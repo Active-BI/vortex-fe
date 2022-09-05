@@ -1,0 +1,28 @@
+<mat-dialog-content class="mat-typography w-100">
+  <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col">
+    <h2 class="text-center text-xl">
+      {{page}} CONSULTOR
+    </h2>
+      <div class="flex flex-col w-[100%]">
+        <mat-form-field appearance="fill">
+          <mat-label>Nome</mat-label>
+          <input type="text" formControlName="nome" matInput #first/>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Telefone</mat-label>
+          <input type="text" formControlName="telefone" matInput #first/>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input type="text" formControlName="email" matInput #first/>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Responsavel</mat-label>
+          <input type="text" formControlName="responsavel" matInput #first/>
+        </mat-form-field>
+      </div>
+    <button mat-raised-button color="primary" (click)="onSubmit()">{{page}}</button>
+  </form>
+
+</mat-dialog-content>
+<!-- {{form.value | json }} -->
