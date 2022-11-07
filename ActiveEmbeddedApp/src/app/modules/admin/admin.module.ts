@@ -8,6 +8,7 @@ import {
     DialogoCriacaoComponent,
     DialogoEdicaoComponent,
 } from './consultores/consultores.component';
+
 import { ImportacaoComponent } from './importacao/importacao.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
@@ -23,6 +24,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { DialogoCriacaoEmpresasComponent, DialogoEdicaoEmpresasComponent, EmpresasComponent } from './empresas/empresas.component';
 import { MatSelectModule } from '@angular/material/select';
 import { ClientesComponent, DialogoEdicaoClientesComponent, DialogoCriacaoClientesComponent } from './clientes/clientes.component';
+import { EbeddedReportModule } from 'app/modules/embedded-report/embedded-report.module';
+import { GestaoVulnerabilidadeComponent } from './gestao-vulnerabilidade/gestao-vulnerabilidade.component';
+import { CorrelacionamentoLogsComponent } from './correlacionamento-logs/correlacionamento-logs.component';
+import { DeteccaoRespEndpointsComponent } from './deteccao-resp-endpoints/deteccao-resp-endpoints.component';
+import { MapeamentoDadosSensiveisComponent } from './mapeamento-dados-sensiveis/mapeamento-dados-sensiveis.component';
+import { GestaoConsetimentoCookiesComponent } from './gestao-consetimento-cookies/gestao-consetimento-cookies.component';
+import { PrevencaoContraVazamentosDadosComponent } from './prevencao-contra-vazamentos-dados/prevencao-contra-vazamentos-dados.component';
+
+import { MatExpansionModule } from '@angular/material/expansion';
+import { FuseAlertModule } from '@fuse/components/alert';
+import { SharedModule } from 'app/shared/shared.module';
+
+
+
 
 const adminroutes: Route[] = [
     {
@@ -33,6 +48,29 @@ const adminroutes: Route[] = [
     {
         path: 'inicio',
         component: InicioComponent,
+    },
+    {
+        path: 'gestao-vulnerabilidades',
+        component: GestaoVulnerabilidadeComponent,
+    },
+    {
+        path: 'correlacionamento-logs',
+        component: CorrelacionamentoLogsComponent,
+    },
+    {
+        path: 'deteccao-resposta',
+        component: DeteccaoRespEndpointsComponent,
+    },
+    {
+        path: 'mapeamento-dados',
+        component: MapeamentoDadosSensiveisComponent,
+    },
+    {
+        path: 'gestao-consentmento-cookies',
+        component: GestaoConsetimentoCookiesComponent,
+    },  {
+        path: 'prevencao-contra-vazamentos-dados',
+        component: PrevencaoContraVazamentosDadosComponent,
     },
     // {
     //     path: 'consultores',
@@ -66,7 +104,13 @@ const adminroutes: Route[] = [
         DialogoCriacaoEmpresasComponent,
         ClientesComponent,
         DialogoEdicaoClientesComponent,
-        DialogoCriacaoClientesComponent
+        DialogoCriacaoClientesComponent,
+        GestaoVulnerabilidadeComponent,
+        CorrelacionamentoLogsComponent,
+        DeteccaoRespEndpointsComponent,
+        MapeamentoDadosSensiveisComponent,
+        PrevencaoContraVazamentosDadosComponent,
+        GestaoConsetimentoCookiesComponent
     ],
     imports: [
         CommonModule,
@@ -83,6 +127,11 @@ const adminroutes: Route[] = [
         MatButtonModule,
         MatIconModule,
         MatSelectModule,
+        EbeddedReportModule,
+        MatExpansionModule,
+        FuseAlertModule,
+        SharedModule
+        // HelpCenterModule
     ],
     entryComponents: [MatDialogModule],
 })

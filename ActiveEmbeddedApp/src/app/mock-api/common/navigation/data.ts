@@ -10,41 +10,47 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : 'inicio'
     },
     {
-        id   : 'item1',
-        title: 'Item 1',
+        id   : 'gestao-vulnerabilidades',
+        title: 'Gestão de Vulnerabilidades',
         type : 'basic',
         icon : 'heroicons_outline:pencil-alt',
-        link : '',
+        link : 'gestao-vulnerabilidades',
     },
     {
-        id   : 'item2',
-        title: 'Item 2',
+        id   : 'correlacionamento-logs',
+        title: 'Correlacionmaneto de Logs',
         type : 'basic',
         icon : 'heroicons_outline:users',
-        link : '/home'
+        link : 'correlacionamento-logs'
     },
     {
-        id   : 'item3',
-        title: 'Item 3',
-        type : 'collapsable',
-        icon : 'heroicons_outline:calculator',
-        link : '/home',
-        children: [
-            {
-                id: 'item3.1',
-                title: 'Item 3.1',
-                type: 'basic',
-                icon: 'heroicons_outline:library',
-                link: '/home2',
-            },
-            {
-                id: 'item3.2',
-                title: 'Item 3.2',
-                type: 'basic',
-                icon: 'heroicons_outline:tag',
-                link: '/home3',
-            },
-    ]
+        id   : 'deteccao-resposta',
+        title: 'Detecção e Resposta aos EndPoints',
+        type : 'basic',
+        icon : 'heroicons_outline:users',
+        link : 'deteccao-resposta'
+    },
+    {
+        id   : 'mapeamento-dados',
+        title: 'Mapeamentos de Dados Sensíveis',
+        type : 'basic',
+        icon : 'heroicons_outline:users',
+        link : 'mapeamento-dados'
+    },
+    {
+        id   : 'gestao-consentmento-cookies',
+        title: 'Gestão de Consentimento de Cookies',
+        type : 'basic',
+        icon : 'heroicons_outline:users',
+        link : 'gestao-consentmento-cookies'
+    }
+    ,
+    {
+        id   : 'prevencao-contra-vazamentos-dados',
+        title: 'Prevenção Contra Vazamentos de Dados',
+        type : 'basic',
+        icon : 'heroicons_outline:users',
+        link : 'prevencao-contra-vazamentos-dados'
     }
 
 ];

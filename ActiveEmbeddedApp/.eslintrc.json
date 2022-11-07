@@ -18,6 +18,7 @@
                 "project": [
                     "tsconfig.json"
                 ],
+                "tsconfigRootDir": "ActiveEmbeddedApp",
                 "createDefaultProgram": true
             },
             "extends": [

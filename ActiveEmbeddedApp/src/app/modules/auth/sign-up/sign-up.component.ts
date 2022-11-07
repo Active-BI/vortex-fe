@@ -65,6 +65,7 @@ export class AuthSignUpComponent implements OnInit
         // Do nothing if the form is invalid
         if ( this.signUpForm.invalid )
         {
+            alert("Erro no formulário!")
             return;
         }
 
