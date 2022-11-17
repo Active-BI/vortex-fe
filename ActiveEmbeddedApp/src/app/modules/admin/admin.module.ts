@@ -25,6 +25,10 @@ import { DialogoCriacaoEmpresasComponent, DialogoEdicaoEmpresasComponent, Empres
 import { MatSelectModule } from '@angular/material/select';
 import { ClientesComponent, DialogoEdicaoClientesComponent, DialogoCriacaoClientesComponent } from './clientes/clientes.component';
 import { EbeddedReportModule } from 'app/modules/embedded-report/embedded-report.module';
+import { LayoutModule } from '@angular/cdk/layout';
+
+
+// Compontents
 import { GestaoVulnerabilidadeComponent } from './gestao-vulnerabilidade/gestao-vulnerabilidade.component';
 import { CorrelacionamentoLogsComponent } from './correlacionamento-logs/correlacionamento-logs.component';
 import { DeteccaoRespEndpointsComponent } from './deteccao-resp-endpoints/deteccao-resp-endpoints.component';
@@ -35,10 +39,9 @@ import { PrevencaoContraVazamentosDadosComponent } from './prevencao-contra-vaza
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { SharedModule } from 'app/shared/shared.module';
-import { GestaoDeUsuariosComponent } from './gestao-de-usuarios/gestao-de-usuarios.component';
-
-
-
+import { ListUsersComponent } from './users/list-users/list-users.component';
+import { EditUserComponent } from './users/edit-user/edit-user.component';
+import { CreateUserComponent } from './users/create-user/create-user.component';
 
 const adminroutes: Route[] = [
     {
@@ -74,8 +77,12 @@ const adminroutes: Route[] = [
         component: PrevencaoContraVazamentosDadosComponent,
     },
     {
-        path: 'gestao-de-usuarios',
-        component: GestaoDeUsuariosComponent,
+        path: 'usuarios',
+        component: ListUsersComponent,
+    },
+    {
+        path: 'usuarios-criar',
+        component: CreateUserComponent,
     },
     // {
     //     path: 'consultores',
@@ -116,10 +123,13 @@ const adminroutes: Route[] = [
         MapeamentoDadosSensiveisComponent,
         PrevencaoContraVazamentosDadosComponent,
         GestaoConsetimentoCookiesComponent,
-        GestaoDeUsuariosComponent
+        ListUsersComponent,
+        EditUserComponent,
+        CreateUserComponent
     ],
     imports: [
         CommonModule,
+        LayoutModule,
         RouterModule.forChild(adminroutes),
         HttpClientModule,
         MatTableModule,
