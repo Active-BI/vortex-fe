@@ -1,18 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UsuariosService } from 'app/modules/services/usuarios';
 import { ToastrService } from 'ngx-toastr';
 import { PeriodicElement } from '../list-users/list-users.component';
+import { ordersData } from '../usersUtils';
 
-
-const ordersData = [
-  { id: 1, name: 'Gestão de Vulnerabilidade' },
-  { id: 2, name: 'Correlacionamento de Logs' },
-  { id: 3, name: 'Detecção e Resposta aos EndPoints' },
-  { id: 4, name: 'Mapeamento de dados Sensíveis' },
-  { id: 5, name: 'Gestão de Consentimento De Cookies' },
-  { id: 6, name: 'Prevenção contra Vazamento de Dados' }
-];
 
 @Component({
   selector: 'app-edit-user',
@@ -33,11 +26,12 @@ export class EditUserComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private usuariosService: UsuariosService) {
     this.route.queryParams.subscribe(params => {
       this.matricula = params['matricula'];
     });
-    this.defaultUsers = JSON.parse(localStorage.getItem('defaultUsers'))
+    this.defaultUsers = this.usuariosService.getUsuario()
     this.addCheckboxes();
   }
   private addCheckboxes() {

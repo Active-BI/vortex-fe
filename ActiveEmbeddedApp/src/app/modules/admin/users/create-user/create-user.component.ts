@@ -4,6 +4,7 @@ import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PeriodicElement } from '../list-users/list-users.component';
+import { UsuariosService } from 'app/modules/services/usuarios';
 
 @Component({
   selector: 'app-create-user',
@@ -17,9 +18,10 @@ export class CreateUserComponent extends EditUserComponent implements OnInit{
       router: Router,
       route: ActivatedRoute,
       toastr: ToastrService,
-      private toast: ToastrService)
+      private toast: ToastrService,
+      usuariosService: UsuariosService)
       {
-    super(fb, router, route, toastr);
+    super(fb, router, route, toastr, usuariosService);
   }
 
   override ngOnInit(): void {
