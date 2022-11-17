@@ -27,16 +27,27 @@ export class ListUsersComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-  ) { 
+  ) {
     if (!localStorage.getItem("defaultUsers")) {
       localStorage.setItem("defaultUsers", JSON.stringify(ELEMENT_DATA))
+      this.dataSource = ELEMENT_DATA
     } else {
       this.dataSource = JSON.parse(localStorage.getItem("defaultUsers"))
     }
   }
 
   ngOnInit(): void { }
-
+  deletarUsuario(matricula): void {
+    const index = this.dataSource.findIndex((user: PeriodicElement) => user.matricula === matricula)
+    this.dataSource.splice(index, 1)
+    localStorage.setItem("defaultUsers", JSON.stringify(this.dataSource))
+    location.reload()
+  }
+  criarUsuario(): void {
+    this.router.navigate(['../usuarios-criar'], {
+      relativeTo: this.route,
+    })
+  }
   editarUsuario(matricula): void {
     this.router.navigate(['../usuarios-editar'], {
       relativeTo: this.route,

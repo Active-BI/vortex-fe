@@ -8,7 +8,6 @@ import {
     DialogoCriacaoComponent,
     DialogoEdicaoComponent,
 } from './consultores/consultores.component';
-
 import { ImportacaoComponent } from './importacao/importacao.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';

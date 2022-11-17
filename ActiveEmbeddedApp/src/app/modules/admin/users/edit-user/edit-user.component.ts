@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { PeriodicElement } from '../list-users/list-users.component';
 
 
 const ordersData = [
-  { id: 1, name: 'order 1' },
-  { id: 2, name: 'order 2' },
-  { id: 3, name: 'order 3' },
-  { id: 4, name: 'order 4' }
+  { id: 1, name: 'Gestão de Vulnerabilidade' },
+  { id: 2, name: 'Correlacionamento de Logs' },
+  { id: 3, name: 'Detecção e Resposta aos EndPoints' },
+  { id: 4, name: 'Mapeamento de dados Sensíveis' },
+  { id: 5, name: 'Gestão de Consentimento De Cookies' },
+  { id: 6, name: 'Prevenção contra Vazamento de Dados' }
 ];
 
 @Component({
@@ -29,7 +32,8 @@ export class EditUserComponent implements OnInit {
   defaultUsers: PeriodicElement[] = []
   constructor(private fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute,) {
+    private route: ActivatedRoute,
+    private toastr: ToastrService) {
     this.route.queryParams.subscribe(params => {
       this.matricula = params['matricula'];
     });
@@ -41,7 +45,6 @@ export class EditUserComponent implements OnInit {
   }
   ngOnInit(): void {
     const user = this.defaultUsers.find((user: PeriodicElement) => user.matricula === this.matricula)
-    console.log(user, this)
     this.form.patchValue({
       matricula: user.matricula,
       nome: user.nome,
@@ -63,7 +66,7 @@ export class EditUserComponent implements OnInit {
     const index = this.defaultUsers.findIndex((user: PeriodicElement) => user.matricula === this.form.value.matricula)
     this.defaultUsers[index] = this.form.value as PeriodicElement
     localStorage.setItem('defaultUsers', JSON.stringify(this.defaultUsers))
-
+    this.toastr.success("Editado com Sucesso")
     this.voltar()
   }
 }
