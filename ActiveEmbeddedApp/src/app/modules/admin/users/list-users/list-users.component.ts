@@ -6,12 +6,13 @@ export interface PeriodicElement {
   nome: string;
   perfil: string;
   area: string;
+  visoes: any[]
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { matricula: '176565', nome: 'João Silva', perfil: 'User', area: 'Comercial' },
-  { matricula: '1053433', nome: 'Rodrigo Nunes', perfil: 'Admin', area: 'Administrativo' },
-  { matricula: '10078', nome: 'Carlos Alberto Saihd', perfil: 'User', area: 'Projetos' },
+  { matricula: '176565', nome: 'João Silva', perfil: 'User', area: 'Comercial', visoes: [] },
+  { matricula: '1053433', nome: 'Rodrigo Nunes', perfil: 'Admin', area: 'Administrativo', visoes: [] },
+  { matricula: '10078', nome: 'Carlos Alberto Saihd', perfil: 'User', area: 'Projetos', visoes: [] },
 ];
 
 @Component({
@@ -21,12 +22,18 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ListUsersComponent implements OnInit {
   displayedColumns: string[] = ['matricula', 'nome', 'perfil', 'area', 'opcoes'];
-  dataSource = ELEMENT_DATA;
+  dataSource = [];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+  ) { 
+    if (!localStorage.getItem("defaultUsers")) {
+      localStorage.setItem("defaultUsers", JSON.stringify(ELEMENT_DATA))
+    } else {
+      this.dataSource = JSON.parse(localStorage.getItem("defaultUsers"))
+    }
+  }
 
   ngOnInit(): void { }
 
