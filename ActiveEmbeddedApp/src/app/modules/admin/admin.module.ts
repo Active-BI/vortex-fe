@@ -84,6 +84,14 @@ const adminroutes: Route[] = [
         path: 'usuarios-criar',
         component: CreateUserComponent,
     },
+    {
+        path: 'usuarios-editar',
+        component: EditUserComponent,
+    },
+    {
+        path: 'usuarios-editar/:id',
+        component: EditUserComponent,
+    },
     // {
     //     path: 'consultores',
     //     component: ConsultoresComponent,
@@ -146,7 +154,7 @@ const adminroutes: Route[] = [
         EbeddedReportModule,
         MatExpansionModule,
         FuseAlertModule,
-        SharedModule
+        SharedModule,
         // HelpCenterModule
     ],
     entryComponents: [MatDialogModule],

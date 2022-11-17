@@ -51,12 +51,13 @@
                                 svgIcon="heroicons_solid:trash"
                             ></mat-icon>
                         </button>
-                        <button (click)="element">
+                        <button (click)="editarUsuario(element.matricula)">
                             <mat-icon
                                 color="primary"
                                 class="cursor-pointer"
                                 svgIcon="edit_note"
                             ></mat-icon>
+
                         </button>
                     </div>
                 </td>
@@ -66,9 +67,10 @@
   </div>
   <div class="flex flex-row justify-end p-4" id="table">
 
-  <button mat-raised-button color="primary" (click)="null">
+  <button mat-raised-button color="primary">
     Novo Usuário
 </button>
+
   </div>
 </div>
 

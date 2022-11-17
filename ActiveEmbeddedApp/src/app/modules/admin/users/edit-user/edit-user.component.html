@@ -1,1 +1,28 @@
-<p>edit-user works!</p>
+<button (click)="voltar()">VOLTAR</button>
+
+<form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-100">
+    <h2 class="text-center text-xl">
+        EDITAR USUÁRIO
+    </h2>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input type="text" formControlName="nome" matInput #first />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Perfil</mat-label>
+        <input type="text" formControlName="perfil" matInput #first />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Area</mat-label>
+        <input type="text" formControlName="area" matInput #first />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Opções</mat-label>
+        <input type="text" formControlName="opcoes" matInput #first />
+    </mat-form-field>
+    
+</form>
