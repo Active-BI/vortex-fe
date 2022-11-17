@@ -1,6 +1,6 @@
 <div *ngIf="showReport">
 
-    <powerbi-report *ngIf="type === 'report'"
+    <powerbi-report #reportObj *ngIf="type === 'report'"
         [embedConfig] = "config"
 
         [cssClassName] = "'pbi-report'"
