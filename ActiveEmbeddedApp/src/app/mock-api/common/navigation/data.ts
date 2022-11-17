@@ -53,26 +53,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : 'prevencao-contra-vazamentos-dados'
     },
     {
-        id   : 'usuarios',
-        title: 'Gestão de Usuários',
-        type : 'collapsable',
-        icon : 'mat_solid:group',
-        children:[{
+
             id   : 'usuarios.lista',
             title: 'Lista Usuários',
             type : 'basic',
             icon : 'mat_solid:person_search',
             link: 'usuarios'
-        },
-        {
-            id   : 'usuarios.novo',
-            title: 'Novo Usuário',
-            type : 'basic',
-            icon : 'mat_solid:person_add',
-            link: 'usuarios-criar'
-        },
-
-        ]
     }
 
 ];
