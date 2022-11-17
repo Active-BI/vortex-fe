@@ -13,7 +13,7 @@ export interface UserRegister extends User {
   passwordConfirmation: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
+export const ELEMENT_DATA: PeriodicElement[] = [
   { matricula: '176565', nome: 'João Silva', perfil: 'User', area: 'Comercial', visoes: [] },
   { matricula: '1053433', nome: 'Rodrigo Nunes', perfil: 'Admin', area: 'Administrativo', visoes: [] },
   { matricula: '10078', nome: 'Carlos Alberto Saihd', perfil: 'User', area: 'Projetos', visoes: [] },
@@ -50,6 +50,5 @@ export class UsuariosService {
     const index = dataSource.findIndex((user: PeriodicElement) => user.matricula === matricula)
     dataSource.splice(index, 1)
     localStorage.setItem("defaultUsers", JSON.stringify(dataSource))
-    location.reload()
   }
 }

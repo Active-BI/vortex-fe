@@ -11,7 +11,7 @@ import {
 import { ImportacaoComponent } from './importacao/importacao.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
@@ -25,7 +25,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { ClientesComponent, DialogoEdicaoClientesComponent, DialogoCriacaoClientesComponent } from './clientes/clientes.component';
 import { EbeddedReportModule } from 'app/modules/embedded-report/embedded-report.module';
 import { LayoutModule } from '@angular/cdk/layout';
-
 
 // Compontents
 import { GestaoVulnerabilidadeComponent } from './gestao-vulnerabilidade/gestao-vulnerabilidade.component';
@@ -41,6 +40,8 @@ import { SharedModule } from 'app/shared/shared.module';
 import { ListUsersComponent } from './users/list-users/list-users.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { getPortuguesePaginatorIntl } from '../services/portuguese-paginator-intl';
 
 const adminroutes: Route[] = [
     {
@@ -154,8 +155,11 @@ const adminroutes: Route[] = [
         MatExpansionModule,
         FuseAlertModule,
         SharedModule,
-        // HelpCenterModule
     ],
     entryComponents: [MatDialogModule],
+    providers: [
+        { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+        { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() }
+    ]
 })
 export class AdminModule {}
