@@ -8,7 +8,6 @@ import {
     DialogoCriacaoComponent,
     DialogoEdicaoComponent,
 } from './consultores/consultores.component';
-
 import { ImportacaoComponent } from './importacao/importacao.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
@@ -84,6 +83,14 @@ const adminroutes: Route[] = [
         path: 'usuarios-criar',
         component: CreateUserComponent,
     },
+    {
+        path: 'usuarios-editar',
+        component: EditUserComponent,
+    },
+    {
+        path: 'usuarios-editar/:id',
+        component: EditUserComponent,
+    },
     // {
     //     path: 'consultores',
     //     component: ConsultoresComponent,
@@ -146,7 +153,7 @@ const adminroutes: Route[] = [
         EbeddedReportModule,
         MatExpansionModule,
         FuseAlertModule,
-        SharedModule
+        SharedModule,
         // HelpCenterModule
     ],
     entryComponents: [MatDialogModule],

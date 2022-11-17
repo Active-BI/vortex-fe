@@ -1,27 +1,45 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UsuariosService } from 'app/modules/services/usuarios';
 
 export interface PeriodicElement {
-    matricula: string;
-    nome: string;
-    perfil: string;
-    area: string;
-  }
-
-  const ELEMENT_DATA: PeriodicElement[] = [
-    {matricula: '176565', nome: 'João Silva', perfil: 'User', area: 'Comercial'},
-    {matricula: '1053433', nome: 'Rodrigo Nunes', perfil: 'Admin', area: 'Administrativo'},
-    {matricula: '10078', nome: 'Carlos Alberto Saihd', perfil: 'User', area: 'Projetos'},
-  ];
+  matricula: string;
+  nome: string;
+  perfil: string;
+  area: string;
+  visoes: any[]
+}
 
 @Component({
-    selector: 'app-list-users',
-    templateUrl: './list-users.component.html',
-    styleUrls: ['./list-users.component.scss'],
+  selector: 'app-list-users',
+  templateUrl: './list-users.component.html',
+  styleUrls: ['./list-users.component.scss'],
 })
 export class ListUsersComponent implements OnInit {
-    displayedColumns: string[] = ['matricula', 'nome', 'perfil', 'area', 'opcoes'];
-    dataSource = ELEMENT_DATA;
-    constructor() {}
+  displayedColumns: string[] = ['matricula', 'nome', 'perfil', 'area', 'opcoes'];
+  dataSource = [];
 
-    ngOnInit(): void {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private usuariosService: UsuariosService
+  ) {
+    this.dataSource = this.usuariosService.getUsuario()
+  }
+
+  ngOnInit(): void { }
+  deletarUsuario(matricula): void {
+    this.usuariosService.deleteUsuario(matricula)
+  }
+  criarUsuario(): void {
+    this.router.navigate(['../usuarios-criar'], {
+      relativeTo: this.route,
+    })
+  }
+  editarUsuario(matricula): void {
+    this.router.navigate(['../usuarios-editar'], {
+      relativeTo: this.route,
+      queryParams: { matricula }
+    });
+  }
 }

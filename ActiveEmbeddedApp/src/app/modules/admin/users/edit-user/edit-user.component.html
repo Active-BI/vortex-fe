@@ -1,1 +1,42 @@
-<p>edit-user works!</p>
+<div class="flex flex-col m-10">
+    <button (click)="voltar()" class="self-start">
+        <mat-icon svgIcon="arrow_back"></mat-icon>
+    </button>
+        <h2 class="text-center text-xl">
+            EDITAR USUÁRIO
+        </h2>
+    <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-100 ml-5">
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Nome</mat-label>
+            <input type="text" formControlName="nome" matInput #first />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Perfil</mat-label>
+            <mat-select formControlName="perfil">
+                <mat-option value="User">User</mat-option>
+                <mat-option value="Admin">Admin</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Area</mat-label>
+            <mat-select formControlName="area">
+                <mat-option value="Comercial">Comercial</mat-option>
+                <mat-option value="Administrativo">Administrativo</mat-option>
+                <mat-option value="Projetos">Projetos</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <h4 class="text-left mb-2 text-xl">
+            Visões
+        </h4>
+        <label formArrayName="visoes" *ngFor="let order of visoesFormArray.controls; let i = index">
+            <input type="checkbox" [formControlName]="i">
+            {{ordersData[i].name}}
+        </label>
+    </form>
+    <button  mat-raised-button color="primary" (click)="editar()" class="self-end">EDITAR</button>
+</div>

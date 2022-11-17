@@ -1,11 +1,11 @@
 export interface FSDocument extends HTMLDocument
 {
     mozFullScreenElement?: Element;
-    mozCancelFullScreen?: () => void;
+    mozCancelFullScreen: any;
     msFullscreenElement?: Element;
-    msExitFullscreen?: () => void;
+    msExitFullscreen: any;
     webkitFullscreenElement?: Element;
-    webkitExitFullscreen?: () => void;
+    webkitExitFullscreen: any;
 }
 
 export interface FSDocumentElement extends HTMLElement

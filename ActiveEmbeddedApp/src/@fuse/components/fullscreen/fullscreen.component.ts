@@ -22,7 +22,7 @@ export class FuseFullscreenComponent implements OnInit
      */
     constructor(@Inject(DOCUMENT) private _document: Document)
     {
-        this._fsDoc = _document as FSDocument;
+        this._fsDoc = _document as any;
     }
 
     // -----------------------------------------------------------------------------------------------------
