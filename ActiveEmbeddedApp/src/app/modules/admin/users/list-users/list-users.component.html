@@ -4,7 +4,7 @@
     <div class="w-full text-4xl md:text-3xl sm:text-7xl ">Usuários</div>
 
     <div class="flex flex-col justify-center p-4" id="table">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <table mat-table  [dataSource]="usuarios" class="mat-elevation-z8">
 
             <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
@@ -63,8 +63,15 @@
                 </td>
             </ng-container>
           </table>
-
-  </div>
+          <mat-paginator
+            class="justify-self-end"
+            #paginator
+            [pageSize]="10"
+            [length]="usuariosL"
+            showFirstLastButtons
+          >
+          </mat-paginator>
+        </div>
   <div class="flex flex-row justify-end p-4" id="table">
 
   <button mat-raised-button color="primary" (click)="criarUsuario()">
