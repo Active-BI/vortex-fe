@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UsuariosService } from 'app/modules/services/usuarios';
 
 export interface PeriodicElement {
   matricula: string;
@@ -8,12 +9,6 @@ export interface PeriodicElement {
   area: string;
   visoes: any[]
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { matricula: '176565', nome: 'João Silva', perfil: 'User', area: 'Comercial', visoes: [] },
-  { matricula: '1053433', nome: 'Rodrigo Nunes', perfil: 'Admin', area: 'Administrativo', visoes: [] },
-  { matricula: '10078', nome: 'Carlos Alberto Saihd', perfil: 'User', area: 'Projetos', visoes: [] },
-];
 
 @Component({
   selector: 'app-list-users',
@@ -27,21 +22,14 @@ export class ListUsersComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private usuariosService: UsuariosService
   ) {
-    if (!localStorage.getItem("defaultUsers")) {
-      localStorage.setItem("defaultUsers", JSON.stringify(ELEMENT_DATA))
-      this.dataSource = ELEMENT_DATA
-    } else {
-      this.dataSource = JSON.parse(localStorage.getItem("defaultUsers"))
-    }
+    this.dataSource = this.usuariosService.getUsuario()
   }
 
   ngOnInit(): void { }
   deletarUsuario(matricula): void {
-    const index = this.dataSource.findIndex((user: PeriodicElement) => user.matricula === matricula)
-    this.dataSource.splice(index, 1)
-    localStorage.setItem("defaultUsers", JSON.stringify(this.dataSource))
-    location.reload()
+    this.usuariosService.deleteUsuario(matricula)
   }
   criarUsuario(): void {
     this.router.navigate(['../usuarios-criar'], {

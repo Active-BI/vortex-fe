@@ -38,8 +38,17 @@ export class UsuariosService {
   }
 
   editUsuario(payload: PeriodicElement, matricula: string): any {
+    const dataSource = this.getUsuario()
+    const index = dataSource.findIndex((user: PeriodicElement) => user.matricula === matricula)
+    dataSource[index] = payload
+    localStorage.setItem('defaultUsers', JSON.stringify(dataSource))
   }
 
-  deleteUsuarios(id: string): any {
+  deleteUsuario(matricula: string): any {
+    const dataSource = this.getUsuario()
+    const index = dataSource.findIndex((user: PeriodicElement) => user.matricula === matricula)
+    dataSource.splice(index, 1)
+    localStorage.setItem("defaultUsers", JSON.stringify(dataSource))
+    location.reload()
   }
 }

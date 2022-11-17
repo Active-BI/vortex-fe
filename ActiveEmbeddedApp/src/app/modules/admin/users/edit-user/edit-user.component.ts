@@ -57,9 +57,7 @@ export class EditUserComponent implements OnInit {
     });
   }
   editar(): void {
-    const index = this.defaultUsers.findIndex((user: PeriodicElement) => user.matricula === this.form.value.matricula)
-    this.defaultUsers[index] = this.form.value as PeriodicElement
-    localStorage.setItem('defaultUsers', JSON.stringify(this.defaultUsers))
+    this.usuariosService.editUsuario(this.form.value as PeriodicElement, this.matricula)
     this.toastr.success("Editado com Sucesso")
     this.voltar()
   }
