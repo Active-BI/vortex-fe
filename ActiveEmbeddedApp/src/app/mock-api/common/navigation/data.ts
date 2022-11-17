@@ -51,6 +51,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:users',
         link : 'prevencao-contra-vazamentos-dados'
+    },
+    {
+        id   : 'gestao-de-usuarios',
+        title: 'Gestão de Usuários',
+        type : 'basic',
+        icon : 'heroicons_outline:users',
+        link : 'gestao-de-usuarios'
     }
 
 ];

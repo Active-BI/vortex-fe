@@ -35,6 +35,7 @@ import { PrevencaoContraVazamentosDadosComponent } from './prevencao-contra-vaza
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { SharedModule } from 'app/shared/shared.module';
+import { GestaoDeUsuariosComponent } from './gestao-de-usuarios/gestao-de-usuarios.component';
 
 
 
@@ -71,6 +72,10 @@ const adminroutes: Route[] = [
     },  {
         path: 'prevencao-contra-vazamentos-dados',
         component: PrevencaoContraVazamentosDadosComponent,
+    },
+    {
+        path: 'gestao-de-usuarios',
+        component: GestaoDeUsuariosComponent,
     },
     // {
     //     path: 'consultores',
@@ -110,7 +115,8 @@ const adminroutes: Route[] = [
         DeteccaoRespEndpointsComponent,
         MapeamentoDadosSensiveisComponent,
         PrevencaoContraVazamentosDadosComponent,
-        GestaoConsetimentoCookiesComponent
+        GestaoConsetimentoCookiesComponent,
+        GestaoDeUsuariosComponent
     ],
     imports: [
         CommonModule,
