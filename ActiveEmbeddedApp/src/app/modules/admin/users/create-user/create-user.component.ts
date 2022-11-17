@@ -19,7 +19,9 @@ export class CreateUserComponent extends EditUserComponent implements OnInit{
       route: ActivatedRoute,
       toastr: ToastrService,
       private toast: ToastrService,
-      usuariosService: UsuariosService)
+      usuariosService: UsuariosService,
+      private usuarioService: UsuariosService,
+      )
       {
     super(fb, router, route, toastr, usuariosService);
   }
@@ -30,7 +32,7 @@ export class CreateUserComponent extends EditUserComponent implements OnInit{
   criar(): void {
     this.form.patchValue({ matricula: Math.round(Math.random() * 20000).toString()})
     this.defaultUsers.push(this.form.value as PeriodicElement)
-    localStorage.setItem("defaultUsers", JSON.stringify(this.defaultUsers))
+    this.usuarioService.postUsuario(this.defaultUsers)
     this.toast.success("Usuário Criado com Sucesso")
     this.voltar()
   }

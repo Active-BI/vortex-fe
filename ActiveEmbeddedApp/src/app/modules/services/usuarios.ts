@@ -34,7 +34,8 @@ export class UsuariosService {
     }
   }
 
-  postUsuario(payload: PeriodicElement): any {
+  postUsuario(payload: PeriodicElement[]): any {
+    localStorage.setItem("defaultUsers", JSON.stringify(payload))
   }
 
   editUsuario(payload: PeriodicElement, matricula: string): any {

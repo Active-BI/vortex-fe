@@ -53,7 +53,6 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : 'prevencao-contra-vazamentos-dados'
     },
     {
-
             id   : 'usuarios.lista',
             title: 'Lista Usuários',
             type : 'basic',

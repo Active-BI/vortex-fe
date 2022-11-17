@@ -28,9 +28,11 @@ export class EditUserComponent implements OnInit {
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private usuariosService: UsuariosService) {
+
     this.route.queryParams.subscribe(params => {
       this.matricula = params['matricula'];
     });
+
     this.defaultUsers = this.usuariosService.getUsuario()
     this.addCheckboxes();
   }
@@ -44,7 +46,7 @@ export class EditUserComponent implements OnInit {
       nome: user.nome,
       perfil: user.perfil,
       area: user.area,
-      visoes: [...user.visoes]
+      visoes: user.visoes
     })
   }
 
