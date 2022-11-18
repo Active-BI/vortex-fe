@@ -59,12 +59,12 @@ export class EditUserComponent implements OnInit {
     });
   }
   editar(): void {
-    if (this.form.validator) {
+    if (this.form.valid) {
       this.usuariosService.editUsuario(this.form.value as PeriodicElement, this.matricula)
       this.toastr.success("Editado com Sucesso")
       this.voltar()
     } else {
-      this.form.touched
+      this.form.markAllAsTouched()
     }
   }
 }
