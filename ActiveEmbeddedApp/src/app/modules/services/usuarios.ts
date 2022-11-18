@@ -26,7 +26,7 @@ export class UsuariosService {
   constructor(private http: HttpClient) { }
 
   getUsuario(): PeriodicElement[] {
-    if (!localStorage.getItem("defaultUsers")) {
+    if (!localStorage.getItem("defaultUsers") || JSON.parse(localStorage.getItem("defaultUsers")).length === 0 ) {
       localStorage.setItem("defaultUsers", JSON.stringify(ELEMENT_DATA))
       return ELEMENT_DATA
     } else {

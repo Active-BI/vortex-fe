@@ -3,6 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UsuariosService } from 'app/modules/services/usuarios';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
+import { ToastrService } from 'ngx-toastr';
 
 export interface PeriodicElement {
   matricula: string;
@@ -27,7 +30,9 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private usuariosService: UsuariosService
+    private usuariosService: UsuariosService,
+    public dialog: MatDialog,
+    private toastr: ToastrService,
   ) {
   }
 
@@ -45,9 +50,16 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
     this.usuariosL = this.usuarios?.data.length;
   }
   deletarUsuario(matricula): void {
-    this.usuariosService.deleteUsuario(matricula)
-    this.requisicoes()
+    this.dialog.open(DeleteModalComponent, {
+      data: () => {
+        this.usuariosService.deleteUsuario(matricula)
+        this.dialog.closeAll()
+        this.toastr.success("Deletado com Sucesso")
+        this.requisicoes()
+      }
+  });
   }
+
   criarUsuario(): void {
     this.router.navigate(['../usuarios-criar'], {
       relativeTo: this.route,
