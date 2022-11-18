@@ -54,7 +54,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
             id   : 'usuarios.lista',
-            title: 'Lista Usuários',
+            title: 'Gestão de Usuários',
             type : 'basic',
             icon : 'mat_solid:person_search',
             link: 'usuarios'
