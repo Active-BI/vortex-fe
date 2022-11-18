@@ -15,9 +15,9 @@ import { ordersData } from '../usersUtils';
 export class EditUserComponent implements OnInit {
   form = this.fb.group({
     matricula: [''],
-    nome: ['', Validators.required],
-    perfil: ['', Validators.required],
-    area: ['', Validators.required],
+    nome: ['', [Validators.required, Validators.minLength(3)]],
+    perfil: ['', [Validators.required]],
+    area: ['', [Validators.required]],
     visoes: new FormArray([]),
   })
   matricula: string
@@ -59,8 +59,12 @@ export class EditUserComponent implements OnInit {
     });
   }
   editar(): void {
-    this.usuariosService.editUsuario(this.form.value as PeriodicElement, this.matricula)
-    this.toastr.success("Editado com Sucesso")
-    this.voltar()
+    if (this.form.validator) {
+      this.usuariosService.editUsuario(this.form.value as PeriodicElement, this.matricula)
+      this.toastr.success("Editado com Sucesso")
+      this.voltar()
+    } else {
+      this.form.touched
+    }
   }
 }

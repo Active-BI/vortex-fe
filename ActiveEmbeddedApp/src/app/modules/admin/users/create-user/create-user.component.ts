@@ -30,10 +30,14 @@ export class CreateUserComponent extends EditUserComponent implements OnInit{
   }
 
   criar(): void {
-    this.form.patchValue({ matricula: Math.round(Math.random() * 20000).toString()})
-    this.defaultUsers.push(this.form.value as PeriodicElement)
-    this.usuarioService.postUsuario(this.defaultUsers)
-    this.toast.success("Usuário Criado com Sucesso")
-    this.voltar()
+    if (this.form.validator) {
+      this.form.patchValue({ matricula: Math.round(Math.random() * 20000).toString()})
+      this.defaultUsers.push(this.form.value as PeriodicElement)
+      this.usuarioService.postUsuario(this.defaultUsers)
+      this.toast.success("Usuário Criado com Sucesso")
+      this.voltar()
+    } else {
+      this.form.markAllAsTouched()
+    }
   }
 }

@@ -11,8 +11,15 @@
       <mat-form-field appearance="fill">
           <mat-label>Nome</mat-label>
           <input type="text" formControlName="nome" matInput #first />
-      </mat-form-field>
-
+        </mat-form-field>
+        <div *ngIf="form.controls.nome.touched" class="text-red-600 mb-2">
+            <div *ngIf="form.controls.nome.errors?.['required']">
+                Nome é Obrigatório
+            </div>
+            <div *ngIf="form.controls.nome.errors?.['minlength']">
+                Precisa de no mínimo 3 dígitos
+            </div>
+        </div>
       <mat-form-field appearance="fill">
           <mat-label>Perfil</mat-label>
           <mat-select formControlName="perfil">
@@ -20,7 +27,11 @@
               <mat-option value="Admin">Admin</mat-option>
           </mat-select>
       </mat-form-field>
-
+      <div *ngIf="form.controls.perfil.touched">
+        <div *ngIf="form.controls.perfil.errors?.['required']" class="text-red-600 mb-2">
+            Perfil é Obrigatório
+        </div>
+    </div>
       <mat-form-field appearance="fill">
           <mat-label>Area</mat-label>
           <mat-select formControlName="area">
@@ -30,6 +41,12 @@
           </mat-select>
       </mat-form-field>
 
+      <div *ngIf="form.controls.area.touched" class="text-red-600 mb-2">
+        <div *ngIf="form.controls.area.errors?.['required']">
+            Area é Obrigatório
+        </div>
+    </div>
+
       <h4 class="text-left mb-2 text-xl">
           Visões
       </h4>
@@ -37,6 +54,11 @@
           <input type="checkbox" [formControlName]="i">
           {{ordersData[i].name}}
       </label>
+      <div *ngIf="form.controls.visoes.touched" class="text-red-600 mb-2">
+        <div *ngIf="form.controls.visoes.errors?.['required']">
+            Visões é Obrigatório
+        </div>
+    </div>
   </form>
   <button  mat-raised-button color="primary" (click)="criar()" class="self-end">CRIAR</button>
 </div>
