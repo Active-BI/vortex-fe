@@ -50,10 +50,9 @@
       <h4 class="text-left mb-2 text-xl">
           Visões
       </h4>
-      <label formArrayName="visoes" *ngFor="let order of visoesFormArray.controls; let i = index">
-          <input type="checkbox" [formControlName]="i">
-          {{ordersData[i].name}}
-      </label>
+      <label formArrayName="visoes" >
+        aa
+    </label>
       <div *ngIf="form.controls.visoes.touched" class="text-red-600 mb-2">
         <div *ngIf="form.controls.visoes.errors?.['required']">
             Visões é Obrigatório

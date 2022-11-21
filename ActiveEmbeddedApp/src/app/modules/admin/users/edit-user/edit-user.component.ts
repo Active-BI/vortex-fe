@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuariosService } from 'app/modules/services/usuarios';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +18,7 @@ export class EditUserComponent implements OnInit {
     nome: ['', [Validators.required, Validators.minLength(3)]],
     perfil: ['', [Validators.required]],
     area: ['', [Validators.required]],
-    visoes: new FormArray([]),
+    visoes: [[], [Validators.required]],
   })
   matricula: string
   ordersData = ordersData
@@ -34,11 +34,11 @@ export class EditUserComponent implements OnInit {
     });
 
     this.defaultUsers = this.usuariosService.getUsuario()
-    this.addCheckboxes();
+    // this.addCheckboxes();
   }
-  private addCheckboxes() {
-    this.ordersData.forEach(() => this.visoesFormArray.push(new FormControl(false)));
-  }
+  // private addCheckboxes() {
+  //   this.ordersData.forEach(() => this.visoesFormArray.push(new FormControl(false)));
+  // }
   ngOnInit(): void {
     const user = this.defaultUsers.find((user: PeriodicElement) => user.matricula === this.matricula)
     this.form.patchValue({
@@ -48,10 +48,11 @@ export class EditUserComponent implements OnInit {
       area: user.area,
       visoes: user.visoes
     })
+    console.log(this.visoesFormArray.value)
   }
 
   get visoesFormArray() {
-    return this.form.controls.visoes as FormArray;
+    return this.form.controls.visoes as FormControl;
   }
   voltar(): void {
     this.router.navigate(['../usuarios'], {
