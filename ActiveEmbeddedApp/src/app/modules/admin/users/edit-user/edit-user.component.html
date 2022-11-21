@@ -78,7 +78,7 @@
             </div>
 
             <mat-accordion class="my-5">
-                <mat-expansion-panel showToggle [expanded]="true" (opened)="panelOpenState = true"
+                <mat-expansion-panel showToggle [expanded]="visoesFormArray.value.length > 0" (opened)="panelOpenState = true" 
                 (closed)="panelOpenState = false">
                     <mat-expansion-panel-header class="ml-[-20px]">
                         <mat-panel-title>
