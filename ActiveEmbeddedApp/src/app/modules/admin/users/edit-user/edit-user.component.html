@@ -1,16 +1,28 @@
-<div class="flex flex-col m-10">
-    <button (click)="voltar()" class="self-start">
-        <mat-icon svgIcon="arrow_back"></mat-icon>
-    </button>
-        <h2 class="text-center text-xl">
-            EDITAR USUÁRIO
-        </h2>
-    <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-100 ml-5">
+<div>
 
+<div class="m-10 mb-0 rounded-t-xl flex items-center bg-white py-[3px]">
+
+    <button (click)="voltar()" class="self-start  hover:rounded-full m-2">
+        <mat-icon class="flex self-center text-slate-600 hover:text-slate-400" svgIcon="arrow_back"></mat-icon>
+    </button>
+    
+    <div class="w-full m-2">
+        <h1 class="text-center text-slate-700 text-2xl">
+            EDITAR USUÁRIO
+        </h1> 
+    </div>
+</div>
+<div class="flex flex-col m-10 mt-0 bg-white rounded-b-xl p-5">
+    <!-- <h2 class="text-left mb-2 text-xl">
+        Informações do Usuário
+    </h2> -->
+    <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-100">
 
         <mat-form-field appearance="fill">
             <mat-label>Nome</mat-label>
             <input type="text" formControlName="nome" matInput #first />
+            <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
+
         </mat-form-field>
         <div *ngIf="form.controls.nome.touched" class="text-red-600 mb-2">
             <div *ngIf="form.controls.nome.errors?.['required']">
@@ -26,6 +38,8 @@
                 <mat-option value="User">User</mat-option>
                 <mat-option value="Admin">Admin</mat-option>
             </mat-select>
+            <mat-icon svgIcon="heroicons_outline:archive"></mat-icon>
+
         </mat-form-field>
         <div *ngIf="form.controls.perfil.touched">
             <div *ngIf="form.controls.perfil.errors?.['required']" class="text-red-600 mb-2">
@@ -39,19 +53,34 @@
                 <mat-option value="Administrativo">Administrativo</mat-option>
                 <mat-option value="Projetos">Projetos</mat-option>
             </mat-select>
+            <mat-icon svgIcon="heroicons_outline:archive"></mat-icon>
+
         </mat-form-field>
         <div *ngIf="form.controls.area.touched" class="text-red-600 mb-2">
             <div *ngIf="form.controls.area.errors?.['required']">
                 Area é Obrigatório
             </div>
         </div>
-        <h4 class="text-left mb-2 text-xl">
-            Visões
-        </h4>
-        <label formArrayName="visoes" *ngFor="let order of visoesFormArray.controls; let i = index">
-            <input type="checkbox" [formControlName]="i">
-            {{ordersData[i].name}}
-        </label>
+        <mat-accordion class="my-5">
+            <mat-expansion-panel showToggle [expanded]="true">
+              <mat-expansion-panel-header class="ml-[-20px]">
+                <mat-panel-title >
+                    <p class="text-xl text-slate-600">
+                        Visões
+                    </p>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="flex flex-col">
+
+                  <label formArrayName="visoes" *ngFor="let order of visoesFormArray.controls; let i = index">
+                      <input type="checkbox" [formControlName]="i">
+                      {{ordersData[i].name}}
+                    </label>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
     </form>
-    <button  mat-raised-button color="primary" (click)="editar()" class="self-end">SALVAR</button>
+    <button  mat-raised-button color="primary" (click)="editar()" class="self-end mt-2">SALVAR</button>
+</div>
 </div>
