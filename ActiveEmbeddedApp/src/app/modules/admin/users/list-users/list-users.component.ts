@@ -51,12 +51,15 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
   }
   deletarUsuario(matricula): void {
     this.dialog.open(DeleteModalComponent, {
-      data: () => {
+      data: { 
+        nome: "Usuários",
+        data: () => {
         this.usuariosService.deleteUsuario(matricula)
         this.dialog.closeAll()
         this.toastr.success("Deletado com Sucesso")
         this.requisicoes()
-      }
+        }
+      },
   });
   }
 

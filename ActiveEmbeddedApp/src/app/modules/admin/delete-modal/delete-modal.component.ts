@@ -15,7 +15,7 @@ export class DeleteModalComponent {
   ) { }
 
   onSubmit(): void {
-    this.data();
+    this.data.data();
   }
   voltar(): void {
     this.dialog.closeAll()
