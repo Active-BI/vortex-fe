@@ -7,7 +7,11 @@ td {
 }
 
 .mat-header-cell {
-    text-align: center
+    text-align: center;
+}
+
+.mat-cell {
+    text-transform: capitalize;
 }
 
 tr:hover .mat-cell {
