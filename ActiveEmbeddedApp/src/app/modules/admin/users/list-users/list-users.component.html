@@ -40,10 +40,10 @@
 
 
             <!-- Extra Columns -->
-            <ng-container matColumnDef="opcoes" align="center">
+            <ng-container matColumnDef="opcoes" class="flex">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
-                    <div class="flex align-center w-[60%]">
+                    <div class="w-full flex justify-end">
                         <button (click)="deletarUsuario(element.matricula)">
                             <mat-icon
                                 color="warn"
