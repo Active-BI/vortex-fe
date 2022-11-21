@@ -20,6 +20,7 @@ export class EditUserComponent implements OnInit {
     area: ['', [Validators.required]],
     visoes: [[], [Validators.required]],
   })
+  panelOpenState = false
   matricula: string
   ordersData = ordersData
   defaultUsers: PeriodicElement[] = []

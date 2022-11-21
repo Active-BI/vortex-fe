@@ -42,6 +42,7 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { getPortuguesePaginatorIntl } from '../services/portuguese-paginator-intl';
+import {MatBadgeModule} from '@angular/material/badge';
 
 const adminroutes: Route[] = [
     {
@@ -155,6 +156,7 @@ const adminroutes: Route[] = [
         MatExpansionModule,
         FuseAlertModule,
         SharedModule,
+        MatBadgeModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [
