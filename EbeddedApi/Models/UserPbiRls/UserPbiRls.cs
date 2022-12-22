@@ -18,6 +18,7 @@ public class UserPbiRls {
     public string Identificacao { get; set; }
     public string Empresa { get; set; }
     public string Perfil {get;set;}
+    public string EmailContato { get; set; }
     [NotMapped]
     public DateTime? DataUltimoAcesso { get; set; }
     public virtual List<UserVisions> UserVisions { get; set; }

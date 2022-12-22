@@ -3,6 +3,7 @@ using System;
 using EbeddedApi.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EbeddedApi.Migrations.Rls
 {
     [DbContext(typeof(UserPbiRlsContext))]
-    partial class UserPbiRlsContextModelSnapshot : ModelSnapshot
+    [Migration("20221219144207_Clientes")]
+    partial class Clientes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,8 +79,6 @@ namespace EbeddedApi.Migrations.Rls
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
-
-                    b.HasIndex("VisaoId");
 
                     b.ToTable("visoes_cliente", (string)null);
                 });
@@ -291,7 +291,7 @@ namespace EbeddedApi.Migrations.Rls
 
                     b.HasOne("EbeddedApi.Models.Vision", "Vision")
                         .WithMany()
-                        .HasForeignKey("VisaoId")
+                        .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

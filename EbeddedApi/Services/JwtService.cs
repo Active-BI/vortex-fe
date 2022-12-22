@@ -39,28 +39,23 @@ namespace EbeddedApi.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secret);
 
+            var user = _userPbiContext.UserPbiRls.AsNoTracking()
+                                            .Include(x => x.UserVisions)
+                                            .ThenInclude(us => us.Vision)
+                                            .FirstOrDefault( x=> x.Email.ToUpper() == email.ToUpper());
 
-            //TODO: Cadastrar Regra de Perfil
-
-            // var user = _userPbiContext.UserPbiRls.AsNoTracking()
-            //                                 .Include(x => x.UserVisions)
-            //                                 .ThenInclude(us => us.Vision)
-            //                                 .FirstOrDefault( x=> x.Email.ToUpper() == email.ToUpper());
-
-            // var role = _identityContext.Roles.AsNoTracking().FirstOrDefault(x => x.Id == Guid.Parse(user.Perfil));
+            var role = _identityContext.Roles.AsNoTracking().FirstOrDefault(x => x.Id == Guid.Parse(user.Perfil));
 
             var claims = new List<Claim>(){
                 new Claim(ClaimTypes.Email, email),
-                new Claim("perfil", ""),
+                new Claim("perfil", role.Name),
                 new Claim("type", "ApiToken"),
-                new Claim("firstName", "")
+                new Claim("firstName", user.Nome)
             };
-
-            // TODO: Austar configurações de visões
-
-            // user.UserVisions.ForEach(x => {
-            //     claims.Add(new Claim("visions", x.Vision.Name.ToString()));
-            // });
+            
+            user.UserVisions.ForEach(x => {
+                claims.Add(new Claim("visions", x.Vision.Name.ToString()));
+            });
 
             if(metodo == MetodoAutenticacao.ADFS) claims.Add(new Claim("auth_method","ADFS"));
             if(metodo == MetodoAutenticacao.Auth) claims.Add(new Claim("auth_method","Auth"));

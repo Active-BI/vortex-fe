@@ -1,6 +1,8 @@
 using System;
 using EbeddedApi.Models;
+using EbeddedApi.Models.Cliente;
 using EbeddedApi.Models.Menu;
+using EbeddedApi.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace EbeddedApi.Context
@@ -20,8 +22,9 @@ namespace EbeddedApi.Context
         public virtual DbSet<MenuItem> MenuItems { get; set; }
         public virtual DbSet<MenuSubItem> MenuSubItems { get; set; }
         public virtual DbSet<UserMenu> UserMenus { get; set; }
-
-
+        public virtual DbSet<Cliente> Cliente { get; set; }
+        public virtual DbSet<MenusCliente> MenusCliente { get; set; }
+        public virtual DbSet<VisoesCliente> VisoesCliente { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserPbiRls>(entity =>
@@ -43,6 +46,10 @@ namespace EbeddedApi.Context
 
                 entity.Property(e => e.Perfil)
                     .HasColumnName("Perfil")
+                    .IsRequired(false);
+                
+                entity.Property(e => e.EmailContato)
+                    .HasColumnName("email_contato")
                     .IsRequired(false);
 
                   entity.Property(e => e.DataUltimoAcesso)
@@ -169,17 +176,62 @@ namespace EbeddedApi.Context
                         .HasForeignKey(e => e.MenuItemId);
             });
 
-        // Data Seeders
+            
+            modelBuilder.Entity<MenusCliente>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("menus_cliente");
 
-        //  modelBuilder.Entity<UserPbiRls>().HasData(
-        //     new UserPbiRls() { Id = Guid.Parse("40baa252-e009-431c-85e1-d43f8bd2d684"), 
-        //                        Email = "call.thiago@gmail.com",
-        //                        Nome = "Thiago Caldas",
-        //                        Identificacao = "1053433",
-        //                        Perfil = "6a203390-8389-49ca-aa0e-6a14ba7815bc" }
+                entity.Property(e => e.MenuId)
+                    .HasColumnName("menu_id");
 
-        //     );
+                entity.Property(e => e.ClienteId)
+                    .HasColumnName("cliente_id");
 
+                entity.HasOne(e => e.MenuItem)
+                    .WithMany()
+                    .HasForeignKey(e => e.MenuId);
+
+                entity.HasOne(e => e.Cliente)
+                    .WithMany()
+                    .HasForeignKey(e => e.ClienteId);
+
+            });
+
+            modelBuilder.Entity<VisoesCliente>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("visoes_cliente");
+
+                entity.Property(e => e.VisaoId)
+                    .HasColumnName("visao_id");
+
+                entity.Property(e => e.ClienteId)
+                    .HasColumnName("cliente_id");
+
+                entity.HasOne(e => e.Cliente)
+                    .WithMany()
+                    .HasForeignKey(e => e.ClienteId);
+
+                entity.HasOne(e => e.Vision)
+                    .WithMany()
+                    .HasForeignKey(e => e.VisaoId);
+            });
+            
+            modelBuilder.Entity<Cliente>(entity =>
+            {
+                entity.HasKey(e => e.ClienteId);
+                entity.ToTable("cliente");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name");
+
+            });
+        }
+
+        public static implicit operator UserPbiRlsContext(ClienteService v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

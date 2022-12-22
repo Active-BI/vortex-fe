@@ -12,7 +12,7 @@ namespace EbeddedApi.Models.Auth
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-       
+        [Required]
         public string CaptchaResponse { get; set; }
     }
 }

@@ -58,10 +58,10 @@ namespace EbeddedApi.Services
             var user = this.IdentityContext.Users.FirstOrDefault(x => x.NormalizedEmail == email.ToUpper());
                 
                 // Verifica tentativas login
-                // if (user.AccessFailedCount >= 3){
-                //     var result = await verifyRecaptha(tokenCaptcha);
-                //     if (!result.Success) throw new LimitAttemptException();
-                // }
+                if (user.AccessFailedCount >= 3){
+                    var result = await verifyRecaptha(tokenCaptcha);
+                    if (!result.Success) throw new LimitAttemptException();
+                }
                 
                 if (await this.UserManager.CheckPasswordAsync(user, password))
                 {
@@ -69,23 +69,23 @@ namespace EbeddedApi.Services
                     await UserManager.SetLockoutEndDateAsync(user, null);
 
                     // Gera response para 2FA
-                    // var userTFA = await this.TwoFactorService.GetClientSetup(email);
+                    var userTFA = await this.TwoFactorService.GetClientSetup(email);
 
-                    // string qrCodeImageUrl = string.Empty;
-                    // string manualEntryCode = string.Empty;
+                    string qrCodeImageUrl = string.Empty;
+                    string manualEntryCode = string.Empty;
 
-                    // if (false)
-                    // {
-                    //     var setup = TwoFactorService.GenerateTotpUrl(userTFA.TFASecretKey, email);
-                    //     qrCodeImageUrl = setup.QrCodeImageUrl;
-                    //     manualEntryCode = setup.ManualEntryCode;
-                    // }
+                    if (!userTFA.TFASettedUp.Value)
+                    {
+                        var setup = TwoFactorService.GenerateTotpUrl(userTFA.TFASecretKey, email);
+                        qrCodeImageUrl = setup.QrCodeImageUrl;
+                        manualEntryCode = setup.ManualEntryCode;
+                    }
 
                     return new UserTFAResponse()
                     {
-                        token = this.JwtService.GenerateSecurityToken(email, MetodoAutenticacao.Auth),
-                        QrCodeImageUrl = "", //qrCodeImageUrl,
-                        ManualEntryCode = "" //manualEntryCode
+                        UserTempToken = this.JwtService.GenerateTempToken(email, MetodoAutenticacao.Auth),
+                        QrCodeImageUrl = qrCodeImageUrl,
+                        ManualEntryCode = manualEntryCode
                     };
                 }
                 else
@@ -103,20 +103,21 @@ namespace EbeddedApi.Services
         {
 
             // Verifica reCaptcha
-            // var result = await verifyRecaptha(request.CaptchaResponse);
+            var result = await verifyRecaptha(request.CaptchaResponse);
 
-            //if (!result.Success) throw new NotImplementedException("Erro ao validar entrada");
+            if (!result.Success) throw new NotImplementedException("Erro ao validar entrada");
 
 
             //Verifica usuário cadastrado
-            //if (!await VerificaUsuarioCadastrado(request.Email)) throw new NotImplementedException("Usuário não Autorizado");
+            if (!await VerificaUsuarioCadastrado(request.Email)) throw new NotImplementedException("Usuário não Autorizado");
 
 
-            // var containsUser = await this.IdentityContext.Users.AsNoTracking().AnyAsync(x => x.NormalizedEmail == request.Email.ToUpper());
+            var containsUser = await this.IdentityContext.Users.AsNoTracking()
+                                                               .AnyAsync(x => x.NormalizedEmail == request.Email.ToUpper());
 
 
 
-            // if (containsUser) throw new NotImplementedException("Email já cadastrado");
+            if (containsUser) throw new NotImplementedException("Email já cadastrado");
 
             User user = new User()
             {

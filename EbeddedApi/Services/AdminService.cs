@@ -5,11 +5,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using EbeddedApi.Context;
+using EbeddedApi.Controllers.Dto;
 using EbeddedApi.Models;
 using EbeddedApi.Models.Admin;
 using EbeddedApi.Models.Menu;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Npgsql;
 
 namespace EbeddedApi.Services
 {
@@ -42,6 +44,7 @@ namespace EbeddedApi.Services
                              user.Id,
                              user.Nome,
                              user.Email,
+                             user.EmailContato,
                              user.Empresa,
                              user.Identificacao,
                              Perfil = vis.Name,
@@ -52,7 +55,119 @@ namespace EbeddedApi.Services
             
             return result;
         }
+        public async Task<Vision> GetVisionsById(Guid id)
+        {
 
+            var result = await this.userPbiContext.Visions
+                                .AsNoTracking()
+                                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+        public async Task<IEnumerable> GetMenuItens(){
+            
+            var result = await this.userPbiContext.MenuItems
+                                .AsNoTracking()
+                                .OrderBy(x => x.Title)
+                                .Select(x => new { x.Id, x.Title, x.MenuSubItens} )
+                                .ToListAsync();
+            
+            return result;
+        }
+
+
+        public async Task<MenuItem> GetMenuItensById(Guid id)
+        {
+
+            var result = await this.userPbiContext.MenuItems
+                                .AsNoTracking()
+                                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+        public async Task<Vision> PutVisions(Vision vision, Guid ItemId)
+        {
+
+            var visao = new Vision()
+            {
+                Id = ItemId,
+                Name = vision.Name
+            };
+            var result = this.userPbiContext.Visions.Update(visao);
+            this.userPbiContext.SaveChanges();
+
+            return visao;
+        }
+         public async Task<Vision> AddVisions(VisionReq vision)
+        {
+            var visao = new Vision()
+            {
+                Name = vision.Name
+            };
+            var result = await this.userPbiContext.Visions.AddAsync(visao);
+            this.userPbiContext.SaveChanges();
+
+            return visao;
+        }
+         public async Task DelVisions(Guid id)
+        {
+
+            var vision = new Vision() {
+                Id = id
+            };
+            this.userPbiContext.Visions.Remove(vision);
+            this.userPbiContext.SaveChanges();
+        }
+        public async Task<MenuItem> PutMenuItens(MenuItemRequest menuItem, Guid ItemId)
+        {
+
+            var menu = new MenuItem()
+            {
+                Id = ItemId,
+                Class = menuItem.Class,
+                Context = menuItem.Context,
+                LongTitle = menuItem.LongTitle,
+                Title = menuItem.Title,
+                Icon = menuItem.Icon,
+                Path = menuItem.Path,
+            };
+            var result = this.userPbiContext.MenuItems.Update(menu);
+            this.userPbiContext.SaveChanges();
+
+            return menu;
+        }
+
+        public async Task DelMenuItem(Guid id)
+        {
+            if (this.userPbiContext.UserMenus.Any(x => x.MenuItemId == id))
+            {
+                var userMenus = this.userPbiContext.UserMenus.Where(x => x.MenuItemId == id).ToList();
+                this.userPbiContext.UserMenus.RemoveRange(userMenus);
+                this.userPbiContext.SaveChanges();
+            }
+
+            var menu = new MenuItem() {
+                Id = id
+            };
+            this.userPbiContext.MenuItems.Remove(menu);
+            this.userPbiContext.SaveChanges();
+        }
+
+        public async Task<MenuItem> AddMenuItem(MenuItemRequest menuItem)
+        {
+            var menu = new MenuItem()
+            {
+                Class = menuItem.Class,
+                Context = menuItem.Context,
+                LongTitle = menuItem.LongTitle,
+                Title = menuItem.Title,
+                Icon = menuItem.Icon
+            };
+            var result = await this.userPbiContext.MenuItems.AddAsync(menu);
+            this.userPbiContext.SaveChanges();
+
+            return menu;
+        }
         public async Task AddUserPreRegisterAsync(PreRegisterUserRequest request){
              
 
@@ -63,6 +178,7 @@ namespace EbeddedApi.Services
                     Email = request.Email,
                     Identificacao = request.Identificacao,
                     Empresa = string.Empty,
+                    EmailContato = request.EmailContato,
                     Perfil = request.Role,
                     Nome = request.Nome,
                 };
@@ -111,7 +227,8 @@ namespace EbeddedApi.Services
                 
                 userRls.Identificacao = request.Identificacao == "" ? userRls.Identificacao : request.Identificacao;
                 userRls.Nome = request.Nome == "" ? userRls.Nome : request.Nome;
-                userRls.Perfil = request.Perfil == "" ? userRls.Nome : request.Perfil;
+                userRls.Perfil = request.Perfil == "" ? userRls.Perfil : request.Perfil;
+                userRls.EmailContato = request.EmailContato == "" ? userRls.EmailContato : request.EmailContato;
 
                 userRls.UserVisions.Clear();
                 userRls.UserMenus.Clear();
@@ -182,7 +299,7 @@ namespace EbeddedApi.Services
                 // Comita transação
                 await this.userPbiContext.SaveChangesAsync();
                 transaction.Commit();
-            } catch(Exception){
+            } catch(Exception ex){
                 // Rollback na transação
                 await transaction.RollbackAsync();
                 throw new NotImplementedException("Erro ao remover usuário");
@@ -190,12 +307,5 @@ namespace EbeddedApi.Services
             
 
         }
-
-        
-
-
     }
-
-
-
 }

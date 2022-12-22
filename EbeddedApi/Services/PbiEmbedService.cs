@@ -143,14 +143,17 @@ namespace EmbeddedApi.Services
             // #####################################
 
             var listReportsRLS = new List<Guid>(){
-                new Guid("bd72d692-02c4-418f-98da-92207fbd2898"), // Gestão de Vulnerabildiades
-                new Guid("ef1438a9-6827-4989-b250-f930a4bb0585"), // Resposta aos Incidentes
-                new Guid("4ae21ee6-022a-4758-9492-268e377c7d99"), // Operações e Requisições
-                new Guid("e31fb684-7a59-424a-93d3-e1a161995278"), // Mapeamento de Dados Sensíveis
-                new Guid("b427451f-5f62-4e4a-8bac-ef2887ed3307"), // Gestão de Consentimento e Cockies
-                new Guid("e6e13286-2cc3-484e-8b6f-081e1588a5f3"), // Distribuição de Aplicações Web
-                new Guid("72cb58e2-7b6b-470f-a9c6-4fabd1036a3b"), // Detecção Resposta Em EndPoints
-                new Guid("71e611bd-b48d-4957-8778-599a3f7ecabc") // Detecção Resposta Em EndPoints
+                new Guid("bd72d692-02c4-418f-98da-92207fbd2898"), // Gestão de Vulnerabildiades - OK
+                new Guid("ef1438a9-6827-4989-b250-f930a4bb0585"), // Resposta aos Incidentes  - OK
+                new Guid("4ae21ee6-022a-4758-9492-268e377c7d99"), // Operações e Requisições - Ok
+                new Guid("e31fb684-7a59-424a-93d3-e1a161995278"), // Mapeamento de Dados Sensíveis - Ok
+                new Guid("b427451f-5f62-4e4a-8bac-ef2887ed3307"), // Gestão de Consentimento e Cockies - OK
+                new Guid("e6e13286-2cc3-484e-8b6f-081e1588a5f3"), // Distribuição de Aplicações Web - OK
+                new Guid("71e611bd-b48d-4957-8778-599a3f7ecabc"), // Detecção Resposta Em EndPoints Sentinel - OK
+                new Guid("72cb58e2-7b6b-470f-a9c6-4fabd1036a3b"), // Detecção Resposta Em EndPoints Trend - OK
+                new Guid("527b41cb-7f74-40e8-9eb8-5125bd93273c"), // Correlacionamento de Logs - OK
+                new Guid("9cdf20da-9034-4092-904b-91fb375d0842") // Prevenção Contra Vazamento de Dados (DLP) - OK
+
 
             };
 
