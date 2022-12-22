@@ -13,18 +13,18 @@ namespace EbeddedApi.Controllers
     [Authorize(Policy = "Admin")]
     public class MenuClienteController : Controller
     {
-        private readonly ClienteService clienteService;
+        private readonly MenuService menuService;
 
         public MenuClienteController(ClienteService clienteService)
         {
-            this.clienteService = clienteService;
+            this.menuService = menuService;
         }
         
 
         [HttpGet("")]
         public async Task<IActionResult> GetMenusCliente() {
             try {
-                var result = await this.clienteService.GetMenusCliente();
+                var result = await this.menuService.GetMenusCliente();
                 return Ok(result);
             } catch (Exception) {
                 return StatusCode(StatusCodes.Status400BadRequest, "Houve um erro ao obter os dados");
@@ -33,7 +33,7 @@ namespace EbeddedApi.Controllers
         [HttpGet("{menuClienteId}")]
         public async Task<IActionResult> GetMenusClienteById(Guid menuClienteId) {
             try {
-                var result = await this.clienteService.GetMenusClienteById(menuClienteId);
+                var result = await this.menuService.GetMenusClienteById(menuClienteId);
                 return Ok(result);
             } catch (Exception) {
                 return StatusCode(StatusCodes.Status400BadRequest, "Houve um erro ao obter os dados");
@@ -41,10 +41,10 @@ namespace EbeddedApi.Controllers
         }
         [HttpPost("")]
         public async Task<IActionResult> PostMenusCliente([FromBody] MenuClienteRequestDto menu) {
-            var findMenu = await this.clienteService.FindMenu(menu);
+            var findMenu = await this.menuService.FindMenu(menu);
             if (findMenu != null) return StatusCode(StatusCodes.Status400BadRequest, "Houve um erro ao salvar dados");
             try {
-                await this.clienteService.PostMenusCliente(menu);
+                await this.menuService.PostMenusCliente(menu);
                 return StatusCode(StatusCodes.Status201Created);
             } catch (Exception) {
                 return StatusCode(StatusCodes.Status400BadRequest, "Houve um erro ao salvar dados");
@@ -53,10 +53,10 @@ namespace EbeddedApi.Controllers
     
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteMenuCliente(Guid Id) {
-            var getMenuCliente = await this.clienteService.GetMenusClienteById(Id);
+            var getMenuCliente = await this.menuService.GetMenusClienteById(Id);
             if (getMenuCliente == null) return NotFound("menu-cliente não existe");
             try {
-                await this.clienteService.DeleteMenusCliente(Id);
+                await this.menuService.DeleteMenusCliente(Id);
                 return StatusCode(StatusCodes.Status204NoContent);
             } catch (Exception) {
                 return StatusCode(StatusCodes.Status400BadRequest, "Houve um erro ao obter os dados");

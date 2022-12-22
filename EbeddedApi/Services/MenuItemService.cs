@@ -1,33 +1,26 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using EbeddedApi.Context;
 using EbeddedApi.Controllers.Dto;
-using EbeddedApi.Models;
-using EbeddedApi.Models.Admin;
 using EbeddedApi.Models.Menu;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Npgsql;
 
 namespace EbeddedApi.Services
 {
     public class MenuItemService
     {
          private readonly ILogger<MenuItemService> _logger;
-        private readonly UserPbiRlsContext userPbiContext;
         private readonly IdentityContext identityContext;
         private readonly MenuItemContext MenuItemContext;
 
+
         public MenuItemService(ILogger<MenuItemService> logger,
-                               UserPbiRlsContext userPbiContext,
                                IdentityContext identityContext)
         {
             _logger = logger;
-            this.userPbiContext = userPbiContext;
             this.identityContext = identityContext;
         }
 
@@ -74,11 +67,11 @@ namespace EbeddedApi.Services
 
         public async Task DelMenuItem(Guid id)
         {
-            if (this.userPbiContext.UserMenus.Any(x => x.MenuItemId == id))
+            if (this.MenuItemContext.UserMenus.Any(x => x.MenuItemId == id))
             {
-                var userMenus = this.userPbiContext.UserMenus.Where(x => x.MenuItemId == id).ToList();
-                this.userPbiContext.UserMenus.RemoveRange(userMenus);
-                this.userPbiContext.SaveChanges();
+                var userMenus = this.MenuItemContext.UserMenus.Where(x => x.MenuItemId == id).ToList();
+                this.MenuItemContext.UserMenus.RemoveRange(userMenus);
+                this.MenuItemContext.SaveChanges();
             }
 
             var menu = new MenuItem() {

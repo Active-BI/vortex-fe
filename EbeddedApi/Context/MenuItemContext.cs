@@ -1,4 +1,5 @@
 using EbeddedApi.Models;
+using EbeddedApi.Models.Cliente;
 using EbeddedApi.Models.Menu;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,8 @@ namespace EbeddedApi.Context
         public virtual DbSet<UserPbiRls> UserPbiRls { get; set; }
         public virtual DbSet<MenuItem> MenuItems { get; set; }
         public virtual DbSet<MenuSubItem> MenuSubItems { get; set; }
-
+        public virtual DbSet<UserMenu> UserMenus { get; set; }
+        public virtual DbSet<MenusCliente> MenusCliente { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -83,6 +85,48 @@ namespace EbeddedApi.Context
                 
               
             });
+
+            modelBuilder.Entity<UserMenu>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("user_menu");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id");
+
+                entity.Property(e => e.UserPbiRelsId)
+                    .HasColumnName("user_pbi_rels_id");
+
+                entity.Property(e => e.MenuItemId)
+                    .HasColumnName("menu_item_id");
+                
+                entity.HasOne(e => e.Menu)
+                        .WithMany()
+                        .HasForeignKey(e => e.MenuItemId);
+            });
+
+            
+            modelBuilder.Entity<MenusCliente>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("menus_cliente");
+
+                entity.Property(e => e.MenuId)
+                    .HasColumnName("menu_id");
+
+                entity.Property(e => e.ClienteId)
+                    .HasColumnName("cliente_id");
+
+                entity.HasOne(e => e.MenuItem)
+                    .WithMany()
+                    .HasForeignKey(e => e.MenuId);
+
+                entity.HasOne(e => e.Cliente)
+                    .WithMany()
+                    .HasForeignKey(e => e.ClienteId);
+
+            });
+            
         }
     }
 }

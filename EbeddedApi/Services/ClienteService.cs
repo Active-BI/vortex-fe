@@ -62,43 +62,5 @@ namespace EbeddedApi.Services
             this.userPbiContext.SaveChanges();
         }
 
-        //////////////////////////////////////////////////////////////////////
-
-        public async Task<IEnumerable> GetMenusCliente() {
-            var result = this.userPbiContext.MenusCliente
-                            .AsNoTracking()
-                            .ToList();
-            return result;
-        }
-        public async Task<MenusCliente> GetMenusClienteById(Guid menuClienteId) {
-            var result = this.userPbiContext.MenusCliente
-                            .AsNoTracking()
-                            .FirstOrDefault(x => x.Id == menuClienteId);
-            return result;
-        }
-        public async Task<MenusCliente> FindMenu(MenuClienteRequestDto menu) {
-            var result = this.userPbiContext.MenusCliente
-                            .AsNoTracking()
-                            .FirstOrDefault(x => x.ClienteId == menu.ClienteId && x.MenuId == menu.MenuId);
-            return result;
-        }
-        public async Task PostMenusCliente(MenuClienteRequestDto menu) {
-            var newMenu = new MenusCliente(){
-                ClienteId = menu.ClienteId,
-                MenuId = menu.MenuId
-            };
-
-            await this.userPbiContext.MenusCliente.AddAsync(newMenu);
-            this.userPbiContext.SaveChanges();
-        }
-
-        public async Task DeleteMenusCliente(Guid menusClienteId) {
-            var newMenuCliente = new MenusCliente(){
-                Id = menusClienteId
-            };
-            var result = this.userPbiContext.MenusCliente
-                            .Remove(newMenuCliente);
-            this.userPbiContext.SaveChanges();
-        }
     }
 }

@@ -138,14 +138,14 @@ namespace EbeddedApi.Services
                 // Inclui Menus do usuário
                  await menuItemContext.MenuItems.ForEachAsync(x => {
                                                             if (request.Menus.Contains(x.Title))
-                                                            userPbiContext.UserMenus.Add(
+                                                            menuItemContext.UserMenus.Add(
                                                             new UserMenu(){
                                                                 UserPbiRelsId = userRls.Id,
                                                                 MenuItemId = x.Id
                                                             } 
                                                             );});
                                                             
-            userPbiContext.SaveChanges();
+            menuItemContext.SaveChanges();
         }
 
         public async Task DeleteUser(string userId, ClaimsPrincipal userRequest){
@@ -175,13 +175,13 @@ namespace EbeddedApi.Services
 
                 
                 // Elimina menus
-                var userMenus = this.userPbiContext.UserMenus
+                var userMenus = this.menuItemContext.UserMenus
                                         .Where(x => x.UserPbiRelsId == Guid.Parse(userId))
                                         .AsNoTracking()
                                         .ToList();
 
                  if(userMenus.Any())
-                    this.userPbiContext.UserMenus.RemoveRange(userMenus);
+                    this.menuItemContext.UserMenus.RemoveRange(userMenus);
 
                 // Elimina Usuário
                 UserPbiRls user = new UserPbiRls(){ Id = userGUID };
@@ -189,6 +189,7 @@ namespace EbeddedApi.Services
 
                 // Comita transação
                 await this.userPbiContext.SaveChangesAsync();
+                await this.menuItemContext.SaveChangesAsync();
                 transaction.Commit();
             } catch(Exception ex){
                 // Rollback na transação
