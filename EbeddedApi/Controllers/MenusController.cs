@@ -12,11 +12,11 @@ namespace EbeddedApi.Controllers
     [Authorize(Policy = "Admin")]
     public class MenuItemsController : Controller
     {
-        private readonly AdminService adminService;
+        private readonly MenuItemService menuItemService;
 
-        public MenuItemsController(AdminService adminService)
+        public MenuItemsController(MenuItemService menuItemService)
         {
-            this.adminService = adminService;
+            this.menuItemService = menuItemService;
         }
         
 
@@ -26,7 +26,7 @@ namespace EbeddedApi.Controllers
             
            try {
 
-                var result = await this.adminService.GetMenuItens();
+                var result = await this.menuItemService.GetMenuItens();
                
                 return Ok(result);
 
@@ -41,7 +41,7 @@ namespace EbeddedApi.Controllers
         public async Task<IActionResult> GetMenuItensById(Guid id){
            try {
 
-                var result = await this.adminService.GetMenuItensById(id);
+                var result = await this.menuItemService.GetMenuItensById(id);
                
                 return Ok(result);
 
@@ -59,7 +59,7 @@ namespace EbeddedApi.Controllers
             if (getMenuItem == null) return NotFound("Menu de Acesso não existe");
 
            try {
-                var result = this.adminService.PutMenuItens(menuItem, Id);
+                var result = this.menuItemService.PutMenuItens(menuItem, Id);
                 return Ok(result);
             }
             catch(Exception){
@@ -70,7 +70,7 @@ namespace EbeddedApi.Controllers
         [HttpPost("")]
         public async Task<IActionResult> AddMenuItem([FromBody] MenuItemRequest menuItem){
             try {
-                var resultMenu = await this.adminService.AddMenuItem(menuItem);
+                var resultMenu = await this.menuItemService.AddMenuItem(menuItem);
                 return StatusCode(StatusCodes.Status201Created, resultMenu);
             }
             catch(Exception){
@@ -80,10 +80,10 @@ namespace EbeddedApi.Controllers
         }
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DelMenuItens(Guid Id){
-            var menuItem = await this.adminService.GetMenuItensById(Id);
+            var menuItem = await this.menuItemService.GetMenuItensById(Id);
             if (menuItem == null) return NotFound("Menu de Acesso não existe");
             try {
-                var result = this.adminService.DelMenuItem(Id);
+                var result = this.menuItemService.DelMenuItem(Id);
                 return Ok(result);
             }
             catch(Exception){

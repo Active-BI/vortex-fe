@@ -41,6 +41,8 @@ namespace EmbeddedApi
         {
 
              services.AddDbContext<UserPbiRlsContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")));
+             services.AddDbContext<VisionContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")));
+             services.AddDbContext<MenuItemContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")));
 
              services.AddDbContext<IdentityContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")));
              services.AddDbContext<UserTFAContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")));
@@ -97,7 +99,11 @@ namespace EmbeddedApi
                     .AddScoped(typeof(JwtService))
                     .AddScoped(typeof(UsersService))
                     .AddScoped(typeof(AuthService))
-                    .AddScoped(typeof(AdminService));
+                    .AddScoped(typeof(AdminService))
+                    .AddScoped(typeof(VisionService))
+                    .AddScoped(typeof(MenuItemService))
+                    .AddScoped(typeof(VisoesClienteService))
+                    .AddScoped(typeof(ClienteService));
 
      
             // Loading appsettings.json in C# Model classes

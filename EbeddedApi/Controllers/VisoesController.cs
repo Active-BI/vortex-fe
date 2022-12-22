@@ -16,12 +16,13 @@ namespace EbeddedApi.Controllers
     [Authorize(Policy = "Admin")]
     public class VisoesController : Controller
     {
-        private readonly AdminService adminService;
-        private readonly UserPbiRlsContext userPbiContext;
+        private readonly VisionContext visionContext;
+        private readonly VisionService visionService;
 
-        public VisoesController(AdminService adminService)
+        public VisoesController(VisionContext visionContext, VisionService visionService)
         {
-            this.adminService = adminService;
+            this.visionContext = visionContext;
+            this.visionService = visionService;
         }
         
 
@@ -33,7 +34,7 @@ namespace EbeddedApi.Controllers
             try{
 
                 // userVisions para o usuário
-                var usrVisions = await userPbiContext.Visions.AsNoTracking().OrderBy(x => x.Name).ToListAsync();
+                var usrVisions = await visionContext.Visions.AsNoTracking().OrderBy(x => x.Name).ToListAsync();
                 return Ok(usrVisions);
 
             } catch(Exception)
@@ -46,7 +47,7 @@ namespace EbeddedApi.Controllers
         public async Task<IActionResult> GetVisionsById(Guid id){
            try {
 
-                var result = await this.adminService.GetVisionsById(id);
+                var result = await this.visionService.GetVisionsById(id);
                
                 return Ok(result);
 
@@ -63,7 +64,7 @@ namespace EbeddedApi.Controllers
             if (getVision == null) return NotFound("Visão existe");
 
            try {
-                var result = this.adminService.PutVisions(vision, Id);
+                var result = this.visionService.PutVisions(vision, Id);
                 return Ok(result);
             }
             catch(Exception){
@@ -74,7 +75,7 @@ namespace EbeddedApi.Controllers
         [HttpPost("visions")]
         public async Task<IActionResult> AddVisions([FromBody] VisionReq vision){
             try {
-                var newVision = await this.adminService.AddVisions(vision);
+                var newVision = await this.visionService.AddVisions(vision);
                 return StatusCode(StatusCodes.Status201Created, newVision);
             }
             catch(Exception){
@@ -84,10 +85,10 @@ namespace EbeddedApi.Controllers
         }
         [HttpDelete("visions/{Id}")]
         public async Task<IActionResult> DelVisions(Guid Id){
-            var getVision = await this.adminService.GetVisionsById(Id);
+            var getVision = await this.visionService.GetVisionsById(Id);
             if (getVision == null) return NotFound("Menu de Acesso não existe");
             try {
-                var result = this.adminService.DelVisions(Id);
+                var result = this.visionService.DelVisions(Id);
                 return Ok(result);
             }
             catch(Exception){

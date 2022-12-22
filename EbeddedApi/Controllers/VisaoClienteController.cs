@@ -13,11 +13,11 @@ namespace EbeddedApi.Controllers
     [Authorize(Policy = "Admin")]
     public class VisaoClienteController : Controller
     {
-        private readonly ClienteService clienteService;
+        private readonly VisoesClienteService visoesClienteService;
 
-        public VisaoClienteController(ClienteService clienteService)
+        public VisaoClienteController(VisoesClienteService visoesClienteService)
         {
-            this.clienteService = clienteService;
+            this.visoesClienteService = visoesClienteService;
         }
         
 
@@ -26,7 +26,7 @@ namespace EbeddedApi.Controllers
         [HttpGet("")]
         public async Task<IActionResult> GetVisoesCliente() {
             try {
-                var result = await this.clienteService.GetVisoesCliente();
+                var result = await this.visoesClienteService.GetVisoesCliente();
                 return Ok(result);
             } catch (Exception) {
                 return StatusCode(StatusCodes.Status400BadRequest, "Houve um erro ao obter os dados");
@@ -35,7 +35,7 @@ namespace EbeddedApi.Controllers
         [HttpGet("{visaoClienteId}")]
         public async Task<IActionResult> GetVisoesClienteById(Guid visaoClienteId) {
             try {
-                var result = await this.clienteService.GetVisoesClienteById(visaoClienteId);
+                var result = await this.visoesClienteService.GetVisoesClienteById(visaoClienteId);
                 return Ok(result);
             } catch (Exception) {
                 return StatusCode(StatusCodes.Status400BadRequest, "Houve um erro ao obter os dados");
@@ -43,10 +43,10 @@ namespace EbeddedApi.Controllers
         }
         [HttpPost("")]
         public async Task<IActionResult> PostVisaoCliente([FromBody] VisaoClienteRequestDto visao) {
-            var findVisao = await this.clienteService.FindVisao(visao);
+            var findVisao = await this.visoesClienteService.FindVisao(visao);
             if (findVisao != null) return StatusCode(StatusCodes.Status400BadRequest, "Houve um erro ao salvar dados");
             try {
-                await this.clienteService.PostVisoesCliente(visao);
+                await this.visoesClienteService.PostVisoesCliente(visao);
                 return StatusCode(StatusCodes.Status201Created);
             } catch (Exception) {
                 return StatusCode(StatusCodes.Status400BadRequest, "Houve um erro ao salvar dados");
@@ -55,10 +55,10 @@ namespace EbeddedApi.Controllers
     
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteVisaoCliente(Guid Id) {
-            var getVisaoCliente = await this.clienteService.GetVisoesClienteById(Id);
+            var getVisaoCliente = await this.visoesClienteService.GetVisoesClienteById(Id);
             if (getVisaoCliente == null) return NotFound("visão-cliente não existe");
             try {
-                await this.clienteService.DeleteVisoesCliente(Id);
+                await this.visoesClienteService.DeleteVisoesCliente(Id);
                 return StatusCode(StatusCodes.Status204NoContent);
             } catch (Exception) {
                 return StatusCode(StatusCodes.Status400BadRequest, "Houve um erro ao obter os dados");
