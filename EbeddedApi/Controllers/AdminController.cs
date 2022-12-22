@@ -170,13 +170,11 @@ namespace EbeddedApi.Controllers
                     x.Menu.Class,
                     x.Menu.Context,
                     x.Menu.MenuSubItens
-
                 });
-               
                 return Ok(result);
 
             }
-            catch(Exception){
+            catch(Exception e){
                 return StatusCode(StatusCodes.Status400BadRequest, "Houve um erro ao processar essa informação");
             }
 

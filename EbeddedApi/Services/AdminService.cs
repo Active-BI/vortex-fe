@@ -17,20 +17,15 @@ namespace EbeddedApi.Services
     {
          private readonly ILogger<AdminService> _logger;
         private readonly UserPbiRlsContext userPbiContext;
-        private readonly MenuItemContext menuItemContext;
-        private readonly VisionContext visionContext;
         private readonly IdentityContext identityContext;
 
         public AdminService(ILogger<AdminService> logger,
                                UserPbiRlsContext userPbiContext,
-                               VisionContext visionContext,
                                IdentityContext identityContext)
         {
             _logger = logger;
             this.userPbiContext = userPbiContext;
-            this.userPbiContext = userPbiContext;
             this.identityContext = identityContext;
-            this.visionContext = visionContext;
         }
 
         public async Task<IEnumerable> GetUsers(){
@@ -75,7 +70,7 @@ namespace EbeddedApi.Services
                 };
 
                 // Adicionando Visões
-                var Visions = await visionContext.Visions.Where(x => request.Visions.Contains(x.Name)).ToListAsync();
+                var Visions = await userPbiContext.Visions.Where(x => request.Visions.Contains(x.Name)).ToListAsync();
                 var userVisions = new List<UserVisions>();
                 Visions.ForEach(
                     x =>{
@@ -91,7 +86,7 @@ namespace EbeddedApi.Services
                 var menuUsuario = request.Menus.Select(x => Guid.Parse(x)).ToList();
 
                 // Adicionando Menus
-                var Menus = await menuItemContext.MenuItems.Where(x => menuUsuario.Contains(x.Id)).ToListAsync();
+                var Menus = await userPbiContext.MenuItems.Where(x => menuUsuario.Contains(x.Id)).ToListAsync();
                 var userMenus = new List<UserMenu>();
                 Menus.ForEach(
                     x =>{
@@ -125,9 +120,9 @@ namespace EbeddedApi.Services
                 userRls.UserMenus.Clear();
 
                 // Inclui visões do usuário
-                await visionContext.Visions.ForEachAsync(x => {
+                await userPbiContext.Visions.ForEachAsync(x => {
                                                             if (request.Visions.Contains(x.Name))
-                                                            visionContext.UserVisions.Add(
+                                                            userPbiContext.UserVisions.Add(
                                                             new UserVisions(){
                                                                 UserId = userRls.Id,
                                                                 VisionId = x.Id
@@ -136,16 +131,16 @@ namespace EbeddedApi.Services
 
 
                 // Inclui Menus do usuário
-                 await menuItemContext.MenuItems.ForEachAsync(x => {
+                 await userPbiContext.MenuItems.ForEachAsync(x => {
                                                             if (request.Menus.Contains(x.Title))
-                                                            menuItemContext.UserMenus.Add(
+                                                            userPbiContext.UserMenus.Add(
                                                             new UserMenu(){
                                                                 UserPbiRelsId = userRls.Id,
                                                                 MenuItemId = x.Id
                                                             } 
                                                             );});
                                                             
-            menuItemContext.SaveChanges();
+            userPbiContext.SaveChanges();
         }
 
         public async Task DeleteUser(string userId, ClaimsPrincipal userRequest){
@@ -165,23 +160,23 @@ namespace EbeddedApi.Services
                    throw new NotImplementedException();
 
                 // Elimina Visoes do usuário
-                var UserVisions = this.visionContext.UserVisions
+                var UserVisions = this.userPbiContext.UserVisions
                                         .Where(x => x.UserId == Guid.Parse(userId))
                                         .AsNoTracking()
                                         .ToList();
 
                  if(UserVisions.Any())
-                    this.visionContext.UserVisions.RemoveRange(UserVisions);
+                    this.userPbiContext.UserVisions.RemoveRange(UserVisions);
 
                 
                 // Elimina menus
-                var userMenus = this.menuItemContext.UserMenus
+                var userMenus = this.userPbiContext.UserMenus
                                         .Where(x => x.UserPbiRelsId == Guid.Parse(userId))
                                         .AsNoTracking()
                                         .ToList();
 
                  if(userMenus.Any())
-                    this.menuItemContext.UserMenus.RemoveRange(userMenus);
+                    this.userPbiContext.UserMenus.RemoveRange(userMenus);
 
                 // Elimina Usuário
                 UserPbiRls user = new UserPbiRls(){ Id = userGUID };
@@ -189,7 +184,7 @@ namespace EbeddedApi.Services
 
                 // Comita transação
                 await this.userPbiContext.SaveChangesAsync();
-                await this.menuItemContext.SaveChangesAsync();
+                await this.userPbiContext.SaveChangesAsync();
                 transaction.Commit();
             } catch(Exception ex){
                 // Rollback na transação

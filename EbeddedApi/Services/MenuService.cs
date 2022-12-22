@@ -12,28 +12,28 @@ namespace EbeddedApi.Services
     public class MenuService
     {
         private readonly IdentityContext identityContext;
-        private readonly MenuItemContext menuItemContext;
+        private readonly UserPbiRlsContext userPbiRlsContext;
         public MenuService(
-            MenuItemContext menuItemContext,
+            UserPbiRlsContext userPbiRlsContext,
             IdentityContext identityContext)
         {
-            this.menuItemContext = menuItemContext;
+            this.userPbiRlsContext = userPbiRlsContext;
         }
 
         public async Task<IEnumerable> GetMenusCliente() {
-            var result = this.menuItemContext.MenusCliente
+            var result = this.userPbiRlsContext.MenusCliente
                             .AsNoTracking()
                             .ToList();
             return result;
         }
         public async Task<MenusCliente> GetMenusClienteById(Guid menuClienteId) {
-            var result = this.menuItemContext.MenusCliente
+            var result = this.userPbiRlsContext.MenusCliente
                             .AsNoTracking()
                             .FirstOrDefault(x => x.Id == menuClienteId);
             return result;
         }
         public async Task<MenusCliente> FindMenu(MenuClienteRequestDto menu) {
-            var result = this.menuItemContext.MenusCliente
+            var result = this.userPbiRlsContext.MenusCliente
                             .AsNoTracking()
                             .FirstOrDefault(x => x.ClienteId == menu.ClienteId && x.MenuId == menu.MenuId);
             return result;
@@ -44,17 +44,17 @@ namespace EbeddedApi.Services
                 MenuId = menu.MenuId
             };
 
-            await this.menuItemContext.MenusCliente.AddAsync(newMenu);
-            this.menuItemContext.SaveChanges();
+            await this.userPbiRlsContext.MenusCliente.AddAsync(newMenu);
+            this.userPbiRlsContext.SaveChanges();
         }
 
         public async Task DeleteMenusCliente(Guid menusClienteId) {
             var newMenuCliente = new MenusCliente(){
                 Id = menusClienteId
             };
-            var result = this.menuItemContext.MenusCliente
+            var result = this.userPbiRlsContext.MenusCliente
                             .Remove(newMenuCliente);
-            this.menuItemContext.SaveChanges();
+            this.userPbiRlsContext.SaveChanges();
         }
     }
 }

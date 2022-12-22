@@ -39,11 +39,7 @@ namespace EmbeddedApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-
              services.AddDbContext<UserPbiRlsContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")));
-             services.AddDbContext<VisionContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")));
-             services.AddDbContext<MenuItemContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")));
-
              services.AddDbContext<IdentityContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")));
              services.AddDbContext<UserTFAContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")));
 

@@ -11,20 +11,20 @@ namespace EbeddedApi.Services
     public class VisionService
     {
          private readonly ILogger<VisionService> _logger;
-        private readonly VisionContext visionContext;
+        private readonly UserPbiRlsContext userPbiRlsContext;
 
         public VisionService(ILogger<VisionService> logger,
-                               VisionContext visionContext,
-                               IdentityContext identityContext)
+                                UserPbiRlsContext userPbiRlsContext,
+                                IdentityContext identityContext)
         {
             _logger = logger;
-            this.visionContext = visionContext;
+            this.userPbiRlsContext = userPbiRlsContext;
         }
 
         public async Task<Vision> GetVisionsById(Guid id)
         {
 
-            var result = await this.visionContext.Visions
+            var result = await this.userPbiRlsContext.Visions
                                 .AsNoTracking()
                                 .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -39,8 +39,8 @@ namespace EbeddedApi.Services
                 Id = ItemId,
                 Name = vision.Name
             };
-            var result = this.visionContext.Visions.Update(visao);
-            this.visionContext.SaveChanges();
+            var result = this.userPbiRlsContext.Visions.Update(visao);
+            this.userPbiRlsContext.SaveChanges();
 
             return visao;
         }
@@ -50,8 +50,8 @@ namespace EbeddedApi.Services
             {
                 Name = vision.Name
             };
-            var result = await this.visionContext.Visions.AddAsync(visao);
-            this.visionContext.SaveChanges();
+            var result = await this.userPbiRlsContext.Visions.AddAsync(visao);
+            this.userPbiRlsContext.SaveChanges();
 
             return visao;
         }
@@ -61,8 +61,8 @@ namespace EbeddedApi.Services
             var vision = new Vision() {
                 Id = id
             };
-            this.visionContext.Visions.Remove(vision);
-            this.visionContext.SaveChanges();
+            this.userPbiRlsContext.Visions.Remove(vision);
+            this.userPbiRlsContext.SaveChanges();
         }
 
     }

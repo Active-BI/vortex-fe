@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
 import { ToastrService } from 'ngx-toastr';
+import { AdminService } from 'app/modules/services/admin.service';
 
 export interface PeriodicElement {
   matricula: string;
@@ -31,6 +32,7 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private usuariosService: UsuariosService,
+    private adminService: AdminService,
     public dialog: MatDialog,
     private toastr: ToastrService,
   ) {
@@ -41,6 +43,7 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
+    this.adminService.getMenuContext().subscribe((e) => console.log(e))
     this.requisicoes()
   }
   requisicoes() {

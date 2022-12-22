@@ -14,19 +14,21 @@ namespace EbeddedApi.Services
     {
          private readonly ILogger<MenuItemService> _logger;
         private readonly IdentityContext identityContext;
-        private readonly MenuItemContext MenuItemContext;
+        private readonly UserPbiRlsContext userPbiContext;
 
 
         public MenuItemService(ILogger<MenuItemService> logger,
+                                  UserPbiRlsContext userPbiContext,
                                IdentityContext identityContext)
         {
             _logger = logger;
             this.identityContext = identityContext;
+            this.userPbiContext = userPbiContext;
         }
 
         public async Task<IEnumerable> GetMenuItens(){
             
-            var result = await this.MenuItemContext.MenuItems
+            var result = await this.userPbiContext.MenuItems
                                 .AsNoTracking()
                                 .OrderBy(x => x.Title)
                                 .Select(x => new { x.Id, x.Title, x.MenuSubItens} )
@@ -39,7 +41,7 @@ namespace EbeddedApi.Services
         public async Task<MenuItem> GetMenuItensById(Guid id)
         {
 
-            var result = await this.MenuItemContext.MenuItems
+            var result = await this.userPbiContext.MenuItems
                                 .AsNoTracking()
                                 .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -59,26 +61,26 @@ namespace EbeddedApi.Services
                 Icon = menuItem.Icon,
                 Path = menuItem.Path,
             };
-            var result = this.MenuItemContext.MenuItems.Update(menu);
-            this.MenuItemContext.SaveChanges();
+            var result = this.userPbiContext.MenuItems.Update(menu);
+            this.userPbiContext.SaveChanges();
 
             return menu;
         }
 
         public async Task DelMenuItem(Guid id)
         {
-            if (this.MenuItemContext.UserMenus.Any(x => x.MenuItemId == id))
+            if (this.userPbiContext.UserMenus.Any(x => x.MenuItemId == id))
             {
-                var userMenus = this.MenuItemContext.UserMenus.Where(x => x.MenuItemId == id).ToList();
-                this.MenuItemContext.UserMenus.RemoveRange(userMenus);
-                this.MenuItemContext.SaveChanges();
+                var userMenus = this.userPbiContext.UserMenus.Where(x => x.MenuItemId == id).ToList();
+                this.userPbiContext.UserMenus.RemoveRange(userMenus);
+                this.userPbiContext.SaveChanges();
             }
 
             var menu = new MenuItem() {
                 Id = id
             };
-            this.MenuItemContext.MenuItems.Remove(menu);
-            this.MenuItemContext.SaveChanges();
+            this.userPbiContext.MenuItems.Remove(menu);
+            this.userPbiContext.SaveChanges();
         }
 
         public async Task<MenuItem> AddMenuItem(MenuItemRequest menuItem)
@@ -91,8 +93,8 @@ namespace EbeddedApi.Services
                 Title = menuItem.Title,
                 Icon = menuItem.Icon
             };
-            var result = await this.MenuItemContext.MenuItems.AddAsync(menu);
-            this.MenuItemContext.SaveChanges();
+            var result = await this.userPbiContext.MenuItems.AddAsync(menu);
+            this.userPbiContext.SaveChanges();
 
             return menu;
         }

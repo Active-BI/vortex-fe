@@ -16,12 +16,11 @@ namespace EbeddedApi.Controllers
     [Authorize(Policy = "Admin")]
     public class VisoesController : Controller
     {
-        private readonly VisionContext visionContext;
         private readonly VisionService visionService;
+        private readonly UserPbiRlsContext userPbiRlsContext;
 
-        public VisoesController(VisionContext visionContext, VisionService visionService)
+        public VisoesController(VisionService visionService)
         {
-            this.visionContext = visionContext;
             this.visionService = visionService;
         }
         
@@ -34,7 +33,7 @@ namespace EbeddedApi.Controllers
             try{
 
                 // userVisions para o usuário
-                var usrVisions = await visionContext.Visions.AsNoTracking().OrderBy(x => x.Name).ToListAsync();
+                var usrVisions = await userPbiRlsContext.Visions.AsNoTracking().OrderBy(x => x.Name).ToListAsync();
                 return Ok(usrVisions);
 
             } catch(Exception)

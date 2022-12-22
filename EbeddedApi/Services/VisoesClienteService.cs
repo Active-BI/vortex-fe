@@ -11,27 +11,27 @@ namespace EbeddedApi.Services
 {
     public class VisoesClienteService
     {
-        private readonly VisionContext visionContext;
+        private readonly UserPbiRlsContext userPbiRlsContext;
         public VisoesClienteService(
-            VisionContext visionContext)
+            UserPbiRlsContext userPbiRlsContext)
         {
-            this.visionContext = visionContext;
+            this.userPbiRlsContext = userPbiRlsContext;
         }
 
         public async Task<IEnumerable> GetVisoesCliente() {
-            var result = this.visionContext.VisoesCliente
+            var result = this.userPbiRlsContext.VisoesCliente
                             .AsNoTracking()
                             .ToList();
             return result;
         }
         public async Task<VisoesCliente> GetVisoesClienteById(Guid visaoClienteId) {
-            var result = this.visionContext.VisoesCliente
+            var result = this.userPbiRlsContext.VisoesCliente
                             .AsNoTracking()
                             .FirstOrDefault(x => x.Id == visaoClienteId);
             return result;
         }
         public async Task<VisoesCliente> FindVisao(VisaoClienteRequestDto visao) {
-            var result = this.visionContext.VisoesCliente
+            var result = this.userPbiRlsContext.VisoesCliente
                             .AsNoTracking()
                             .FirstOrDefault(x => x.ClienteId == visao.ClienteId && x.VisaoId == visao.VisaoId);
             return result;
@@ -42,17 +42,17 @@ namespace EbeddedApi.Services
                 VisaoId = visao.VisaoId
             };
 
-            await this.visionContext.VisoesCliente.AddAsync(newVision);
-            this.visionContext.SaveChanges();
+            await this.userPbiRlsContext.VisoesCliente.AddAsync(newVision);
+            this.userPbiRlsContext.SaveChanges();
         }
 
         public async Task DeleteVisoesCliente(Guid visoesClienteId) {
             var newVisoesCliente = new VisoesCliente(){
                 Id = visoesClienteId
             };
-            var result = this.visionContext.VisoesCliente
+            var result = this.userPbiRlsContext.VisoesCliente
                             .Remove(newVisoesCliente);
-            this.visionContext.SaveChanges();
+            this.userPbiRlsContext.SaveChanges();
         }
     }
 };
