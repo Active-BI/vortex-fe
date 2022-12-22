@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EbeddedApi.Context;
+using EbeddedApi.Controllers.Dto;
 using EbeddedApi.Models;
 using EbeddedApi.Models.Admin;
 using EbeddedApi.Models.Auth;
@@ -64,22 +65,6 @@ namespace EbeddedApi.Controllers
             
             return result != null ? Ok(result) : StatusCode(StatusCodes.Status422UnprocessableEntity,null);
 
-        }
-
-        [HttpGet("visions")]
-        public async Task<IActionResult> GetVisions(){
-
-            try{
-
-                // userVisions para o usuário
-                var usrVisions = await userPbiContext.Visions.AsNoTracking().OrderBy(x => x.Name).ToListAsync();
-                return Ok(usrVisions);
-
-            } catch(Exception)
-            {
-                return StatusCode(StatusCodes.Status422UnprocessableEntity, "Erro ao obter visões.");
-            }
-            
         }
 
         [HttpPost("roles")]
@@ -196,23 +181,5 @@ namespace EbeddedApi.Controllers
             }
 
         }
-
-
-        [HttpGet("menuitens")]
-        public async Task<IActionResult> GetMenuItens(){
-            
-           try {
-
-                var result = await this.userPbiContext.MenuItems.AsNoTracking().Select(x => new { x.Id, x.Title} ).ToListAsync();
-               
-                return Ok(result);
-
-            }
-            catch(Exception){
-                return StatusCode(StatusCodes.Status400BadRequest, "Houve um erro ao processar essa informação");
-            }
-
-        }
-
     }
 }
