@@ -62,7 +62,7 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
                     layoutType: 2,
                     background:1,
             };
-            this.report.updateSettings(this.settings);
+            // this.report.updateSettings(this.settings);x
           } else {
             this.embeddedSrv.changeHandSetStatus('desktop');
             this.settings = {
@@ -70,7 +70,8 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
                     layoutType: 0,
                     background:0,
             };
-            this.report.updateSettings(this.settings);
+            // console.log(this.report)
+            // this.report.updateSettings(this.settings);
           }
         });
 
@@ -99,7 +100,6 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
     //    );
     }
     ngAfterViewInit(): void {
-        console.log(this.reportObj);
         // this.report = this.reportObj.getReport();
     }
 
@@ -111,7 +111,6 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
             this.groupId,
             this.reportId
         ).subscribe((res) => {
-                console.log(settings);
                 this.token = res.EmbedToken;
                 this.config = {
                     type: 'report',

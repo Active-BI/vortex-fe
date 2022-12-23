@@ -44,7 +44,6 @@ export class ConsultoresComponent extends PaginaSimples implements OnInit {
     }
 
     deletar(id: string): void {
-        console.log(id);
         this.dialog.open(DeleteModalComponent, {
             data: () =>
                 this.consultoresService

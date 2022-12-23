@@ -68,7 +68,6 @@ export class ImportacaoComponent {
         reader.readAsArrayBuffer(e.target.files[0]);
     };
     changePage(event: PageEvent): void {
-        console.log('i\'m called');
         this.paginator.pageIndex = event.pageIndex;
     }
     confirmar(): void {

@@ -49,7 +49,6 @@ export class EditUserComponent implements OnInit {
       area: user.area,
       visoes: user.visoes
     })
-    console.log(this.visoesFormArray.value)
   }
 
   get visoesFormArray() {

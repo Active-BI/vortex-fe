@@ -42,12 +42,10 @@ export class EmpresasComponent extends PaginaSimples implements OnInit {
         this.empresasService.getEmpresas().subscribe((res) => {
             this.empresas = new MatTableDataSource(res.data);
             this.empresas.paginator = this.paginator;
-            console.log(this.empresas);
         });
     }
 
     deletar(id: string): void {
-        console.log(id);
         this.dialog.open(DeleteModalComponent, {
             data: () =>
                 this.empresasService.deletarEmpresas(id).subscribe((res) => {
@@ -106,8 +104,6 @@ export class DialogoCriacaoEmpresasComponent extends Dialog {
       });
 
     onSubmit(): void {
-        console.log(this.form, 'is invalid');
-
         if (!this.form.invalid) {
             this.empresasService.postEmpresas(this.form.value).subscribe((res) => {
               window.location.reload();
@@ -149,7 +145,6 @@ export class DialogoEdicaoEmpresasComponent
     }
 
     override onSubmit(): void {
-        console.log(this.form.invalid);
         if (!this.form.invalid) {
             this.empresasService.editarEmpresas(this.form.value, this.form.value.id as string).subscribe((res) => {
               window.location.reload();

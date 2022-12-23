@@ -4,6 +4,11 @@ export interface FuseNavigationItem
 {
     id?: string;
     title?: string;
+    longTitle?: string;
+    path?: string;
+    class?: string;
+    context?: string;
+    menuSubItens?: string;
     subtitle?: string;
     type:
         | 'aside'
