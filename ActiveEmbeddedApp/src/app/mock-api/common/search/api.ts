@@ -5,13 +5,14 @@ import { FuseMockApiService } from '@fuse/lib/mock-api';
 import { defaultNavigation } from 'app/mock-api/common/navigation/data';
 import { contacts } from 'app/mock-api/apps/contacts/data';
 import { tasks } from 'app/mock-api/apps/tasks/data';
+import { AdminService } from '../../../modules/services/admin.service'
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchMockApi
 {
-    private readonly _defaultNavigation: FuseNavigationItem[] = defaultNavigation;
+    private _defaultNavigation: FuseNavigationItem[];
     private readonly _contacts: any[] = contacts;
     private readonly _tasks: any[] = tasks;
 
@@ -20,11 +21,15 @@ export class SearchMockApi
      */
     constructor(
         private _fuseMockApiService: FuseMockApiService,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        private adminService: AdminService
     )
     {
         // Register Mock API handlers
-        this.registerHandlers();
+        this.adminService.getMenuContext().subscribe(e => {
+            this._defaultNavigation = e
+            this.registerHandlers(this._defaultNavigation);
+        })
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -34,10 +39,10 @@ export class SearchMockApi
     /**
      * Register Mock API handlers
      */
-    registerHandlers(): void
+    registerHandlers(e: FuseNavigationItem[]): void
     {
         // Get the flat navigation and store it
-        const flatNavigation = this._fuseNavigationService.getFlatNavigation(this._defaultNavigation);
+        const flatNavigation = this._fuseNavigationService.getFlatNavigation(e);
 
         // -----------------------------------------------------------------------------------------------------
         // @ Search results - GET

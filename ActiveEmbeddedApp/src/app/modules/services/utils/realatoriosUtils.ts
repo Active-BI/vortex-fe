@@ -11,7 +11,6 @@ export const getBasePriceQuery = (Clients: any[], filters: any): string => {
     )
     const start = filters.start
     const end = filters.end
-    console.log(filters.clientes, "CNPJ")
   if (findCliente?.cnpj) {
     const cnpj = removeInitialSpace(findCliente)
     const query = `limit=0&offset=0&cnpjCpfComprador=${cnpj}&nomeProduto=${filters.produto}&inicioDataEmissao=${start}&fimDataEmissao=${end}`

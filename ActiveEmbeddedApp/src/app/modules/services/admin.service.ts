@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FuseNavigationItem } from '@fuse/components/navigation';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
@@ -172,8 +173,8 @@ export class AdminService {
 
 
 
-  getMenuContext(): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}admin/menucontext`)
+  getMenuContext(): Observable<FuseNavigationItem[]>{
+    return this.http.get<FuseNavigationItem[]>(`${this.baseUrl}admin/menucontext`)
     .pipe(
       debounceTime(500),
       catchError((err) => {
