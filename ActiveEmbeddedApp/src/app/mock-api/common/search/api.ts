@@ -27,8 +27,9 @@ export class SearchMockApi
     {
         // Register Mock API handlers
         this.adminService.getMenuContext().subscribe(e => {
-            this._defaultNavigation = e
-            this.registerHandlers(this._defaultNavigation);
+            // defaultNavigation.push(...e)
+            // this._defaultNavigation = defaultNavigation
+            // this.registerHandlers(this._defaultNavigation);
         })
     }
 

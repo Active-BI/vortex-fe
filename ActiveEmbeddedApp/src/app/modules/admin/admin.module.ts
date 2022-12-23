@@ -43,6 +43,7 @@ import { CreateUserComponent } from './users/create-user/create-user.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { getPortuguesePaginatorIntl } from '../services/portuguese-paginator-intl';
 import {MatBadgeModule} from '@angular/material/badge';
+import { AuthGuard } from '../services/guard/auth.guard';
 
 const adminroutes: Route[] = [
     {
@@ -61,10 +62,13 @@ const adminroutes: Route[] = [
     {
         path: 'correlacionamento-logs',
         component: CorrelacionamentoLogsComponent,
+        
     },
     {
         path: 'deteccao-resposta',
         component: DeteccaoRespEndpointsComponent,
+        canActivate: [AuthGuard],
+        data: {expectedRole: ['User','Admin']}
     },
     {
         path: 'mapeamento-dados',

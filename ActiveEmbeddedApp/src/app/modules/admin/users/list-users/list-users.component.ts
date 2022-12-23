@@ -43,7 +43,6 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.adminService.getMenuContext().subscribe((e) => console.log(e))
     this.requisicoes()
   }
   requisicoes() {
