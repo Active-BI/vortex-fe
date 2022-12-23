@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EbeddedApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = "")]
     public class ClientesController : Controller
     {
         private readonly UserPbiRlsContext userPbiContext;

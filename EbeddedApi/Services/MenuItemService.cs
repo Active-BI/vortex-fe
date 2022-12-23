@@ -59,7 +59,7 @@ namespace EbeddedApi.Services
                 LongTitle = menuItem.LongTitle,
                 Title = menuItem.Title,
                 Icon = menuItem.Icon,
-                Path = menuItem.Path,
+                Link = menuItem.Link,
             };
             var result = this.userPbiContext.MenuItems.Update(menu);
             this.userPbiContext.SaveChanges();

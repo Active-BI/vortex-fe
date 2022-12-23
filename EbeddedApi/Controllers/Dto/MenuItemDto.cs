@@ -2,7 +2,7 @@ namespace EbeddedApi.Controllers.Dto
 {
     public class MenuItemRequest
     {
-        public string Path { get; set; }
+        public string Link { get; set; }
         public string Title { get; set; }
         public string LongTitle { get; set; }
         public string Icon { get; set; }

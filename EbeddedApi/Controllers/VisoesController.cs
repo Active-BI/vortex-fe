@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EbeddedApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = "")]
     public class VisoesController : Controller
     {
         private readonly VisionService visionService;

@@ -1,16 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EbeddedApi.Context;
-using EbeddedApi.Controllers.Dto;
-using EbeddedApi.Models;
 using EbeddedApi.Models.Admin;
 using EbeddedApi.Models.Auth;
 using EbeddedApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -18,7 +14,7 @@ using Microsoft.Extensions.Logging;
 namespace EbeddedApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = "")]
     public class AdminController : Controller
     {
         private readonly ILogger<AdminController> _logger;
@@ -163,7 +159,9 @@ namespace EbeddedApi.Controllers
                                 .FirstOrDefaultAsync(x => x.Email.ToUpper() == email.ToUpper());
 
                 var result = itens.UserMenus.Select(x => new {
-                    x.Menu.Path,
+                    x.Menu.Link,
+                    x.Menu.Type,
+                    x.Menu.Id,
                     x.Menu.Title,
                     x.Menu.LongTitle,
                     x.Menu.Icon,

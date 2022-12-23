@@ -83,8 +83,8 @@ namespace EbeddedApi.Context
                 entity.Property(e => e.Id)
                     .HasColumnName("id");
 
-                entity.Property(e => e.Path)
-                    .HasColumnName("path");
+                entity.Property(e => e.Link)
+                    .HasColumnName("link");
 
                 entity.Property(e => e.Title)
                     .HasColumnName("title");
@@ -97,6 +97,8 @@ namespace EbeddedApi.Context
 
                 entity.Property(e => e.Class)
                     .HasColumnName("class");
+                entity.Property(e => e.Type)
+                    .HasColumnName("type");
                 
                 entity.Property(e => e.Context)
                     .HasColumnName("context");
