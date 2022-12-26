@@ -31,7 +31,6 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['nome', 'identificacao', 'perfil', 'opcoes'];
   usuarios: MatTableDataSource<PeriodicElement>
   usuariosL: number = 0
-  id = ''
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -40,9 +39,6 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
     public dialog: MatDialog,
     private toastr: ToastrService,
   ) {
-    this.route.queryParams.subscribe(params => {
-      this.id = params['id'];
-    });
   }
 
   ngAfterViewInit(): void {
@@ -61,25 +57,23 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
     } )
 
   }
-  deletarUsuario(matricula): void {
+  deletarUsuario(id): void {
     this.dialog.open(DeleteModalComponent, {
       data: { 
         nome: "Usuários",
         data: () => {
-        this.usuariosService.deleteUsuario(matricula)
-        this.dialog.closeAll()
-        this.toastr.success("Deletado com Sucesso")
-        this.requisicoes()
+        this.adminSrv.deleteUser(id).subscribe(() => {
+          this.dialog.closeAll()
+          this.toastr.success("Deletado com Sucesso")
+          this.requisicoes()
+        })
         }
       },
   });
   }
 
   criarUsuario(): void {
-    this.router.navigate(['/usuarios-criar'], {
-      relativeTo: this.route,
-    })
-    this.requisicoes()
+    this.router.navigate(['app/usuarios-criar'])
 
   }
   editarUsuario(id): void {

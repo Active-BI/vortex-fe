@@ -8,7 +8,7 @@
 
         <div class="w-full m-2">
             <h1 class="text-center text-slate-700 text-2xl">
-                EDITAR USUÁRIO
+                CRIAR USUÁRIO
             </h1>
         </div>
     </div>
@@ -18,62 +18,72 @@
     </h2> -->
         <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-100">
 
-        <mat-form-field appearance="fill">
-            <mat-label>Nome</mat-label>
-            <input type="text" formControlName="nome" matInput #first />
-        </mat-form-field>
-        <div *ngIf="form.controls.nome.touched" class="text-red-600 mb-2">
-            <div *ngIf="form.controls.nome.errors?.['required']">
-                Nome é Obrigatório
-            </div>
-            <div *ngIf="form.controls.nome.errors?.['minlength']">
-                Precisa de no mínimo 3 dígitos
-            </div>
-        </div>
-        <mat-form-field appearance="fill">
-            <mat-label>Perfil</mat-label>
-            <mat-select formControlName="perfil">
-                <mat-option value="User">User</mat-option>
-                <mat-option value="Admin">Admin</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <div *ngIf="form.controls.perfil.touched">
-            <div *ngIf="form.controls.perfil.errors?.['required']" class="text-red-600 mb-2">
-                Perfil é Obrigatório
-            </div>
-        </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Nome</mat-label>
+                <input type="text" formControlName="nome" matInput #first />
+                <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Visões</mat-label>
-            <mat-select [formControl]="visoesFormArray" multiple class="max-w-[93%]">
-                <mat-option *ngFor="let order of ordersData" [value]="order.id">
-                    {{order.name}}
-                </mat-option>
-            </mat-select>
-            <mat-icon [matBadge]="visoesFormArray.value.length" matBadgeColor="primary" svgIcon="heroicons_outline:eye">
-            </mat-icon>
-        </mat-form-field>
-        <div *ngIf="form.controls.visoes.touched" class="text-red-600 mb-2">
-            <div *ngIf="form.controls.visoes.errors?.['required']">
-                Visões é Obrigatório
-            </div>
-        </div>
-
-        <mat-accordion class="my-5">
-            <mat-expansion-panel showToggle [expanded]="visoesFormArray.value.length > 0" (opened)="panelOpenState = true"
-                (closed)="panelOpenState = false">
-                <mat-expansion-panel-header class="ml-[-20px]">
-                    <mat-panel-title>
-                        {{ panelOpenState ? "Esconder" : "Mostrar"}} Visões
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="flex flex-col">
-                    <div *ngFor="let v of visoesFormArray.value">
-                        {{ordersData[v - 1].name}}
-                    </div>
+            </mat-form-field>
+            <div *ngIf="form.controls.nome.touched" class="text-red-600 mb-2">
+                <div *ngIf="form.controls.nome.errors?.['required']">
+                    Nome é Obrigatório
                 </div>
-            </mat-expansion-panel>
-        </mat-accordion>
-    </form>
-    <button mat-raised-button color="primary" (click)="criar()" class="self-end">CRIAR</button>
+                <div *ngIf="form.controls.nome.errors?.['minlength']">
+                    Precisa de no mínimo 3 dígitos
+                </div>
+            </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input type="text" formControlName="email" matInput #first />
+                <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
+
+            </mat-form-field>
+            <div *ngIf="form.controls.email.touched" class="text-red-600 mb-2">
+                <div *ngIf="form.controls.email.errors?.['required']">
+                    Email é Obrigatório
+                </div>
+                <div *ngIf="form.controls.email.invalid && !form.controls.email.errors?.['required']">
+                    Email inválido
+                </div>
+            </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Email de contato (Opcional)</mat-label>
+                <input type="text" formControlName="emailContato" matInput #first />
+                <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
+
+            </mat-form-field>
+            <div *ngIf="form.controls.emailContato.touched" class="text-red-600 mb-2">
+                <div *ngIf="form.controls.emailContato.invalid && form.value.emailContato !== ''">
+                    Email inválido
+                </div>
+            </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Identificação</mat-label>
+                <input type="text" formControlName="identificacao" matInput #first />
+                <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
+
+            </mat-form-field>
+            <div *ngIf="form.controls.identificacao.touched" class="text-red-600 mb-2">
+                <div *ngIf="form.controls.identificacao.errors?.['required']">
+                    Identificação é Obrigatória
+                </div>
+            </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Perfil</mat-label>
+                <mat-select formControlName="perfil">
+                        <mat-option value="ca21241b-a37d-4e6f-bbb6-26643d3cdd99">User</mat-option>
+                        <mat-option value="6a203390-8389-49ca-aa0e-6a14ba7815bc">Admin</mat-option>
+                </mat-select>
+                <mat-icon svgIcon="heroicons_outline:archive"></mat-icon>
+
+            </mat-form-field>
+            <div *ngIf="form.controls.perfil.touched">
+                <div *ngIf="form.controls.perfil.errors?.['required']" class="text-red-600 mb-2">
+                    Perfil é Obrigatório
+                </div>
+            </div>
+
+        </form>
+        <button mat-raised-button color="primary" (click)="criar()" class="self-end mt-2">CRIAR</button>
+    </div>
 </div>

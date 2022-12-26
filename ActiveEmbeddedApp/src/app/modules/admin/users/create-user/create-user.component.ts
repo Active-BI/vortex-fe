@@ -20,12 +20,11 @@ export class CreateUserComponent extends EditUserComponent implements OnInit{
       route: ActivatedRoute,
       toastr: ToastrService,
       private toast: ToastrService,
-      usuariosService: UsuariosService,
-      private usuarioService: UsuariosService,
       adminSrv: AdminService,
+      private adminSrv1: AdminService,
       )
       {
-    super(fb, router, route, toastr,adminSrv, usuariosService);
+    super(fb, router, route, toastr,adminSrv);
   }
 
   override ngOnInit(): void {
@@ -33,11 +32,10 @@ export class CreateUserComponent extends EditUserComponent implements OnInit{
 
   criar(): void {
     if (this.form.valid) {
-      // this.form.patchValue({ matricula: Math.round(Math.random() * 20000).toString()})
-      // this.defaultUsers.push(this.form.value as PeriodicElement)
-      // this.usuarioService.postUsuario(this.defaultUsers)
-      // this.toast.success("Usuário Criado com Sucesso")
-      // this.voltar()
+      this.adminSrv1.preRegister(this.form.value).subscribe((e) => {
+        this.toast.success("Usuário Criado com Sucesso")
+        this.voltar()
+    })
     } else {
       this.form.markAllAsTouched()
     }
