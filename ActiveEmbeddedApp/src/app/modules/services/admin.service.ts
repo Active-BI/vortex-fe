@@ -152,7 +152,7 @@ export class AdminService {
   }
 
   preRegister(user:any): Observable<any>{
-    return this.http.post<any>(`${this.baseUrl}/admin`,user)
+    return this.http.post<any>(`${this.baseUrl}admin`,user)
     .pipe(
       catchError((err) => {
         this.toast.error(`Erro ao pré-cadastrar usuário`,null,{progressBar:true, timeOut:2000});
@@ -162,7 +162,7 @@ export class AdminService {
   }
 
   deleteUser(userId: string): Observable<any>{
-    return this.http.delete<any>(`${this.baseUrl}/admin?userId=${userId}`)
+    return this.http.delete<any>(`${this.baseUrl}admin?userId=${userId}`)
     .pipe(
       catchError((err) => {
         this.toast.error(`Erro ao remover usuário`,null,{progressBar:true, timeOut:2000});

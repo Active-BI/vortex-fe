@@ -92,18 +92,12 @@ namespace EbeddedApi.Controllers
         public async Task<IActionResult> UpdateUser([FromBody]UpdateUserRequest request){
 
             try{
-
                 await this.adminService.UpdateUser(request);
-
-
-
-            } catch(Exception)
+            } catch(Exception e)
             {
                 return StatusCode(StatusCodes.Status422UnprocessableEntity, "Erro ao atualizar usuário");
             }
-            
             return Ok();
-            
                          
         }
 

@@ -62,7 +62,7 @@ namespace EbeddedApi.Services
                     Identificacao = request.Identificacao,
                     Empresa = string.Empty,
                     EmailContato = request.EmailContato,
-                    Perfil = request.Role,
+                    Perfil = request.Perfil,
                     Nome = request.Nome,
                 };
 
@@ -101,27 +101,27 @@ namespace EbeddedApi.Services
 
         public async Task UpdateUser(UpdateUserRequest request){
 
-            //    var userRls = await this.userPbiContext.UserPbiRls
-            //                                     .Include(x => x.UserVisions)
-            //                                     .ThenInclude(us => us.Vision)
-            //                                     .Include(x => x.UserMenus)
-            //                                     .ThenInclude(us => us.Menu)
-            //                                     .FirstOrDefaultAsync(user => user.Id == request.Id);
+               var userRls = await this.userPbiContext.UserPbiRls
+                                                .Include(x => x.UserVisions)
+                                                .ThenInclude(us => us.Vision)
+                                                .Include(x => x.UserMenus)
+                                                .ThenInclude(us => us.Menu)
+                                                .FirstOrDefaultAsync(user => user.Id == request.Id);
                 
-            //     userRls.Identificacao = request.Identificacao == "" ? userRls.Identificacao : request.Identificacao;
-            //     userRls.Nome = request.Nome == "" ? userRls.Nome : request.Nome;
-            //     userRls.Perfil = request.Perfil == "" ? userRls.Perfil : request.Perfil;
-            //     userRls.EmailContato = request.EmailContato == "" ? userRls.EmailContato : request.EmailContato;
-                var user = new UserPbiRls {
-                    Id = request.Id,
-                    Email = request.Email,
-                    Nome = request.Nome,
-                    Identificacao = request.Identificacao,
-                    Perfil = request.Perfil,
-                    EmailContato = request.EmailContato,
-                };
+                userRls.Identificacao = request.Identificacao == "" ? userRls.Identificacao : request.Identificacao;
+                userRls.Nome = request.Nome == "" ? userRls.Nome : request.Nome;
+                userRls.Perfil = request.Perfil == "" ? userRls.Perfil : request.Perfil;
+                userRls.EmailContato = request.EmailContato == "" ? userRls.EmailContato : request.EmailContato;
+                // var user = new UserPbiRls {
+                //     Id = request.Id,
+                //     Email = request.Email,
+                //     Nome = request.Nome,
+                //     Identificacao = request.Identificacao,
+                //     Perfil = request.Perfil,
+                //     EmailContato = request.EmailContato,
+                // };
 
-                userPbiContext.UserPbiRls.Add(user);
+                userPbiContext.UserPbiRls.Update(userRls);
                 // userRls.UserVisions.Clear();
                 // userRls.UserMenus.Clear();
 

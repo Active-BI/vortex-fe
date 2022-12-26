@@ -37,8 +37,7 @@ export class EditUserComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private adminSrv: AdminService,
-    private usuariosService: UsuariosService) {
+    private adminSrv: AdminService) {
 
   this.id = this.route.snapshot.paramMap.get("id")
 
