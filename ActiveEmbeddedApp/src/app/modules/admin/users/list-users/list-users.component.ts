@@ -7,13 +7,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'app/modules/services/admin.service';
+import { MenuService } from 'app/modules/services/menu.service';
 
 export interface PeriodicElement {
-  matricula: string;
+  id: string;
+  email: string;
+  emailContato: string;
+  identificacao: string;
   nome: string;
   perfil: string;
-  area: string;
   visoes: any[]
+  menus: any[string]
 }
 
 @Component({
@@ -24,18 +28,21 @@ export interface PeriodicElement {
 export class ListUsersComponent implements AfterViewInit, OnInit {
   @ViewChild('paginator') paginator: MatPaginator;
 
-  displayedColumns: string[] = ['matricula', 'nome', 'perfil', 'area', 'opcoes'];
+  displayedColumns: string[] = ['nome', 'identificacao', 'perfil', 'opcoes'];
   usuarios: MatTableDataSource<PeriodicElement>
   usuariosL: number = 0
-
+  id = ''
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private usuariosService: UsuariosService,
-    private adminService: AdminService,
+    private adminSrv: AdminService,
     public dialog: MatDialog,
     private toastr: ToastrService,
   ) {
+    this.route.queryParams.subscribe(params => {
+      this.id = params['id'];
+    });
   }
 
   ngAfterViewInit(): void {
@@ -46,10 +53,13 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
     this.requisicoes()
   }
   requisicoes() {
-    const users = this.usuariosService.getUsuario()
-    this.usuarios = new MatTableDataSource(users);
-    this.usuarios.paginator = this.paginator;
-    this.usuariosL = this.usuarios?.data.length;
+    this.adminSrv.getUsers().subscribe(e => {
+      this.usuarios = new MatTableDataSource(e);
+      this.usuarios.paginator = this.paginator;
+      this.usuariosL = this.usuarios?.data.length;
+
+    } )
+
   }
   deletarUsuario(matricula): void {
     this.dialog.open(DeleteModalComponent, {
@@ -66,18 +76,13 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
   }
 
   criarUsuario(): void {
-    this.router.navigate(['../usuarios-criar'], {
+    this.router.navigate(['/usuarios-criar'], {
       relativeTo: this.route,
     })
     this.requisicoes()
 
   }
-  editarUsuario(matricula): void {
-    this.router.navigate(['../usuarios-editar'], {
-      relativeTo: this.route,
-      queryParams: { matricula }
-    });
-    this.requisicoes()
-
+  editarUsuario(id): void {
+    this.router.navigate([`app/usuarios-editar/${id}`])
   }
 }

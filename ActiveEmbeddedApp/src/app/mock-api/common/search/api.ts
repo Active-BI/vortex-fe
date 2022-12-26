@@ -12,7 +12,7 @@ import { AdminService } from '../../../modules/services/admin.service'
 })
 export class SearchMockApi
 {
-    private _defaultNavigation: FuseNavigationItem[];
+    private _defaultNavigation: FuseNavigationItem[] = defaultNavigation
     private readonly _contacts: any[] = contacts;
     private readonly _tasks: any[] = tasks;
 
@@ -26,11 +26,7 @@ export class SearchMockApi
     )
     {
         // Register Mock API handlers
-        this.adminService.getMenuContext().subscribe(e => {
-            // defaultNavigation.push(...e)
-            // this._defaultNavigation = defaultNavigation
-            // this.registerHandlers(this._defaultNavigation);
-        })
+        this.registerHandlers()
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -40,10 +36,10 @@ export class SearchMockApi
     /**
      * Register Mock API handlers
      */
-    registerHandlers(e: FuseNavigationItem[]): void
+    registerHandlers(): void
     {
         // Get the flat navigation and store it
-        const flatNavigation = this._fuseNavigationService.getFlatNavigation(e);
+        const flatNavigation = this._fuseNavigationService.getFlatNavigation(this._defaultNavigation);
 
         // -----------------------------------------------------------------------------------------------------
         // @ Search results - GET

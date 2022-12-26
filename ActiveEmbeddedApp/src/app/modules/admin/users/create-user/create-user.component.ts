@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PeriodicElement } from '../list-users/list-users.component';
 import { UsuariosService } from 'app/modules/services/usuarios';
+import { AdminService } from 'app/modules/services/admin.service';
 
 @Component({
   selector: 'app-create-user',
@@ -21,9 +22,10 @@ export class CreateUserComponent extends EditUserComponent implements OnInit{
       private toast: ToastrService,
       usuariosService: UsuariosService,
       private usuarioService: UsuariosService,
+      adminSrv: AdminService,
       )
       {
-    super(fb, router, route, toastr, usuariosService);
+    super(fb, router, route, toastr,adminSrv, usuariosService);
   }
 
   override ngOnInit(): void {
@@ -31,11 +33,11 @@ export class CreateUserComponent extends EditUserComponent implements OnInit{
 
   criar(): void {
     if (this.form.valid) {
-      this.form.patchValue({ matricula: Math.round(Math.random() * 20000).toString()})
-      this.defaultUsers.push(this.form.value as PeriodicElement)
-      this.usuarioService.postUsuario(this.defaultUsers)
-      this.toast.success("Usuário Criado com Sucesso")
-      this.voltar()
+      // this.form.patchValue({ matricula: Math.round(Math.random() * 20000).toString()})
+      // this.defaultUsers.push(this.form.value as PeriodicElement)
+      // this.usuarioService.postUsuario(this.defaultUsers)
+      // this.toast.success("Usuário Criado com Sucesso")
+      // this.voltar()
     } else {
       this.form.markAllAsTouched()
     }

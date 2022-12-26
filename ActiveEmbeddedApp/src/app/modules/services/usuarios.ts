@@ -13,11 +13,11 @@ export interface UserRegister extends User {
   passwordConfirmation: string;
 }
 
-export const ELEMENT_DATA: PeriodicElement[] = [
-  { matricula: '176565', nome: 'João Silva', perfil: 'User', area: 'Comercial', visoes: [] },
-  { matricula: '1053433', nome: 'Rodrigo Nunes', perfil: 'Admin', area: 'Administrativo', visoes: [] },
-  { matricula: '10078', nome: 'Carlos Alberto Saihd', perfil: 'User', area: 'Projetos', visoes: [] },
-];
+// export const ELEMENT_DATA: PeriodicElement[] = [
+//   { matricula: '176565', nome: 'João Silva', perfil: 'User', area: 'Comercial', visoes: [] },
+//   { matricula: '1053433', nome: 'Rodrigo Nunes', perfil: 'Admin', area: 'Administrativo', visoes: [] },
+//   { matricula: '10078', nome: 'Carlos Alberto Saihd', perfil: 'User', area: 'Projetos', visoes: [] },
+// ];
 
 @Injectable({
   providedIn: 'root'
@@ -25,30 +25,30 @@ export const ELEMENT_DATA: PeriodicElement[] = [
 export class UsuariosService {
   constructor(private http: HttpClient) { }
 
-  getUsuario(): PeriodicElement[] {
-    if (!localStorage.getItem("defaultUsers") || JSON.parse(localStorage.getItem("defaultUsers")).length === 0 ) {
-      localStorage.setItem("defaultUsers", JSON.stringify(ELEMENT_DATA))
-      return ELEMENT_DATA
-    } else {
-      return JSON.parse(localStorage.getItem("defaultUsers")) as PeriodicElement[]
-    }
+  getUsuario(): any {
+    // if (!localStorage.getItem("defaultUsers") || JSON.parse(localStorage.getItem("defaultUsers")).length === 0 ) {
+    //   localStorage.setItem("defaultUsers", JSON.stringify(ELEMENT_DATA))
+    //   return ELEMENT_DATA
+    // } else {
+    //   return JSON.parse(localStorage.getItem("defaultUsers")) as PeriodicElement[]
+    // }
   }
 
-  postUsuario(payload: PeriodicElement[]): any {
-    localStorage.setItem("defaultUsers", JSON.stringify(payload))
+  postUsuario(payload: any): any {
+    // localStorage.setItem("defaultUsers", JSON.stringify(payload))
   }
 
   editUsuario(payload: PeriodicElement, matricula: string): any {
-    const dataSource = this.getUsuario()
-    const index = dataSource.findIndex((user: PeriodicElement) => user.matricula === matricula)
-    dataSource[index] = payload
-    localStorage.setItem('defaultUsers', JSON.stringify(dataSource))
+    // const dataSource = this.getUsuario()
+    // const index = dataSource.findIndex((user: PeriodicElement) => user.matricula === matricula)
+    // dataSource[index] = payload
+    // localStorage.setItem('defaultUsers', JSON.stringify(dataSource))
   }
 
   deleteUsuario(matricula: string): any {
-    const dataSource = this.getUsuario()
-    const index = dataSource.findIndex((user: PeriodicElement) => user.matricula === matricula)
-    dataSource.splice(index, 1)
-    localStorage.setItem("defaultUsers", JSON.stringify(dataSource))
+    // const dataSource = this.getUsuario()
+    // const index = dataSource.findIndex((user: PeriodicElement) => user.matricula === matricula)
+    // dataSource.splice(index, 1)
+    // localStorage.setItem("defaultUsers", JSON.stringify(dataSource))
   }
 }

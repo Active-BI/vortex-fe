@@ -39,6 +39,7 @@
         "ng-apexcharts": "1.7.1",
         "ngx-cnpj-cpf-validator": "^0.0.5",
         "ngx-markdown": "14.0.1",
+        "ngx-pagination": "^6.0.3",
         "ngx-quill": "18.0.0",
         "ngx-toastr": "^15.2.2",
         "perfect-scrollbar": "1.5.5",

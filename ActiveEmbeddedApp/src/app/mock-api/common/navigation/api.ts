@@ -9,7 +9,7 @@ import { AdminService } from '../../../modules/services/admin.service'
 })
 export class NavigationMockApi
 {
-    private _defaultNavigation: FuseNavigationItem[];
+    private _defaultNavigation: FuseNavigationItem[] = defaultNavigation
     
     /**
      * Constructor
@@ -17,12 +17,7 @@ export class NavigationMockApi
     constructor(private _fuseMockApiService: FuseMockApiService, private adminService: AdminService )
     {
         // Register Mock API handlers
-        this.adminService.getMenuContext().subscribe(e => {
-            defaultNavigation.push(...e)
-            this._defaultNavigation = defaultNavigation
-            this.registerHandlers(this._defaultNavigation);
-        })
-
+        this.registerHandlers()
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -32,7 +27,7 @@ export class NavigationMockApi
     /**
      * Register Mock API handlers
      */
-    registerHandlers(e: FuseNavigationItem[]): void
+    registerHandlers(): void
     {
         // -----------------------------------------------------------------------------------------------------
         // @ Navigation - GET

@@ -54,7 +54,7 @@ export class AdminService {
  private baseUrl = environment.baseUrl;
 
   getUsers(): Observable<any[]>{
-    return this.http.get<any[]>(`${this.baseUrl}/admin`)
+    return this.http.get<any[]>(`${this.baseUrl}admin`)
     .pipe(
       catchError((err) => {
         this.toast.error(`Erro ao consultar usuários`,null,{progressBar:true, timeOut:2000});
@@ -132,7 +132,7 @@ export class AdminService {
     )
   }
   getUserById(userId: string): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}/admin/${userId}`)
+    return this.http.get<any>(`${this.baseUrl}admin/${userId}`)
     .pipe(
       catchError((err) => {
         this.toast.error(`Erro ao consultar usuário`,null,{progressBar:true, timeOut:2000});
@@ -142,7 +142,7 @@ export class AdminService {
   }
 
   updateUser(user:any): Observable<any>{
-    return this.http.put<any>(`${this.baseUrl}/admin/user`,user)
+    return this.http.put<any>(`${this.baseUrl}admin/user`,user)
     .pipe(
       catchError((err) => {
         this.toast.error(`Erro ao atualizar usuários`,null,{progressBar:true, timeOut:2000});

@@ -42,20 +42,6 @@
                 Perfil é Obrigatório
             </div>
         </div>
-        <mat-form-field appearance="fill">
-            <mat-label>Area</mat-label>
-            <mat-select formControlName="area">
-                <mat-option value="Comercial">Comercial</mat-option>
-                <mat-option value="Administrativo">Administrativo</mat-option>
-                <mat-option value="Projetos">Projetos</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <div *ngIf="form.controls.area.touched" class="text-red-600 mb-2">
-            <div *ngIf="form.controls.area.errors?.['required']">
-                Area é Obrigatório
-            </div>
-        </div>
 
         <mat-form-field appearance="fill">
             <mat-label>Visões</mat-label>

@@ -33,8 +33,6 @@ namespace EbeddedApi.Services
              var result = from user in await this.userPbiContext.UserPbiRls.AsNoTracking()
                                             .Include(x => x.UserVisions)
                                             .ThenInclude(us => us.Vision)
-                                            .Include(x => x.UserMenus)
-                                            .ThenInclude(mn => mn.Menu)
                                             .ToListAsync()
                          join vis in this.identityContext.Roles.ToList()
                          on user.Perfil equals vis.Id.ToString() 
@@ -46,12 +44,11 @@ namespace EbeddedApi.Services
                              user.Empresa,
                              user.Identificacao,
                              Perfil = vis.Name,
-                             Visions = user.UserVisions,
-                             Menus = user.UserMenus,
+                             PerfilId = vis.Id,
                              UltimoAcesso = user.DataUltimoAcesso
                          };
             
-            return result;
+            return result.ToList().OrderBy(x => x.Nome);
         }
 
         public async Task AddUserPreRegisterAsync(PreRegisterUserRequest request){
@@ -104,41 +101,50 @@ namespace EbeddedApi.Services
 
         public async Task UpdateUser(UpdateUserRequest request){
 
-               var userRls = await this.userPbiContext.UserPbiRls
-                                                .Include(x => x.UserVisions)
-                                                .ThenInclude(us => us.Vision)
-                                                .Include(x => x.UserMenus)
-                                                .ThenInclude(us => us.Menu)
-                                                .FirstOrDefaultAsync(user => user.Id == request.Id);
+            //    var userRls = await this.userPbiContext.UserPbiRls
+            //                                     .Include(x => x.UserVisions)
+            //                                     .ThenInclude(us => us.Vision)
+            //                                     .Include(x => x.UserMenus)
+            //                                     .ThenInclude(us => us.Menu)
+            //                                     .FirstOrDefaultAsync(user => user.Id == request.Id);
                 
-                userRls.Identificacao = request.Identificacao == "" ? userRls.Identificacao : request.Identificacao;
-                userRls.Nome = request.Nome == "" ? userRls.Nome : request.Nome;
-                userRls.Perfil = request.Perfil == "" ? userRls.Perfil : request.Perfil;
-                userRls.EmailContato = request.EmailContato == "" ? userRls.EmailContato : request.EmailContato;
+            //     userRls.Identificacao = request.Identificacao == "" ? userRls.Identificacao : request.Identificacao;
+            //     userRls.Nome = request.Nome == "" ? userRls.Nome : request.Nome;
+            //     userRls.Perfil = request.Perfil == "" ? userRls.Perfil : request.Perfil;
+            //     userRls.EmailContato = request.EmailContato == "" ? userRls.EmailContato : request.EmailContato;
+                var user = new UserPbiRls {
+                    Id = request.Id,
+                    Email = request.Email,
+                    Nome = request.Nome,
+                    Identificacao = request.Identificacao,
+                    Perfil = request.Perfil,
+                    EmailContato = request.EmailContato,
+                };
 
-                userRls.UserVisions.Clear();
-                userRls.UserMenus.Clear();
+                userPbiContext.UserPbiRls.Add(user);
+                // userRls.UserVisions.Clear();
+                // userRls.UserMenus.Clear();
 
                 // Inclui visões do usuário
-                await userPbiContext.Visions.ForEachAsync(x => {
-                                                            if (request.Visions.Contains(x.Name))
-                                                            userPbiContext.UserVisions.Add(
-                                                            new UserVisions(){
-                                                                UserId = userRls.Id,
-                                                                VisionId = x.Id
-                                                            } 
-                                                            );});
+                // await userPbiContext.Visions.ForEachAsync(x => {
+                //                                             if (request.Visions.Contains(x.Name))
+                //                                             userPbiContext.UserVisions.Add(
+                //                                             new UserVisions(){
+                //                                                 UserId = userRls.Id,
+                //                                                 VisionId = x.Id
+                //                                             } 
+                //                                             );});
 
 
                 // Inclui Menus do usuário
-                 await userPbiContext.MenuItems.ForEachAsync(x => {
-                                                            if (request.Menus.Contains(x.Title))
-                                                            userPbiContext.UserMenus.Add(
-                                                            new UserMenu(){
-                                                                UserPbiRelsId = userRls.Id,
-                                                                MenuItemId = x.Id
-                                                            } 
-                                                            );});
+                //  await userPbiContext.MenuItems.ForEachAsync(x => {
+                //                                             if (request.Menus.Contains(x.Title))
+                //                                             userPbiContext.UserMenus.Add(
+                //                                             new UserMenu(){
+                //                                                 UserPbiRelsId = userRls.Id,
+                //                                                 MenuItemId = x.Id
+                //                                             } 
+                //                                             );});
                                                             
             userPbiContext.SaveChanges();
         }
