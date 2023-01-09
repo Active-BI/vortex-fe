@@ -89,13 +89,44 @@
                     (input)="filterVisions($event.target.value)" [formControl]="myControl" [matAutocomplete]="auto">
                 <mat-autocomplete (optionSelected)="onChange($event.option.value)" autoActiveFirstOption
                     #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredVisions" [value]="option.name">
+                    <mat-option *ngFor="let option of filteredVisions" [value]="option.name" [disabled]="visionsSelecteds.includes(option.name)">
                         {{option.name}}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
-                    <mat-chip *ngFor="let v of visionsSelecteds">{{v}}</mat-chip>
         </form>
+
+
+        <mat-accordion class="mb-2" >
+            <mat-expansion-panel class="p-[-10px]" (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Todos os acessos
+                </mat-panel-title>
+
+              </mat-expansion-panel-header>
+              <div class="flex flex-col w-full justify-center ">
+                <mat-chip *ngFor="let v of visionsSelecteds" class="p-1 m-1 px-2 flex rounded-md w-full bg-slate-200 items-center justify-between">
+                    <div>
+                        {{v}}
+                    </div>
+                        <button (click)="deletarVisao(v)" class="flex   items-center justify-between">
+                            <mat-icon
+                                color="warn"
+                                class="cursor-pointer "
+                                svgIcon="heroicons_solid:trash"
+                            ></mat-icon>
+                        </button>
+                </mat-chip>
+            </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+
+
+
+
         <button mat-raised-button color="primary" (click)="editar()"
             class="self-end mt-2 rounded-sm text-colorText">SALVAR</button>
     </div>

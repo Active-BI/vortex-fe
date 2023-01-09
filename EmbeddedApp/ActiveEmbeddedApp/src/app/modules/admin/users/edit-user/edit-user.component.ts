@@ -65,7 +65,6 @@ export class EditUserComponent implements OnInit {
 
 
       this.adminSrv.geVisions().subscribe((e: any) => {
-        e = e.filter((a) => !this.visionsSelecteds.includes(a.name))
         this.visoes = e
         this.filteredVisions = e
       })
@@ -79,13 +78,13 @@ export class EditUserComponent implements OnInit {
   filteredVisions = []
 
   filterVisions(e: any) {
-    this.filteredVisions = this.visoes.filter((v) => v.name.toUpperCase().includes(e.toUpperCase()))
-    this.resetfilteredVisions()
+    this.filteredVisions = this.visoes.filter((a) => a.name.includes(e.toUpperCase()))
   }
 
   voltar(): void {
     this.router.navigate(['app/usuarios'])
   }
+
   onChange(e) {
     if (this.visoes.find(a => a.name === e)) {
       const value = this.form.value.visions
@@ -95,25 +94,28 @@ export class EditUserComponent implements OnInit {
         visions: value
       })
 
-      this.filteredVisions = this.visoes
-
-      this.resetfilteredVisions()
       this.myControl.setValue('')
+      this.filterVisions('')
     }
   }
-
 
   redirectToEdit(id) {
     this.router.navigate([`app/usuarios-editar/${id}`])
   }
 
+  deletarVisao(name) {
+    this.visionsSelecteds = this.visionsSelecteds.filter((a) => a !== name)
+    this.form.patchValue({
+      visions: this.visionsSelecteds
+    })
+  }
 
   editar(): void {
     if (this.form.valid && this.myControl.valid) {
       this.adminSrv.updateUser(this.form.value as PeriodicElement).subscribe((e => {
         this.toastr.success("Editado com Sucesso")
-        this.voltar()
       }))
+      this.voltar()
     } else {
       this.form.markAllAsTouched()
     }

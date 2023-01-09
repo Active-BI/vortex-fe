@@ -1,62 +1,70 @@
 /* tslint:disable:max-line-length */
 import { FuseNavigationItem } from '@fuse/components/navigation';
- 
+
 export const defaultNavigation: FuseNavigationItem[] = [
     {
-        id   : 'inicio',
+        id: 'inicio',
         title: 'Inicio',
-        type : 'basic',
-        icon : 'heroicons_outline:home',
-        link : 'inicio'
+        type: 'basic',
+        icon: 'heroicons_outline:home',
+        link: 'inicio'
     },
     {
-        id   : 'gestao-vulnerabilidades',
-        title: 'Gestão de Vulnerabilidades',
-        type : 'basic',
-        icon : 'mat_solid:policy',
-        link : 'gestao-vulnerabilidades',
+        id: 'financeiro',
+        title: 'Financeiro',
+        type: 'basic',
+        icon: 'mat_solid:policy',
+        link: 'financeiro',
     },
     {
-        id   : 'correlacionamento-logs',
-        title: 'Correlacionmaneto de Logs',
-        type : 'basic',
-        icon : 'mat_solid:announcement',
-        link : 'correlacionamento-logs'
+        id: 'gente-e-gestao',
+        title: 'Gente e Gestão',
+        type: 'basic',
+        icon: 'mat_solid:announcement',
+        link: 'gente-e-gestao'
     },
     {
-        id   : 'deteccao-resposta',
-        title: 'Detecção e Resposta aos EndPoints',
-        type : 'basic',
-        icon : 'mat_solid:important_devices',
-        link : 'deteccao-resposta'
+        id: 'operacao',
+        title: 'Operação',
+        type: 'basic',
+        icon: 'mat_solid:important_devices',
+        link: 'operacao'
     },
     {
-        id   : 'mapeamento-dados',
-        title: 'Mapeamentos de Dados Sensíveis',
-        type : 'basic',
-        icon : 'mat_solid:privacy_tip',
-        link : 'mapeamento-dados'
+        id: 'comercial',
+        title: 'Comercial',
+        type: 'basic',
+        icon: 'mat_solid:privacy_tip',
+        link: 'comercial'
     },
     {
-        id   : 'gestao-consentmento-cookies',
-        title: 'Gestão de Consentimento de Cookies',
-        type : 'basic',
-        icon : 'mat_solid:perm_device_information',
-        link : 'gestao-consentmento-cookies'
+        id: 'juridico',
+        title: 'Jurídico',
+        type: 'basic',
+        icon: 'mat_solid:perm_device_information',
+        link: 'juridico'
+    },
+    {
+        id: 'juridico',
+        title: 'Jurídico',
+        type: 'basic',
+        icon: 'mat_solid:perm_device_information',
+        link: 'juridico'
     }
+
     ,
     {
-        id   : 'prevencao-contra-vazamentos-dados',
+        id: 'prevencao-contra-vazamentos-dados',
         title: 'Prevenção Contra Vazamentos de Dados',
-        type : 'basic',
-        icon : 'mat_solid:security',
-        link : 'prevencao-contra-vazamentos-dados'
+        type: 'basic',
+        icon: 'mat_solid:security',
+        link: 'prevencao-contra-vazamentos-dados'
     },
     {
-            id   : 'usuarios.lista',
-            title: 'Gestão de Usuários',
-            type : 'basic',
-            icon : 'mat_solid:person_search',
-            link: 'usuarios'
+        id: 'usuarios.lista',
+        title: 'Gestão de Usuários',
+        type: 'basic',
+        icon: 'mat_solid:person_search',
+        link: 'usuarios'
     }
 ];

@@ -57,26 +57,25 @@ const adminroutes: Route[] = [
         component: InicioComponent,
     },
     {
-        path: 'gestao-vulnerabilidades',
+        path: 'financeiro',
         component: GestaoVulnerabilidadeComponent,
     },
     {
-        path: 'correlacionamento-logs',
+        path: 'gente-e-gestao',
         component: CorrelacionamentoLogsComponent,
-        
     },
     {
-        path: 'deteccao-resposta',
-        component: DeteccaoRespEndpointsComponent,
-        canActivate: [AuthGuard],
-        data: {expectedRole: ['User','Admin']}
+        path: 'operacao',
+        component: MapeamentoDadosSensiveisComponent,
+        // canActivate: [AuthGuard],
+        // data: {expectedRole: ['User','Admin']}
     },
     {
-        path: 'mapeamento-dados',
+        path: 'comercial',
         component: MapeamentoDadosSensiveisComponent,
     },
     {
-        path: 'gestao-consentmento-cookies',
+        path: 'juridico',
         component: GestaoConsetimentoCookiesComponent,
     },  {
         path: 'prevencao-contra-vazamentos-dados',
@@ -98,22 +97,6 @@ const adminroutes: Route[] = [
         path: 'usuarios-editar/:id',
         component: EditUserComponent,
     },
-    // {
-    //     path: 'consultores',
-    //     component: ConsultoresComponent,
-    // },
-    // {
-    //     path: 'empresas',
-    //     component: EmpresasComponent,
-    // },
-    // {
-    //     path: 'importacao',
-    //     component: ImportacaoComponent,
-    // },
-    // {
-    //     path: 'clientes',
-    //     component: ClientesComponent,
-    // },
 ];
 
 @NgModule({
