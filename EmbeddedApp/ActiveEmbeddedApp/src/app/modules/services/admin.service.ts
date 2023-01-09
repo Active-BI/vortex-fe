@@ -64,7 +64,7 @@ export class AdminService {
   }
 
   geVisions(): Observable<any[]>{
-    return this.http.get<any[]>(`${this.baseUrl}/admin/visions`)
+    return this.http.get<any[]>(`${this.baseUrl}visoes`)
     .pipe(
       map((visions: Vision[]) => {
         return visions.sort((a, b) => {
@@ -92,45 +92,6 @@ export class AdminService {
     )
   }
 
-  geVisionById(id: string): Observable<Vision>{
-    return this.http.get<Vision>(`${this.baseUrl}/admin/visions/${id}`)
-    .pipe(
-      catchError((err) => {
-        this.toast.error(`Erro ao consultar visão`,null,{progressBar:true, timeOut:2000});
-        return throwError(err);
-      })
-    )
-  }
-
-  DelVision(id: string): Observable<Vision> {
-    return this.http.delete<Vision>(`${this.baseUrl}/admin/visions/${id}`)
-    .pipe(
-      catchError((err) => {
-        this.toast.error(`Erro ao atualizar dados`, null, {progressBar:true, timeOut:2000});
-        return throwError(err);
-      })
-    )
-  }
-
-  putVision(payload: Vision, id: string): Observable<Vision> {
-    return this.http.put<Vision>(`${this.baseUrl}/admin/visions/${id}`, payload)
-    .pipe(
-      catchError((err) => {
-        this.toast.error(`Erro ao atualizar dados`, null, {progressBar:true, timeOut:2000});
-        return throwError(err);
-      })
-    )
-  }
-
-  postVision(payload: Vision): Observable<Vision> {
-    return this.http.post<Vision>(`${this.baseUrl}/admin/visions`, payload)
-    .pipe(
-      catchError((err) => {
-        this.toast.error(`Erro ao salvar dados`, null, {progressBar:true, timeOut:2000});
-        return throwError(err);
-      })
-    )
-  }
   getUserById(userId: string): Observable<any>{
     return this.http.get<any>(`${this.baseUrl}admin/${userId}`)
     .pipe(
@@ -184,52 +145,4 @@ export class AdminService {
     )
   }
 
-  getMenuItens(): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}/admin/menuitens`)
-    .pipe(
-      catchError((err) => {
-        this.toast.error(`Erro ao obter dados`, null, {progressBar:true, timeOut:2000});
-        return throwError(err);
-      })
-    )
-  }
-
-  postMenuItem(menuItem: IMenuItem): Observable<IMenuItem> {
-    return this.http.post<IMenuItem>(`${this.baseUrl}/admin/menuitens`, menuItem)
-    .pipe(
-      catchError((err) => {
-        this.toast.error(`Erro ao salvar dados`, null, {progressBar:true, timeOut:2000});
-        return throwError(err);
-      })
-    )
-  }
-  getMenuItensById(id: string): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}/admin/menuitens/${id}`)
-    .pipe(
-      catchError((err) => {
-        this.toast.error(`Erro ao obter dados`, null, {progressBar:true, timeOut:2000});
-        return throwError(err);
-      })
-    )
-  }
-
-  putMenuItem(payload: IMenuItem, id: string): Observable<IMenuItem> {
-    return this.http.put<IMenuItem>(`${this.baseUrl}/admin/menuitens/${id}`, payload)
-    .pipe(
-      catchError((err) => {
-        this.toast.error(`Erro ao atualizar dados`, null, {progressBar:true, timeOut:2000});
-        return throwError(err);
-      })
-    )
-  }
-
-  DelMenuItem(id: string): Observable<any> {
-    return this.http.delete<IMenuItem>(`${this.baseUrl}/admin/menuitens/${id}`)
-    .pipe(
-      catchError((err) => {
-        this.toast.error(`Erro ao atualizar dados`, null, {progressBar:true, timeOut:2000});
-        return throwError(err);
-      })
-    )
-  }
 }

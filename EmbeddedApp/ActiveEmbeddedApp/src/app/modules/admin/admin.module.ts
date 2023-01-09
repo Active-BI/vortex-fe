@@ -37,13 +37,14 @@ import { PrevencaoContraVazamentosDadosComponent } from './prevencao-contra-vaza
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { SharedModule } from 'app/shared/shared.module';
-import { ListUsersComponent } from './users/list-users/list-users.component';
-import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { getPortuguesePaginatorIntl } from '../services/portuguese-paginator-intl';
 import {MatBadgeModule} from '@angular/material/badge';
 import { AuthGuard } from '../services/guard/auth.guard';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ListUsersComponent } from './users/list-users/list-users.component';
+import { EditUserComponent } from './users/edit-user/edit-user.component';
 
 const adminroutes: Route[] = [
     {
@@ -136,9 +137,9 @@ const adminroutes: Route[] = [
         MapeamentoDadosSensiveisComponent,
         PrevencaoContraVazamentosDadosComponent,
         GestaoConsetimentoCookiesComponent,
+        CreateUserComponent,
         ListUsersComponent,
-        EditUserComponent,
-        CreateUserComponent
+        EditUserComponent
     ],
     imports: [
         CommonModule,
@@ -161,6 +162,7 @@ const adminroutes: Route[] = [
         FuseAlertModule,
         SharedModule,
         MatBadgeModule,
+        MatAutocompleteModule
     ],
     entryComponents: [MatDialogModule],
     providers: [

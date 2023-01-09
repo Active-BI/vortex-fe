@@ -3,7 +3,6 @@ import { FormBuilder, Validators, FormArray, FormControl, FormGroup } from '@ang
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'app/modules/services/admin.service';
 import { listRoles } from 'app/modules/services/roles.service';
-import { UsuariosService } from 'app/modules/services/usuarios';
 import { ToastrService } from 'ngx-toastr';
 import { PeriodicElement } from '../list-users/list-users.component';
 import { ordersData } from '../usersUtils';
@@ -15,6 +14,8 @@ import { ordersData } from '../usersUtils';
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {
+  myControl = new FormControl('');
+
   form = this.fb.group({
     id: [''],
     nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -24,13 +25,15 @@ export class EditUserComponent implements OnInit {
     identificacao: ['', [Validators.required]],
     perfil: ['', [Validators.required]],
     perfilId: [''],
-    visoes: [[]],
+    visions: [[]],
     menus: [[]],
   })
   panelOpenState = false
   id: string
   ordersData = ordersData
   user: any
+
+  visoes = []
 
   listRoles = listRoles
   constructor(private fb: FormBuilder,
@@ -40,16 +43,12 @@ export class EditUserComponent implements OnInit {
     private adminSrv: AdminService) {
 
   this.id = this.route.snapshot.paramMap.get("id")
-
- 
-    // this.addCheckboxes();
   }
-  // private addCheckboxes() {
-  //   this.ordersData.forEach(() => this.visoesFormArray.push(new FormControl(false)));
-  // }
   ngOnInit(): void {
+    this.form.controls.email.disable()
     this.adminSrv.getUserById(this.id).subscribe((e : any) => {
       this.user = e
+      console.log(this.user.userVisions.map(x => x.vision.name))
       this.form.patchValue({
         id: this.user.id,
         nome: this.user.nome,
@@ -57,22 +56,47 @@ export class EditUserComponent implements OnInit {
         emailContato: this.user.emailContato,
         identificacao: this.user.identificacao,
         perfil: this.user.perfil,
-        visoes: [],
+        visions:  this.user.userVisions.map(x => x.vision.name),
         menus: []
       })
-      console.log(this.form.value)
+
+    })
+
+    this.adminSrv.geVisions().subscribe((e : any) => {
+      e = e.sort((a,b)=> {
+        a = a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+        b = b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+        if (a > b) {
+          return 1;
+        }
+        if (a < b) {
+          return -1;
+        }
+        // a must be equal to b
+        return 0;
+      })
+      this.visoes = e
+      this.filteredVisions = e
     })
   
   }
-
+  filteredVisions = []
+  filterVisions(e) {
+    this.filteredVisions =this.visoes.filter((v) => v.name.toUpperCase().includes(e.toUpperCase()))
+  }
   get visoesFormArray() {
-    return this.form.controls.visoes as FormControl;
+    return this.form.controls.visions as FormControl;
   }
   voltar(): void {
     this.router.navigate(['app/usuarios'])
   }
+
+  redirectToEdit(id) {
+    this.router.navigate([`app/usuarios-editar/${id}`])
+  }
   editar(): void {
-    if (this.form.valid) {
+    if (this.form.valid && this.myControl.valid) {
+      const payload = this.form.value
       this.adminSrv.updateUser(this.form.value as PeriodicElement).subscribe((e => {
         this.toastr.success("Editado com Sucesso")
         this.voltar()

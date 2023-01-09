@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EditUserComponent } from '../edit-user/edit-user.component';
-import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { PeriodicElement } from '../list-users/list-users.component';
-import { UsuariosService } from 'app/modules/services/usuarios';
 import { AdminService } from 'app/modules/services/admin.service';
 
 @Component({
@@ -34,7 +32,7 @@ export class CreateUserComponent extends EditUserComponent implements OnInit{
     if (this.form.valid) {
       this.adminSrv1.preRegister(this.form.value).subscribe((e) => {
         this.toast.success("Usuário Criado com Sucesso")
-        this.voltar()
+        this.redirectToEdit(e.id)
     })
     } else {
       this.form.markAllAsTouched()

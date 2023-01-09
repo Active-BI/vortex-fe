@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsuariosService } from 'app/modules/services/usuarios';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'app/modules/services/admin.service';
-import { MenuService } from 'app/modules/services/menu.service';
+import { FormControl } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 export interface PeriodicElement {
   id: string;
@@ -27,14 +27,14 @@ export interface PeriodicElement {
 })
 export class ListUsersComponent implements AfterViewInit, OnInit {
   @ViewChild('paginator') paginator: MatPaginator;
+  myControl = new FormControl('');
+  pipe = new DatePipe('en-US');
 
-  displayedColumns: string[] = ['nome', 'identificacao', 'perfil', 'opcoes'];
+  displayedColumns: string[] = ['nome', 'identificacao', 'perfil', 'ultimoAcesso', 'opcoes'];
   usuarios: MatTableDataSource<PeriodicElement>
   usuariosL: number = 0
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private usuariosService: UsuariosService,
     private adminSrv: AdminService,
     public dialog: MatDialog,
     private toastr: ToastrService,
@@ -51,19 +51,26 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
   requisicoes() {
     this.adminSrv.getUsers().subscribe(e => {
       this.usuarios = new MatTableDataSource(e);
+      this.usuariosFiltrados = new MatTableDataSource(e);
+      this.usuariosFiltrados.paginator = this.paginator;
       this.usuarios.paginator = this.paginator;
       this.usuariosL = this.usuarios?.data.length;
-
     } )
 
+  }
+  usuariosFiltrados: MatTableDataSource<PeriodicElement>
+  filtarUsuarios(e) {
+    const data = this.usuarios.data.filter((u) => u.nome.toUpperCase().includes(e.toUpperCase()))
+    this.usuariosFiltrados = new MatTableDataSource(data)
+    this.usuariosFiltrados.paginator = this.paginator;
   }
   deletarUsuario(id): void {
     this.dialog.open(DeleteModalComponent, {
       data: { 
         nome: "Usuários",
         data: () => {
-        this.adminSrv.deleteUser(id).subscribe(() => {
           this.dialog.closeAll()
+        this.adminSrv.deleteUser(id).subscribe(() => {
           this.toastr.success("Deletado com Sucesso")
           this.requisicoes()
         })

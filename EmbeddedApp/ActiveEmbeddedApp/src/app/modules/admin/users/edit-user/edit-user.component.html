@@ -1,26 +1,26 @@
-<div>
+<div class="w-full flex flex-row justify-center items-center">
 
-    <div class="m-10 mb-0 rounded-t-xl flex items-center bg-white py-[3px]">
+    <div class="flex flex-col m-10 mt-0 bg-white rounded-b-xl p-5 shadow-2xl">
+        <div class="mx-10 my-0 rounded-t-xl flex items-center bg-white py-[3px]">
 
-        <button (click)="voltar()" class="self-start  hover:rounded-full m-2">
-            <mat-icon class="flex self-center text-slate-600 hover:text-slate-400" svgIcon="arrow_back"></mat-icon>
-        </button>
+            <button (click)="voltar()" class="self-start my-2 mr-8 ml-[-40px] hover:rounded-full">
+                <mat-icon class="flex self-center text-slate-600 hover:text-slate-400" svgIcon="arrow_back"></mat-icon>
+            </button>
 
-        <div class="w-full m-2">
-            <h1 class="text-center text-slate-700 text-2xl">
-                EDITAR USUÁRIO
-            </h1>
+            <div class="w-full m-2">
+                <h1 class="text-center text-slate-700 text-2xl">
+                    EDITAR USUÁRIO
+                </h1>
+            </div>
         </div>
-    </div>
-    <div class="flex flex-col m-10 mt-0 bg-white rounded-b-xl p-5">
         <!-- <h2 class="text-left mb-2 text-xl">
         Informações do Usuário
-    </h2> -->
+        </h2> -->
         <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-100">
 
             <mat-form-field appearance="fill">
                 <mat-label>Nome</mat-label>
-                <input type="text" formControlName="nome" matInput #first />
+                <input formControlName="nome" matInput #first />
                 <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
 
             </mat-form-field>
@@ -71,8 +71,8 @@
             <mat-form-field appearance="fill">
                 <mat-label>Perfil</mat-label>
                 <mat-select formControlName="perfil">
-                        <mat-option value="ca21241b-a37d-4e6f-bbb6-26643d3cdd99">User</mat-option>
-                        <mat-option value="6a203390-8389-49ca-aa0e-6a14ba7815bc">Admin</mat-option>
+                    <mat-option value="ca21241b-a37d-4e6f-bbb6-26643d3cdd99">User</mat-option>
+                    <mat-option value="6a203390-8389-49ca-aa0e-6a14ba7815bc">Admin</mat-option>
                 </mat-select>
                 <mat-icon svgIcon="heroicons_outline:archive"></mat-icon>
 
@@ -82,8 +82,29 @@
                     Perfil é Obrigatório
                 </div>
             </div>
+            <!-- <mat-form-field appearance="fill">
+                <mat-label>Rls</mat-label>
+                <input matInput [formControl]="" class="w-full h-10 border-2 border-black "/>
+                <mat-select formControlName="visions" [(value)]="form.value.visions"
+                multiple>
+                    <mat-option *ngFor="let rls of visoes" [value]="rls.name" select>
+                        {{rls.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> -->
 
+            <mat-form-field appearance="fill">
+                <mat-label>Acesso</mat-label>
+
+
+                    <mat-select [formControl]="form.controls.visions" multiple>
+                        <mat-option *ngFor="let v of filteredVisions" [value]="v.name">
+                            {{v.name}}
+                          </mat-option>
+                    </mat-select>
+
+              </mat-form-field>
         </form>
-        <button mat-raised-button color="primary" (click)="editar()" class="self-end mt-2">SALVAR</button>
+        <button mat-raised-button color="primary" (click)="editar()" class="self-end mt-2 rounded-sm text-colorText">SALVAR</button>
     </div>
 </div>

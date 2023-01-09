@@ -1,14 +1,28 @@
 <div class="flex flex-col flex-auto min-w-0">
     <!-- Main -->
     <div class="text-3x-L flex-auto p-6  justify-center">
-    <div class="w-full mx-5 text-3xl flex items-center justify-between">Usuários
-      <button mat-raised-button color="primary" class="mr-10" (click)="criarUsuario()">
+    <!-- <div class="w-full mx-5 text-3xl flex items-center justify-end">
+      <button mat-raised-button color="primary" class="mr-10 rounded-sm text-colorText" (click)="criarUsuario()">
         Novo Usuário
-    </button>
+      </button>
+    </div> -->
+    <div class="w-full bg-primary h-16 rounded-t-sm  mt-4 flex items-center justify-between">
+        <div class="text-3xl mx-4">Usuários</div>
+          <!-- <input placeholder="Buscar" formControlName="identificacao" class="bg-white w-1/4 rounded-sm h-12 px-2  mx-4 m-2">
+          asdasasd -->
+          <div class="flex items-center justify-between">
+            <div class="p-2 bg-white rounded-md flex items-center cursor-pointer">
+              <mat-icon svgIcon="heroicons_solid:user-add" class="text-primary w-8 h-8" (click)="criarUsuario()"></mat-icon>
+            </div>
+            <mat-form-field appearance="fill" class="w-80 mt-4 mr-4 ml-1">
+              <input type="text" [formControl]="myControl" placeholder="Buscar" (ngModelChange)="filtarUsuarios($event)"  matInput/>
+              <mat-icon>search</mat-icon>
+            </mat-form-field>
+          </div>
+            
     </div>
-
-    <div class="flex flex-col p-4 " id="table">
-        <table mat-table  [dataSource]="usuarios" class="pb-6">
+    <div class="flex flex-col shadow-2xl" id="table">
+        <table mat-table class="" [dataSource]="usuariosFiltrados" class="pb-6">
             <!-- Name Column -->
             <ng-container matColumnDef="nome">
               <th mat-header-cell *matHeaderCellDef> Nome </th>
@@ -27,6 +41,10 @@
               <td mat-cell *matCellDef="let element"> {{element.identificacao}} </td>
             </ng-container>
 
+            <ng-container matColumnDef="ultimoAcesso">
+              <th mat-header-cell *matHeaderCellDef> Primeiro acesso </th>
+              <td mat-cell *matCellDef="let element"> {{  pipe.transform(element.dataUltimoAcesso, "dd/MM/yyyy")}} </td>
+            </ng-container>
 
             <!-- Rows -->
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -47,7 +65,7 @@
                         </button>
                         <button (click)="editarUsuario(element.id)">
                             <mat-icon
-                                color="primary"
+                                color="accent"
                                 class="cursor-pointer"
                                 svgIcon="edit_note"
                             ></mat-icon>
