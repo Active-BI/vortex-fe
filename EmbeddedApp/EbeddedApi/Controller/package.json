@@ -1,0 +1,20 @@
+{
+  "name": "ebeddedapi",
+  "version": "1.0.0",
+  "description": "Scritps to deploy on ftp server",
+  "main": "deploy.js",
+  "dependencies": {
+    "cli-progress": "^3.11.1",
+    "ftp-deploy": "^2.4.2"
+  },
+  "type": "commonjs",
+  "devDependencies": {},
+  "scripts": {
+    "deploy": "cd .. && cd ./EmbeddedApp_Portal/ && ng build -c hml --output-path ../EbeddedApi/wwwroot && cd .. && cd ./EbeddedApi/ && dotnet publish && node deploy hml",
+    "deploy:stg": "cd .. && cd ./EmbeddedApp_Portal/ && ng build -c stg --output-path ../EbeddedApi/wwwroot && cd .. && cd ./EbeddedApi/ && dotnet publish && node deploy stg",
+    "deploy:prd": "cd .. && cd ./EmbeddedApp_Portal/ && ng build -c production --base-href / --output-path ../EbeddedApi/wwwroot && cd .. && cd ./EbeddedApi/ && dotnet publish && node deploy prd",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Thiago Caldas",
+  "license": "ISC"
+}
