@@ -66,23 +66,18 @@ export class AdminService {
   geVisions(): Observable<any[]>{
     return this.http.get<any[]>(`${this.baseUrl}visoes`)
     .pipe(
-      map((visions: Vision[]) => {
+      map((visions: any[]) => {
         return visions.sort((a, b) => {
-          if(a.name.toUpperCase().includes('BRASIL')){
-            return -1
+          a = a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+          b = b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+          if (a > b) {
+            return 1;
           }
-          else if (a.name.toUpperCase().includes('NACIONAL')){
-            return -1
+          if (a < b) {
+            return -1;
           }
-          else if ( a.name < b.name){
-            return - 1
-          }
-          else if(a.name > b.name){
-            return 1
-          }
-          else {
-            return 0
-          }
+          // a must be equal to b
+          return 0;
         })
       } ),
       catchError((err) => {

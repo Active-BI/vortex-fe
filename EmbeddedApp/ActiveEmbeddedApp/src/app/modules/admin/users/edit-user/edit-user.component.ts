@@ -15,12 +15,12 @@ import { ordersData } from '../usersUtils';
 })
 export class EditUserComponent implements OnInit {
   myControl = new FormControl('');
-
+  visionsSelecteds = []
   form = this.fb.group({
     id: [''],
     nome: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required,
-      Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+    Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
     emailContato: ['', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
     identificacao: ['', [Validators.required]],
     perfil: ['', [Validators.required]],
@@ -42,13 +42,15 @@ export class EditUserComponent implements OnInit {
     private toastr: ToastrService,
     private adminSrv: AdminService) {
 
-  this.id = this.route.snapshot.paramMap.get("id")
+    this.id = this.route.snapshot.paramMap.get("id")
+
   }
+
   ngOnInit(): void {
     this.form.controls.email.disable()
-    this.adminSrv.getUserById(this.id).subscribe((e : any) => {
+    this.adminSrv.getUserById(this.id).subscribe((e: any) => {
       this.user = e
-      console.log(this.user.userVisions.map(x => x.vision.name))
+      const visoesName = this.user.userVisions.map(x => x.vision.name)
       this.form.patchValue({
         id: this.user.id,
         nome: this.user.nome,
@@ -56,47 +58,58 @@ export class EditUserComponent implements OnInit {
         emailContato: this.user.emailContato,
         identificacao: this.user.identificacao,
         perfil: this.user.perfil,
-        visions:  this.user.userVisions.map(x => x.vision.name),
+        visions: visoesName,
         menus: []
       })
+      this.visionsSelecteds = visoesName
 
-    })
 
-    this.adminSrv.geVisions().subscribe((e : any) => {
-      e = e.sort((a,b)=> {
-        a = a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
-        b = b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
-        if (a > b) {
-          return 1;
-        }
-        if (a < b) {
-          return -1;
-        }
-        // a must be equal to b
-        return 0;
+      this.adminSrv.geVisions().subscribe((e: any) => {
+        e = e.filter((a) => !this.visionsSelecteds.includes(a.name))
+        this.visoes = e
+        this.filteredVisions = e
       })
-      this.visoes = e
-      this.filteredVisions = e
     })
-  
   }
+
+  resetfilteredVisions() {
+    this.filteredVisions = this.filteredVisions.filter((a) => !this.visionsSelecteds.includes(a.name))
+  }
+
   filteredVisions = []
-  filterVisions(e) {
-    this.filteredVisions =this.visoes.filter((v) => v.name.toUpperCase().includes(e.toUpperCase()))
+
+  filterVisions(e: any) {
+    this.filteredVisions = this.visoes.filter((v) => v.name.toUpperCase().includes(e.toUpperCase()))
+    this.resetfilteredVisions()
   }
-  get visoesFormArray() {
-    return this.form.controls.visions as FormControl;
-  }
+
   voltar(): void {
     this.router.navigate(['app/usuarios'])
   }
+  onChange(e) {
+    if (this.visoes.find(a => a.name === e)) {
+      const value = this.form.value.visions
+      value.push(e)
+      this.visionsSelecteds = value
+      this.form.patchValue({
+        visions: value
+      })
+
+      this.filteredVisions = this.visoes
+
+      this.resetfilteredVisions()
+      this.myControl.setValue('')
+    }
+  }
+
 
   redirectToEdit(id) {
     this.router.navigate([`app/usuarios-editar/${id}`])
   }
+
+
   editar(): void {
     if (this.form.valid && this.myControl.valid) {
-      const payload = this.form.value
       this.adminSrv.updateUser(this.form.value as PeriodicElement).subscribe((e => {
         this.toastr.success("Editado com Sucesso")
         this.voltar()

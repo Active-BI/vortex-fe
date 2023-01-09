@@ -82,29 +82,21 @@
                     Perfil é Obrigatório
                 </div>
             </div>
-            <!-- <mat-form-field appearance="fill">
-                <mat-label>Rls</mat-label>
-                <input matInput [formControl]="" class="w-full h-10 border-2 border-black "/>
-                <mat-select formControlName="visions" [(value)]="form.value.visions"
-                multiple>
-                    <mat-option *ngFor="let rls of visoes" [value]="rls.name" select>
-                        {{rls.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field> -->
 
-            <mat-form-field appearance="fill">
+            <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Acesso</mat-label>
-
-
-                    <mat-select [formControl]="form.controls.visions" multiple>
-                        <mat-option *ngFor="let v of filteredVisions" [value]="v.name">
-                            {{v.name}}
-                          </mat-option>
-                    </mat-select>
-
-              </mat-form-field>
+                <input type="text" placeholder="Buscar" aria-label="Number" matInput
+                    (input)="filterVisions($event.target.value)" [formControl]="myControl" [matAutocomplete]="auto">
+                <mat-autocomplete (optionSelected)="onChange($event.option.value)" autoActiveFirstOption
+                    #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredVisions" [value]="option.name">
+                        {{option.name}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+                    <mat-chip *ngFor="let v of visionsSelecteds">{{v}}</mat-chip>
         </form>
-        <button mat-raised-button color="primary" (click)="editar()" class="self-end mt-2 rounded-sm text-colorText">SALVAR</button>
+        <button mat-raised-button color="primary" (click)="editar()"
+            class="self-end mt-2 rounded-sm text-colorText">SALVAR</button>
     </div>
 </div>

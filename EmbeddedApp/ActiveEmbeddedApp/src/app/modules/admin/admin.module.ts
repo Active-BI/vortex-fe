@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Route, RouterModule } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
@@ -139,7 +139,8 @@ const adminroutes: Route[] = [
         GestaoConsetimentoCookiesComponent,
         CreateUserComponent,
         ListUsersComponent,
-        EditUserComponent
+        EditUserComponent,
+        
     ],
     imports: [
         CommonModule,
@@ -162,12 +163,13 @@ const adminroutes: Route[] = [
         FuseAlertModule,
         SharedModule,
         MatBadgeModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
         { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() }
-    ]
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AdminModule {}
