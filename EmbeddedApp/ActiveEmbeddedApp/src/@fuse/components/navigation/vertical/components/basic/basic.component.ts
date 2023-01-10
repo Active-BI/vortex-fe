@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { IsActiveMatchOptions } from '@angular/router';
+import { IsActiveMatchOptions, Route, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/vertical/vertical.component';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
@@ -26,7 +26,8 @@ export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestr
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
-        private _fuseUtilsService: FuseUtilsService
+        private _fuseUtilsService: FuseUtilsService,
+        private router: Router
     )
     {
         // Set the equivalent of {exact: false} as default for active match options.
@@ -72,6 +73,10 @@ export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestr
     /**
      * On destroy
      */
+    configRoute(item) {
+        console.log('/' + item)
+        return this.router.navigate(['/usuarios']);
+    }
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions

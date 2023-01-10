@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Data, Route, Router, RouterStateSnapshot } from '@angular/router';
 
 import { EmbeddedService } from 'app/modules/services/embedded/embedded.service';
+import { map, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-gestao-vulnerabilidade',
@@ -8,15 +10,24 @@ import { EmbeddedService } from 'app/modules/services/embedded/embedded.service'
   styleUrls: ['./gestao-vulnerabilidade.component.scss']
 })
 export class GestaoVulnerabilidadeComponent implements OnInit {
-    reportID = '7b71c89f-1d23-4d57-a99c-369f0ae8b5d1';
-    groupID = 'c807ca26-3f93-463d-aa15-9a12e48174ba';
-
+    reportID = '';
+    groupID = '';
+    enable = false
     layout = 'desktop';
-
-    constructor(private embeddedSrv: EmbeddedService) { }
-
-  ngOnInit(): void {
-
+    parametro$ = Observable<Data>;
+    constructor(private router: ActivatedRoute
+      ) {
+        
+      }
+      
+    ngOnInit(): void {
+        this.router.params.subscribe((e) => {
+          this.enable = false
+          this.reportID = e.reportId;
+          this.groupID = e.groupId
+          setTimeout(() => {this.enable = true}, 300);
+          
+    })
   }
 
 }

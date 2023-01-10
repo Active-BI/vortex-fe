@@ -35,6 +35,7 @@ export class NavigationMockApi
         this._fuseMockApiService
             .onGet('api/common/navigation')
             .reply(() => {
+
                 return [
                     200,
                     {

@@ -26,6 +26,7 @@ export class SearchMockApi
     )
     {
         // Register Mock API handlers
+
         this.registerHandlers()
     }
 
@@ -72,7 +73,6 @@ export class SearchMockApi
 
                 // Prepare the results array
                 const results = [];
-
                 // If there are contacts results...
                 if ( contactsResults.length > 0 )
                 {
@@ -92,6 +92,7 @@ export class SearchMockApi
                         label  : 'Contacts',
                         results: contactsResults
                     });
+
                 }
 
                 // If there are page results...

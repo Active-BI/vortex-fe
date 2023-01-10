@@ -9,6 +9,10 @@ export interface FuseNavigationItem
     class?: string;
     context?: string;
     menuSubItens?: string;
+    data?: {
+        reportId?: string;
+        groupId?: string;
+    };
     subtitle?: string;
     type:
         | 'aside'
@@ -16,6 +20,7 @@ export interface FuseNavigationItem
         | 'collapsable'
         | 'divider'
         | 'group'
+        | 'bi'
         | 'spacer';
     hidden?: (item: FuseNavigationItem) => boolean;
     active?: boolean;

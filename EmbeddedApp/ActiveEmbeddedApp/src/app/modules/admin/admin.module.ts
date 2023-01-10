@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Route, RouterModule } from '@angular/router';
+import { ActivatedRoute, Route, RouterModule } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
 import { AdminComponent } from './admin.component';
 import {
@@ -45,12 +45,17 @@ import { AuthGuard } from '../services/guard/auth.guard';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ListUsersComponent } from './users/list-users/list-users.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
+import { BiDefaultComponent } from './bi-default/bi-default.component';
 
 const adminroutes: Route[] = [
     {
         path: '',
         component: InicioComponent,
         pathMatch: 'full',
+    },
+    {
+        path: 'view/:reportId/:groupId',
+        component: GestaoVulnerabilidadeComponent,
     },
     {
         path: 'inicio',
@@ -67,8 +72,6 @@ const adminroutes: Route[] = [
     {
         path: 'operacao',
         component: MapeamentoDadosSensiveisComponent,
-        // canActivate: [AuthGuard],
-        // data: {expectedRole: ['User','Admin']}
     },
     {
         path: 'comercial',
@@ -123,7 +126,7 @@ const adminroutes: Route[] = [
         CreateUserComponent,
         ListUsersComponent,
         EditUserComponent,
-        
+        BiDefaultComponent
     ],
     imports: [
         CommonModule,
