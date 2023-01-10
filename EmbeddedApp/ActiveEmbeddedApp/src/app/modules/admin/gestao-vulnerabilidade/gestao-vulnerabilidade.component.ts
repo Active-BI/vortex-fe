@@ -22,6 +22,7 @@ export class GestaoVulnerabilidadeComponent implements OnInit {
       
     ngOnInit(): void {
         this.router.params.subscribe((e) => {
+          // console.log(e)
           this.enable = false
           this.reportID = e.reportId;
           this.groupID = e.groupId

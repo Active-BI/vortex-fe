@@ -26,7 +26,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id: 'realizado-vs-orcado',
                 title: 'Realizado vs Orçado',
                 type: 'basic',
-                link: 'view/15d9dd35-357b-4c7d-acbd-1544ecfac4dd/c807ca26-3f93-463d-aa15-9a12e48174ba',
+                link: 'view/c8b6e6fe-8904-42cb-a597-b4c6943f7ae7/8336cfba-32f1-40fc-a957-08c6b2f2a43f',
             },
             {
                 id: 'fechamento-financeiro',
