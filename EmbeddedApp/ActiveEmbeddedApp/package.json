@@ -8,7 +8,7 @@
     "scripts": {
         "ng": "ng",
         "start": "node server",
-        "build": " ng build -c production --output-path ..\\EbeddedApi\\wwwroot --base-href / && cd .. && cd .\\EbeddedApi && heroku container:push web -a app-active && heroku container:release web -a app-active",
+        "build": " ng build -c production --output-path ..\\EbeddedApi\\wwwroot --base-href / && cd .. && cd .\\EbeddedApi\\Api && heroku container:push web -a app-active && heroku container:release web -a app-active",
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
         "lint": "ng lint"
