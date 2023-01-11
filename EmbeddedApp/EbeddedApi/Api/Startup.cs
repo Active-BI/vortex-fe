@@ -131,14 +131,14 @@ namespace EmbeddedApi
 
             } else{
                 app.UseHsts();
-                
+             
                 // app.UseCors(x => x.WithOrigins("https://app-embedded.herokuapp.com/").WithMethods("GET","OPTION").AllowAnyHeader());
                 app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             }
             
             // Desabilitado para não subir servidor de arquivos kestrel app.UseDefaultFiles();
-            //app.UseDefaultFiles();
-            //app.UseStaticFiles();
+             app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseRouting();
             
