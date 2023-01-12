@@ -20,8 +20,8 @@ const themes = {
     // Default theme is required for theming system to work correctly
     'default': {
         primary  : {
-            ...colors.gray,
-            DEFAULT: '#002e5a'
+            ...colors.slate,
+            DEFAULT: colors.slate[900]
         },
         accent   : {
             ...colors.slate,

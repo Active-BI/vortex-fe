@@ -76,33 +76,19 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
         });
 
        this.getEmbedded(this.settings);
-    //    this.layout = this.embeddedSrv.handSetStatus;
-    //    this.embeddedSrv.handSetEmitter.subscribe(
-    //     (res) =>{
-    //         console.log(res);
-    //         if(res === 'mobile'){
-    //         const settings = {
-    //             ... this.settings,
-    //             layoutType: 2,
-    //             background:1,
-    //         };
-    //         this.getEmbedded(settings);
-    //     } else {
-    //         const settings = {
-    //             ... this.config.settings,
-    //             layoutType: 0,
-    //             background:0,
-    //         };
-    //         this.getEmbedded(settings);
-
-    //     }
-    //     }
-    //    );
     }
     ngAfterViewInit(): void {
-        // this.report = this.reportObj.getReport();
+    }
+    refresh() {
+      this.reportObj.getReport().refresh()
+    }
+    fullscreen() {
+      this.reportObj.getReport().fullscreen()
     }
 
+    print() {
+      this.reportObj.getReport().print()
+    }
     // private UpdateLayoutConfig(layout: string): void{}
 
     private getEmbedded(settings: any): void {
@@ -142,6 +128,7 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
                         },
                     },
                 };
+
                 this.showReport = true;
 
             },

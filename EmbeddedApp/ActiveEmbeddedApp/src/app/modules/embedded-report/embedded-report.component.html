@@ -1,8 +1,29 @@
 <div *ngIf="showReport">
+  <div class="flex w-full justify-end">
 
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Opções">
+      <mat-icon class="text-xl mb-2 scale-[2]">settings</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="refresh()">
+        <mat-icon>refresh</mat-icon>
+        <span>Atualizar</span>
+      </button>
+      <button mat-menu-item (click)="fullscreen()">
+        <mat-icon>fullscreen</mat-icon>
+        <span>Tela Cheia</span>
+      </button>
+      <button mat-menu-item (click)="print()">
+        <mat-icon>print</mat-icon>
+        <span>Imprimir</span>
+      </button>
+      
+    </mat-menu>
+</div>
+  
   <powerbi-report #reportObj *ngIf="type === 'report'"
-      [embedConfig] = "config"
-
+  [embedConfig] = "config"
+  
       [cssClassName] = "'pbi-report'"
 
       [phasedEmbedding] = "false"

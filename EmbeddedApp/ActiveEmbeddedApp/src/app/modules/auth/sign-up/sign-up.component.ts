@@ -3,7 +3,8 @@ import { UntypedFormBuilder, UntypedFormGroup, NgForm, Validators } from '@angul
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
-import { AuthService } from 'app/core/auth/auth.service';
+import { AuthService } from 'app/modules/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector     : 'auth-sign-up',
@@ -26,9 +27,10 @@ export class AuthSignUpComponent implements OnInit
      * Constructor
      */
     constructor(
-        private _authService: AuthService,
         private _formBuilder: UntypedFormBuilder,
-        private _router: Router
+        private toastr: ToastrService,
+        private _router: Router,
+        private authService: AuthService,
     )
     {
     }
@@ -44,11 +46,8 @@ export class AuthSignUpComponent implements OnInit
     {
         // Create the form
         this.signUpForm = this._formBuilder.group({
-                name      : ['', Validators.required],
                 email     : ['', [Validators.required, Validators.email]],
                 password  : ['', Validators.required],
-                company   : [''],
-                agreements: ['', Validators.requiredTrue]
             }
         );
     }
@@ -65,9 +64,9 @@ export class AuthSignUpComponent implements OnInit
         // Do nothing if the form is invalid
         if ( this.signUpForm.invalid )
         {
-            alert("Erro no formulário!")
+            this.toastr.error("Erro no formulário!")
             return;
-        }
+        } 
 
         // Disable the form
         this.signUpForm.disable();
@@ -76,7 +75,7 @@ export class AuthSignUpComponent implements OnInit
         this.showAlert = false;
 
         // Sign up
-        this._authService.signUp(this.signUpForm.value)
+        this.authService.register(this.signUpForm.value)
             .subscribe(
                 (response) => {
 
@@ -91,11 +90,6 @@ export class AuthSignUpComponent implements OnInit
                     // Reset the form
                     this.signUpNgForm.resetForm();
 
-                    // Set the alert
-                    this.alert = {
-                        type   : 'error',
-                        message: 'Something went wrong, please try again.'
-                    };
 
                     // Show the alert
                     this.showAlert = true;

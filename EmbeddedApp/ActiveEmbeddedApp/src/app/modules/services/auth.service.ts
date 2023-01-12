@@ -45,12 +45,12 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
 
   login(user: UserCreds): Observable<any> {
-    return this.http.put(`${this.baseUrl}/auth`, user)
+    return this.http.put(`${this.baseUrl}auth`, user)
   }
 
-  register(user): Observable<any> {
+    register(user): Observable<any> {
 
-    return this.http.post<any>(`${this.baseUrl}/auth`, user)
+    return this.http.post<any>(`${this.baseUrl}auth`, user)
     .pipe(
       catchError((err) => {
         this.toast.error(`Erro ao cadastrar usuários`,null,{progressBar:true, timeOut:2000});
