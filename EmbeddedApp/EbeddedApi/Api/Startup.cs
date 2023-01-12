@@ -137,7 +137,7 @@ namespace EmbeddedApi
             }
             
             // Desabilitado para não subir servidor de arquivos kestrel app.UseDefaultFiles();
-             app.UseDefaultFiles();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseRouting();

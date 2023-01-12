@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PowerBIEmbedModule } from 'powerbi-client-angular';
 import { EmbeddedReportComponent } from './embedded-report.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 
@@ -12,6 +14,8 @@ import { EmbeddedReportComponent } from './embedded-report.component';
     imports: [
         CommonModule,
         PowerBIEmbedModule,
+        MatIconModule,
+        MatMenuModule
     ],
     exports:[EmbeddedReportComponent]
 })

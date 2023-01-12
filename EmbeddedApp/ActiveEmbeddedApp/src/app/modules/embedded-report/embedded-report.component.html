@@ -1,23 +1,23 @@
 <div *ngIf="showReport">
 
-    <powerbi-report #reportObj *ngIf="type === 'report'"
-        [embedConfig] = "config"
+  <powerbi-report #reportObj *ngIf="type === 'report'"
+      [embedConfig] = "config"
 
-        [cssClassName] = "'pbi-report'"
+      [cssClassName] = "'pbi-report'"
 
-        [phasedEmbedding] = "false"
+      [phasedEmbedding] = "false"
 
-        [eventHandlers] = "handlers"
-    >
-    </powerbi-report>
-    <powerbi-dashboard *ngIf="type === 'dashboard'"
-    [embedConfig] = "config"
+      [eventHandlers] = "handlers"
+  >
+  </powerbi-report>
+  <powerbi-dashboard *ngIf="type === 'dashboard'"
+  [embedConfig] = "config"
 
-    [cssClassName] = "'pbi-report'"
+  [cssClassName] = "'pbi-report'"
 
-    [phasedEmbedding] = "false"
+  [phasedEmbedding] = "false"
 
-    [eventHandlers] = "handlers"
+  [eventHandlers] = "handlers"
 >
 </powerbi-dashboard>
 </div>
