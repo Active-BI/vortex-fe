@@ -26,7 +26,7 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
     configDashboard;
     showReport=false;
     report: any;
-
+    pages: any
     handlers;
     settings = {
         visualRenderedEvents: true,
@@ -45,7 +45,9 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
     constructor(private embeddedSrv: EmbeddedService, public breakpointObserver: BreakpointObserver) {
         this.handlers =  new Map([
             ['loaded', (): void => console.log('Report loaded')],
-            ['rendered', (): void => console.log('Report rendered')],
+            ['rendered', (): void => {
+        this.selectItems()
+        console.log('Report rendered')}],
             ['error', (event): void => console.log(event.detail)]
         ]);
     }
@@ -76,11 +78,15 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
         });
 
        this.getEmbedded(this.settings);
+       
     }
     ngAfterViewInit(): void {
+      if (this.reportObj) {
+      }
+
     }
-    refresh() {
-      this.reportObj.getReport().refresh()
+    async refresh() {
+      this.reportObj.getReport().getPages().then((e) => console.log(e))
     }
     fullscreen() {
       this.reportObj.getReport().fullscreen()
@@ -89,8 +95,30 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
     print() {
       this.reportObj.getReport().print()
     }
-    // private UpdateLayoutConfig(layout: string): void{}
+    selectItems() {
+      const get = async () => {
 
+        try {
+
+          const pages = await  this.reportObj.getReport().getPages();
+      
+          let log = "Report pages:";
+      
+          this.pages = pages.filter((e) => e.visibility === 0)
+          console.log(this.pages)
+      }
+      
+      catch (error) {
+      
+          console.log(error);
+      
+        }
+      }
+      get()
+    }
+    change(e) {
+      this.pages.find((a) => a.name === e).setActive()
+    }
     private getEmbedded(settings: any): void {
 
         this.embeddedSrv.getEmbeddedInfo(
@@ -127,10 +155,10 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
                             },
                         },
                     },
+                    
                 };
 
                 this.showReport = true;
-
             },
             (err) => {}
         );

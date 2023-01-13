@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
 import { ToastrService } from 'ngx-toastr';
-import { AdminService } from 'app/modules/services/admin.service';
+import { AdminService, getAllRequest } from 'app/modules/services/admin.service';
 import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
@@ -20,6 +20,8 @@ export interface PeriodicElement {
   menus: any[string]
 }
 
+
+
 @Component({
   selector: 'app-list-users',
   templateUrl: './list-users.component.html',
@@ -31,7 +33,7 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
   pipe = new DatePipe('en-US');
 
   displayedColumns: string[] = ['nome', 'identificacao', 'perfil', 'ultimoAcesso', 'opcoes'];
-  usuarios: MatTableDataSource<PeriodicElement>
+  usuarios: MatTableDataSource<getAllRequest>
   usuariosL: number = 0
   constructor(
     private router: Router,
@@ -58,7 +60,7 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
     } )
 
   }
-  usuariosFiltrados: MatTableDataSource<PeriodicElement>
+  usuariosFiltrados: MatTableDataSource<getAllRequest>
   filtarUsuarios(e) {
     const data = this.usuarios.data.filter((u) => u.nome.toUpperCase().includes(e.toUpperCase()))
     this.usuariosFiltrados = new MatTableDataSource(data)

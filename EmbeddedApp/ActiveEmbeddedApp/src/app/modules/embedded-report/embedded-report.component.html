@@ -20,7 +20,15 @@
       
     </mat-menu>
 </div>
-  
+
+
+  <mat-label>Páginas</mat-label>
+  <select (change)="change($event.target.value)" >
+    <option *ngFor="let page of pages" [value]="page.name">
+      {{page.displayName}}
+    </option>
+  </select>
+
   <powerbi-report #reportObj *ngIf="type === 'report'"
   [embedConfig] = "config"
   

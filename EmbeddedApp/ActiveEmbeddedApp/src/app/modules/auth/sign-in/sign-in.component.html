@@ -9,7 +9,7 @@
             </div>
 
             <!-- Title -->
-            <div class="mt-2 text-4xl text-primary font-extrabold tracking-tight leading-tight">Entrar</div>
+            <div class="mt-2 text-4xl text-primary font-extrabold tracking-tight leading-tight ">Entrar</div>
             <!-- Alert -->
             <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
                 [type]="alert.type" [@shake]="alert.type === 'error'">
@@ -58,7 +58,7 @@
                 </button>
                 <div class="flex md:flex md:items-center items-baseline mt-1 font-small">
                     <div>Não tem uma conta?</div>
-                    <a class="ml-1 text-primary hover:underline" [routerLink]="['/auth/sign-up']">Cadastra-se
+                    <a class="ml-1 text-primary underline" [routerLink]="['/auth/sign-up']">Cadastra-se
                     </a>
                 </div>
 

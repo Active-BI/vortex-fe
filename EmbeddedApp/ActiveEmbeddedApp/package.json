@@ -8,7 +8,7 @@
     "scripts": {
         "ng": "ng",
         "start": "node server",
-        "build": " ng build -c production --output-path ..\\EbeddedApi\\wwwroot --base-href / && cd .. && cd .\\EbeddedApi\\Api && heroku container:push web -a app-active && heroku container:release web -a app-active",
+        "build": "ng build -c production --output-path ..\\EbeddedApi\\Api\\wwwroot --base-href /  && cd .. && cd .\\EbeddedApi\\Api && heroku container:push web -a app-active && heroku container:release web -a app-active",
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
         "lint": "ng lint"
@@ -70,6 +70,7 @@
         "@types/jasmine": "4.0.3",
         "@types/lodash": "4.14.182",
         "@types/lodash-es": "4.17.6",
+        "@types/node": "^18.11.18",
         "@typescript-eslint/eslint-plugin": "5.30.7",
         "@typescript-eslint/parser": "5.30.7",
         "autoprefixer": "10.4.7",
@@ -85,6 +86,7 @@
         "karma-jasmine": "5.1.0",
         "karma-jasmine-html-reporter": "2.0.0",
         "lodash": "4.17.21",
+        "nock": "^13.3.0",
         "postcss": "8.4.14",
         "tailwindcss": "3.1.6",
         "typescript": "4.7.4"

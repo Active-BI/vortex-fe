@@ -6,39 +6,15 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, debounceTime, map } from 'rxjs/operators';
 
-interface Vision{
-  id: string
-  name: string
-}export interface IMenuItem {
-  class: string,
-  context: string,
-  icon: string
-  id: string
-  longTitle: string
-  menuSubItens: null | IMenuSubItens[]
-  path: string
-  title: string
-}
-
-export interface IPostMenuItem {
-  class: string,
-  context: string,
-  icon: string
-  longTitle: string
-  menuSubItens: null | IMenuSubItens[]
-  path: string
-  title: string
-}
-
-export interface IMenuSubItens {
-  class: string,
-  context: string,
-  icon: string
-  id: string
-  longTitle: string
-  path: string
-  title: string
-  menuItemId: string
+export interface getAllRequest {
+  id: string;
+  email: string;
+  emailContato: string;
+  identificacao: string;
+  nome: string;
+  perfil: string;
+  userVisions: any[] | null
+  dataUltimoAcesso: string | null
 }
 
 @Injectable({
@@ -53,7 +29,7 @@ export class AdminService {
 
  private baseUrl = environment.baseUrl;
 
-  getUsers(): Observable<any[]>{
+  getUsers(): Observable<getAllRequest[]>{
     return this.http.get<any[]>(`${this.baseUrl}admin`)
     .pipe(
       catchError((err) => {
@@ -126,18 +102,4 @@ export class AdminService {
       })
     )
   }
-
-
-
-  getMenuContext(): Observable<FuseNavigationItem[]>{
-    return this.http.get<FuseNavigationItem[]>(`${this.baseUrl}admin/menucontext`)
-    .pipe(
-      debounceTime(500),
-      catchError((err) => {
-        this.toast.error(`Erro ao obter dados`, null, {progressBar:true, timeOut:2000});
-        return throwError(err);
-      })
-    )
-  }
-
 }

@@ -3,12 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Route, RouterModule } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
 import { AdminComponent } from './admin.component';
-import {
-    ConsultoresComponent,
-    DialogoCriacaoComponent,
-    DialogoEdicaoComponent,
-} from './consultores/consultores.component';
-import { ImportacaoComponent } from './importacao/importacao.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
@@ -20,19 +14,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { DialogoCriacaoEmpresasComponent, DialogoEdicaoEmpresasComponent, EmpresasComponent } from './empresas/empresas.component';
 import { MatSelectModule } from '@angular/material/select';
-import { ClientesComponent, DialogoEdicaoClientesComponent, DialogoCriacaoClientesComponent } from './clientes/clientes.component';
 import { EbeddedReportModule } from 'app/modules/embedded-report/embedded-report.module';
 import { LayoutModule } from '@angular/cdk/layout';
 
 // Compontents
 import { GestaoVulnerabilidadeComponent } from './gestao-vulnerabilidade/gestao-vulnerabilidade.component';
-import { CorrelacionamentoLogsComponent } from './correlacionamento-logs/correlacionamento-logs.component';
-import { DeteccaoRespEndpointsComponent } from './deteccao-resp-endpoints/deteccao-resp-endpoints.component';
-import { MapeamentoDadosSensiveisComponent } from './mapeamento-dados-sensiveis/mapeamento-dados-sensiveis.component';
-import { GestaoConsetimentoCookiesComponent } from './gestao-consetimento-cookies/gestao-consetimento-cookies.component';
-import { PrevencaoContraVazamentosDadosComponent } from './prevencao-contra-vazamentos-dados/prevencao-contra-vazamentos-dados.component';
 
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FuseAlertModule } from '@fuse/components/alert';
@@ -61,29 +48,7 @@ const adminroutes: Route[] = [
         path: 'inicio',
         component: InicioComponent,
     },
-    {
-        path: 'financeiro',
-        component: GestaoVulnerabilidadeComponent,
-    },
-    {
-        path: 'gente-e-gestao',
-        component: CorrelacionamentoLogsComponent,
-    },
-    {
-        path: 'operacao',
-        component: MapeamentoDadosSensiveisComponent,
-    },
-    {
-        path: 'comercial',
-        component: MapeamentoDadosSensiveisComponent,
-    },
-    {
-        path: 'juridico',
-        component: GestaoConsetimentoCookiesComponent,
-    },  {
-        path: 'prevencao-contra-vazamentos-dados',
-        component: PrevencaoContraVazamentosDadosComponent,
-    },
+
     {
         path: 'usuarios',
         component: ListUsersComponent,
@@ -91,10 +56,6 @@ const adminroutes: Route[] = [
     {
         path: 'usuarios-criar',
         component: CreateUserComponent,
-    },
-    {
-        path: 'usuarios-editar',
-        component: EditUserComponent,
     },
     {
         path: 'usuarios-editar/:id',
@@ -106,23 +67,8 @@ const adminroutes: Route[] = [
     declarations: [
         InicioComponent,
         AdminComponent,
-        ConsultoresComponent,
-        ImportacaoComponent,
-        DeleteModalComponent,
-        DialogoCriacaoComponent,
-        DialogoEdicaoComponent,
-        EmpresasComponent,
-        DialogoEdicaoEmpresasComponent,
-        DialogoCriacaoEmpresasComponent,
-        ClientesComponent,
-        DialogoEdicaoClientesComponent,
-        DialogoCriacaoClientesComponent,
         GestaoVulnerabilidadeComponent,
-        CorrelacionamentoLogsComponent,
-        DeteccaoRespEndpointsComponent,
-        MapeamentoDadosSensiveisComponent,
-        PrevencaoContraVazamentosDadosComponent,
-        GestaoConsetimentoCookiesComponent,
+        DeleteModalComponent,
         CreateUserComponent,
         ListUsersComponent,
         EditUserComponent,

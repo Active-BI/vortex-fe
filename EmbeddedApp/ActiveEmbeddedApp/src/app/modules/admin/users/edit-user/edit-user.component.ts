@@ -64,7 +64,7 @@ export class EditUserComponent implements OnInit {
       this.visionsSelecteds = visoesName
 
 
-      this.adminSrv.geVisions().subscribe((e: any) => {
+      this.adminSrv.geVisions().subscribe((e: any) => {console.log(e)
         this.visoes = e
         this.filteredVisions = e
       })
