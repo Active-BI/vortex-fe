@@ -9,7 +9,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { errorCalback, requestError } from '../../testesUtils/adminTestesFuncsUtils';
 import { getAllRequest, id, mockItem } from '../../testesUtils/adminTestesUtils';
 
-describe('Testando casos de erro dos EndPoints de usuários', () => {
+describe('Testando casos de erro dos EndPoints de usuários - SERVICE', () => {
   let seuService: AdminService
   let httpMock: HttpTestingController;
 
@@ -24,74 +24,100 @@ describe('Testando casos de erro dos EndPoints de usuários', () => {
     seuService = TestBed.get(AdminService);
     httpMock = TestBed.get(HttpTestingController);
   });
- 
+
   describe('Testa caso de erro do método Get de usuários', () => {
     it('deve lançar erro ao não buscar uma lista de usuários', () => {
       seuService
         .getUsers()
-        .subscribe((e: getAllRequest[]) =>  () => {
+        .subscribe((e: getAllRequest[]) => () => {
         },
-        (error) => errorCalback(error),
-        () => {
-        },
-      );
+          (error) => errorCalback(error),
+          () => {
+          },
+        );
 
-        const request = httpMock.expectOne(`${baseUrl}admin`);
-        
-        requestError(request)
+      const request = httpMock.expectOne(`${baseUrl}admin`);
+
+      requestError(request)
     });
   })
 
   describe('Testa caso de erro do método GetById de usuários', () => {
-    let actualError;
     it('deve lançar erro ao não buscar um usuário', () => {
       seuService
         .getUserById(id)
-        .subscribe((e: getAllRequest[]) =>  () => {
+        .subscribe((e: getAllRequest[]) => () => {
         },
-        (error) => errorCalback(error),
-        () => {
-        },
-      );
+          (error) => errorCalback(error),
+          () => {
+          },
+        );
 
-        const request = httpMock.expectOne(`${baseUrl}admin/${id}`);
-        
-        requestError(request)
+      const request = httpMock.expectOne(`${baseUrl}admin/${id}`);
+
+      requestError(request)
 
     });
   })
 
   describe('Testa caso de erro do método Put de usuários', () => {
-    let actualError;
     it('deve lançar erro ao não atualizar um usuário', () => {
       seuService
         .updateUser(mockItem)
-        .subscribe((e: getAllRequest[]) =>  () => {
+        .subscribe((e: getAllRequest[]) => () => {
         },
-        (error) => errorCalback(error),
-        () => {
-        },
-      );
-        const request = httpMock.expectOne(`${baseUrl}admin/user`);
-        
-        requestError(request)
+          (error) => errorCalback(error),
+          () => {
+          },
+        );
+      const request = httpMock.expectOne(`${baseUrl}admin/user`);
+
+      requestError(request)
 
     });
   })
+  describe('Testa caso de erro do método Pré-registrar de usuários', () => {
+    it('deve lançar erro ao não Pré-registrar um usuário', () => {
+      seuService
+        .preRegister(mockItem)
+        .subscribe(() => () => {
+        },
+          (error) => {errorCalback(error)},
+          () => {
+          },
+        );
+      const request = httpMock.expectOne(`${baseUrl}admin`);
 
+      requestError(request)
+
+    });
+  })
   describe('Testa caso de erro do método Delete de usuários', () => {
-    let actualError;
     it('deve lançar erro ao não deletar um usuário', () => {
       seuService
         .deleteUser(id)
-        .subscribe((e: getAllRequest[]) =>  () => {
+        .subscribe((e: getAllRequest[]) => () => {
         },
-        (error) => errorCalback(error),
-        () => {
+          (error) => errorCalback(error),
+          () => {
+          },
+        );
+      const request = httpMock.expectOne(`${baseUrl}admin?userId=${id}`);
+      requestError(request)
+    });
+  })
+  describe('Testa caso de erro do método Get de visões', () => {
+    it('deve lançar erro ao não deletar um usuário', () => {
+      seuService
+        .getVisions()
+        .subscribe((e: getAllRequest[]) => () => {
         },
-      );
-        const request = httpMock.expectOne(`${baseUrl}admin?userId=${id}`);
-        requestError(request)
+          (error) => errorCalback(error),
+          () => {
+          },
+        );
+      const request = httpMock.expectOne(`${baseUrl}visoes`);
+      requestError(request)
     });
   })
 });

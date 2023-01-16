@@ -8,7 +8,7 @@ import { environment } from 'environments/environment';
 import { ToastrModule } from 'ngx-toastr';
 import { getAllRequest, id, ImockVision, mockItem, mockItemArr, mockVision } from '../../testesUtils/adminTestesUtils';
 
-describe('Testando EndPoints das Páginas de usuários', () => {
+describe('Testando EndPoints das Páginas de usuários - SERVICE', () => {
   let seuService: AdminService
   let httpMock: HttpTestingController;
 
@@ -23,7 +23,7 @@ describe('Testando EndPoints das Páginas de usuários', () => {
     seuService = TestBed.get(AdminService);
     httpMock = TestBed.get(HttpTestingController);
   });
-  
+
   describe('Testa método Get de usuários', () => {
 
     it('deve buscar uma lista de usuários', () => {
@@ -53,16 +53,16 @@ describe('Testando EndPoints das Páginas de usuários', () => {
 
     it('deve buscar um único usuário', () => {
       seuService
-        .getUserById('1')
+        .getUserById(id)
         .subscribe((e: getAllRequest) => {
-          expect(e.id).toEqual('1');
+          expect(e.id).toEqual(id);
         })
       const httpRequest = httpMock.expectOne(`${baseUrl}admin/1`);
       httpRequest.flush(mockItem);
     });
     it('Testa se o método e o endpoint estão corretos', () => {
       seuService
-        .getUserById('1')
+        .getUserById(id)
         .subscribe((response: getAllRequest[]) => { });
 
       const httpRequest = httpMock.expectOne(`${baseUrl}admin/1`);
@@ -98,8 +98,8 @@ describe('Testando EndPoints das Páginas de usuários', () => {
       seuService
         .preRegister(mockItem)
         .subscribe(() => { })
-      
-        const httpRequest = httpMock.expectOne(`${baseUrl}admin`);
+
+      const httpRequest = httpMock.expectOne(`${baseUrl}admin`);
 
       expect(httpRequest.request.method).toEqual('POST');
       expect(httpRequest.request.body).toEqual(mockItem);
@@ -110,7 +110,7 @@ describe('Testando EndPoints das Páginas de usuários', () => {
 
     it('deve buscar uma lista de Visões', () => {
       seuService
-        .geVisions()
+        .getVisions()
         .subscribe((e: ImockVision[]) => {
           expect(e.length).toEqual(1);
           expect(e[0].name).toEqual('teste');
@@ -120,9 +120,9 @@ describe('Testando EndPoints das Páginas de usuários', () => {
     });
     it('Testa se o método e o endpoint estão corretos', () => {
       seuService
-        .geVisions()
+        .getVisions()
         .subscribe((response: ImockVision[]) => {
-         });
+        });
 
       const httpRequest = httpMock.expectOne(`${baseUrl}visoes`);
 

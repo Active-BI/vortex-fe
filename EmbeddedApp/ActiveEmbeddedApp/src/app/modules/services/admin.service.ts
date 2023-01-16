@@ -39,7 +39,7 @@ export class AdminService {
     )
   }
 
-  geVisions(): Observable<any[]>{
+  getVisions(): Observable<any[]>{
     return this.http.get<any[]>(`${this.baseUrl}visoes`)
     .pipe(
       map((visions: any[]) => {

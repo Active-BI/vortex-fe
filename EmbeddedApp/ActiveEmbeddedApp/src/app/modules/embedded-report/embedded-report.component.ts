@@ -6,6 +6,7 @@ import {
     BreakpointState,
     Breakpoints
   } from '@angular/cdk/layout';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-embedded-report',
@@ -16,8 +17,11 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
     @Input() reportId: string;
     @Input() groupId: string;
     @Input() type: string;
-
+    form: FormGroup = this.fb.group({
+      vision: '',
+    })
     @ViewChild(PowerBIReportEmbedComponent) reportObj!: PowerBIReportEmbedComponent;
+    
 
     layout: string;
     token;
@@ -26,7 +30,7 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
     configDashboard;
     showReport=false;
     report: any;
-    pages: any
+    pages: any = []
     handlers;
     settings = {
         visualRenderedEvents: true,
@@ -42,11 +46,13 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
         },
     };
 
-    constructor(private embeddedSrv: EmbeddedService, public breakpointObserver: BreakpointObserver) {
+    constructor(private embeddedSrv: EmbeddedService, public breakpointObserver: BreakpointObserver, private fb: FormBuilder) {
         this.handlers =  new Map([
             ['loaded', (): void => console.log('Report loaded')],
             ['rendered', (): void => {
-        this.selectItems()
+              if (this.pages.length < 1) {
+                this.selectItems()
+              }
         console.log('Report rendered')}],
             ['error', (event): void => console.log(event.detail)]
         ]);
@@ -80,6 +86,7 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
        this.getEmbedded(this.settings);
        
     }
+
     ngAfterViewInit(): void {
       if (this.reportObj) {
       }
@@ -102,10 +109,10 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
 
           const pages = await  this.reportObj.getReport().getPages();
       
-          let log = "Report pages:";
-      
           this.pages = pages.filter((e) => e.visibility === 0)
-          console.log(this.pages)
+          this.form.patchValue({
+            vision: this.pages[0].name
+          })
       }
       
       catch (error) {
@@ -116,8 +123,8 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
       }
       get()
     }
-    change(e) {
-      this.pages.find((a) => a.name === e).setActive()
+    change({ value : name }) {
+      this.pages.find((a) => a.name === name).setActive()
     }
     private getEmbedded(settings: any): void {
 
