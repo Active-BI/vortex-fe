@@ -3,38 +3,15 @@ import {
   HttpTestingController
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { AdminService } from 'app/modules/services/admin.service';
 import { environment } from 'environments/environment';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
-
+import { ToastrModule } from 'ngx-toastr';
+import { getAllRequest, id, ImockVision, mockItem, mockItemArr, mockVision } from '../../testesUtils/adminTestesUtils';
 
 describe('Testando EndPoints das Páginas de usuários', () => {
   let seuService: AdminService
   let httpMock: HttpTestingController;
-  interface getAllRequest {
-    id: string;
-    email: string;
-    emailContato: string;
-    identificacao: string;
-    nome: string;
-    perfil: string;
-    userVisions: any[] | null
-    dataUltimoAcesso: string | null
-  }
-  interface ImockVision {name: string, id: string}
-  const mockVision: ImockVision  = {name: 'teste', id: '1'}
-  const mockItem: getAllRequest[] = [{
-    id: '1',
-    email: 'mockEmail@mock.com.br',
-    emailContato: 'mockEmail@mock.com.br',
-    identificacao: 'mock user',
-    nome: 'mock',
-    perfil: 'user',
-    userVisions: [],
-    dataUltimoAcesso: ''
-  }]
+
   const baseUrl = environment.baseUrl;
 
   beforeEach(() => {
@@ -57,7 +34,7 @@ describe('Testando EndPoints das Páginas de usuários', () => {
           expect(e[0].email).toEqual('mockEmail@mock.com.br');
         })
       const httpRequest = httpMock.expectOne(`${baseUrl}admin`);
-      httpRequest.flush(mockItem);
+      httpRequest.flush(mockItemArr);
     });
     it('Testa se o método e o endpoint estão corretos', () => {
       seuService
@@ -69,19 +46,19 @@ describe('Testando EndPoints das Páginas de usuários', () => {
       expect(httpRequest.request.method).toEqual('GET');
       expect(httpRequest.request.responseType).toEqual('json');
 
-      httpRequest.flush(mockItem);
+      httpRequest.flush(mockItemArr);
     })
   })
   describe('Testa método GetById de usuários', () => {
 
-    it('deve buscar um único usuários', () => {
+    it('deve buscar um único usuário', () => {
       seuService
         .getUserById('1')
         .subscribe((e: getAllRequest) => {
           expect(e.id).toEqual('1');
         })
       const httpRequest = httpMock.expectOne(`${baseUrl}admin/1`);
-      httpRequest.flush(mockItem[0]);
+      httpRequest.flush(mockItem);
     });
     it('Testa se o método e o endpoint estão corretos', () => {
       seuService
@@ -92,11 +69,9 @@ describe('Testando EndPoints das Páginas de usuários', () => {
 
       expect(httpRequest.request.method).toEqual('GET');
       expect(httpRequest.request.responseType).toEqual('json');
-      httpRequest.flush(mockItem[0]);
+      httpRequest.flush(mockItem);
     })
   })
-
-
   describe('Testa método Put de usuários', () => {
     it('Se payload e Url estão corretos', () => {
       seuService
@@ -108,16 +83,26 @@ describe('Testando EndPoints das Páginas de usuários', () => {
       expect(httpRequest.request.body).toEqual(mockItem);
     });
   })
+  describe('Testa método Delete de usuários', () => {
+    it('Se payload e Url estão corretos', () => {
+      seuService
+        .deleteUser(id)
+        .subscribe(() => { })
+      const httpRequest = httpMock.expectOne(`${baseUrl}admin?userId=${id}`);
+
+      expect(httpRequest.request.method).toEqual('DELETE');
+    });
+  })
   describe('Testa método de Pré-registrar de usuários', () => {
     it('Se payload e Url estão corretos', () => {
       seuService
-        .preRegister(mockItem[0])
+        .preRegister(mockItem)
         .subscribe(() => { })
       
         const httpRequest = httpMock.expectOne(`${baseUrl}admin`);
 
       expect(httpRequest.request.method).toEqual('POST');
-      expect(httpRequest.request.body).toEqual(mockItem[0]);
+      expect(httpRequest.request.body).toEqual(mockItem);
     });
   })
 

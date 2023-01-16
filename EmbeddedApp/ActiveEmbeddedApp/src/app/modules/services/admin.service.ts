@@ -32,7 +32,7 @@ export class AdminService {
   getUsers(): Observable<getAllRequest[]>{
     return this.http.get<any[]>(`${this.baseUrl}admin`)
     .pipe(
-      catchError((err) => {
+      catchError((err) => {''
         this.toast.error(`Erro ao consultar usuários`,null,{progressBar:true, timeOut:2000});
         return throwError(err);
       })
