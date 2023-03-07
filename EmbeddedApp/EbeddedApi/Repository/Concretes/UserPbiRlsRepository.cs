@@ -23,9 +23,10 @@ namespace Repository.Concretes
             try
             {
 
-            await this._userPbiContext.UserPbiRls.AddAsync(entity);
-            await this._userPbiContext.SaveChangesAsync();
-            } catch(Exception)
+                await this._userPbiContext.UserPbiRls.AddAsync(entity);
+                await this._userPbiContext.SaveChangesAsync();
+            }
+            catch (Exception)
             {
                 throw new UserNotSaved("Erro ao salvar usuário");
             }
@@ -33,13 +34,14 @@ namespace Repository.Concretes
         }
 
         public async Task Delete(UserPbiRls entity)
-        {   
+        {
             try
             {
 
-            this._userPbiContext.UserPbiRls.Remove(entity);
-            await this._userPbiContext.SaveChangesAsync();
-            } catch (Exception)
+                this._userPbiContext.UserPbiRls.Remove(entity);
+                await this._userPbiContext.SaveChangesAsync();
+            }
+            catch (Exception)
             {
                 throw new UserDeleteError("Erro ao deletar usuário");
             }
@@ -68,12 +70,14 @@ namespace Repository.Concretes
             try
             {
 
-            var result = await this._userPbiContext.UserPbiRls.AsNoTracking()
-                                             .Include(x => x.UserVisions)
-                                             .ThenInclude(us => us.Vision)
-                                             .ToListAsync();
-            return result;
-            } catch (Exception) {
+                var result = await this._userPbiContext.UserPbiRls.AsNoTracking()
+                                                 .Include(x => x.UserVisions)
+                                                 .ThenInclude(us => us.Vision)
+                                                 .ToListAsync();
+                return result;
+            }
+            catch (Exception)
+            {
                 throw new UserGetError("Erro ao consultar usuários");
             }
         }

@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace EbeddedApi.Migrations.Rls
+namespace Infra.Migrations.Rls
 {
     [DbContext(typeof(UserPbiRlsContext))]
     partial class UserPbiRlsContextModelSnapshot : ModelSnapshot
@@ -22,173 +22,6 @@ namespace EbeddedApi.Migrations.Rls
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("EbeddedApi.Models.Cliente.Cliente", b =>
-                {
-                    b.Property<Guid>("ClienteId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("ClienteId");
-
-                    b.ToTable("cliente", (string)null);
-                });
-
-            modelBuilder.Entity("EbeddedApi.Models.Cliente.MenusCliente", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ClienteId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("cliente_id");
-
-                    b.Property<Guid>("MenuId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("menu_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("MenuId");
-
-                    b.ToTable("menus_cliente", (string)null);
-                });
-
-            modelBuilder.Entity("EbeddedApi.Models.Cliente.VisoesCliente", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ClienteId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("cliente_id");
-
-                    b.Property<Guid>("VisaoId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("visao_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("VisaoId");
-
-                    b.ToTable("visoes_cliente", (string)null);
-                });
-
-            modelBuilder.Entity("EbeddedApi.Models.Menu.MenuItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Class")
-                        .HasColumnType("text")
-                        .HasColumnName("class");
-
-                    b.Property<string>("Context")
-                        .HasColumnType("text")
-                        .HasColumnName("context");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("text")
-                        .HasColumnName("icon");
-
-                    b.Property<string>("Link")
-                        .HasColumnType("text")
-                        .HasColumnName("link");
-
-                    b.Property<string>("LongTitle")
-                        .HasColumnType("text")
-                        .HasColumnName("long_title");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text")
-                        .HasColumnName("title");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("text")
-                        .HasColumnName("type");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("menu_item", (string)null);
-                });
-
-            modelBuilder.Entity("EbeddedApi.Models.Menu.MenuSubItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Class")
-                        .HasColumnType("text")
-                        .HasColumnName("class");
-
-                    b.Property<string>("Context")
-                        .HasColumnType("text")
-                        .HasColumnName("context");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("text")
-                        .HasColumnName("icon");
-
-                    b.Property<string>("LongTitle")
-                        .HasColumnType("text")
-                        .HasColumnName("long_title");
-
-                    b.Property<Guid>("MenuItemId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("menu_item_id");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("text")
-                        .HasColumnName("path");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text")
-                        .HasColumnName("title");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MenuItemId");
-
-                    b.ToTable("menu_sub_item", (string)null);
-                });
-
-            modelBuilder.Entity("EbeddedApi.Models.Menu.UserMenu", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid>("MenuItemId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("menu_item_id");
-
-                    b.Property<Guid>("UserPbiRelsId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_pbi_rels_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MenuItemId");
-
-                    b.HasIndex("UserPbiRelsId");
-
-                    b.ToTable("user_menu", (string)null);
-                });
-
             modelBuilder.Entity("EbeddedApi.Models.UserPbiRls", b =>
                 {
                     b.Property<Guid>("Id")
@@ -200,6 +33,7 @@ namespace EbeddedApi.Migrations.Rls
                         .HasColumnName("data_ultimo_acesso");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("email");
 
@@ -208,14 +42,17 @@ namespace EbeddedApi.Migrations.Rls
                         .HasColumnName("email_contato");
 
                     b.Property<string>("Empresa")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("empresa");
 
                     b.Property<string>("Identificacao")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("identificacao");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Nome");
 
@@ -258,76 +95,13 @@ namespace EbeddedApi.Migrations.Rls
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
 
                     b.HasKey("Id");
 
                     b.ToTable("visions", (string)null);
-                });
-
-            modelBuilder.Entity("EbeddedApi.Models.Cliente.MenusCliente", b =>
-                {
-                    b.HasOne("EbeddedApi.Models.Cliente.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EbeddedApi.Models.Menu.MenuItem", "MenuItem")
-                        .WithMany()
-                        .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("MenuItem");
-                });
-
-            modelBuilder.Entity("EbeddedApi.Models.Cliente.VisoesCliente", b =>
-                {
-                    b.HasOne("EbeddedApi.Models.Cliente.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EbeddedApi.Models.Vision", "Vision")
-                        .WithMany()
-                        .HasForeignKey("VisaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("Vision");
-                });
-
-            modelBuilder.Entity("EbeddedApi.Models.Menu.MenuSubItem", b =>
-                {
-                    b.HasOne("EbeddedApi.Models.Menu.MenuItem", null)
-                        .WithMany("MenuSubItens")
-                        .HasForeignKey("MenuItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EbeddedApi.Models.Menu.UserMenu", b =>
-                {
-                    b.HasOne("EbeddedApi.Models.Menu.MenuItem", "Menu")
-                        .WithMany()
-                        .HasForeignKey("MenuItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EbeddedApi.Models.UserPbiRls", null)
-                        .WithMany("UserMenus")
-                        .HasForeignKey("UserPbiRelsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Menu");
                 });
 
             modelBuilder.Entity("EbeddedApi.Models.UserVisions", b =>
@@ -347,15 +121,8 @@ namespace EbeddedApi.Migrations.Rls
                     b.Navigation("Vision");
                 });
 
-            modelBuilder.Entity("EbeddedApi.Models.Menu.MenuItem", b =>
-                {
-                    b.Navigation("MenuSubItens");
-                });
-
             modelBuilder.Entity("EbeddedApi.Models.UserPbiRls", b =>
                 {
-                    b.Navigation("UserMenus");
-
                     b.Navigation("UserVisions");
                 });
 #pragma warning restore 612, 618

@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace EbeddedApi.Migrations.Identity
+#nullable disable
+
+namespace Infra.Migrations.Identity
 {
-    public partial class InitialMigrate : Migration
+    public partial class initialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,7 +29,6 @@ namespace EbeddedApi.Migrations.Identity
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -152,16 +153,6 @@ namespace EbeddedApi.Migrations.Identity
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { new Guid("42163d28-5962-4c7f-a16b-88b46a75ef00"), "943c852d-3484-4341-b1f9-82afa8100d08", "User", "USER" },
-                    { new Guid("3dfdc71e-9bf2-49fe-947e-bba6521d02fb"), "5dc26126-9b1b-4697-8f90-02d3a0b92ea3", "Coordinator", "COORDINATOR" },
-                    { new Guid("02da2c8e-db05-4ad2-9844-f3d2ec926541"), "d6556d45-3764-4384-b283-bb07c8355ff2", "Manager", "MANAGER" }
                 });
 
             migrationBuilder.CreateIndex(

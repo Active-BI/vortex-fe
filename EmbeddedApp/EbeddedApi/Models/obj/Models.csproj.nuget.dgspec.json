@@ -1,30 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\T-GAMER\\Desktop\\active\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj": {}
+    "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj": {}
   },
   "projects": {
-    "C:\\Users\\T-GAMER\\Desktop\\active\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj": {
+    "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\T-GAMER\\Desktop\\active\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj",
         "projectName": "Models",
-        "projectPath": "C:\\Users\\T-GAMER\\Desktop\\active\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj",
-        "packagesPath": "C:\\Users\\T-GAMER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\T-GAMER\\Desktop\\active\\EmbeddedApp\\EbeddedApi\\Models\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Models\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\T-GAMER\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -72,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace EbeddedApi.Migrations.Identity
+namespace Infra.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
     partial class IdentityContextModelSnapshot : ModelSnapshot
@@ -47,22 +47,6 @@ namespace EbeddedApi.Migrations.Identity
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("ca21241b-a37d-4e6f-bbb6-26643d3cdd99"),
-                            ConcurrencyStamp = "8341360b-dbc1-4c93-b94a-5eff837aed16",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = new Guid("6a203390-8389-49ca-aa0e-6a14ba7815bc"),
-                            ConcurrencyStamp = "8a7e0766-4931-4e94-864f-249902ebce0a",
-                            Name = "Admin",
-                            NormalizedName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("EbeddedApi.Models.Auth.User", b =>

@@ -31,12 +31,11 @@ namespace EbeddedApi.Services
             this._visionRepository = visionRepository;
         }
 
-        public async Task<IEnumerable> GetUsers(){
+        public async Task<IEnumerable> GetUsers()
+        {
             var users = await this._userPbiRlsRepository.GetFromAdmin();
-            var result = this._rolesRepository.joinRoles(users);
 
-
-            return result.ToList().OrderBy(x => x.Nome);
+            return users.ToList().OrderBy(x => x.Nome);
         }
 
         public async Task<UserPbiRls> GetById(Guid id)
@@ -54,40 +53,42 @@ namespace EbeddedApi.Services
             return result;
         }
 
-        public async Task<UserPbiRls> AddUserPreRegisterAsync(UserDto request){
-             
+        public async Task<UserPbiRls> AddUserPreRegisterAsync(UserDto request)
+        {
 
-                // userVisions para o usuário
 
-                var userRls = new UserPbiRls()
-                {
-                    Email = request.Email,
-                    Identificacao = request.Identificacao,
-                    Empresa = string.Empty,
-                    EmailContato = request.EmailContato,
-                    Perfil = request.Perfil,
-                    Nome = request.Nome,
-                };
+            // userVisions para o usuário
+
+            var userRls = new UserPbiRls()
+            {
+                Email = request.Email,
+                Identificacao = request.Identificacao,
+                Empresa = string.Empty,
+                EmailContato = request.EmailContato,
+                Perfil = request.Perfil,
+                Nome = request.Nome,
+            };
 
             await this._userPbiRlsRepository.AddAsync(userRls);
-
             await this._visionRepository.AddVisions(request, userRls);
+
             return userRls;
 
         }
 
-        public async Task UpdateUser(UserDto request){
+        public async Task UpdateUser(UserDto request)
+        {
             var users = await this._userPbiRlsRepository.GetFromAdmin();
 
             var userRls = users.FirstOrDefault(user => user.Id == request.Id);
-                
-                userRls.Identificacao = request.Identificacao == "" ? userRls.Identificacao : request.Identificacao;
-                userRls.Nome = request.Nome == "" ? userRls.Nome : request.Nome;
-                userRls.Perfil = request.Perfil == "" ? userRls.Perfil : request.Perfil;
-                userRls.EmailContato = request.EmailContato == "" ? userRls.EmailContato : request.EmailContato;
 
-                await this._userPbiRlsRepository.Put(userRls);
-                userRls.UserVisions.Clear();
+            userRls.Identificacao = request.Identificacao == "" ? userRls.Identificacao : request.Identificacao;
+            userRls.Nome = request.Nome == "" ? userRls.Nome : request.Nome;
+            userRls.Perfil = request.Perfil == "" ? userRls.Perfil : request.Perfil;
+            userRls.EmailContato = request.EmailContato == "" ? userRls.EmailContato : request.EmailContato;
+
+            await this._userPbiRlsRepository.Put(userRls);
+            userRls.UserVisions.Clear();
 
 
             await this._visionRepository.AddVisions(request, userRls);
@@ -96,42 +97,46 @@ namespace EbeddedApi.Services
             this._dataBaseFunctions.SaveChanges();
         }
 
-        public async Task DeleteUser(string userId, ClaimsPrincipal userRequest){
-            
+        public async Task DeleteUser(string userId, ClaimsPrincipal userRequest)
+        {
+
             var transaction = this._dataBaseFunctions.BeginTransaction();
 
             var userGUID = Guid.Parse(userId);
 
-            try {
+            try
+            {
                 // Verifica se o usuário é o mesmo da solicitação
 
                 var userEmail = await this._userPbiRlsRepository.GetById(userGUID);
-                
+
                 var name = userRequest.Claims.ToArray()[0].Value;
 
-                if(userEmail.Email.ToUpper() == name.ToUpper())
-                   throw new NotImplementedException();
+                if (userEmail.Email.ToUpper() == name.ToUpper())
+                    throw new NotImplementedException();
 
                 // Elimina Visoes do usuário
                 var UserVisions = _visionRepository.GetById(Guid.Parse(userId));
 
 
-                 if(UserVisions.Any())
+                if (UserVisions.Any())
                     await this._visionRepository.RemoveRange(UserVisions);
 
 
                 // Elimina Usuário
-                UserPbiRls user = new UserPbiRls(){ Id = userGUID };
+                UserPbiRls user = new UserPbiRls() { Id = userGUID };
                 await this._userPbiRlsRepository.Delete(user);
 
                 // Comita transação
                 transaction.Commit();
-            } catch(Exception ex){
+            }
+            catch (Exception ex)
+            {
                 // Rollback na transação
                 await transaction.RollbackAsync();
                 throw new NotImplementedException("Erro ao remover usuário");
             }
-            
+
 
         }
     }

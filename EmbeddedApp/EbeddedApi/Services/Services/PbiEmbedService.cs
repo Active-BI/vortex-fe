@@ -18,7 +18,7 @@ namespace EmbeddedApi.Services
     public class PbiEmbedService
     {
         private readonly AadService aadService;
-        private readonly string urlPowerBiServiceApiRoot  = "https://api.powerbi.com";
+        private readonly string urlPowerBiServiceApiRoot = "https://api.powerbi.com";
 
         public PbiEmbedService(AadService aadService)
         {
@@ -32,7 +32,7 @@ namespace EmbeddedApi.Services
         public PowerBIClient GetPowerBIClient()
         {
             var tokenCredentials = new TokenCredentials(aadService.GetAccessToken(), "Bearer");
-            return new PowerBIClient(new Uri(urlPowerBiServiceApiRoot ), tokenCredentials);
+            return new PowerBIClient(new Uri(urlPowerBiServiceApiRoot), tokenCredentials);
         }
 
         /// <summary>
@@ -137,36 +137,26 @@ namespace EmbeddedApi.Services
         public async Task<EmbedToken> GetEmbedToken(Guid reportId, IList<Guid> datasetIds, string userId, PowerBIClient pbiClient, [Optional] Guid targetWorkspaceId)
         {
             //PowerBIClient pbiClient = this.GetPowerBIClient();
-            
+
             // #####################################
             // Reports com RLS - Cadastrar aqui todos os guids com RLS configurados no Power BI
             // #####################################
 
             var listReportsRLS = new List<Guid>(){
-                new Guid("bd72d692-02c4-418f-98da-92207fbd2898"), // Gestão de Vulnerabildiades - OK
-                new Guid("ef1438a9-6827-4989-b250-f930a4bb0585"), // Resposta aos Incidentes  - OK
-                new Guid("4ae21ee6-022a-4758-9492-268e377c7d99"), // Operações e Requisições - Ok
-                new Guid("e31fb684-7a59-424a-93d3-e1a161995278"), // Mapeamento de Dados Sensíveis - Ok
-                new Guid("b427451f-5f62-4e4a-8bac-ef2887ed3307"), // Gestão de Consentimento e Cockies - OK
-                new Guid("e6e13286-2cc3-484e-8b6f-081e1588a5f3"), // Distribuição de Aplicações Web - OK
-                new Guid("71e611bd-b48d-4957-8778-599a3f7ecabc"), // Detecção Resposta Em EndPoints Sentinel - OK
-                new Guid("72cb58e2-7b6b-470f-a9c6-4fabd1036a3b"), // Detecção Resposta Em EndPoints Trend - OK
-                new Guid("527b41cb-7f74-40e8-9eb8-5125bd93273c"), // Correlacionamento de Logs - OK
-                new Guid("9cdf20da-9034-4092-904b-91fb375d0842") // Prevenção Contra Vazamento de Dados (DLP) - OK
-
-
+                new Guid("a2ade005-2751-4427-b1a5-4345005ba6e2"), // Painel Controle de Horas
             };
 
             EmbedToken embedToken;
 
             List<EffectiveIdentity> listaRls = new List<EffectiveIdentity>();
-          
+
             // Create a request for getting Embed token 
             // This method works only with new Power BI V2 workspace experience
 
-            if(userId == null){
+            if (userId == null)
+            {
                 var tokenRequest2 = new GenerateTokenRequestV2(
-                
+
                 reports: new List<GenerateTokenRequestV2Report>() { new GenerateTokenRequestV2Report(reportId) },
 
                 datasets: datasetIds.Select(datasetId => new GenerateTokenRequestV2Dataset(datasetId.ToString())).ToList(),
@@ -177,25 +167,19 @@ namespace EmbeddedApi.Services
 
 
                 // Generate Embed token
-            embedToken = await pbiClient.EmbedToken.GenerateTokenAsync(tokenRequest2);
+                embedToken = await pbiClient.EmbedToken.GenerateTokenAsync(tokenRequest2);
 
-            return embedToken;
+                return embedToken;
 
             }
 
-            Dictionary<string, string> UserRole = new Dictionary<string, string>();
-            UserRole.Add("thiago.caldas@activebi.com.br","OPERADOR");
-            UserRole.Add("luiz@activebi.com.br","OPERADOR");
-            UserRole.Add("francis.santos@ish.com.br","OPERADOR");
-            UserRole.Add("irapua@ish.com.br","OPERADOR");
 
-            var user_rsl = UserRole.TryGetValue(userId.ToString(), out string us) ? us : "";
 
             EffectiveIdentity rls = new EffectiveIdentity(
-                username: userId,
-                roles: new List<string>(){"User"},
-                reports: new List<string>(){ reportId.ToString() },
-                datasets: new List<string>(){ datasetIds[0].ToString() }
+                username: "lucas.franca@activebi.com.br",
+                roles: new List<string>() { "User" },
+                reports: new List<string>() { reportId.ToString() },
+                datasets: new List<string>() { datasetIds[0].ToString() }
             );
 
             listaRls.Add(rls);
@@ -207,7 +191,7 @@ namespace EmbeddedApi.Services
             identities: listaRls
         );
 
-            if ( listReportsRLS.Contains(reportId))
+            if (listReportsRLS.Contains(reportId))
             {
                 /// TODO: Incluir rls no método abaixo quando estiver configurado no PBI
                 embedToken = pbiClient.Reports.GenerateTokenInGroup(targetWorkspaceId, reportId, new GenerateTokenRequest(accessLevel: "View", datasetId: datasetIds.ToString(), false, rls));
@@ -215,11 +199,11 @@ namespace EmbeddedApi.Services
                 return embedToken;
             }
             else
-                {
-                    embedToken = pbiClient.Reports.GenerateTokenInGroup(targetWorkspaceId, reportId, new GenerateTokenRequest(accessLevel: "View", datasetId: datasetIds.ToString()));
-                    return embedToken;
+            {
+                embedToken = pbiClient.Reports.GenerateTokenInGroup(targetWorkspaceId, reportId, new GenerateTokenRequest(accessLevel: "View", datasetId: datasetIds.ToString()));
+                return embedToken;
 
-                }
+            }
 
 
         }

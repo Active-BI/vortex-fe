@@ -7,19 +7,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace EbeddedApi.Migrations.Rls
+#nullable disable
+
+namespace Infra.Migrations.Rls
 {
     [DbContext(typeof(UserPbiRlsContext))]
-    [Migration("20220305145646_CreateUserVisionRls")]
-    partial class CreateUserVisionRls
+    [Migration("20230307183423_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityByDefaultColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("EbeddedApi.Models.UserPbiRls", b =>
                 {
@@ -27,25 +30,41 @@ namespace EbeddedApi.Migrations.Rls
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime?>("DataUltimoAcesso")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("data_ultimo_acesso");
+
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("email");
 
+                    b.Property<string>("EmailContato")
+                        .HasColumnType("text")
+                        .HasColumnName("email_contato");
+
                     b.Property<string>("Empresa")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("empresa");
 
                     b.Property<string>("Identificacao")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("identificacao");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Nome");
 
+                    b.Property<string>("Perfil")
+                        .HasColumnType("text")
+                        .HasColumnName("Perfil");
+
                     b.HasKey("Id");
 
-                    b.ToTable("user_pbi_rels");
+                    b.ToTable("user_pbi_rels", (string)null);
                 });
 
             modelBuilder.Entity("EbeddedApi.Models.UserVisions", b =>
@@ -64,7 +83,11 @@ namespace EbeddedApi.Migrations.Rls
 
                     b.HasKey("Id");
 
-                    b.ToTable("user_visions");
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VisionId");
+
+                    b.ToTable("user_visions", (string)null);
                 });
 
             modelBuilder.Entity("EbeddedApi.Models.Vision", b =>
@@ -74,16 +97,35 @@ namespace EbeddedApi.Migrations.Rls
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("text")
-                        .HasColumnName("normalized_name");
-
                     b.HasKey("Id");
 
-                    b.ToTable("visions");
+                    b.ToTable("visions", (string)null);
+                });
+
+            modelBuilder.Entity("EbeddedApi.Models.UserVisions", b =>
+                {
+                    b.HasOne("EbeddedApi.Models.UserPbiRls", null)
+                        .WithMany("UserVisions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EbeddedApi.Models.Vision", "Vision")
+                        .WithMany()
+                        .HasForeignKey("VisionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Vision");
+                });
+
+            modelBuilder.Entity("EbeddedApi.Models.UserPbiRls", b =>
+                {
+                    b.Navigation("UserVisions");
                 });
 #pragma warning restore 612, 618
         }
