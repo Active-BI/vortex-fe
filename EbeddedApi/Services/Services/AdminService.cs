@@ -65,7 +65,7 @@ namespace EbeddedApi.Services
                 Identificacao = request.Identificacao,
                 Empresa = string.Empty,
                 EmailContato = request.EmailContato,
-                Perfil = request.Perfil,
+                PerfilId = request.PerfilId,
                 Nome = request.Nome,
             };
 
@@ -73,7 +73,6 @@ namespace EbeddedApi.Services
             await this._visionRepository.AddVisions(request, userRls);
 
             return userRls;
-
         }
 
         public async Task UpdateUser(UserDto request)
@@ -84,7 +83,7 @@ namespace EbeddedApi.Services
 
             userRls.Identificacao = request.Identificacao == "" ? userRls.Identificacao : request.Identificacao;
             userRls.Nome = request.Nome == "" ? userRls.Nome : request.Nome;
-            userRls.Perfil = request.Perfil == "" ? userRls.Perfil : request.Perfil;
+            userRls.PerfilId = request.PerfilId.ToString() == "" ? userRls.PerfilId : request.PerfilId;
             userRls.EmailContato = request.EmailContato == "" ? userRls.EmailContato : request.EmailContato;
 
             await this._userPbiRlsRepository.Put(userRls);

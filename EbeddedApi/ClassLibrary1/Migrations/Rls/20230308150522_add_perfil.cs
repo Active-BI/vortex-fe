@@ -5,10 +5,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infra.Migrations.Rls
 {
-    public partial class initialCreate : Migration
+    public partial class add_perfil : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "perfil",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_perfil", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "user_pbi_rels",
                 columns: table => new
@@ -18,7 +30,7 @@ namespace Infra.Migrations.Rls
                     Nome = table.Column<string>(type: "text", nullable: false),
                     identificacao = table.Column<string>(type: "text", nullable: false),
                     empresa = table.Column<string>(type: "text", nullable: false),
-                    Perfil = table.Column<string>(type: "text", nullable: true),
+                    perfil_id = table.Column<Guid>(type: "uuid", nullable: false),
                     email_contato = table.Column<string>(type: "text", nullable: true),
                     data_ultimo_acesso = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -77,6 +89,9 @@ namespace Infra.Migrations.Rls
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "perfil");
+
             migrationBuilder.DropTable(
                 name: "user_visions");
 

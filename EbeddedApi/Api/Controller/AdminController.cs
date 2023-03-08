@@ -22,13 +22,15 @@ namespace EbeddedApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(){
+        public async Task<IActionResult> Get()
+        {
 
-            try {
+            try
+            {
                 var result = await this.adminService.GetUsers();
                 return Ok(result);
             }
-            catch(UserGetError e)
+            catch (UserGetError e)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
@@ -41,14 +43,16 @@ namespace EbeddedApi.Controllers
         }
 
         [HttpGet("{userId}")]
-        public async Task<IActionResult> GetById(Guid userId){
+        public async Task<IActionResult> GetById(Guid userId)
+        {
             try
             {
 
-            var result = await this.adminService.GetById(userId);
-            
-            return result != null ? Ok(result) : StatusCode(StatusCodes.Status422UnprocessableEntity,null);
-            } catch(UserGetError e)
+                var result = await this.adminService.GetById(userId);
+
+                return result != null ? Ok(result) : StatusCode(StatusCodes.Status422UnprocessableEntity, null);
+            }
+            catch (UserGetError e)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
@@ -60,9 +64,11 @@ namespace EbeddedApi.Controllers
         }
 
         [HttpPut("user")]
-        public async Task<IActionResult> UpdateUser([FromBody]UpdateUserRequest request){
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request)
+        {
 
-            try{
+            try
+            {
                 var updateUser = new UserDto()
                 {
                     Email = request.Email,
@@ -70,14 +76,14 @@ namespace EbeddedApi.Controllers
                     Nome = request.Nome,
                     Identificacao = request.Identificacao,
                     EmailContato = request.EmailContato,
-                    Perfil = request.Perfil,
+                    PerfilId = request.PerfilId,
                     Visions = request.Visions,
-                    Menus = request.Menus
                 };
                 await this.adminService.UpdateUser(updateUser);
-            } catch(VisionNotSaved e)
+            }
+            catch (VisionNotSaved e)
             {
-                return StatusCode(StatusCodes.Status422UnprocessableEntity,e.Message);
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, e.Message);
             }
 
             catch (Exception e)
@@ -86,15 +92,17 @@ namespace EbeddedApi.Controllers
             }
 
             return Ok();
-                         
+
         }
 
         [HttpPost]
-        public async Task<IActionResult> preRegister([FromBody] PreRegisterUserRequest request){
+        public async Task<IActionResult> preRegister([FromBody] PreRegisterUserRequest request)
+        {
 
-            try {
+            try
+            {
 
-                if(await this.adminService.GetByEmail(request.Email))
+                if (await this.adminService.GetByEmail(request.Email))
                     return StatusCode(StatusCodes.Status422UnprocessableEntity, "Usuário já existente");
 
                 // userVisions para o usuário
@@ -105,15 +113,15 @@ namespace EbeddedApi.Controllers
                     Nome = request.Nome,
                     Identificacao = request.Identificacao,
                     EmailContato = request.EmailContato,
-                    Perfil = request.Perfil,
+                    PerfilId = request.PerfilId,
                     Visions = request.Visions,
-                    Menus = request.Menus
                 };
 
-               var userPbrls = await this.adminService.AddUserPreRegisterAsync(updateUser);
+                var userPbrls = await this.adminService.AddUserPreRegisterAsync(updateUser);
                 return Ok(userPbrls);
-        
-            } catch(VisionNotSaved e)
+
+            }
+            catch (VisionNotSaved e)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
@@ -125,15 +133,18 @@ namespace EbeddedApi.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteUser([FromQuery] string userId){
+        public async Task<IActionResult> DeleteUser([FromQuery] string userId)
+        {
 
-           try {
+            try
+            {
 
                 await this.adminService.DeleteUser(userId, User);
                 return StatusCode(StatusCodes.Status202Accepted);
 
             }
-            catch(VisionGetError e){
+            catch (VisionGetError e)
+            {
                 return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
             catch (Exception e)

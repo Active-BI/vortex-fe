@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1z+AYjsbjZLuaW8OH8u5lGYJWAiUL4naDGFU/PsO+g5qGhlWlXS6X1ZMahaV9Qrh9uCNAJissISUxipWOiMscQ==",
+  "dgSpecHash": "2ZDk6cBjkAbEpufWBqBxmqrnWGJBhgfgqMWtprK0p1asZ0pNnzpxUqUX1MmoLI4S49NNfWo/sSrXdj4sXJEEZQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Services\\Services.csproj",
+  "projectFilePath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\Services\\Services.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.0\\microsoft.aspnetcore.authentication.jwtbearer.6.0.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.aspnetcore.authentication.wsfederation\\6.0.0\\microsoft.aspnetcore.authentication.wsfederation.6.0.0.nupkg.sha512",

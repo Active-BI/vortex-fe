@@ -34,31 +34,20 @@ namespace EbeddedApi.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secret);
 
-
-            //TODO: Cadastrar Regra de Perfil
-
             var user = _userPbiContext.UserPbiRls.AsNoTracking()
-                                            .Include(x => x.UserVisions)
-                                            .ThenInclude(us => us.Vision)
-                                            .FirstOrDefault( x=> x.Email.ToUpper() == email.ToUpper());
+                                            .FirstOrDefault(x => x.Email.ToUpper() == email.ToUpper());
 
-            var role = _identityContext.Roles.AsNoTracking().FirstOrDefault(x => x.Id == Guid.Parse(user.Perfil));
+            var role = _userPbiContext.Perfil.AsNoTracking().FirstOrDefault(x => x.Id == user.PerfilId);
 
             var claims = new List<Claim>(){
                 new Claim(ClaimTypes.Email, email),
-                new Claim("roles", role.NormalizedName),
                 new Claim("type", "ApiToken"),
-                new Claim("firstName", "")
+                new Claim("firstName", ""),
+                new Claim(ClaimTypes.Role, role.Name.ToUpper())
             };
 
-            // TODO: Austar configurações de visões
-
-            // user.UserVisions.ForEach(x => {
-            //     claims.Add(new Claim("visions", x.Vision.Name.ToString()));
-            // });
-
-            if(metodo == MetodoAutenticacao.ADFS) claims.Add(new Claim("auth_method","ADFS"));
-            if(metodo == MetodoAutenticacao.Auth) claims.Add(new Claim("auth_method","Auth"));
+            if (metodo == MetodoAutenticacao.ADFS) claims.Add(new Claim("auth_method", "ADFS"));
+            if (metodo == MetodoAutenticacao.Auth) claims.Add(new Claim("auth_method", "Auth"));
 
             var tokenDescriptor = new SecurityTokenDescriptor
 
@@ -108,20 +97,21 @@ namespace EbeddedApi.Services
                 ClockSkew = TimeSpan.Zero
             };
 
-                handler.ValidateToken(token, validationParameters, out var securityToken);
+            handler.ValidateToken(token, validationParameters, out var securityToken);
 
-                if (!(securityToken is JwtSecurityToken jwtSecurityToken) ||
-                    !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
-                        StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return false;
-                }
+            if (!(securityToken is JwtSecurityToken jwtSecurityToken) ||
+                !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
+                    StringComparison.InvariantCultureIgnoreCase))
+            {
+                return false;
+            }
 
-                return true;
-           
+            return true;
+
         }
 
-        public string GetClaimFromToken(string token, string claimType) {
+        public string GetClaimFromToken(string token, string claimType)
+        {
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;

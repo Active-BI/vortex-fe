@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infra.Migrations.Rls
 {
     [DbContext(typeof(UserPbiRlsContext))]
-    [Migration("20230307183423_initialCreate")]
-    partial class initialCreate
+    [Migration("20230308150522_add_perfil")]
+    partial class add_perfil
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,22 @@ namespace Infra.Migrations.Rls
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("EbeddedApi.Models.Perfil", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("perfil", (string)null);
+                });
 
             modelBuilder.Entity("EbeddedApi.Models.UserPbiRls", b =>
                 {
@@ -58,9 +74,9 @@ namespace Infra.Migrations.Rls
                         .HasColumnType("text")
                         .HasColumnName("Nome");
 
-                    b.Property<string>("Perfil")
-                        .HasColumnType("text")
-                        .HasColumnName("Perfil");
+                    b.Property<Guid>("PerfilId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("perfil_id");
 
                     b.HasKey("Id");
 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "S+QLFt0HfvXbjrWILd6VCYX7EcpxZxEyt40WNIeJVloZTybXuZHjyzCmksFSGDbLv1cuY6tLYqGCdtASZ1W/bg==",
+  "dgSpecHash": "wiMBUX8SS6gfifHp9+GRNU820ugDmop0tBFdcT3qL1ZQHFs1Sbvnh/LNXLx5ELvjBiws5zy9EBy1raqt2tj8ew==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Repository\\Repository.csproj",
+  "projectFilePath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\Repository\\Repository.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.0\\microsoft.aspnetcore.cryptography.internal.6.0.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\6.0.0\\microsoft.aspnetcore.cryptography.keyderivation.6.0.0.nupkg.sha512",

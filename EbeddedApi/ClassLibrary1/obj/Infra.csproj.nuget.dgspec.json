@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\ClassLibrary1\\Infra.csproj": {}
+    "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\ClassLibrary1\\Infra.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\ClassLibrary1\\Infra.csproj": {
+    "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\ClassLibrary1\\Infra.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\ClassLibrary1\\Infra.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\ClassLibrary1\\Infra.csproj",
         "projectName": "Infra",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\ClassLibrary1\\Infra.csproj",
+        "projectPath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\ClassLibrary1\\Infra.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\ClassLibrary1\\obj\\",
+        "outputPath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\ClassLibrary1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -26,8 +26,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj"
+              "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\Models\\Models.csproj"
               }
             }
           }
@@ -81,14 +81,14 @@
         }
       }
     },
-    "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj": {
+    "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\Models\\Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\Models\\Models.csproj",
         "projectName": "Models",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Models\\Models.csproj",
+        "projectPath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\Models\\Models.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\Models\\obj\\",
+        "outputPath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -63,7 +63,7 @@ namespace EmbeddedApi
             builder.Services.AddAuthorization(options =>
                 {
                     options.AddPolicy("ADMIN", policy =>
-                                    policy.RequireClaim("perfil", "ADMIN"));
+                                    policy.RequireClaim("perfil_id", "ADMIN"));
                 });
 
 

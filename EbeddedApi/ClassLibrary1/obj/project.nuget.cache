@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QWM1XA04LV0c9W9TCcw04ntuP12orGHKzfDzxTyoq8C/wYISxhLF2fhkf6jNft8FN7sc7b1vOnjP+cB8EbRd6w==",
+  "dgSpecHash": "Dq3O+z8mhd1d7apiqAukgIA7rg+sCKEMRoWJRZYVM6xKtQAtYAv5NpHdYT56/dZQ5OmT3Kmr9W7uQglHY//gFw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EmbeddedApp\\EbeddedApi\\ClassLibrary1\\Infra.csproj",
+  "projectFilePath": "C:\\Users\\Usuario\\Desktop\\(interno)active-embedded\\EbeddedApi\\ClassLibrary1\\Infra.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.0\\microsoft.aspnetcore.cryptography.internal.6.0.0.nupkg.sha512",
