@@ -30,39 +30,40 @@ namespace EbeddedApi.Services
         #endregion
 
         #region Métodos Públicos
-    
-          public async Task<UserTFAResponse> AuthLogin(string email, string password){
+
+        public async Task<UserTFAResponse> AuthLogin(string email, string password)
+        {
             var users = await this._identityRepository.Get();
             var user = users.FirstOrDefault(x => x.NormalizedEmail == email.ToUpper());
-                
-                if (await this.UserManager.CheckPasswordAsync(user, password))
-                {
-                    await UserManager.ResetAccessFailedCountAsync(user);
-                    await UserManager.SetLockoutEndDateAsync(user, null);
 
-                    return new UserTFAResponse()
-                    {
-                        token = this.JwtService.GenerateSecurityToken(email, MetodoAutenticacao.Auth),
-                        QrCodeImageUrl = "", //qrCodeImageUrl,
-                        ManualEntryCode = "" //manualEntryCode
-                    };
-                }
-                else
+            if (await this.UserManager.CheckPasswordAsync(user, password))
+            {
+                await UserManager.ResetAccessFailedCountAsync(user);
+                await UserManager.SetLockoutEndDateAsync(user, null);
+
+                return new UserTFAResponse()
                 {
-                    await UserManager.AccessFailedAsync(user);
-                    if(user.AccessFailedCount >= 3) throw new LimitAttemptException();
-                }
-                throw new LoginError("Não foi possível efetuar o login");
-          }
+                    token = this.JwtService.GenerateSecurityToken(email, MetodoAutenticacao.Auth),
+                    QrCodeImageUrl = "", //qrCodeImageUrl,
+                    ManualEntryCode = "" //manualEntryCode
+                };
+            }
+            else
+            {
+                await UserManager.AccessFailedAsync(user);
+                if (user.AccessFailedCount >= 3) throw new LimitAttemptException();
+            }
+            throw new LoginError("Não foi possível efetuar o login");
+        }
 
 
         public async Task AuthRegister(SignAuthRequest request)
-         {
+        {
             if (!await VerificaUsuarioPreCadastrado(request.Email)) throw new Unauthorized("Usuário não Autorizado");
             var users = await this._identityRepository.Get();
 
             var containsUser = users.Any(x => x.NormalizedEmail == request.Email.ToUpper());
-            
+
             if (containsUser) throw new Conflict("Email já cadastrado");
             User user = new User()
             {
@@ -74,7 +75,6 @@ namespace EbeddedApi.Services
             };
             await this.UserManager.CreateAsync(user, request.Password);
             await this.UserManager.AddClaimAsync(user, new Claim("auth_method", "Auth"));
-
             await this._identityRepository.Add(user);
         }
 
@@ -83,9 +83,10 @@ namespace EbeddedApi.Services
 
         #region Métodos Provados
 
-        async Task<bool> VerificaUsuarioPreCadastrado(string email){
+        async Task<bool> VerificaUsuarioPreCadastrado(string email)
+        {
             var users = await this._userPbiRlsRepository.GetFromAdmin();
-           return users.Any(x => x.Email.ToUpper() == email.ToUpper());
+            return users.Any(x => x.Email.ToUpper() == email.ToUpper());
         }
 
 
