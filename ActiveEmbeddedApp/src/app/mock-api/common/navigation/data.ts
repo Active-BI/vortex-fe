@@ -102,7 +102,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id: 'monitoramento-horas',
                 title: 'Monitoramento Horas',
                 type: 'basic',
-                link: 'view/a2ade005-2751-4427-b1a5-4345005ba6e2/4aebafbd-5555-4f41-8ad8-3c95ae749c1b',
+                link: 'view/4a6f3b19-88c4-4547-802e-8964810cfa66/395a994f-9f0f-4a54-be92-2d3113e27e1c',
             },
             {
                 id: 'gestao-de-projetos',
