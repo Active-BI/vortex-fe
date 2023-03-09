@@ -9,7 +9,7 @@ using Models.Models.Dtos;
 namespace EbeddedApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "ADMIN")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly AdminService adminService;

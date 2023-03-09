@@ -23,9 +23,10 @@ namespace EmbeddedApi.Services
         private readonly string urlPowerBiServiceApiRoot = "https://api.powerbi.com";
         private readonly UserPbiRlsContext _userPbiContext;
 
-        public PbiEmbedService(AadService aadService)
+        public PbiEmbedService(AadService aadService, UserPbiRlsContext userPbiRlsContext)
         {
             this.aadService = aadService;
+            this._userPbiContext = userPbiRlsContext;
         }
 
         /// <summary>
