@@ -69,7 +69,7 @@ namespace EmbeddedApi.Services
                     ReportId = pbiReport.Id, ReportName = pbiReport.Name, EmbedUrl = pbiReport.EmbedUrl
                 }
             };
-
+            
             // Get Embed token multiple resources
             var embedToken = await GetEmbedToken(reportId, datasetIds, userId, pbiClient, workspaceId);
 
@@ -180,6 +180,8 @@ namespace EmbeddedApi.Services
 
             var user = _userPbiContext.UserPbiRls.AsNoTracking()
                                               .FirstOrDefault(x => x.Email.ToUpper() == userId.ToUpper());
+
+
             var role = _userPbiContext.Perfil.AsNoTracking().FirstOrDefault(x => x.Id == user.PerfilId);
 
             EffectiveIdentity rls = new EffectiveIdentity(
