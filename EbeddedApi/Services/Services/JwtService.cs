@@ -43,7 +43,7 @@ namespace EbeddedApi.Services
                 new Claim(ClaimTypes.Email, email),
                 new Claim("type", "ApiToken"),
                 new Claim("firstName", ""),
-                new Claim(ClaimTypes.Role, role.Name.ToUpper())
+                new Claim(ClaimTypes.Role, role.Name)
             };
 
             if (metodo == MetodoAutenticacao.ADFS) claims.Add(new Claim("auth_method", "ADFS"));

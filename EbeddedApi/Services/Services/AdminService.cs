@@ -46,6 +46,7 @@ namespace EbeddedApi.Services
         }
         public async Task<bool> GetByEmail(string email)
         {
+
             if (email == null) return false;
 
             var users = await this._userPbiRlsRepository.GetFromAdmin();
@@ -87,11 +88,6 @@ namespace EbeddedApi.Services
             userRls.EmailContato = request.EmailContato == "" ? userRls.EmailContato : request.EmailContato;
 
             await this._userPbiRlsRepository.Put(userRls);
-            userRls.UserVisions.Clear();
-
-
-            await this._visionRepository.AddVisions(request, userRls);
-
 
             this._dataBaseFunctions.SaveChanges();
         }

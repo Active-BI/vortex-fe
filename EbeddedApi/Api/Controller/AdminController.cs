@@ -101,11 +101,10 @@ namespace EbeddedApi.Controllers
 
             try
             {
-
+                var requestTest = request;
                 if (await this.adminService.GetByEmail(request.Email))
                     return StatusCode(StatusCodes.Status422UnprocessableEntity, "Usuário já existente");
 
-                // userVisions para o usuário
                 var updateUser = new UserDto()
                 {
                     Email = request.Email,

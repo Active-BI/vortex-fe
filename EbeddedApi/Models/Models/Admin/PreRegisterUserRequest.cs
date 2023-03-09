@@ -12,8 +12,8 @@ namespace EbeddedApi.Models.Admin
         public string Identificacao { get; set; }
         public string EmailContato { get; set; }
         public Guid PerfilId { get; set; }
-        public List<string> Visions { get; set; }
-        public List<string> Menus { get; set; }
+        public List<string>? Visions { get; set; }
+        public List<string>? Menus { get; set; }
 
     }
 }
