@@ -42,7 +42,6 @@ namespace EbeddedApi.Services
             var claims = new List<Claim>(){
                 new Claim(ClaimTypes.Email, email),
                 new Claim("type", "ApiToken"),
-                new Claim("firstName", ""),
                 new Claim(ClaimTypes.Role, role.Name)
             };
 
