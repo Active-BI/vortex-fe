@@ -23,7 +23,7 @@ namespace Repository.Concretes
             try
             {
 
-                await this._userPbiContext.UserPbiRls.AddAsync(entity);
+                await this._userPbiContext.AddAsync(entity);
                 await this._userPbiContext.SaveChangesAsync();
             }
             catch (Exception)
@@ -38,7 +38,7 @@ namespace Repository.Concretes
             try
             {
 
-                this._userPbiContext.UserPbiRls.Remove(entity);
+                this._userPbiContext.Remove(entity);
                 await this._userPbiContext.SaveChangesAsync();
             }
             catch (Exception)
@@ -71,12 +71,12 @@ namespace Repository.Concretes
             {
 
                 var result = await this._userPbiContext.UserPbiRls.AsNoTracking()
-                                                 .Include(x => x.UserVisions)
-                                                 .ThenInclude(us => us.Vision)
+                                                 //  .Include(x => x.UserVisions)
+                                                 //  .ThenInclude(us => us.Vision)
                                                  .ToListAsync();
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw new UserGetError("Erro ao consultar usuários");
             }

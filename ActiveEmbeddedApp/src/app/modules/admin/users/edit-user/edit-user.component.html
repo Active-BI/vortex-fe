@@ -70,15 +70,15 @@
             </div>
             <mat-form-field appearance="fill">
                 <mat-label>Perfil</mat-label>
-                <mat-select formControlName="perfil">
+                <mat-select formControlName="perfilId">
                     <mat-option value="ca21241b-a37d-4e6f-bbb6-26643d3cdd99">User</mat-option>
                     <mat-option value="6a203390-8389-49ca-aa0e-6a14ba7815bc">Admin</mat-option>
                 </mat-select>
                 <mat-icon svgIcon="heroicons_outline:archive"></mat-icon>
 
             </mat-form-field>
-            <div *ngIf="form.controls.perfil.touched">
-                <div *ngIf="form.controls.perfil.errors?.['required']" class="text-red-600 mb-2">
+            <div *ngIf="form.controls.perfilId.touched">
+                <div *ngIf="form.controls.perfilId.errors?.['required']" class="text-red-600 mb-2">
                     Perfil é Obrigatório
                 </div>
             </div>
