@@ -80,9 +80,10 @@ namespace Repository.Concretes
             try
             {
 
-            this._userPbiContext.UserVisions.RemoveRange(request);
-            await this._userPbiContext.SaveChangesAsync();
-            } catch (Exception)
+                this._userPbiContext.UserVisions.RemoveRange(request);
+                await this._userPbiContext.SaveChangesAsync();
+            }
+            catch (Exception)
             {
                 throw new VisionDeleteError("Erro ao deletar visão");
             }

@@ -1,20 +1,26 @@
 <div class="flex flex-col flex-auto min-w-0">
     <div class="text-3x-L flex-auto p-6  justify-center">
+        <div class="flex items-center justify-start">
+            <button
+             mat-raised-button
+             (click)="criarUsuario()"
+            class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">Criar Usuário</button>
+        </div>
 
     <div class="w-full bg-primary h-16 rounded-t-md  mt-4 flex items-center justify-between">
-        <div class="text-3xl text-white mx-4">Usuários</div>
-          <div class="flex items-center justify-between">
+            <div class="text-3xl text-white mx-4">Usuários</div>
+          <div class="flex items-center justify-start">
 
-            <mat-form-field appearance="fill" class="w-80 mt-4 mr-1 ml-1">
-              <mat-icon>search</mat-icon>
+            <mat-form-field appearance="fill" class="w-80 mt-4 mr-4 ml-1">
+              <mat-icon class="mr-4">search</mat-icon>
               <input type="text" [formControl]="myControl" placeholder="Buscar" (ngModelChange)="filtarUsuarios($event)"  matInput/>
             </mat-form-field>
 
-            <div class="p-2 bg-white rounded-md flex items-center cursor-pointer mr-4">
+            <!-- <div class="p-2 bg-white rounded-md flex items-center cursor-pointer mr-4">
               <mat-icon svgIcon="heroicons_solid:user-add" class="text-primary w-8 h-8" (click)="criarUsuario()"></mat-icon>
-            </div>
+            </div> -->
           </div>
-            
+
     </div>
     <div class="flex flex-col shadow-2xl" id="table">
         <table mat-table class="" [dataSource]="usuariosFiltrados" class="pb-6">

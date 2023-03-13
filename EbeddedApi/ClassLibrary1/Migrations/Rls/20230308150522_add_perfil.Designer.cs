@@ -3,6 +3,7 @@ using System;
 using EbeddedApi.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infra.Migrations.Rls
 {
     [DbContext(typeof(UserPbiRlsContext))]
-    partial class UserPbiRlsContextModelSnapshot : ModelSnapshot
+    [Migration("20230308150522_add_perfil")]
+    partial class add_perfil
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,6 +60,7 @@ namespace Infra.Migrations.Rls
                         .HasColumnName("email_contato");
 
                     b.Property<string>("Empresa")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("empresa");
 

@@ -19,19 +19,16 @@ namespace Repository.Concretes
 
         public IEnumerable<UserPbiRls> joinRoles(IEnumerable<UserPbiRls> Users)
         {
-            var roles = this._identityContext.Roles.ToList();
             var result = from user in Users
-                         join vis in roles
-                        on user.Perfil equals vis.Id.ToString()
                          select new UserPbiRls()
                          {
                              Id = user.Id,
-                             Nome =user.Nome,
+                             Nome = user.Nome,
                              Email = user.Email,
                              EmailContato = user.EmailContato,
                              Empresa = user.Empresa,
                              Identificacao = user.Identificacao,
-                             Perfil = vis.Name,
+                             PerfilId = user.PerfilId,
                              DataUltimoAcesso = user.DataUltimoAcesso
                          };
             return result;

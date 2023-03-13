@@ -1,25 +1,25 @@
-    using EmbeddedApi.Models;
-    using EmbeddedApi.Services;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Options;
-    using System.Text.Json;
-    using Microsoft.AspNetCore.Authorization;
-    using EbeddedApi.Services;
-    using Microsoft.Net.Http.Headers;
+using EmbeddedApi.Models;
+using EmbeddedApi.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
+using EbeddedApi.Services;
+using Microsoft.Net.Http.Headers;
 
 namespace EmbeddedApi.Controllers
 {
 
     [Route("api/[controller]")]
-     [ApiController]
-     [Authorize]
+    [ApiController]
+    [Authorize]
     public class EmbedInfoController : ControllerBase
     {
         private readonly PbiEmbedService pbiEmbedService;
 
         private readonly JwtService _jwtService;
 
-        public EmbedInfoController(PbiEmbedService pbiEmbedService,  JwtService jwtService)
+        public EmbedInfoController(PbiEmbedService pbiEmbedService, JwtService jwtService)
         {
             this.pbiEmbedService = pbiEmbedService;
             _jwtService = jwtService;
@@ -35,7 +35,8 @@ namespace EmbeddedApi.Controllers
             string token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             try
             {
-                PowerBI pbiConfig = new PowerBI(){
+                PowerBI pbiConfig = new PowerBI()
+                {
                     WorkspaceId = groupId,
                     ReportId = reportId
                 };
@@ -48,7 +49,7 @@ namespace EmbeddedApi.Controllers
             catch (Exception ex)
             {
                 // HttpContext.Response.StatusCode = 500;
-                return StatusCode(StatusCodes.Status500InternalServerError,  ex.Message + "\n\n" + ex.StackTrace);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message + "\n\n" + ex.StackTrace);
             }
         }
 

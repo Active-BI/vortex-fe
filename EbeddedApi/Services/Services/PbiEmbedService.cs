@@ -5,7 +5,9 @@
 
 namespace EmbeddedApi.Services
 {
+    using EbeddedApi.Context;
     using EmbeddedApi.Models;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.PowerBI.Api;
     using Microsoft.PowerBI.Api.Models;
     using Microsoft.Rest;
@@ -19,10 +21,12 @@ namespace EmbeddedApi.Services
     {
         private readonly AadService aadService;
         private readonly string urlPowerBiServiceApiRoot = "https://api.powerbi.com";
+        private readonly UserPbiRlsContext _userPbiContext;
 
-        public PbiEmbedService(AadService aadService)
+        public PbiEmbedService(AadService aadService, UserPbiRlsContext userPbiRlsContext)
         {
             this.aadService = aadService;
+            this._userPbiContext = userPbiRlsContext;
         }
 
         /// <summary>
@@ -65,7 +69,7 @@ namespace EmbeddedApi.Services
                     ReportId = pbiReport.Id, ReportName = pbiReport.Name, EmbedUrl = pbiReport.EmbedUrl
                 }
             };
-
+            
             // Get Embed token multiple resources
             var embedToken = await GetEmbedToken(reportId, datasetIds, userId, pbiClient, workspaceId);
 
@@ -143,7 +147,7 @@ namespace EmbeddedApi.Services
             // #####################################
 
             var listReportsRLS = new List<Guid>(){
-                new Guid("a2ade005-2751-4427-b1a5-4345005ba6e2"), // Painel Controle de Horas
+                new Guid("4a6f3b19-88c4-4547-802e-8964810cfa66"), // Painel Controle de Horas
             };
 
             EmbedToken embedToken;
@@ -174,10 +178,15 @@ namespace EmbeddedApi.Services
             }
 
 
+            var user = _userPbiContext.UserPbiRls.AsNoTracking()
+                                              .FirstOrDefault(x => x.Email.ToUpper() == userId.ToUpper());
+
+
+            var role = _userPbiContext.Perfil.AsNoTracking().FirstOrDefault(x => x.Id == user.PerfilId);
 
             EffectiveIdentity rls = new EffectiveIdentity(
-                username: "lucas.franca@activebi.com.br",
-                roles: new List<string>() { "User" },
+                username: userId,
+                roles: new List<string>() { role.Name },
                 reports: new List<string>() { reportId.ToString() },
                 datasets: new List<string>() { datasetIds[0].ToString() }
             );
