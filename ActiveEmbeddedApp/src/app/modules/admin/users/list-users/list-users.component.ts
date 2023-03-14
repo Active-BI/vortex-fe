@@ -35,7 +35,7 @@ export interface PeriodicElement {
     templateUrl: './list-users.component.html',
     styleUrls: ['./list-users.component.scss'],
 })
-export class ListUsersComponent implements AfterViewInit, OnInit {
+export class ListUsersComponent implements OnInit {
     @ViewChild('paginator') paginator: MatPaginator;
     myControl = new FormControl('');
     pipe = new DatePipe('en-US');
@@ -54,9 +54,7 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
         private adminSrv: AdminService,
         public dialog: MatDialog,
         private toastr: ToastrService
-    ) {}
-
-    ngAfterViewInit(): void {
+    ) {
         this.requisicoes();
     }
 
@@ -65,14 +63,14 @@ export class ListUsersComponent implements AfterViewInit, OnInit {
     }
     requisicoes() {
         this.adminSrv.getUsers().subscribe((e) => {
-            e = e.map((user) => ({
+            const users = e.map((user) => ({
                 ...user,
                 perfil: listRoles.find((perfil) => user.perfilId === perfil.id)
                     .name,
             }));
 
-            this.usuarios = new MatTableDataSource(e);
-            this.usuariosFiltrados = new MatTableDataSource(e);
+            this.usuarios = new MatTableDataSource(users);
+            this.usuariosFiltrados = new MatTableDataSource(users);
             this.usuariosFiltrados.paginator = this.paginator;
             this.usuarios.paginator = this.paginator;
             this.usuariosL = this.usuarios?.data.length;

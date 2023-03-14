@@ -60,11 +60,8 @@ export class EditUserComponent implements OnInit {
 
     ngOnInit(): void {
         this.form.controls.email.disable();
-        console.log(this.id);
         this.adminSrv.getUserById(this.id).subscribe((e: any) => {
             this.user = e;
-            // const visoesName = this.user.userVisions.map((x) => x.vision.name);
-            console.log(e);
             this.form.patchValue({
                 id: this.user.id,
                 nome: this.user.nome,
@@ -133,8 +130,8 @@ export class EditUserComponent implements OnInit {
                 .updateUser(this.form.value as PeriodicElement)
                 .subscribe((e) => {
                     this.toastr.success('Editado com Sucesso');
+                    this.voltar();
                 });
-            this.voltar();
         } else {
             this.form.markAllAsTouched();
         }
