@@ -68,7 +68,7 @@ export class ListUsersComponent implements OnInit {
                 perfil: listRoles.find((perfil) => user.perfilId === perfil.id)
                     .name,
             }));
-
+            console.log(users);
             this.usuarios = new MatTableDataSource(users);
             this.usuariosFiltrados = new MatTableDataSource(users);
             this.usuariosFiltrados.paginator = this.paginator;

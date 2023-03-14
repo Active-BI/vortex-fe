@@ -1,11 +1,17 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    Input,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { EmbeddedService } from '../services/embedded/embedded.service';
 import { PowerBIReportEmbedComponent } from 'powerbi-client-angular';
 import {
     BreakpointObserver,
     BreakpointState,
-    Breakpoints
-  } from '@angular/cdk/layout';
+    Breakpoints,
+} from '@angular/cdk/layout';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -13,24 +19,24 @@ import { FormBuilder, FormGroup } from '@angular/forms';
     templateUrl: './embedded-report.component.html',
     styleUrls: ['./embedded-report.component.scss'],
 })
-export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
+export class EmbeddedReportComponent implements OnInit, AfterViewInit {
     @Input() reportId: string;
     @Input() groupId: string;
     @Input() type: string;
     form: FormGroup = this.fb.group({
-      vision: '',
-    })
-    @ViewChild(PowerBIReportEmbedComponent) reportObj!: PowerBIReportEmbedComponent;
-    
+        vision: '',
+    });
+    @ViewChild(PowerBIReportEmbedComponent)
+    reportObj!: PowerBIReportEmbedComponent;
 
     layout: string;
     token;
     user;
     config;
     configDashboard;
-    showReport=false;
+    showReport = false;
     report: any;
-    pages: any = []
+    pages: any = [];
     handlers;
     settings = {
         visualRenderedEvents: true,
@@ -46,92 +52,92 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
         },
     };
 
-    constructor(private embeddedSrv: EmbeddedService, public breakpointObserver: BreakpointObserver, private fb: FormBuilder) {
-        this.handlers =  new Map([
+    constructor(
+        private embeddedSrv: EmbeddedService,
+        public breakpointObserver: BreakpointObserver,
+        private fb: FormBuilder
+    ) {
+        this.handlers = new Map([
             ['loaded', (): void => console.log('Report loaded')],
-            ['rendered', (): void => {
-              if (this.pages.length < 1) {
-                this.selectItems()
-              }
-        console.log('Report rendered')}],
-            ['error', (event): void => console.log(event.detail)]
+            [
+                'rendered',
+                (): void => {
+                    if (this.pages.length < 1) {
+                        this.selectItems();
+                    }
+                    console.log('Report rendered');
+                },
+            ],
+            ['error', (event): void => console.log(event.detail)],
         ]);
     }
 
     ngOnInit(): void {
-
         this.breakpointObserver
-        .observe([Breakpoints.Handset])
-        .subscribe((state: BreakpointState) => {
-          if (state.matches) {
-            console.log('Viewport width is less than handset!');
-            this.settings = {
-                ... this.settings,
-                    layoutType: 2,
-                    background:1,
-            };
-            // this.report.updateSettings(this.settings);x
-          } else {
-            this.embeddedSrv.changeHandSetStatus('desktop');
-            this.settings = {
-                ... this.settings,
-                    layoutType: 0,
-                    background:0,
-            };
-            // console.log(this.report)
-            // this.report.updateSettings(this.settings);
-          }
-        });
+            .observe([Breakpoints.Handset])
+            .subscribe((state: BreakpointState) => {
+                if (state.matches) {
+                    console.log('Viewport width is less than handset!');
+                    this.settings = {
+                        ...this.settings,
+                        layoutType: 2,
+                        background: 1,
+                    };
+                    // this.report.updateSettings(this.settings);x
+                } else {
+                    this.embeddedSrv.changeHandSetStatus('desktop');
+                    this.settings = {
+                        ...this.settings,
+                        layoutType: 0,
+                        background: 0,
+                    };
+                    // console.log(this.report)
+                    // this.report.updateSettings(this.settings);
+                }
+            });
 
-       this.getEmbedded(this.settings);
-       
+        this.getEmbedded(this.settings);
     }
 
     ngAfterViewInit(): void {
-      if (this.reportObj) {
-      }
-
+        if (this.reportObj) {
+        }
     }
     async refresh() {
-      this.reportObj.getReport().getPages().then((e) => console.log(e))
+        this.reportObj
+            .getReport()
+            .getPages()
+            .then((e) => console.log(e));
     }
     fullscreen() {
-      this.reportObj.getReport().fullscreen()
+        this.reportObj.getReport().fullscreen();
     }
 
     print() {
-      this.reportObj.getReport().print()
+        this.reportObj.getReport().print();
     }
     selectItems() {
-      const get = async () => {
+        const get = async () => {
+            try {
+                const pages = await this.reportObj.getReport().getPages();
 
-        try {
-
-          const pages = await  this.reportObj.getReport().getPages();
-      
-          this.pages = pages.filter((e) => e.visibility === 0)
-          this.form.patchValue({
-            vision: this.pages[0].name
-          })
-      }
-      
-      catch (error) {
-      
-          console.log(error);
-      
-        }
-      }
-      get()
+                this.pages = pages.filter((e) => e.visibility === 0);
+                this.form.patchValue({
+                    vision: this.pages[0].name,
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        get();
     }
-    change({ value : name }) {
-      this.pages.find((a) => a.name === name).setActive()
+    change({ value: name }) {
+        this.pages.find((a) => a.name === name).setActive();
     }
     private getEmbedded(settings: any): void {
-
-        this.embeddedSrv.getEmbeddedInfo(
-            this.groupId,
-            this.reportId
-        ).subscribe((res) => {
+        this.embeddedSrv.getEmbeddedInfo(this.groupId, this.reportId).subscribe(
+            (res) => {
+                console.log(res);
                 this.token = res.EmbedToken;
                 this.config = {
                     type: 'report',
@@ -141,7 +147,7 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
                     accessToken: this.token.Token,
                     hostname: 'https://app.powerbi.com',
                     settings: {
-                        ... settings
+                        ...settings,
                     },
                 };
                 this.configDashboard = {
@@ -162,14 +168,11 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit  {
                             },
                         },
                     },
-                    
                 };
 
                 this.showReport = true;
             },
             (err) => {}
         );
-
-
     }
 }

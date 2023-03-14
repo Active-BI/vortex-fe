@@ -7,7 +7,6 @@ import { environment } from '../../../../environments/environment';
     providedIn: 'root',
 })
 export class EmbeddedService {
-
     baseUrl = `${environment.baseUrl}`;
 
     handSetStatus = 'desktop';
@@ -17,7 +16,7 @@ export class EmbeddedService {
     handSetEmitter = new EventEmitter<string>();
     constructor(private http: HttpClient) {}
 
-    changeHandSetStatus(layout: 'desktop' | 'mobile'): void{
+    changeHandSetStatus(layout: 'desktop' | 'mobile'): void {
         this.handSetStatus = layout;
         this.handSetEmitter.emit(this.handSetStatus);
     }
@@ -28,14 +27,8 @@ export class EmbeddedService {
      * @param reportId é o ID do relatóro
      * @returns Json com o token para relatório
      */
-    getEmbeddedInfo(
-        groupId: string,
-        reportId: string,
-        userId = ''
-    ): Observable<any> {
-        return this.http.get(
-            `${this.baseUrl}EmbedInfo/report?groupId=${groupId}&reportId=${reportId}`
-        );
+    getEmbeddedInfo(groupId: string, reportId: string): Observable<any> {
+        return this.http.get(`${this.baseUrl}power-bi/${groupId}/${reportId}`);
     }
 
     exportReportToPDF(
