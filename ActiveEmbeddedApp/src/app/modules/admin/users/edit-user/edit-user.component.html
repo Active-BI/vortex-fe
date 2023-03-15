@@ -20,15 +20,15 @@
 
             <mat-form-field appearance="fill">
                 <mat-label>Nome</mat-label>
-                <input formControlName="nome" matInput #first />
+                <input formControlName="name" matInput #first />
                 <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
 
             </mat-form-field>
-            <div *ngIf="form.controls.nome.touched" class="text-red-600 mb-2">
-                <div *ngIf="form.controls.nome.errors?.['required']">
+            <div *ngIf="form.controls.name.touched" class="text-red-600 mb-2">
+                <div *ngIf="form.controls.name.errors?.['required']">
                     Nome é Obrigatório
                 </div>
-                <div *ngIf="form.controls.nome.errors?.['minlength']">
+                <div *ngIf="form.controls.name.errors?.['minlength']">
                     Precisa de no mínimo 3 dígitos
                 </div>
             </div>
@@ -46,83 +46,34 @@
                     Email inválido
                 </div>
             </div>
-            <mat-form-field appearance="fill">
-                <mat-label>Email de contato (Opcional)</mat-label>
-                <input type="text" formControlName="emailContato" matInput #first />
-                <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
 
-            </mat-form-field>
-            <div *ngIf="form.controls.emailContato.touched" class="text-red-600 mb-2">
-                <div *ngIf="form.controls.emailContato.invalid && form.value.emailContato !== ''">
-                    Email inválido
-                </div>
-            </div>
             <mat-form-field appearance="fill">
                 <mat-label>Identificação</mat-label>
-                <input type="text" formControlName="identificacao" matInput #first />
+                <input type="text" formControlName="identification" matInput #first />
                 <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
 
             </mat-form-field>
-            <div *ngIf="form.controls.identificacao.touched" class="text-red-600 mb-2">
-                <div *ngIf="form.controls.identificacao.errors?.['required']">
+            <div *ngIf="form.controls.identification.touched" class="text-red-600 mb-2">
+                <div *ngIf="form.controls.identification.errors?.['required']">
                     Identificação é Obrigatória
                 </div>
             </div>
             <mat-form-field appearance="fill">
                 <mat-label>Perfil</mat-label>
-                <mat-select formControlName="perfilId">
+                <mat-select formControlName="role_id">
                     <mat-option value="ca21241b-a37d-4e6f-bbb6-26643d3cdd99">User</mat-option>
                     <mat-option value="6a203390-8389-49ca-aa0e-6a14ba7815bc">Admin</mat-option>
                 </mat-select>
                 <mat-icon svgIcon="heroicons_outline:archive"></mat-icon>
 
             </mat-form-field>
-            <div *ngIf="form.controls.perfilId.touched">
-                <div *ngIf="form.controls.perfilId.errors?.['required']" class="text-red-600 mb-2">
+            <div *ngIf="form.controls.role_id.touched">
+                <div *ngIf="form.controls.role_id.errors?.['required']" class="text-red-600 mb-2">
                     Perfil é Obrigatório
                 </div>
             </div>
 
-            <!-- <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Acesso</mat-label>
-                <input type="text" placeholder="Buscar" aria-label="Number" matInput
-                    (input)="filterVisions($event.target.value)" [formControl]="myControl" [matAutocomplete]="auto">
-                <mat-autocomplete (optionSelected)="onChange($event.option.value)" autoActiveFirstOption
-                    #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredVisions" [value]="option.name" [disabled]="visionsSelecteds.includes(option.name)">
-                        {{option.name}}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field> -->
         </form>
-
-
-        <!-- <mat-accordion class="mb-2" >
-            <mat-expansion-panel class="p-[-10px]" (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  Todos os acessos
-                </mat-panel-title>
-
-              </mat-expansion-panel-header>
-              <div class="flex flex-col w-full justify-center ">
-                <mat-chip *ngFor="let v of visionsSelecteds" class="p-1 m-1 px-2 flex rounded-md w-full bg-slate-200 items-center justify-between">
-                    <div>
-                        {{v}}
-                    </div>
-                        <button (click)="deletarVisao(v)" class="flex   items-center justify-between">
-                            <mat-icon
-                                color="warn"
-                                class="cursor-pointer "
-                                svgIcon="heroicons_solid:trash"
-                            ></mat-icon>
-                        </button>
-                </mat-chip>
-            </div>
-            </mat-expansion-panel>
-          </mat-accordion> -->
-
 
 
 

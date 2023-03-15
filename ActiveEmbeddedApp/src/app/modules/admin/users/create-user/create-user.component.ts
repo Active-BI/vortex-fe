@@ -3,7 +3,7 @@ import { EditUserComponent } from '../edit-user/edit-user.component';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AdminService } from 'app/modules/services/admin.service';
+import { AdminService, PreRegister } from 'app/modules/services/admin.service';
 
 @Component({
     selector: 'app-create-user',
@@ -28,7 +28,9 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
 
     criar(): void {
         if (this.form.valid) {
-            this.adminSrv1.preRegister(this.form.value).subscribe((e) => {
+            delete this.form.value.id;
+            const formPayload = this.form.value as PreRegister;
+            this.adminSrv1.createPreRegister(formPayload).subscribe((e) => {
                 this.toast.success('Usuário Criado com Sucesso');
                 this.voltar();
             });

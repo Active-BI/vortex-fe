@@ -18,6 +18,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { listRoles } from '../usersUtils';
+import moment from 'moment';
 
 export interface PeriodicElement {
     id: string;
@@ -63,12 +64,18 @@ export class ListUsersComponent implements OnInit {
     }
     requisicoes() {
         this.adminSrv.getUsers().subscribe((e) => {
-            const users = e.map((user) => ({
-                ...user,
-                perfil: listRoles.find((perfil) => user.perfilId === perfil.id)
-                    .name,
+            const users = e.map((preRegister) => ({
+                ...preRegister,
+                perfil: listRoles.find(
+                    (role) => preRegister.role_id === role.id
+                ).name,
+                dataUltimoAcesso:
+                    preRegister.User !== null
+                        ? moment(preRegister.User.last_access).format(
+                              'DD/MM/YY'
+                          )
+                        : 'N/',
             }));
-            console.log(users);
             this.usuarios = new MatTableDataSource(users);
             this.usuariosFiltrados = new MatTableDataSource(users);
             this.usuariosFiltrados.paginator = this.paginator;
@@ -79,7 +86,7 @@ export class ListUsersComponent implements OnInit {
     usuariosFiltrados: MatTableDataSource<getAllRequest>;
     filtarUsuarios(e) {
         const data = this.usuarios.data.filter((u) =>
-            u.nome.toUpperCase().includes(e.toUpperCase())
+            u.name.toUpperCase().includes(e.toUpperCase())
         );
         this.usuariosFiltrados = new MatTableDataSource(data);
         this.usuariosFiltrados.paginator = this.paginator;

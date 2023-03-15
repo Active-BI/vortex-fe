@@ -7,7 +7,10 @@ import {
     FormGroup,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdminService } from 'app/modules/services/admin.service';
+import {
+    AdminService,
+    getAllRequest,
+} from 'app/modules/services/admin.service';
 import { listRoles } from 'app/modules/services/roles.service';
 import { ToastrService } from 'ngx-toastr';
 import { PeriodicElement } from '../list-users/list-users.component';
@@ -23,7 +26,7 @@ export class EditUserComponent implements OnInit {
     visionsSelecteds = [];
     form = this.fb.group({
         id: [''],
-        nome: ['', [Validators.required, Validators.minLength(3)]],
+        name: ['', [Validators.required, Validators.minLength(3)]],
         email: [
             '',
             [
@@ -31,21 +34,13 @@ export class EditUserComponent implements OnInit {
                 Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
             ],
         ],
-        emailContato: [
-            '',
-            [Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')],
-        ],
-        identificacao: ['', [Validators.required]],
-        perfilId: ['', [Validators.required]],
-        visions: [[]],
-        menus: [[]],
+        identification: ['', [Validators.required]],
+        role_id: ['', [Validators.required]],
     });
     panelOpenState = false;
     id: string;
     ordersData = ordersData;
-    user: any;
-
-    visoes = [];
+    user: getAllRequest;
 
     listRoles = listRoles;
     constructor(
@@ -60,78 +55,34 @@ export class EditUserComponent implements OnInit {
 
     ngOnInit(): void {
         this.form.controls.email.disable();
-        this.adminSrv.getUserById(this.id).subscribe((e: any) => {
+        this.adminSrv.getUserById(this.id).subscribe((e) => {
             this.user = e;
             this.form.patchValue({
                 id: this.user.id,
-                nome: this.user.nome,
+                name: this.user.name,
                 email: this.user.email,
-                perfilId: this.user.perfilId,
-                emailContato: this.user.emailContato,
-                identificacao: this.user.identificacao,
-                // visions: visoesName,
-                menus: [],
-            });
-            // this.visionsSelecteds = visoesName;
-
-            this.adminSrv.getVisions().subscribe((e: any) => {
-                this.visoes = e;
-                this.filteredVisions = e;
+                role_id: this.user.role_id,
+                identification: this.user.identification,
             });
         });
     }
 
-    resetfilteredVisions() {
-        this.filteredVisions = this.filteredVisions.filter(
-            (a) => !this.visionsSelecteds.includes(a.name)
-        );
-    }
-
     filteredVisions = [];
-
-    filterVisions(e: any) {
-        this.filteredVisions = this.visoes.filter((a) =>
-            a.name.includes(e.toUpperCase())
-        );
-    }
 
     voltar(): void {
         this.router.navigate(['app/usuarios']);
-    }
-
-    onChange(e) {
-        if (this.visoes.find((a) => a.name === e)) {
-            const value = this.form.value.visions;
-            value.push(e);
-            this.visionsSelecteds = value;
-            this.form.patchValue({
-                visions: value,
-            });
-
-            this.myControl.setValue('');
-            this.filterVisions('');
-        }
     }
 
     redirectToEdit(id) {
         this.router.navigate([`app/usuarios-editar/${id}`]);
     }
 
-    deletarVisao(name) {
-        this.visionsSelecteds = this.visionsSelecteds.filter((a) => a !== name);
-        this.form.patchValue({
-            visions: this.visionsSelecteds,
-        });
-    }
-
     editar(): void {
         if (this.form.valid && this.myControl.valid) {
-            this.adminSrv
-                .updateUser(this.form.value as PeriodicElement)
-                .subscribe((e) => {
-                    this.toastr.success('Editado com Sucesso');
-                    this.voltar();
-                });
+            this.adminSrv.updateUser(this.form.value).subscribe((e) => {
+                this.toastr.success('Editado com Sucesso');
+                this.voltar();
+            });
         } else {
             this.form.markAllAsTouched();
         }

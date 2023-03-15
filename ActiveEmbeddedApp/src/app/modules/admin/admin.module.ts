@@ -5,7 +5,10 @@ import { InicioComponent } from './inicio/inicio.component';
 import { AdminComponent } from './admin.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import {
+    MatPaginatorIntl,
+    MatPaginatorModule,
+} from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
@@ -27,8 +30,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { CreateUserComponent } from './users/create-user/create-user.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { getPortuguesePaginatorIntl } from '../services/portuguese-paginator-intl';
-import {MatBadgeModule} from '@angular/material/badge';
-import { AuthGuard } from '../services/guard/auth.guard';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ListUsersComponent } from './users/list-users/list-users.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
@@ -50,14 +52,19 @@ const adminroutes: Route[] = [
     },
 
     {
+        data: { expectedRoles: ['Admin'] },
         path: 'usuarios',
         component: ListUsersComponent,
     },
     {
+        data: { expectedRoles: ['Admin'] },
+
         path: 'usuarios-criar',
         component: CreateUserComponent,
     },
     {
+        data: { expectedRoles: ['Admin'] },
+
         path: 'usuarios-editar/:id',
         component: EditUserComponent,
     },
@@ -72,7 +79,7 @@ const adminroutes: Route[] = [
         CreateUserComponent,
         ListUsersComponent,
         EditUserComponent,
-        BiDefaultComponent
+        BiDefaultComponent,
     ],
     imports: [
         CommonModule,
@@ -100,8 +107,8 @@ const adminroutes: Route[] = [
     entryComponents: [MatDialogModule],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-        { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() }
+        { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AdminModule {}

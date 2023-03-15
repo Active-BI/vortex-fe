@@ -137,14 +137,13 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
     private getEmbedded(settings: any): void {
         this.embeddedSrv.getEmbeddedInfo(this.groupId, this.reportId).subscribe(
             (res) => {
-                console.log(res);
-                this.token = res.EmbedToken;
+                this.token = res.embedToken;
                 this.config = {
                     type: 'report',
                     tokenType: 1,
-                    embedUrl: res.EmbedReport[0].EmbedUrl,
-                    id: res.EmbedReport[0].ReportId,
-                    accessToken: this.token.Token,
+                    embedUrl: res.reportsDetail[0].embedUrl,
+                    id: res.reportsDetail[0].reportId,
+                    accessToken: this.token.token,
                     hostname: 'https://app.powerbi.com',
                     settings: {
                         ...settings,
@@ -153,9 +152,9 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
                 this.configDashboard = {
                     type: 'dashboard',
                     tokenType: 1,
-                    embedUrl: res.EmbedReport[0].EmbedUrl,
-                    id: res.EmbedReport[0].ReportId,
-                    accessToken: this.token.Token,
+                    embedUrl: res.reportsDetail[0].embedUrl,
+                    id: res.reportsDetail[0].reportId,
+                    accessToken: this.token.token,
                     hostname: 'https://app.powerbi.com',
                     settings: {
                         visualRenderedEvents: true,

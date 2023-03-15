@@ -6,15 +6,37 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, debounceTime, map } from 'rxjs/operators';
 
+export interface PreRegister {
+    name: string;
+    email: string;
+    identification: string;
+    role_id: string;
+}
+export interface PreRegisterUpdate {
+    id: string;
+    name: string;
+    email: string;
+    identification: string;
+    role_id: string;
+}
 export interface getAllRequest {
     id: string;
     email: string;
-    emailContato: string;
-    identificacao: string;
-    nome: string;
-    perfilId: string;
-    userVisions: any[] | null;
-    dataUltimoAcesso: string | null;
+    identification: string;
+    name: string;
+    role_id: string;
+    role: { id: string; name: string } | null;
+    User: {
+        name: string;
+        email: string;
+        normalized_name: string;
+        normalized_email: string;
+        password_hash: string;
+        last_access: Date;
+        status: boolean;
+        pre_register_id: string;
+        id: string;
+    };
 }
 
 @Injectable({
@@ -26,83 +48,65 @@ export class AdminService {
     private baseUrl = environment.baseUrl;
 
     getUsers(): Observable<getAllRequest[]> {
-        return this.http.get<any[]>(`${this.baseUrl}admin`).pipe(
-            catchError((err) => {
-                ('');
-                this.toast.error(`Erro ao consultar usuários`, null, {
-                    progressBar: true,
-                    timeOut: 2000,
-                });
-                return throwError(err);
-            })
-        );
-    }
-
-    getVisions(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.baseUrl}visoes`).pipe(
-            map((visions: any[]) => {
-                return visions.sort((a, b) => {
-                    a = a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-                    b = b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-                    if (a > b) {
-                        return 1;
-                    }
-                    if (a < b) {
-                        return -1;
-                    }
-                    // a must be equal to b
-                    return 0;
-                });
-            }),
-            catchError((err) => {
-                this.toast.error(`Erro ao obter visões`, null, {
-                    progressBar: true,
-                    timeOut: 2000,
-                });
-                return throwError(err);
-            })
-        );
-    }
-
-    getUserById(userId: string): Observable<any> {
-        return this.http.get<any>(`${this.baseUrl}admin/${userId}`).pipe(
-            catchError((err) => {
-                this.toast.error(`Erro ao consultar usuário`, null, {
-                    progressBar: true,
-                    timeOut: 2000,
-                });
-                return throwError(err);
-            })
-        );
-    }
-
-    updateUser(user: any): Observable<any> {
-        return this.http.put<any>(`${this.baseUrl}admin/user`, user).pipe(
-            catchError((err) => {
-                this.toast.error(`Erro ao atualizar usuários`, null, {
-                    progressBar: true,
-                    timeOut: 2000,
-                });
-                return throwError(err);
-            })
-        );
-    }
-
-    preRegister(user: any): Observable<any> {
-        return this.http.post<any>(`${this.baseUrl}admin`, user).pipe(
-            catchError((err) => {
-                this.toast.error(`Erro ao pré-cadastrar usuário`, null, {
-                    progressBar: true,
-                    timeOut: 2000,
-                });
-                return throwError(err);
-            })
-        );
-    }
-
-    deleteUser(userId: string): Observable<any> {
         return this.http
-            .delete<any>(`${this.baseUrl}admin?userId=${userId}`)
+            .get<getAllRequest[]>(`${this.baseUrl}pre-register`)
+            .pipe(
+                catchError((err) => {
+                    ('');
+                    this.toast.error(`Erro ao consultar usuários`, null, {
+                        progressBar: true,
+                        timeOut: 2000,
+                    });
+                    return throwError(err);
+                })
+            );
+    }
+
+    getUserById(userId: string): Observable<getAllRequest> {
+        return this.http
+            .get<getAllRequest>(`${this.baseUrl}pre-register/${userId}`)
+            .pipe(
+                catchError((err) => {
+                    this.toast.error(`Erro ao consultar usuário`, null, {
+                        progressBar: true,
+                        timeOut: 2000,
+                    });
+                    return throwError(err);
+                })
+            );
+    }
+
+    updateUser(user: any): Observable<getAllRequest> {
+        return this.http
+            .put<getAllRequest>(`${this.baseUrl}pre-register`, user)
+            .pipe(
+                catchError((err) => {
+                    this.toast.error(`Erro ao atualizar usuários`, null, {
+                        progressBar: true,
+                        timeOut: 2000,
+                    });
+                    return throwError(err);
+                })
+            );
+    }
+
+    createPreRegister(user: PreRegister): Observable<PreRegisterUpdate> {
+        return this.http
+            .post<PreRegisterUpdate>(`${this.baseUrl}pre-register`, user)
+            .pipe(
+                catchError((err) => {
+                    this.toast.error(`Erro ao atualizar usuários`, null, {
+                        progressBar: true,
+                        timeOut: 2000,
+                    });
+                    return throwError(err);
+                })
+            );
+    }
+
+    deleteUser(userId: string): Observable<getAllRequest> {
+        return this.http
+            .delete<getAllRequest>(`${this.baseUrl}pre-register/${userId}`)
             .pipe(
                 catchError((err) => {
                     this.toast.error(`Erro ao remover usuário`, null, {

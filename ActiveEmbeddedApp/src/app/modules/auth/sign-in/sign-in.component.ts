@@ -59,7 +59,7 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
         };
         this.userService.Login(data).subscribe(
             (res) => {
-                localStorage.setItem('token', res.token);
+                localStorage.setItem('token', JSON.stringify(res.token));
 
                 this.redirect();
             },

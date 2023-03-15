@@ -1,61 +1,83 @@
+import {
+    HttpEvent,
+    HttpHandler,
+    HttpInterceptor,
+    HttpRequest,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
-import { AuthService } from 'app/core/auth/auth.service';
-import { AuthUtils } from 'app/core/auth/auth.utils';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { finalize, Observable, tap } from 'rxjs';
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor
-{
-    /**
-     * Constructor
-     */
-    constructor(private _authService: AuthService)
-    {
+@Injectable({
+    providedIn: 'root',
+})
+export class TokenInterceptorService implements HttpInterceptor {
+    private pendingRequests = 0;
+
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        private toastr: ToastrService
+    ) {
+        console.log('token');
     }
+    intercept(
+        req: HttpRequest<any>,
+        next: HttpHandler
+    ): Observable<HttpEvent<any>> {
+        if (req.url.includes('token-login')) {
+            return next.handle(req.clone()).pipe(
+                tap(
+                    (suc) => {},
+                    (err) => {
+                        if (err.status === 401) {
+                            this.toastr.error(err.error.message);
 
-    /**
-     * Intercept
-     *
-     * @param req
-     * @param next
-     */
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
-    {
-        // Clone the request object
-        let newReq = req.clone();
-
-        // Request
-        //
-        // If the access token didn't expire, add the Authorization header.
-        // We won't add the Authorization header if the access token expired.
-        // This will force the server to return a "401 Unauthorized" response
-        // for the protected API routes which our response interceptor will
-        // catch and delete the access token from the local storage while logging
-        // the user out from the app.
-        if ( this._authService.accessToken && !AuthUtils.isTokenExpired(this._authService.accessToken) )
-        {
-            newReq = req.clone({
-                headers: req.headers.set('Authorization', 'Bearer ' + this._authService.accessToken)
-            });
+                            localStorage.removeItem('token');
+                            this.router.navigate(['/auth/login']);
+                        }
+                    }
+                )
+            );
         }
+        if (req.url.includes('auth') || this.router.url.includes('auth')) {
+            return next.handle(req.clone());
+        }
+        let token = '';
+        if (localStorage.getItem('token') !== null) {
+            token = String(localStorage.getItem('token'));
+            token = JSON.parse(token);
+        } else {
+            localStorage.removeItem('token');
+            this.router.navigate(['/auth/login']);
+        }
+        const authReq = req.clone({
+            headers: req.headers.set('Authorization', 'Bearer ' + token),
+        });
 
-        // Response
-        return next.handle(newReq).pipe(
-            catchError((error) => {
+        return next.handle(authReq).pipe(
+            tap(
+                (suc) => {},
+                (err) => {
+                    if (err.status === 400) {
+                        this.toastr.error(err.error.errorType);
+                    }
+                    if (err.status === 401) {
+                        this.toastr.error(err.error.errorType);
 
-                // Catch "401 Unauthorized" responses
-                if ( error instanceof HttpErrorResponse && error.status === 401 )
-                {
-                    // Sign out
-                    this._authService.signOut();
-
-                    // Reload the app
-                    location.reload();
+                        localStorage.removeItem('token');
+                        this.router.navigate(['/auth/login']);
+                    }
+                    if (err.status === 403) {
+                        this.toastr.error('Acesso negado');
+                        localStorage.removeItem('token');
+                        this.router.navigate(['/auth/login']);
+                    }
+                    this.pendingRequests--;
                 }
-
-                return throwError(error);
-            })
+            ),
+            finalize(() => {})
         );
     }
 }

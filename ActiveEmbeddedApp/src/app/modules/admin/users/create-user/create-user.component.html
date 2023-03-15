@@ -20,15 +20,15 @@
 
             <mat-form-field appearance="fill">
                 <mat-label>Nome</mat-label>
-                <input type="text" formControlName="nome" matInput #first />
+                <input formControlName="name" matInput #first />
                 <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
 
             </mat-form-field>
-            <div *ngIf="form.controls.nome.touched" class="text-red-600 mb-2">
-                <div *ngIf="form.controls.nome.errors?.['required']">
+            <div *ngIf="form.controls.name.touched" class="text-red-600 mb-2">
+                <div *ngIf="form.controls.name.errors?.['required']">
                     Nome é Obrigatório
                 </div>
-                <div *ngIf="form.controls.nome.errors?.['minlength']">
+                <div *ngIf="form.controls.name.errors?.['minlength']">
                     Precisa de no mínimo 3 dígitos
                 </div>
             </div>
@@ -46,43 +46,32 @@
                     Email inválido
                 </div>
             </div>
-            <mat-form-field appearance="fill">
-                <mat-label>Email de contato (Opcional)</mat-label>
-                <input type="text" formControlName="emailContato" matInput #first />
-                <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
 
-            </mat-form-field>
-            <div *ngIf="form.controls.emailContato.touched" class="text-red-600 mb-2">
-                <div *ngIf="form.controls.emailContato.invalid && form.value.emailContato !== ''">
-                    Email inválido
-                </div>
-            </div>
             <mat-form-field appearance="fill">
                 <mat-label>Identificação</mat-label>
-                <input type="text" formControlName="identificacao" matInput #first />
+                <input type="text" formControlName="identification" matInput #first />
                 <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
 
             </mat-form-field>
-            <div *ngIf="form.controls.identificacao.touched" class="text-red-600 mb-2">
-                <div *ngIf="form.controls.identificacao.errors?.['required']">
+            <div *ngIf="form.controls.identification.touched" class="text-red-600 mb-2">
+                <div *ngIf="form.controls.identification.errors?.['required']">
                     Identificação é Obrigatória
                 </div>
             </div>
             <mat-form-field appearance="fill">
                 <mat-label>Perfil</mat-label>
-                <mat-select formControlName="perfilId">
-                        <mat-option value="ca21241b-a37d-4e6f-bbb6-26643d3cdd99">User</mat-option>
-                        <mat-option value="6a203390-8389-49ca-aa0e-6a14ba7815bc">Admin</mat-option>
+                <mat-select formControlName="role_id">
+                    <mat-option value="ca21241b-a37d-4e6f-bbb6-26643d3cdd99">User</mat-option>
+                    <mat-option value="6a203390-8389-49ca-aa0e-6a14ba7815bc">Admin</mat-option>
                 </mat-select>
                 <mat-icon svgIcon="heroicons_outline:archive"></mat-icon>
 
             </mat-form-field>
-            <div *ngIf="form.controls.perfilId.touched">
-                <div *ngIf="form.controls.perfilId.errors?.['required']" class="text-red-600 mb-2">
+            <div *ngIf="form.controls.role_id.touched">
+                <div *ngIf="form.controls.role_id.errors?.['required']" class="text-red-600 mb-2">
                     Perfil é Obrigatório
                 </div>
             </div>
-
         </form>
         <button mat-raised-button color="primary" (click)="criar()" class="self-end mt-2 rounded-sm text-colorText">CRIAR</button>
     </div>

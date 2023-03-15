@@ -50,29 +50,21 @@ export class AuthService {
     }
 
     register(user): Observable<any> {
-        return this.http.post<any>(`${this.baseUrl}auth`, user).pipe(
-            catchError((err) => {
-                this.toast.error(`Erro ao cadastrar usuários`, null, {
-                    progressBar: true,
-                    timeOut: 2000,
-                });
-                return throwError(err);
-            })
-        );
+        return this.http.post<any>(`${this.baseUrl}user`, user);
     }
 
-    getVisionsForUser() {
-        const token = this.getAccessToken();
-        const decodedToken: any = decode(token);
-        const visions = decodedToken.visions;
-        return visions;
-    }
+    // getVisionsForUser() {
+    //     // const token = this.getAccessToken();
+    //     const decodedToken: any = decode(token);
+    //     const visions = decodedToken.visions;
+    //     return visions;
+    // }
 
-    getRolesFromUser() {
-        const token = this.getAccessToken();
-        const roles = this.getRoles(token);
-        return roles;
-    }
+    // getRolesFromUser() {
+    //     // const token = this.getAccessToken();
+    //     const roles = this.getRoles(token);
+    //     return roles;
+    // }
 
     logout() {
         const decodedToken = decode<any>(localStorage.getItem('ApiToken'));
@@ -158,19 +150,19 @@ export class AuthService {
         localStorage.clear();
     }
 
-    getUserFirstName() {
-        const token = localStorage.getItem('ApiToken');
-        const { firstName } = decode<any>(token);
-        return firstName;
-    }
+    // getUserFirstName() {
+    //     const token = localStorage.getItem('ApiToken');
+    //     const { firstName } = decode<any>(token);
+    //     return firstName;
+    // }
 
-    getTfa(): Observable<any> {
-        return this.http.get<any>(`${this.baseUrl}/tfa`);
-    }
+    // getTfa(): Observable<any> {
+    //     return this.http.get<any>(`${this.baseUrl}/tfa`);
+    // }
 
-    getAccessToken(): string {
-        return localStorage.getItem('ApiToken');
-    }
+    // getAccessToken(): string {
+    //     return localStorage.getItem('ApiToken');
+    // }
 
     reset2FA(email: string): Observable<any> {
         return this.http.get<any>(`${this.baseUrl}/auth/resetTFA/${email}`);
