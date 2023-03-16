@@ -8,7 +8,7 @@
     "scripts": {
         "ng": "ng",
         "start": "node server",
-        "build": "npm run build",
+        "build": "ng build",
         "build-compress": "gzipper c ./dist --include js,css,html --output-file-format [filename].[ext] ./dist-compressed/",
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
