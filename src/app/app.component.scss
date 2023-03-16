@@ -1,0 +1,15 @@
+:host {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    height: 100%;
+};
+body.modal-open {
+    overflow: none;
+}
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+}
+@import '~ngx-toastr/toastr.css';
+
