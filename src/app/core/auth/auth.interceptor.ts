@@ -42,7 +42,16 @@ export class TokenInterceptorService implements HttpInterceptor {
             );
         }
         if (req.url.includes('auth') || this.router.url.includes('auth')) {
-            return next.handle(req.clone());
+            return next.handle(req.clone()).pipe(
+                tap(
+                    (suc) => {},
+                    (err) => {
+                        if (err.status === 400) {
+                            this.toastr.error(err.error.errorType);
+                        }
+                    }
+                )
+            );
         }
         let token = '';
         if (localStorage.getItem('token') !== null) {

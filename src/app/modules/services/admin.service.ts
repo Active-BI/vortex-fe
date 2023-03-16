@@ -77,31 +77,17 @@ export class AdminService {
     }
 
     updateUser(user: any): Observable<getAllRequest> {
-        return this.http
-            .put<getAllRequest>(`${this.baseUrl}pre-register`, user)
-            .pipe(
-                catchError((err) => {
-                    this.toast.error(`Erro ao atualizar usuários`, null, {
-                        progressBar: true,
-                        timeOut: 2000,
-                    });
-                    return throwError(err);
-                })
-            );
+        return this.http.put<getAllRequest>(
+            `${this.baseUrl}pre-register`,
+            user
+        );
     }
 
     createPreRegister(user: PreRegister): Observable<PreRegisterUpdate> {
-        return this.http
-            .post<PreRegisterUpdate>(`${this.baseUrl}pre-register`, user)
-            .pipe(
-                catchError((err) => {
-                    this.toast.error(`Erro ao atualizar usuários`, null, {
-                        progressBar: true,
-                        timeOut: 2000,
-                    });
-                    return throwError(err);
-                })
-            );
+        return this.http.post<PreRegisterUpdate>(
+            `${this.baseUrl}pre-register`,
+            user
+        );
     }
 
     deleteUser(userId: string): Observable<getAllRequest> {
