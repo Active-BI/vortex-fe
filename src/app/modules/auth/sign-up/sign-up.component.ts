@@ -69,16 +69,22 @@ export class AuthSignUpComponent implements OnInit {
     valilateIfPasswordAreEquals() {
         const password = this.signUpForm.value['password'];
         const passwordConfirm = this.signUpForm.value['passwordConfirm'];
-
-        if (password !== passwordConfirm)
-            this.signUpForm.controls['passwordConfirm'].setErrors({
-                PassNotEqual: true,
-            });
+        if (password !== passwordConfirm) return false;
+        return true;
+        //     if (password !== passwordConfirm) {
+        //     this.signUpForm.controls['passwordConfirm'].setErrors({
+        //         PassNotEqual: true,
+        //     });
+        // }
     }
 
     signUp(): void {
         if (this.signUpForm.invalid) {
             this.toastr.error('Erro no formulário!');
+            return;
+        }
+        if (!this.valilateIfPasswordAreEquals()) {
+            this.toastr.error('Senhas diferentes');
             return;
         }
         const form = this.signUpForm.value;
