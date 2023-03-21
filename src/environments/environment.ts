@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    baseUrl: 'https://active-embedded-node.herokuapp.com/',
+    baseUrl: 'http://localhost:5002/',
 };
 
 /*

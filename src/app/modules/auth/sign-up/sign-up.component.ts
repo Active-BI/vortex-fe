@@ -4,6 +4,8 @@ import {
     UntypedFormGroup,
     NgForm,
     Validators,
+    AbstractControl,
+    FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
@@ -41,8 +43,31 @@ export class AuthSignUpComponent implements OnInit {
         // Create the form
         this.signUpForm = this._formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required],
+            password: [
+                '',
+                [
+                    Validators.required,
+                    Validators.minLength(6),
+                    this.valilateSpecialCharacterPassword,
+                    this.valilateUpperCaseLetter,
+                ],
+            ],
         });
+    }
+    valilateSpecialCharacterPassword(control: FormControl) {
+        // verifica se existe algum caractere especial
+        console.log(control.errors);
+
+        return !(control.value as string).match(/^[a-zA-Z0-9\s]*$/)
+            ? true
+            : { specialChar: true };
+    }
+    valilateUpperCaseLetter(control: FormControl) {
+        // verifica se existe algum caractere especial
+
+        return /[A-Z]/.test(control.value as string)
+            ? true
+            : { UpperCaseLetter: true };
     }
 
     signUp(): void {
