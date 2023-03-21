@@ -26,7 +26,7 @@ export class AuthSignUpComponent implements OnInit {
         type: 'success',
         message: '',
     };
-    signUpForm: UntypedFormGroup;
+
     showAlert: boolean = false;
 
     /**
@@ -38,26 +38,21 @@ export class AuthSignUpComponent implements OnInit {
         private _router: Router,
         private authService: AuthService
     ) {}
+    ngOnInit(): void {}
 
-    ngOnInit(): void {
-        // Create the form
-        this.signUpForm = this._formBuilder.group({
-            email: ['', [Validators.required, Validators.email]],
-            passwordConfirm: [
-                '',
-                [Validators.required, this.valilateIfPasswordAreEquals],
+    signUpForm = this._formBuilder.group({
+        email: ['', [Validators.required, Validators.email]],
+        passwordConfirm: ['', [Validators.required]],
+        password: [
+            '',
+            [
+                Validators.required,
+                Validators.minLength(6),
+                this.valilateSpecialCharacterPassword,
+                this.valilateUpperCaseLetter,
             ],
-            password: [
-                '',
-                [
-                    Validators.required,
-                    Validators.minLength(6),
-                    this.valilateSpecialCharacterPassword,
-                    this.valilateUpperCaseLetter,
-                ],
-            ],
-        });
-    }
+        ],
+    });
     valilateSpecialCharacterPassword(control: FormControl) {
         // verifica se existe algum caractere especial
         return !(control.value as string).match(/^[a-zA-Z0-9\s]*$/)
@@ -71,21 +66,23 @@ export class AuthSignUpComponent implements OnInit {
             ? true
             : { UpperCaseLetter: true };
     }
-    valilateIfPasswordAreEquals(control: FormControl) {
-        if (control.parent?.controls) {
-            const password = control.parent?.controls['password'].value;
-            console.log(
-                password === control.value ? true : { PassNotEqual: true }
-            );
-            return password === control.value ? true : { PassNotEqual: true };
-        }
+    valilateIfPasswordAreEquals() {
+        const password = this.signUpForm.value['password'];
+        const passwordConfirm = this.signUpForm.value['passwordConfirm'];
+
+        if (password !== passwordConfirm)
+            this.signUpForm.controls['passwordConfirm'].setErrors({
+                PassNotEqual: true,
+            });
     }
+
     signUp(): void {
         if (this.signUpForm.invalid) {
             this.toastr.error('Erro no formulário!');
             return;
         }
-
+        const form = this.signUpForm.value;
+        delete form.passwordConfirm;
         this.authService.register(this.signUpForm.value).subscribe(
             (response) => {
                 this._router.navigateByUrl('/sign-in');

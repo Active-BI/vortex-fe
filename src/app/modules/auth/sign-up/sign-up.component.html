@@ -54,6 +54,7 @@
                         id="password"
                         matInput
                         type="password"
+                        (change)="valilateIfPasswordAreEquals()"
                         [formControlName]="'password'"
                         #passwordField>
                     <button
@@ -91,6 +92,7 @@
                         matInput
                         type="password"
                         [formControlName]="'passwordConfirm'"
+                        (change)="valilateIfPasswordAreEquals()"
                         #passwordField2>
                     <button
                         type="button"
