@@ -90,7 +90,7 @@
                         id="password"
                         matInput
                         type="password"
-                        [formControlName]="'password'"
+                        [formControlName]="'passwordConfirm'"
                         #passwordField2>
                     <button
                         type="button"
@@ -106,8 +106,11 @@
                             *ngIf="passwordField2.type === 'text'"
                             [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
                     </button>
-                    <mat-error>
+                    <mat-error *ngIf="signUpForm.get('passwordConfirm').hasError('required')">
                         * Obrigatório
+                    </mat-error>
+                    <mat-error *ngIf="signUpForm.get('passwordConfirm').hasError('PassNotEqual')">
+                        * As senhas devem ser iguais
                     </mat-error>
                 </mat-form-field>
                 <!-- Submit button -->

@@ -43,6 +43,10 @@ export class AuthSignUpComponent implements OnInit {
         // Create the form
         this.signUpForm = this._formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
+            passwordConfirm: [
+                '',
+                [Validators.required, this.valilateIfPasswordAreEquals],
+            ],
             password: [
                 '',
                 [
@@ -56,20 +60,26 @@ export class AuthSignUpComponent implements OnInit {
     }
     valilateSpecialCharacterPassword(control: FormControl) {
         // verifica se existe algum caractere especial
-        console.log(control.errors);
-
         return !(control.value as string).match(/^[a-zA-Z0-9\s]*$/)
             ? true
             : { specialChar: true };
     }
     valilateUpperCaseLetter(control: FormControl) {
-        // verifica se existe algum caractere especial
+        // verifica se existe letra maiuscula
 
         return /[A-Z]/.test(control.value as string)
             ? true
             : { UpperCaseLetter: true };
     }
-
+    valilateIfPasswordAreEquals(control: FormControl) {
+        if (control.parent?.controls) {
+            const password = control.parent?.controls['password'].value;
+            console.log(
+                password === control.value ? true : { PassNotEqual: true }
+            );
+            return password === control.value ? true : { PassNotEqual: true };
+        }
+    }
     signUp(): void {
         if (this.signUpForm.invalid) {
             this.toastr.error('Erro no formulário!');
