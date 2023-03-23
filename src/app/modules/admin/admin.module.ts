@@ -34,7 +34,9 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ListUsersComponent } from './users/list-users/list-users.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
-import { BiDefaultComponent } from './bi-default/bi-default.component';
+import { BiReportDefaultComponent } from './bi-report-default/bi-default.component';
+import { EbeddedDashboardModule } from '../embedded-dashboard/embedded-dashboard.module';
+import { BiDashboardDefaultComponent } from './bi-dashboard-default/bi-default.component';
 
 const adminroutes: Route[] = [
     {
@@ -43,8 +45,12 @@ const adminroutes: Route[] = [
         pathMatch: 'full',
     },
     {
-        path: 'view/:reportId/:groupId',
-        component: GestaoVulnerabilidadeComponent,
+        path: 'view-report/:reportId/:groupId',
+        component: BiReportDefaultComponent,
+    },
+    {
+        path: 'view-dashboard/:reportId/:groupId',
+        component: BiDashboardDefaultComponent,
     },
     {
         path: 'inicio',
@@ -74,12 +80,12 @@ const adminroutes: Route[] = [
     declarations: [
         InicioComponent,
         AdminComponent,
-        GestaoVulnerabilidadeComponent,
         DeleteModalComponent,
         CreateUserComponent,
         ListUsersComponent,
         EditUserComponent,
-        BiDefaultComponent,
+        BiDashboardDefaultComponent,
+        BiReportDefaultComponent,
     ],
     imports: [
         CommonModule,
@@ -98,6 +104,7 @@ const adminroutes: Route[] = [
         MatIconModule,
         MatSelectModule,
         EbeddedReportModule,
+        EbeddedDashboardModule,
         MatExpansionModule,
         FuseAlertModule,
         SharedModule,

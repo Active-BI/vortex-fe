@@ -1,0 +1,5 @@
+  <div *ngIf="showDashboard">
+    <powerbi-dashboard #reportObj  [embedConfig]="configDashboard" [cssClassName]="'pbi-report'"
+      [phasedEmbedding]="false" >
+    </powerbi-dashboard>
+  </div>

@@ -27,10 +27,19 @@ export class EmbeddedService {
      * @param reportId é o ID do relatóro
      * @returns Json com o token para relatório
      */
-    getEmbeddedInfo(groupId: string, reportId: string): Observable<any> {
-        return this.http.get(`${this.baseUrl}power-bi/${groupId}/${reportId}`);
+    getEmbeddedReportInfo(groupId: string, reportId: string): Observable<any> {
+        return this.http.get(
+            `${this.baseUrl}power-bi/report/${groupId}/${reportId}`
+        );
     }
-
+    getEmbeddedDashboardInfo(
+        groupId: string,
+        reportId: string
+    ): Observable<any> {
+        return this.http.get(
+            `${this.baseUrl}power-bi/dashboard/${groupId}/${reportId}`
+        );
+    }
     exportReportToPDF(
         groupId: string,
         reportId: string,

@@ -3,10 +3,10 @@
     <!-- Main -->
     <div class="flex-auto p-6 sm:p-10">
 
-        <!-- CONTENT GOES HERE -->
-            <app-embedded-report type="report" [reportId]="reportId" [groupId]="groupId">
+            <app-embedded-report *ngIf="enable" type="dashboard" [reportId]="reportID" [groupId]="groupID">
 
             </app-embedded-report>
+
         </div>
 
     </div>

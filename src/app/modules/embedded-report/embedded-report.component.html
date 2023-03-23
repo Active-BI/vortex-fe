@@ -30,10 +30,7 @@
 </div>
 
 <div *ngIf="showReport">
-  <powerbi-report #reportObj *ngIf="type === 'report'" [embedConfig]="config" [cssClassName]="'pbi-report'"
+  <powerbi-report #reportObj [embedConfig]="config" [cssClassName]="'pbi-report'"
     [phasedEmbedding]="false" [eventHandlers]="handlers">
   </powerbi-report>
-  <powerbi-dashboard *ngIf="type === 'dashboard'" [embedConfig]="config" [cssClassName]="'pbi-report'"
-    [phasedEmbedding]="false" [eventHandlers]="handlers">
-  </powerbi-dashboard>
 </div>

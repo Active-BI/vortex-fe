@@ -135,43 +135,45 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
         this.pages.find((a) => a.name === name).setActive();
     }
     private getEmbedded(settings: any): void {
-        this.embeddedSrv.getEmbeddedInfo(this.groupId, this.reportId).subscribe(
-            (res) => {
-                this.token = res.embedToken;
-                this.config = {
-                    type: 'report',
-                    tokenType: 1,
-                    embedUrl: res.reportsDetail[0].embedUrl,
-                    id: res.reportsDetail[0].reportId,
-                    accessToken: this.token.token,
-                    hostname: 'https://app.powerbi.com',
-                    settings: {
-                        ...settings,
-                    },
-                };
-                this.configDashboard = {
-                    type: 'dashboard',
-                    tokenType: 1,
-                    embedUrl: res.reportsDetail[0].embedUrl,
-                    id: res.reportsDetail[0].reportId,
-                    accessToken: this.token.token,
-                    hostname: 'https://app.powerbi.com',
-                    settings: {
-                        visualRenderedEvents: true,
-                        panes: {
-                            filters: {
-                                visible: false,
-                            },
-                            pageNavigation: {
-                                visible: false,
+        this.embeddedSrv
+            .getEmbeddedReportInfo(this.groupId, this.reportId)
+            .subscribe(
+                (res) => {
+                    this.token = res.embedToken;
+                    this.config = {
+                        type: 'report',
+                        tokenType: 1,
+                        embedUrl: res.reportsDetail[0].embedUrl,
+                        id: res.reportsDetail[0].reportId,
+                        accessToken: this.token.token,
+                        hostname: 'https://app.powerbi.com',
+                        settings: {
+                            ...settings,
+                        },
+                    };
+                    this.configDashboard = {
+                        type: 'dashboard',
+                        tokenType: 1,
+                        embedUrl: res.reportsDetail[0].embedUrl,
+                        id: res.reportsDetail[0].reportId,
+                        accessToken: this.token.token,
+                        hostname: 'https://app.powerbi.com',
+                        settings: {
+                            visualRenderedEvents: true,
+                            panes: {
+                                filters: {
+                                    visible: false,
+                                },
+                                pageNavigation: {
+                                    visible: false,
+                                },
                             },
                         },
-                    },
-                };
+                    };
 
-                this.showReport = true;
-            },
-            (err) => {}
-        );
+                    this.showReport = true;
+                },
+                (err) => {}
+            );
     }
 }
