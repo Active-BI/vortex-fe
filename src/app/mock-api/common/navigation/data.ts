@@ -4,6 +4,18 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 const data = {
     roles: ['Admin'],
 };
+export class ModuleRoutes {
+    constructor() {}
+
+    getRoutes() {
+        const p = Promise.resolve(this.getRoutesAsync());
+        return p;
+    }
+
+    async getRoutesAsync() {
+        return await defaultNavigation;
+    }
+}
 export const defaultNavigation: FuseNavigationItem[] = [
     {
         data: { roles: ['User', 'Admin'] },
