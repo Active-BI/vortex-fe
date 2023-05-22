@@ -22,7 +22,7 @@ export class ModuleRoutes {
 
 export const defaultNavigation: FuseNavigationItem[] = [
     {
-        data: { roles: ['User', 'Admin'] },
+        data: { roles: ['User', 'Admin', 'Regional', 'Nacional'] },
         id: 'inicio',
         title: 'Inicio',
         type: 'basic',
@@ -39,21 +39,21 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link: 'usuarios',
     },
     {
-        data: dataAdmin,
+        data: { roles: ['User', 'Admin', 'Regional', 'Nacional'] },
         id: 'indicadores-segurança',
         title: 'Indicadores de Segurança',
         type: 'collapsable',
         icon: 'heroicons_outline:shield-check',
         children: [
             {
-                data: dataAdmin,
+                data: { roles: ['User', 'Admin', 'Regional', 'Nacional'] },
                 id: 'gestao-vuln',
                 title: 'Gestão de vulnerabilidades',
                 type: 'basic',
                 link: 'view-report/7b71c89f-1d23-4d57-a99c-369f0ae8b5d1/c807ca26-3f93-463d-aa15-9a12e48174ba',
             },
             {
-                data: dataAdmin,
+                data: { roles: ['User', 'Admin', 'Regional', 'Nacional'] },
                 id: 'correlacionamento-log',
                 title: 'Correlacionamento de Logs',
                 type: 'basic',
