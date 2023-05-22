@@ -1,33 +1,3 @@
-<div class="flex flex-row" *ngIf="showReport">
-  <form [formGroup]="form" class="w-1/3 flex">
-    <mat-form-field appearance="fill" class="w-full">
-      <mat-select formControlName="vision" placeholder="páginas" (selectionChange)="change($event)">
-        <mat-option *ngFor="let page of pages" [value]="page.name">{{ page.displayName }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
-  <div class="flex w-full justify-end">
-
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Opções">
-      <mat-icon class="text-xl mb-2 scale-[2]">settings</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="refresh()">
-        <mat-icon>refresh</mat-icon>
-        <span>Atualizar</span>
-      </button>
-      <button mat-menu-item (click)="fullscreen()">
-        <mat-icon>fullscreen</mat-icon>
-        <span>Tela Cheia</span>
-      </button>
-      <button mat-menu-item (click)="print()">
-        <mat-icon>print</mat-icon>
-        <span>Imprimir</span>
-      </button>
-
-    </mat-menu>
-  </div>
-</div>
 
 <div *ngIf="showReport">
   <powerbi-report #reportObj [embedConfig]="config" [cssClassName]="'pbi-report'"
