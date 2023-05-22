@@ -37,6 +37,7 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { BiReportDefaultComponent } from './bi-report-default/bi-default.component';
 import { EbeddedDashboardModule } from '../embedded-dashboard/embedded-dashboard.module';
 import { BiDashboardDefaultComponent } from './bi-dashboard-default/bi-default.component';
+import { MessagesModule } from 'app/layout/common/messages/messages.module';
 
 const adminroutes: Route[] = [
     {
@@ -109,6 +110,7 @@ const adminroutes: Route[] = [
         FuseAlertModule,
         SharedModule,
         MatBadgeModule,
+        MessagesModule,
         MatAutocompleteModule,
     ],
     entryComponents: [MatDialogModule],

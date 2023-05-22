@@ -9,22 +9,16 @@ import { MessagesComponent } from 'app/layout/common/messages/messages.component
 import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
-    declarations: [
-        MessagesComponent
-    ],
-    imports     : [
+    declarations: [MessagesComponent],
+    imports: [
         RouterModule,
         OverlayModule,
         PortalModule,
         MatButtonModule,
         MatIconModule,
         MatTooltipModule,
-        SharedModule
+        SharedModule,
     ],
-    exports     : [
-        MessagesComponent
-    ]
+    exports: [MessagesComponent],
 })
-export class MessagesModule
-{
-}
+export class MessagesModule {}

@@ -8,7 +8,7 @@ import { MenuService } from 'app/modules/services/menu.service';
 })
 export class InicioComponent implements OnInit {
     constructor(private menuService: MenuService) {
-        this.menuService.getMenus().subscribe((res) => console.log(res));
+        this.menuService.getAllMenus().subscribe((res) => console.log(res));
     }
     ngOnInit(): void {}
 }

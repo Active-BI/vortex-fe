@@ -17,4 +17,8 @@ export class MenuService {
         const { userId }: any = jwtDecode(localStorage.getItem('token'));
         return this.http.get<any>(`${this.baseUrl}menu/${userId}`);
     }
+
+    getAllMenus(): Observable<any> {
+        return this.http.get<any>(`${this.baseUrl}menu`);
+    }
 }
