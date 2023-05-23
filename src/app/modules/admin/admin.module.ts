@@ -38,6 +38,7 @@ import { BiReportDefaultComponent } from './bi-report-default/bi-default.compone
 import { EbeddedDashboardModule } from '../embedded-dashboard/embedded-dashboard.module';
 import { BiDashboardDefaultComponent } from './bi-dashboard-default/bi-default.component';
 import { MessagesModule } from 'app/layout/common/messages/messages.module';
+import { MenusComponent } from './menus/menus.component';
 
 const adminroutes: Route[] = [
     {
@@ -65,6 +66,11 @@ const adminroutes: Route[] = [
     },
     {
         data: { expectedRoles: ['Admin'] },
+        path: 'menus',
+        component: MenusComponent,
+    },
+    {
+        data: { expectedRoles: ['Admin'] },
 
         path: 'usuarios-criar',
         component: CreateUserComponent,
@@ -87,6 +93,7 @@ const adminroutes: Route[] = [
         EditUserComponent,
         BiDashboardDefaultComponent,
         BiReportDefaultComponent,
+        MenusComponent,
     ],
     imports: [
         CommonModule,

@@ -39,6 +39,15 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link: 'usuarios',
     },
     {
+        data: dataAdmin,
+
+        id: 'menus',
+        title: 'Menus de Acesso',
+        type: 'basic',
+        icon: 'mat_solid:person_search',
+        link: 'menus',
+    },
+    {
         data: { roles: ['User', 'Admin', 'Regional', 'Nacional'] },
         id: 'indicadores-segurança',
         title: 'Indicadores de Segurança',
