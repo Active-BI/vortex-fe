@@ -64,11 +64,11 @@ const adminroutes: Route[] = [
         path: 'usuarios',
         component: ListUsersComponent,
     },
-    {
-        data: { expectedRoles: ['Admin'] },
-        path: 'menus',
-        component: MenusComponent,
-    },
+    // {
+    //     data: { expectedRoles: ['Admin'] },
+    //     path: 'menus',
+    //     component: MenusComponent,
+    // },
     {
         data: { expectedRoles: ['Admin'] },
 
