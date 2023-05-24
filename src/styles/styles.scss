@@ -3,5 +3,5 @@
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
 .pbi-report{
-    height: 50ch;
+    height: calc(0.60 * 74vw); /*16:9 aspect ratio */
 }
