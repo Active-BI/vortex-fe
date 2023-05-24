@@ -2,22 +2,26 @@ import { Injectable } from '@angular/core';
 import { cloneDeep } from 'lodash-es';
 import { FuseNavigationItem } from '@fuse/components/navigation';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
-import { defaultNavigation } from 'app/mock-api/common/navigation/data';
-import { AdminService } from '../../../modules/services/admin.service'
+import {
+    ModuleRoutes,
+    defaultNavigation,
+} from 'app/mock-api/common/navigation/data';
+import { AdminService } from '../../../modules/services/admin.service';
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
-export class NavigationMockApi
-{
-    private _defaultNavigation: FuseNavigationItem[] = defaultNavigation
-    
+export class NavigationMockApi {
+    private _defaultNavigation: FuseNavigationItem[];
+
     /**
      * Constructor
      */
-    constructor(private _fuseMockApiService: FuseMockApiService, private adminService: AdminService )
-    {
+    constructor(private _fuseMockApiService: FuseMockApiService) {
         // Register Mock API handlers
-        this.registerHandlers()
+        new ModuleRoutes().getRoutes().then((res) => {
+            this._defaultNavigation = res;
+        });
+        this.registerHandlers();
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -27,21 +31,17 @@ export class NavigationMockApi
     /**
      * Register Mock API handlers
      */
-    registerHandlers(): void
-    {
+    registerHandlers(): void {
         // -----------------------------------------------------------------------------------------------------
         // @ Navigation - GET
         // -----------------------------------------------------------------------------------------------------
-        this._fuseMockApiService
-            .onGet('api/common/navigation')
-            .reply(() => {
-
-                return [
-                    200,
-                    {
-                        default   : cloneDeep(this._defaultNavigation),
-                    }
-                ];
-            });
+        this._fuseMockApiService.onGet('api/common/navigation').reply(() => {
+            return [
+                200,
+                {
+                    default: cloneDeep(this._defaultNavigation),
+                },
+            ];
+        });
     }
 }

@@ -37,6 +37,8 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { BiReportDefaultComponent } from './bi-report-default/bi-default.component';
 import { EbeddedDashboardModule } from '../embedded-dashboard/embedded-dashboard.module';
 import { BiDashboardDefaultComponent } from './bi-dashboard-default/bi-default.component';
+import { MessagesModule } from 'app/layout/common/messages/messages.module';
+import { MenusComponent } from './menus/menus.component';
 
 const adminroutes: Route[] = [
     {
@@ -62,6 +64,11 @@ const adminroutes: Route[] = [
         path: 'usuarios',
         component: ListUsersComponent,
     },
+    // {
+    //     data: { expectedRoles: ['Admin'] },
+    //     path: 'menus',
+    //     component: MenusComponent,
+    // },
     {
         data: { expectedRoles: ['Admin'] },
 
@@ -86,6 +93,7 @@ const adminroutes: Route[] = [
         EditUserComponent,
         BiDashboardDefaultComponent,
         BiReportDefaultComponent,
+        MenusComponent,
     ],
     imports: [
         CommonModule,
@@ -109,6 +117,7 @@ const adminroutes: Route[] = [
         FuseAlertModule,
         SharedModule,
         MatBadgeModule,
+        MessagesModule,
         MatAutocompleteModule,
     ],
     entryComponents: [MatDialogModule],

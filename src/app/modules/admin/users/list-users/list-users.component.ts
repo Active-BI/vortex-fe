@@ -37,7 +37,6 @@ export interface PeriodicElement {
     styleUrls: ['./list-users.component.scss'],
 })
 export class ListUsersComponent implements OnInit {
-    @ViewChild('paginator') paginator: MatPaginator;
     myControl = new FormControl('');
     pipe = new DatePipe('en-US');
 
@@ -48,6 +47,7 @@ export class ListUsersComponent implements OnInit {
         'ultimoAcesso',
         'opcoes',
     ];
+    @ViewChild('paginator') paginator: MatPaginator;
     usuarios: MatTableDataSource<getAllRequest>;
     usuariosL: number = 0;
     constructor(
