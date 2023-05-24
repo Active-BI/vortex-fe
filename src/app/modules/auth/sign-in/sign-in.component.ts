@@ -2,7 +2,6 @@ import {
     AfterViewInit,
     Component,
     OnInit,
-    ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
@@ -10,6 +9,7 @@ import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { AuthService } from 'app/modules/services/auth/auth.service';
 import { UserService } from 'app/modules/services/login/login';
+import { ToastrService } from 'ngx-toastr';
 
 interface User {
     email: string;
@@ -35,7 +35,8 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
     constructor(
         private router: Router,
         private userService: UserService,
-        private authService: AuthService
+        private authService: AuthService,
+        private toastr: ToastrService
     ) {}
     ngAfterViewInit(): void {
         if (this.authService.isLoggedIn()) {
@@ -57,6 +58,10 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
             email: this.email.value as string,
             password: this.password.value as string,
         };
+        if (this.email.invalid || this.password.invalid) {
+            this.toastr.error('Campos inválidos');
+            return;
+        }
         this.userService.Login(data).subscribe(
             (res) => {
                 localStorage.setItem('token', JSON.stringify(res.token));
