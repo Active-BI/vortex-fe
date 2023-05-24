@@ -1,4 +1,5 @@
 import {
+    HttpErrorResponse,
     HttpEvent,
     HttpHandler,
     HttpInterceptor,
@@ -7,86 +8,86 @@ import {
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { finalize, Observable, tap } from 'rxjs';
+import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class TokenInterceptorService implements HttpInterceptor {
-    private pendingRequests = 0;
+    /**
+     * Constructor
+     */
 
-    constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        private toastr: ToastrService
-    ) {
-        console.log('token');
-    }
+    constructor(private _router: Router, private toast: ToastrService) {}
+
+    /**
+     * Intercept
+     *
+     * @param req
+     * @param next
+     */
     intercept(
         req: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        if (req.url.includes('token-login')) {
-            return next.handle(req.clone()).pipe(
-                tap(
-                    (suc) => {},
-                    (err) => {
-                        if (err.status === 401) {
-                            this.toastr.error(err.error.message);
+        // Clone the request object
+        let newReq = req.clone();
 
-                            localStorage.removeItem('token');
-                            this.router.navigate(['/auth/login']);
-                        }
-                    }
-                )
-            );
+        console.log(this._router.url.includes('auth'));
+        if (
+            localStorage.getItem('token') == null &&
+            this._router.url.includes('auth')
+        ) {
+            newReq = req.clone({
+                headers: req.headers.set(
+                    'Authorization',
+                    `Bearer ${localStorage.getItem('tempToken')}`
+                ),
+            });
         }
-        if (req.url.includes('auth') || this.router.url.includes('auth')) {
-            return next.handle(req.clone()).pipe(
-                tap(
-                    (suc) => {},
-                    (err) => {
-                        if (err.status === 400) {
-                            this.toastr.error(err.error.errorType);
-                        }
-                    }
-                )
-            );
+        try {
+            if (localStorage.getItem('token')) {
+                newReq = req.clone({
+                    headers: req.headers.set(
+                        'Authorization',
+                        'Bearer ' + JSON.parse(localStorage.getItem('token'))
+                    ),
+                });
+            }
+        } catch (e) {
+            localStorage.clear();
         }
-        let token = '';
-        if (localStorage.getItem('token') !== null) {
-            token = String(localStorage.getItem('token'));
-            token = JSON.parse(token);
-        } else {
-            localStorage.removeItem('token');
-            this.router.navigate(['/auth/login']);
-        }
-        const authReq = req.clone({
-            headers: req.headers.set('Authorization', 'Bearer ' + token),
-        });
 
-        return next.handle(authReq).pipe(
-            tap(
-                (suc) => {},
-                (err) => {
-                    if (err.status === 400) {
-                        this.toastr.error(err.error.errorType);
-                    }
-                    if (err.status === 401) {
-                        this.toastr.error(err.error.errorType);
+        // Response
+        return next.handle(newReq).pipe(
+            catchError((error) => {
+                // Catch "401 Unauthorized" responses
 
-                        localStorage.removeItem('token');
-                        this.router.navigate(['/auth/login']);
+                if (
+                    error instanceof HttpErrorResponse &&
+                    error.status === 401
+                ) {
+                    if (
+                        location.hash === '#/auth/tfa' ||
+                        location.hash.includes('reset-pass')
+                    ) {
+                        console.log(error);
+                        this.toast.error(error.error.message);
+                        this._router.navigate(['/auth/sign-in']);
+                        return;
+                    } else {
+                        this.toast.error(error.error.message);
+                        return;
                     }
-                    if (err.status === 403) {
-                        this.toastr.error('Acesso negado');
-                        localStorage.removeItem('token');
-                        this.router.navigate(['/auth/login']);
-                    }
-                    this.pendingRequests--;
                 }
-            ),
-            finalize(() => {})
+                if (
+                    error instanceof HttpErrorResponse &&
+                    error.status === 403
+                ) {
+                    this.toast.error('Sem permissão para modificações');
+                }
+                return throwError(error);
+            })
         );
     }
 }

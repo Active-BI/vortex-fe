@@ -3,6 +3,7 @@ import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
 import { NoAuthGuard } from './modules/services/guards/noAuthGuard.guard';
 import { AuthGuard } from './modules/services/guards/AuthGuard.guard';
+import { SendPassRecoverComponent } from './modules/auth/reset-send/send-pass-recover.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -45,6 +46,10 @@ export const appRoutes: Route[] = [
                     import('app/modules/auth/sign-up/sign-up.module').then(
                         (m) => m.AuthSignUpModule
                     ),
+            },
+            {
+                path: 'reset-send',
+                component: SendPassRecoverComponent,
             },
         ],
     },

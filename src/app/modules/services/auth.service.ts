@@ -49,10 +49,17 @@ export class AuthService {
         return this.http.post(`${this.baseUrl}login`, user);
     }
 
+    resetPass(email: string): Observable<any> {
+        return this.http.get(`${this.baseUrl}login/reset-pass/${email}`);
+    }
+
+    setNewPass(payload: { password: string; token: string }): Observable<any> {
+        console.log(payload);
+        return this.http.post(`${this.baseUrl}login/set-new-pass`, payload);
+    }
     register(user): Observable<any> {
         return this.http.post<any>(`${this.baseUrl}user`, user);
     }
-
     // getVisionsForUser() {
     //     // const token = this.getAccessToken();
     //     const decodedToken: any = decode(token);
