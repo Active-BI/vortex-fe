@@ -7,15 +7,15 @@ export const messages = [
         image: 'assets/images/avatars/male-01.jpg',
         title: 'ATUALIZAÇÃO',
         description: 'Painel de vendas atualizado',
-        time: moment().subtract(25, 'minutes').toISOString(), // 25 minutes ago
+        time: '30 minutos atrás', // 25 minutes ago
         read: false,
     },
     {
         id: '608b4479-a3ac-4e26-8675-3609c52aca58',
         image: 'assets/images/avatars/male-04.jpg',
-        title: 'SEBRAE-AC',
+        title: 'ESCANEAMENTO CONCLUÍDO',
         description: 'Vulnerabilidades acima de 10k',
-        time: moment().subtract(50, 'minutes').toISOString(), // 50 minutes ago
+        time: '25 de maio', // 50 minutes ago
         read: false,
     },
     {
@@ -23,7 +23,7 @@ export const messages = [
         image: 'assets/images/avatars/female-01.jpg',
         title: 'GESTÃO DE USUÁRIOS',
         description: 'Novo usuário cadastrado no sistema',
-        time: moment().subtract(3, 'hours').toISOString(), // 3 hours ago
+        time: '24 de maio', // 3 hours ago
         read: true,
         link: '/dashboards/project',
         useRouter: true,

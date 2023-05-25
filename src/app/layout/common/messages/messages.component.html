@@ -29,7 +29,7 @@
                         [svgIcon]="'heroicons_solid:x'"></mat-icon>
                 </button>
             </div>
-            <div class="text-lg font-medium leading-10">Atualizações do sistema</div>
+            <div class="text-lg font-medium leading-10">Caixa de Mensagens</div>
             <div class="ml-auto">
                 <button
                     mat-icon-button
@@ -135,7 +135,7 @@
                                 [innerHTML]="message.description"></div>
                         </ng-container>
                         <div class="mt-2 text-sm leading-none text-secondary">
-                            {{message.time | date:'MMM dd, h:mm a'}}
+                            {{message.time }}
                         </div>
                     </div>
                 </ng-template>

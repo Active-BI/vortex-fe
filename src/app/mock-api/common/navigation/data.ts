@@ -29,15 +29,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_outline:home',
         link: 'inicio',
     },
-    {
-        data: dataAdmin,
 
-        id: 'usuarios.lista',
-        title: 'Gestão de Usuários',
-        type: 'basic',
-        icon: 'mat_solid:person_search',
-        link: 'usuarios',
-    },
     // {
     //     data: dataAdmin,
 
@@ -271,4 +263,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
     //         },
     //     ],
     // },
+    {
+        data: dataAdmin,
+
+        id: 'usuarios.lista',
+        title: 'Gestão de Usuários',
+        type: 'basic',
+        icon: 'mat_solid:person_search',
+        link: 'usuarios',
+    },
 ];

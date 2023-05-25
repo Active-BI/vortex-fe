@@ -51,21 +51,21 @@
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
                     <div class="w-full flex justify-end">
-                        <button (click)="deletarUsuario(element.id)">
+                        <button  class="text-violet-900" matTooltip='Editar' (click)="editarUsuario(element.id)"  >
+                            <mat-icon
+                                class="cursor-pointer mr-5 text-blue-700"
+                                svgIcon="edit_note"
+                            ></mat-icon>
+
+                        </button>
+                        <button matTooltip='Deletar' (click)="deletarUsuario(element.id)">
                             <mat-icon
                                 color="warn"
                                 class="cursor-pointer mr-5"
                                 svgIcon="heroicons_solid:trash"
                             ></mat-icon>
                         </button>
-                        <button (click)="editarUsuario(element.id)">
-                            <mat-icon
-                                color="accent"
-                                class="cursor-pointer"
-                                svgIcon="edit_note"
-                            ></mat-icon>
 
-                        </button>
                     </div>
                 </td>
             </ng-container>

@@ -1,6 +1,17 @@
-
+<div class="flex justify-start mt-[-20px] gap-2">
+    <button mat-raised-button (click)="fullscreen()"
+        class="flex self-center mb-2 rounded-sm  bg-blue-700 text-white p-1 shadow-xl justify-between text-sm">
+        Tela cheia
+        <!-- <mat-icon class="cursor-pointer ml-1" svgIcon="fullscreen"></mat-icon> -->
+    </button>
+    <button mat-raised-button (click)="print()"
+    class="flex self-center mb-2 rounded-sm  bg-blue-700 text-white p-1 shadow-xl justify-between text-sm">
+    Imprimir
+    <!-- <mat-icon class="cursor-pointer ml-1" svgIcon="fullscreen"></mat-icon> -->
+</button>
+</div>
 <div *ngIf="showReport" style="height: calc(100vh - 105px);">
-  <powerbi-report #reportObj [embedConfig]="config" [cssClassName]="'pbi-report'"
-    [phasedEmbedding]="false" [eventHandlers]="handlers" style="height: calc(100vh - 105px);">
-  </powerbi-report>
+    <powerbi-report #reportObj [embedConfig]="config" [cssClassName]="'pbi-report'" [phasedEmbedding]="false"
+        [eventHandlers]="handlers" style="height: calc(100vh - 105px);">
+    </powerbi-report>
 </div>

@@ -10,6 +10,7 @@ import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
     declarations: [MessagesComponent],
+
     imports: [
         RouterModule,
         OverlayModule,

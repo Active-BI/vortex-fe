@@ -39,6 +39,7 @@ import { EbeddedDashboardModule } from '../embedded-dashboard/embedded-dashboard
 import { BiDashboardDefaultComponent } from './bi-dashboard-default/bi-default.component';
 import { MessagesModule } from 'app/layout/common/messages/messages.module';
 import { MenusComponent } from './menus/menus.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const adminroutes: Route[] = [
     {
@@ -119,6 +120,7 @@ const adminroutes: Route[] = [
         MatBadgeModule,
         MessagesModule,
         MatAutocompleteModule,
+        MatTooltipModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [
