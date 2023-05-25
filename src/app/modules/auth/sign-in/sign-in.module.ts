@@ -12,9 +12,14 @@ import { SharedModule } from 'app/shared/shared.module';
 import { AuthSignInComponent } from 'app/modules/auth/sign-in/sign-in.component';
 import { authSignInRoutes } from 'app/modules/auth/sign-in/sign-in.routing';
 import { SendPassRecoverComponent } from '../reset-send/send-pass-recover.component';
+import { ResetPassComponent } from '../reset-pass/reset-pass.component';
 
 @NgModule({
-    declarations: [AuthSignInComponent, SendPassRecoverComponent],
+    declarations: [
+        AuthSignInComponent,
+        SendPassRecoverComponent,
+        ResetPassComponent,
+    ],
     imports: [
         RouterModule.forChild(authSignInRoutes),
         MatButtonModule,

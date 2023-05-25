@@ -4,6 +4,7 @@ import { InitialDataResolver } from 'app/app.resolvers';
 import { NoAuthGuard } from './modules/services/guards/noAuthGuard.guard';
 import { AuthGuard } from './modules/services/guards/AuthGuard.guard';
 import { SendPassRecoverComponent } from './modules/auth/reset-send/send-pass-recover.component';
+import { ResetPassComponent } from './modules/auth/reset-pass/reset-pass.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -50,6 +51,10 @@ export const appRoutes: Route[] = [
             {
                 path: 'reset-send',
                 component: SendPassRecoverComponent,
+            },
+            {
+                path: 'reset-pass/:token',
+                component: ResetPassComponent,
             },
         ],
     },

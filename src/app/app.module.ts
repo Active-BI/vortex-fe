@@ -14,20 +14,17 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { ToastrModule } from 'ngx-toastr';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import {MatChipsModule} from '@angular/material/chips';
+import { MatChipsModule } from '@angular/material/chips';
 
 const routerConfig: ExtraOptions = {
-    preloadingStrategy       : PreloadAllModules,
-    scrollPositionRestoration: 'enabled'
+    preloadingStrategy: PreloadAllModules,
+    scrollPositionRestoration: 'enabled',
 };
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    providers   : [ { provide: LocationStrategy, useClass: HashLocationStrategy },
-    ],
-    imports     : [
+    declarations: [AppComponent],
+    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, routerConfig),
@@ -48,12 +45,8 @@ const routerConfig: ExtraOptions = {
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({}),
-        MatChipsModule
+        MatChipsModule,
     ],
-    bootstrap   : [
-        AppComponent
-    ]
+    bootstrap: [AppComponent],
 })
-export class AppModule
-{
-}
+export class AppModule {}
