@@ -210,6 +210,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 link: 'view-report/4a6f3b19-88c4-4547-802e-8964810cfa66/395a994f-9f0f-4a54-be92-2d3113e27e1c',
             },
             {
+                id: 'governanca',
+                data: { roles: ['User', 'Admin'] },
+                title: 'Governança Power Bi',
+                type: 'basic',
+                link: 'view-report/a3dd2a2b-fa20-4db3-aa78-301832fc6eff/c807ca26-3f93-463d-aa15-9a12e48174ba',
+            },
+            {
                 data: dataAdmin,
                 id: 'Suporte',
                 title: 'Suporte',
