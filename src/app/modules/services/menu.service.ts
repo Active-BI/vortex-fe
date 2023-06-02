@@ -21,4 +21,8 @@ export class MenuService {
     getAllMenus(): Observable<any> {
         return this.http.get<any>(`${this.baseUrl}menu`);
     }
+
+    postMenus(payload): Observable<any> {
+        return this.http.post<any>(`${this.baseUrl}menu`, payload);
+    }
 }

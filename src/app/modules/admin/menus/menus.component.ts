@@ -24,13 +24,7 @@ export class MenusComponent implements OnInit {
     myControl = new FormControl('');
     pipe = new DatePipe('en-US');
 
-    displayedColumns: string[] = [
-        'nome',
-        'identificacao',
-        'perfil',
-        'ultimoAcesso',
-        'opcoes',
-    ];
+    displayedColumns: string[] = ['nome', 'identificacao', 'perfil', 'opcoes'];
     @ViewChild('paginator') paginator: MatPaginator;
     usuarios: MatTableDataSource<any>;
     usuariosL: number = 0;
@@ -70,7 +64,7 @@ export class MenusComponent implements OnInit {
     usuariosFiltrados: MatTableDataSource<getAllRequest>;
     filtarUsuarios(e) {
         const data = this.usuarios.data.filter((u) =>
-            u.name.toUpperCase().includes(e.toUpperCase())
+            u.title.toUpperCase().includes(e.toUpperCase())
         );
         this.usuariosFiltrados = new MatTableDataSource(data);
         this.usuariosFiltrados.paginator = this.paginator;
@@ -91,9 +85,9 @@ export class MenusComponent implements OnInit {
     }
 
     criarUsuario(): void {
-        this.router.navigate(['app/usuarios-criar']);
+        this.router.navigate(['app/menus-criar']);
     }
     editarUsuario(id): void {
-        this.router.navigate([`app/usuarios-editar/${id}`]);
+        this.router.navigate([`app/menus-editar/${id}`]);
     }
 }

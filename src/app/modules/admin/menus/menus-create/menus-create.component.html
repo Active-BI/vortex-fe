@@ -1,0 +1,60 @@
+<div class="w-full flex flex-row justify-center items-center">
+
+    <div class="flex flex-col m-10 mt-0 bg-white rounded-b-xl p-5 shadow-2xl">
+        <div class="mx-10 my-0 rounded-t-xl flex items-center bg-white py-[3px]">
+
+            <button (click)="voltar()" class="self-start my-2 mr-8 ml-[-40px] hover:rounded-full">
+                <mat-icon class="flex self-center text-slate-600 hover:text-slate-400" svgIcon="arrow_back"></mat-icon>
+            </button>
+
+            <div class="w-full m-2">
+                <h1 class="text-center text-slate-700 text-2xl">
+                    CRIAR MENU
+                </h1>
+            </div>
+        </div>
+        <!-- <h2 class="text-left mb-2 text-xl">
+        Informações do Usuário
+    </h2> -->
+        <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-100">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Reprt Id</mat-label>
+                <input formControlName="report_id" matInput #first />
+
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Group Id</mat-label>
+                <input type="text" formControlName="group_id" matInput #first />
+
+            </mat-form-field>
+
+
+            <mat-form-field appearance="fill">
+                <mat-label>Título</mat-label>
+                <input type="text" formControlName="title" matInput #first />
+
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Tipo</mat-label>
+                <mat-select formControlName="type">
+                    <mat-option value="basic">Basic</mat-option>
+                    <mat-option value="collapsable">Collapsable</mat-option>
+                </mat-select>
+
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Link</mat-label>
+                <input type="text" formControlName="link" matInput #first />
+
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>ícone</mat-label>
+                <input type="text" formControlName="icon" matInput #first />
+
+            </mat-form-field>
+        </form>
+        <button mat-raised-button color="primary" (click)="criar()" class="self-end mt-2 rounded-sm text-colorText">CRIAR</button>
+    </div>
+</div>

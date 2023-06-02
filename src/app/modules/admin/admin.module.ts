@@ -40,6 +40,7 @@ import { BiDashboardDefaultComponent } from './bi-dashboard-default/bi-default.c
 import { MessagesModule } from 'app/layout/common/messages/messages.module';
 import { MenusComponent } from './menus/menus.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MenusCreateComponent } from './menus/menus-create/menus-create.component';
 
 const adminroutes: Route[] = [
     {
@@ -65,11 +66,16 @@ const adminroutes: Route[] = [
         path: 'usuarios',
         component: ListUsersComponent,
     },
-    // {
-    //     data: { expectedRoles: ['Admin'] },
-    //     path: 'menus',
-    //     component: MenusComponent,
-    // },
+    {
+        data: { expectedRoles: ['User', 'Admin', 'Regional', 'Nacional'] },
+        path: 'menus',
+        component: MenusComponent,
+    },
+    {
+        data: { expectedRoles: ['User', 'Admin', 'Regional', 'Nacional'] },
+        path: 'menus-criar',
+        component: MenusCreateComponent,
+    },
     {
         data: { expectedRoles: ['Admin'] },
 
@@ -95,6 +101,7 @@ const adminroutes: Route[] = [
         BiDashboardDefaultComponent,
         BiReportDefaultComponent,
         MenusComponent,
+        MenusCreateComponent,
     ],
     imports: [
         CommonModule,

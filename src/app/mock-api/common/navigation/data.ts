@@ -30,15 +30,15 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link: 'inicio',
     },
 
-    // {
-    //     data: dataAdmin,
+    {
+        data: { roles: ['User', 'Admin', 'Regional', 'Nacional'] },
 
-    //     id: 'menus',
-    //     title: 'Menus de Acesso',
-    //     type: 'basic',
-    //     icon: 'mat_solid:person_search',
-    //     link: 'menus',
-    // },
+        id: 'menus',
+        title: 'Menus de Acesso',
+        type: 'basic',
+        icon: 'mat_solid:person_search',
+        link: 'menus',
+    },
     {
         data: { roles: ['User', 'Admin', 'Regional', 'Nacional'] },
         id: 'indicadores-segurança',
