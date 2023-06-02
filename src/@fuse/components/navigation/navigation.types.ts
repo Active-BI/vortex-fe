@@ -10,6 +10,8 @@ export interface FuseNavigationItem {
     longTitle?: string;
     path?: string;
     class?: string;
+    report_id?: string;
+    group_id?: string;
     context?: string;
     menuSubItens?: string;
     data?: {
