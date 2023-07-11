@@ -7,7 +7,6 @@ import {
     defaultNavigation,
 } from 'app/mock-api/common/navigation/data';
 import { AdminService } from '../../../modules/services/admin.service';
-import { MenuService } from 'app/modules/services/menu.service';
 @Injectable({
     providedIn: 'root',
 })
@@ -17,22 +16,10 @@ export class NavigationMockApi {
     /**
      * Constructor
      */
-    constructor(
-        private _fuseMockApiService: FuseMockApiService,
-        private menuService: MenuService
-    ) {
+    constructor(private _fuseMockApiService: FuseMockApiService) {
         // Register Mock API handlers
         new ModuleRoutes().getRoutes().then((res) => {
             this._defaultNavigation = res;
-        });
-        this.menuService.getMenus().subscribe((res: FuseNavigationItem[]) => {
-            res = res.map((r) => ({
-                ...r,
-                link: 'view-report/' + r.report_id + '/' + r.group_id,
-                type: 'basic',
-                data: { roles: ['User', 'Admin', 'Regional', 'Nacional'] },
-            }));
-            this._defaultNavigation.push(...res);
         });
         this.registerHandlers();
     }

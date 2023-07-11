@@ -9,7 +9,9 @@ import { Observable } from 'rxjs';
     providedIn: 'root',
 })
 export class MenuService {
-    constructor(private http: HttpClient, private toast: ToastrService) {}
+    constructor(private http: HttpClient, private toast: ToastrService) {
+        console.log('bbbbbbbbbbbbbbbb');
+    }
 
     private baseUrl = environment.baseUrl;
 
