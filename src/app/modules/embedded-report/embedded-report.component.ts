@@ -12,12 +12,21 @@ import {
     BreakpointState,
     Breakpoints,
 } from '@angular/cdk/layout';
-import { FormBuilder, FormGroup } from '@angular/forms';
-
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import * as xlsx from 'xlsx';
+import * as excelToJson from 'convert-excel-to-json';
+import moment from 'moment';
+import { PMIService } from '../services/PMI.service';
 @Component({
     selector: 'app-embedded-report',
     templateUrl: './embedded-report.component.html',
-    styleUrls: ['./embedded-report.component.scss'],
+    styleUrls: ['./embedded-report.component.css'],
 })
 export class EmbeddedReportComponent implements OnInit, AfterViewInit {
     @Input() reportId: string;
@@ -26,6 +35,54 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
     form: FormGroup = this.fb.group({
         vision: '',
     });
+    selected = new FormControl('');
+    dadosParaImportar = [];
+    nomeArquivo = '';
+    OpcaoPainel(evento) {
+        if (evento === 'TelaCheia') this.fullscreen();
+        if (evento === 'Imprimir') this.print();
+        if (evento === 'Importar') return;
+
+        this.selected.reset();
+    }
+    Salvar() {
+        if (this.dadosParaImportar.length > 0) {
+            this.pmiService
+                .uploadFile(this.dadosParaImportar)
+                .subscribe((d) => console.log(d));
+        } else {
+            this.toastr.error('Nenhum arquivo foi selecionado');
+        }
+    }
+
+    Importar(e) {
+        e.preventDefault();
+        const fileName = e.target.files[0]?.name;
+        this.nomeArquivo = '';
+        this.dadosParaImportar = [];
+        const reader: FileReader = new FileReader();
+        reader.onload = (): void => {
+            if (!fileName.endsWith('.xlsx')) {
+                this.toastr.error('Extensão inválida');
+                return;
+            }
+            this.nomeArquivo = fileName;
+
+            const data = reader.result;
+            const workbook = xlsx.read(data, {
+                type: 'array',
+                cellDates: true,
+            });
+            const sheetName = workbook.SheetNames[1];
+            const worksheet = workbook.Sheets[sheetName];
+            let json = xlsx.utils.sheet_to_json(worksheet, { defval: '' });
+            this.dadosParaImportar = json.map((d: any) => ({
+                ...d,
+                timestamp: new Date(d.timestamp).toISOString(),
+            }));
+        };
+        reader.readAsArrayBuffer(e.target.files[0]);
+    }
     @ViewChild(PowerBIReportEmbedComponent)
     reportObj!: PowerBIReportEmbedComponent;
 
@@ -55,7 +112,9 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
     constructor(
         private embeddedSrv: EmbeddedService,
         public breakpointObserver: BreakpointObserver,
-        private fb: FormBuilder
+        private toastr: ToastrService,
+        private fb: FormBuilder,
+        private pmiService: PMIService
     ) {
         this.handlers = new Map([
             ['loaded', (): void => console.log('Report loaded')],

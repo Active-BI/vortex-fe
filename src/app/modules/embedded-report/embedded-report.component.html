@@ -1,14 +1,27 @@
-<div class="flex justify-start mt-[-20px] gap-2">
-    <button mat-raised-button (click)="fullscreen()"
-        class="flex self-center mb-2 rounded-sm  bg-blue-700 text-white p-1 shadow-xl justify-between text-sm">
-        Tela cheia
-        <!-- <mat-icon class="cursor-pointer ml-1" svgIcon="fullscreen"></mat-icon> -->
-    </button>
-    <button mat-raised-button (click)="print()"
-    class="flex self-center mb-2 rounded-sm  bg-blue-700 text-white p-1 shadow-xl justify-between text-sm">
-    Imprimir
-    <!-- <mat-icon class="cursor-pointer ml-1" svgIcon="fullscreen"></mat-icon> -->
-</button>
+<div class="flex justify-between mt-[-20px] gap-2 items-center">
+    <mat-icon svgIcon="mat_outline:settings" class="absolute w-8 h-8"></mat-icon>
+
+    <mat-form-field class="opacity-0 w-6 h-6 bg-slate-400 mb-5 mt-[-10px]">
+        <mat-select (selectionChange)="OpcaoPainel($event.value)" placeholder="Selecione" class="" style="height: 10px;"  [formControl]="selected">
+          <mat-option value="TelaCheia">Tela Cheia</mat-option>
+          <mat-option value="Imprimir" >Imprimir</mat-option>
+          <mat-option value="Exportar">Exportar</mat-option>
+          <mat-option value="Importar">Importar</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="flex items-center flex-row justify-center ">
+
+        <form class="form-upload">
+            <label class="input-personalizado">
+              <span class="botao-selecionar  text-white">{{nomeArquivo.length > 0 ? nomeArquivo : 'Selecione uma imagem'}}</span>
+              <img class="imagem" />
+              <input type="file" class="input-file" (change)="Importar($event)" >
+            </label>
+          </form>
+          <button mat-raised-button color="primary"
+          class=" rounded-sm text-white h-8 w-28 bg-blue-700" (click)="Salvar()">Subir Arquivo</button>
+        </div>
 </div>
 <div *ngIf="showReport" style="height: calc(100vh - 105px);">
     <powerbi-report #reportObj [embedConfig]="config" [cssClassName]="'pbi-report'" [phasedEmbedding]="false"
