@@ -14,7 +14,10 @@ export class PMIService {
 
     private baseUrl = environment.baseUrl;
 
-    uploadFile(payload) {
-        return this.http.post(`${this.baseUrl}InserirDadosMock`, payload);
+    uploadFile(payload, reportId) {
+        return this.http.post(`${this.baseUrl}InserirDadosMock`, {
+            payload,
+            reportId,
+        });
     }
 }

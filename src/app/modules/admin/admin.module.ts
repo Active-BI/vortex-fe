@@ -62,28 +62,19 @@ const adminroutes: Route[] = [
     },
 
     {
-        data: { expectedRoles: ['Admin'] },
+        data: { expectedRoles: ['User', 'Admin', 'Regional', 'Nacional'] },
         path: 'usuarios',
         component: ListUsersComponent,
     },
+
     {
         data: { expectedRoles: ['User', 'Admin', 'Regional', 'Nacional'] },
-        path: 'menus',
-        component: MenusComponent,
-    },
-    {
-        data: { expectedRoles: ['User', 'Admin', 'Regional', 'Nacional'] },
-        path: 'menus-criar',
-        component: MenusCreateComponent,
-    },
-    {
-        data: { expectedRoles: ['Admin'] },
 
         path: 'usuarios-criar',
         component: CreateUserComponent,
     },
     {
-        data: { expectedRoles: ['Admin'] },
+        data: { expectedRoles: ['User', 'Admin', 'Regional', 'Nacional'] },
 
         path: 'usuarios-editar/:id',
         component: EditUserComponent,

@@ -12,16 +12,9 @@ import {
     BreakpointState,
     Breakpoints,
 } from '@angular/cdk/layout';
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import * as xlsx from 'xlsx';
-import * as excelToJson from 'convert-excel-to-json';
-import moment from 'moment';
 import { PMIService } from '../services/PMI.service';
 @Component({
     selector: 'app-embedded-report',
@@ -48,7 +41,7 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
     Salvar() {
         if (this.dadosParaImportar.length > 0) {
             this.pmiService
-                .uploadFile(this.dadosParaImportar)
+                .uploadFile(this.dadosParaImportar, this.reportId)
                 .subscribe((d) => console.log(d));
         } else {
             this.toastr.error('Nenhum arquivo foi selecionado');
@@ -73,13 +66,15 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
                 type: 'array',
                 cellDates: true,
             });
-            const sheetName = workbook.SheetNames[1];
+            const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
-            let json = xlsx.utils.sheet_to_json(worksheet, { defval: '' });
+            let json = xlsx.utils.sheet_to_json(worksheet);
             this.dadosParaImportar = json.map((d: any) => ({
                 ...d,
                 timestamp: new Date(d.timestamp).toISOString(),
             }));
+
+            console.log(this.dadosParaImportar);
         };
         reader.readAsArrayBuffer(e.target.files[0]);
     }

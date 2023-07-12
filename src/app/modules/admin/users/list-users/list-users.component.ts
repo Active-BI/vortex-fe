@@ -45,6 +45,7 @@ export class ListUsersComponent implements OnInit {
         'identificacao',
         'perfil',
         'ultimoAcesso',
+        'tenant',
         'opcoes',
     ];
     @ViewChild('paginator') paginator: MatPaginator;

@@ -84,18 +84,6 @@ export const appRoutes: Route[] = [
         ],
     },
 
-    // Landing routes
-    // {
-    //     path: '',
-    //     component  : LayoutComponent,
-    //     data: {
-    //         layout: 'empty'
-    //     },
-    //     children   : [
-    //         {path: 'home', loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule)},
-    //     ]
-    // },
-
     // Admin routes
     {
         path: 'app',
@@ -116,7 +104,6 @@ export const appRoutes: Route[] = [
                         (m) => m.AdminModule
                     ),
             },
-            // {path: 'example2', loadChildren: () => import('app/modules/admin/example2/example2.module').then(m => m.Example2Module)},
         ],
     },
     {
