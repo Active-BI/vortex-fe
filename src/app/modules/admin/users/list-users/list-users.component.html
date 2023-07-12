@@ -38,7 +38,10 @@
               <th mat-header-cell *matHeaderCellDef> Identificacao </th>
               <td mat-cell *matCellDef="let element"> {{element.identification}} </td>
             </ng-container>
-
+            <ng-container matColumnDef="tenant">
+                <th mat-header-cell *matHeaderCellDef> Tenant </th>
+                <td mat-cell *matCellDef="let element"> {{element.tenant.nome_cliente}} </td>
+              </ng-container>
             <ng-container matColumnDef="ultimoAcesso">
               <th mat-header-cell *matHeaderCellDef> Ultimo acesso </th>
               <td mat-cell *matCellDef="let element"> {{  element.dataUltimoAcesso }} </td>
