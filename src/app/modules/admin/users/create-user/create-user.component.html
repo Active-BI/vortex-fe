@@ -58,6 +58,13 @@
                     Identificação é Obrigatória
                 </div>
             </div>
+            <mat-form-field>
+                <mat-label>Tenant</mat-label>
+                <mat-select>
+                   <input (keyup)="onKey($event.target.value)">
+                  <mat-option *ngFor="let t  of selectedTenant" [value]="t.id">{{t.nome_cliente}}</mat-option>
+                </mat-select>
+              </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Perfil</mat-label>
                 <mat-select formControlName="role_id">

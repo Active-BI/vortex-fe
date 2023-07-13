@@ -24,6 +24,7 @@ export interface getAllRequest {
     email: string;
     identification: string;
     name: string;
+    tenant_id: string;
     role_id: string;
     role: { id: string; name: string } | null;
     User: {

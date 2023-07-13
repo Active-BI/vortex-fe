@@ -15,6 +15,7 @@ import { listRoles } from 'app/modules/services/roles.service';
 import { ToastrService } from 'ngx-toastr';
 import { PeriodicElement } from '../list-users/list-users.component';
 import { ordersData } from '../usersUtils';
+import { PMIService } from 'app/modules/services/PMI.service';
 
 @Component({
     selector: 'app-edit-user',
@@ -23,6 +24,20 @@ import { ordersData } from '../usersUtils';
 })
 export class EditUserComponent implements OnInit {
     myControl = new FormControl('');
+    tenants: string[] = [];
+    selectedTenant = this.tenants;
+
+    onKey(value) {
+        this.selectedTenant = this.search(value);
+    }
+
+    search(value: string) {
+        let filter = value.toLowerCase();
+        return this.tenants.filter((option: any) =>
+            option.nome_cliente.toLowerCase().startsWith(filter)
+        );
+    }
+
     visionsSelecteds = [];
     form = this.fb.group({
         id: [''],
@@ -34,6 +49,7 @@ export class EditUserComponent implements OnInit {
                 Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
             ],
         ],
+        tenant_id: ['', [Validators.required]],
         identification: ['', [Validators.required]],
         role_id: ['', [Validators.required]],
     });
@@ -48,23 +64,35 @@ export class EditUserComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private toastr: ToastrService,
-        private adminSrv: AdminService
+        private adminSrv: AdminService,
+        private pmiServices: PMIService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
+        this.pmiServices.tenants().subscribe((res: any) => {
+            this.tenants = res;
+            this.selectedTenant = res;
+            this.adminSrv.getUserById(this.id).subscribe((e) => {
+                this.user = e;
+                let tenant;
+                if (this.tenants.length > 0) {
+                    tenant = res.find((t: any) => t.id === this.user.tenant_id)[
+                        'nome_cliente'
+                    ];
+                }
+                this.form.patchValue({
+                    id: this.user.id,
+                    name: this.user.name,
+                    email: this.user.email,
+                    role_id: this.user.role_id,
+                    identification: this.user.identification,
+                    tenant_id: tenant,
+                });
+            });
+        });
     }
 
     ngOnInit(): void {
         this.form.controls.email.disable();
-        this.adminSrv.getUserById(this.id).subscribe((e) => {
-            this.user = e;
-            this.form.patchValue({
-                id: this.user.id,
-                name: this.user.name,
-                email: this.user.email,
-                role_id: this.user.role_id,
-                identification: this.user.identification,
-            });
-        });
     }
 
     filteredVisions = [];
@@ -79,10 +107,20 @@ export class EditUserComponent implements OnInit {
 
     editar(): void {
         if (this.form.valid && this.myControl.valid) {
-            this.adminSrv.updateUser(this.form.value).subscribe((e) => {
-                this.toastr.success('Editado com Sucesso');
-                this.voltar();
-            });
+            this.adminSrv
+                .updateUser({
+                    ...this.form.value,
+                    tenant_id: (
+                        this.tenants.find(
+                            (t) =>
+                                t['nome_cliente'] === this.form.value.tenant_id
+                        ) as any
+                    ).id,
+                })
+                .subscribe((e) => {
+                    this.toastr.success('Editado com Sucesso');
+                    this.voltar();
+                });
         } else {
             this.form.markAllAsTouched();
         }

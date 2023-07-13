@@ -3,13 +3,12 @@ import { ActivatedRoute, Data } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-bi-dashboard-default',
-    templateUrl: './bi-default.component.html',
-    styleUrls: ['./bi-default.component.scss'],
+    selector: 'app-bi-report-default',
+    templateUrl: './bi-default-tipo.component.html',
+    styleUrls: ['./bi-default-tipo.component.scss'],
 })
-export class BiDashboardDefaultComponent implements OnInit {
-    reportID = '';
-    groupID = '';
+export class BiReportDefaultByTypeComponent implements OnInit {
+    type = '';
     enable = false;
     layout = 'desktop';
     parametro$ = Observable<Data>;
@@ -17,9 +16,10 @@ export class BiDashboardDefaultComponent implements OnInit {
 
     ngOnInit(): void {
         this.router.params.subscribe((e) => {
+            // console.log(e)
+            console.log(e);
             this.enable = false;
-            this.reportID = e.reportId;
-            this.groupID = e.groupId;
+            this.type = e.type;
             setTimeout(() => {
                 this.enable = true;
             }, 300);

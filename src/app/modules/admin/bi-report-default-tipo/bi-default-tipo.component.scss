@@ -1,0 +1,15 @@
+#report-container{
+    height: calc(0.60 * 58vw); /*16:9 aspect ratio */
+
+}
+
+.ping {
+	-webkit-animation: ping 1.5s ease-in-out infinite backwards;
+	        animation: ping 1.5s ease-in-out infinite backwards;
+}
+
+#img-loader{
+  position: absolute;
+  top: 40%;
+  left: 45%;
+}

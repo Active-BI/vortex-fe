@@ -20,4 +20,8 @@ export class PMIService {
             reportId,
         });
     }
+
+    tenants() {
+        return this.http.get(`${this.baseUrl}InserirDadosMock/tenants`);
+    }
 }

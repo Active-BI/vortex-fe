@@ -17,15 +17,12 @@ import { ToastrService } from 'ngx-toastr';
 import * as xlsx from 'xlsx';
 import { PMIService } from '../services/PMI.service';
 @Component({
-    selector: 'app-embedded-report',
+    selector: 'app-embedded-report-type',
     templateUrl: './embedded-report.component.html',
     styleUrls: ['./embedded-report.component.css'],
 })
-export class EmbeddedReportComponent implements OnInit, AfterViewInit {
-    @Input() reportId: string;
-    @Input() groupId: string;
+export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
     @Input() type: string;
-    @Input() tipo: string;
     form: FormGroup = this.fb.group({
         vision: '',
     });
@@ -42,7 +39,7 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
     Salvar() {
         if (this.dadosParaImportar.length > 0) {
             this.pmiService
-                .uploadFile(this.dadosParaImportar, this.tipo)
+                .uploadFile(this.dadosParaImportar, this.type)
                 .subscribe((d) => console.log(d));
         } else {
             this.toastr.error('Nenhum arquivo foi selecionado');
@@ -190,45 +187,43 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
         this.pages.find((a) => a.name === name).setActive();
     }
     private getEmbedded(settings: any): void {
-        this.embeddedSrv
-            .getEmbeddedReportInfo(this.groupId, this.reportId)
-            .subscribe(
-                (res) => {
-                    this.token = res.embedToken;
-                    this.config = {
-                        type: 'report',
-                        tokenType: 1,
-                        embedUrl: res.reportsDetail[0].embedUrl,
-                        id: res.reportsDetail[0].reportId,
-                        accessToken: this.token.token,
-                        hostname: 'https://app.powerbi.com',
-                        settings: {
-                            ...settings,
-                        },
-                    };
-                    this.configDashboard = {
-                        type: 'dashboard',
-                        tokenType: 1,
-                        embedUrl: res.reportsDetail[0].embedUrl,
-                        id: res.reportsDetail[0].reportId,
-                        accessToken: this.token.token,
-                        hostname: 'https://app.powerbi.com',
-                        settings: {
-                            visualRenderedEvents: true,
-                            panes: {
-                                filters: {
-                                    visible: false,
-                                },
-                                pageNavigation: {
-                                    visible: false,
-                                },
+        this.embeddedSrv.getEmbeddedReportInfoByType(this.type).subscribe(
+            (res) => {
+                this.token = res.embedToken;
+                this.config = {
+                    type: 'report',
+                    tokenType: 1,
+                    embedUrl: res.reportsDetail[0].embedUrl,
+                    id: res.reportsDetail[0].reportId,
+                    accessToken: this.token.token,
+                    hostname: 'https://app.powerbi.com',
+                    settings: {
+                        ...settings,
+                    },
+                };
+                this.configDashboard = {
+                    type: 'dashboard',
+                    tokenType: 1,
+                    embedUrl: res.reportsDetail[0].embedUrl,
+                    id: res.reportsDetail[0].reportId,
+                    accessToken: this.token.token,
+                    hostname: 'https://app.powerbi.com',
+                    settings: {
+                        visualRenderedEvents: true,
+                        panes: {
+                            filters: {
+                                visible: false,
+                            },
+                            pageNavigation: {
+                                visible: false,
                             },
                         },
-                    };
+                    },
+                };
 
-                    this.showReport = true;
-                },
-                (err) => {}
-            );
+                this.showReport = true;
+            },
+            (err) => {}
+        );
     }
 }

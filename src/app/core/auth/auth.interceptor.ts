@@ -85,6 +85,7 @@ export class TokenInterceptorService implements HttpInterceptor {
                     error.status === 403
                 ) {
                     this.toast.error('Sem permissão para modificações');
+                    this._router.navigate(['/auth/sign-out']);
                 }
                 return throwError(error);
             })

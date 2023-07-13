@@ -41,6 +41,8 @@ import { MessagesModule } from 'app/layout/common/messages/messages.module';
 import { MenusComponent } from './menus/menus.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MenusCreateComponent } from './menus/menus-create/menus-create.component';
+import { EbeddedReportTypeModule } from '../embedded-report-type/embedded-report.module';
+import { BiReportDefaultByTypeComponent } from './bi-report-default-tipo/bi-default-tipo.component';
 
 const adminroutes: Route[] = [
     {
@@ -51,6 +53,10 @@ const adminroutes: Route[] = [
     {
         path: 'view-report/:reportId/:groupId',
         component: BiReportDefaultComponent,
+    },
+    {
+        path: 'view-report-type/:type',
+        component: BiReportDefaultByTypeComponent,
     },
     {
         path: 'view-dashboard/:reportId/:groupId',
@@ -112,6 +118,7 @@ const adminroutes: Route[] = [
         MatSelectModule,
         EbeddedReportModule,
         EbeddedDashboardModule,
+        EbeddedReportTypeModule,
         MatExpansionModule,
         FuseAlertModule,
         SharedModule,

@@ -32,6 +32,9 @@ export class EmbeddedService {
             `${this.baseUrl}power-bi/report/${groupId}/${reportId}`
         );
     }
+    getEmbeddedReportInfoByType(type: string): Observable<any> {
+        return this.http.get(`${this.baseUrl}power-bi/report/type/${type}`);
+    }
     getEmbeddedDashboardInfo(
         groupId: string,
         reportId: string
