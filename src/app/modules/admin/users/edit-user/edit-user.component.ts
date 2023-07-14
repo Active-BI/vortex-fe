@@ -71,23 +71,29 @@ export class EditUserComponent implements OnInit {
         this.pmiServices.tenants().subscribe((res: any) => {
             this.tenants = res;
             this.selectedTenant = res;
-            this.adminSrv.getUserById(this.id).subscribe((e) => {
-                this.user = e;
-                let tenant;
-                if (this.tenants.length > 0) {
-                    tenant = res.find((t: any) => t.id === this.user.tenant_id)[
-                        'nome_cliente'
-                    ];
-                }
-                this.form.patchValue({
-                    id: this.user.id,
-                    name: this.user.name,
-                    email: this.user.email,
-                    role_id: this.user.role_id,
-                    identification: this.user.identification,
-                    tenant_id: tenant,
+            let editar = false;
+            this.route.url.subscribe(
+                (a) => (editar = a[0].path.includes('editar'))
+            );
+            if (editar) {
+                this.adminSrv.getUserById(this.id).subscribe((e) => {
+                    this.user = e;
+                    let tenant;
+                    if (this.tenants.length > 0) {
+                        tenant = res.find(
+                            (t: any) => t.id === this.user.tenant_id
+                        )['nome_cliente'];
+                    }
+                    this.form.patchValue({
+                        id: this.user.id,
+                        name: this.user.name,
+                        email: this.user.email,
+                        role_id: this.user.role_id,
+                        identification: this.user.identification,
+                        tenant_id: tenant,
+                    });
                 });
-            });
+            }
         });
     }
 

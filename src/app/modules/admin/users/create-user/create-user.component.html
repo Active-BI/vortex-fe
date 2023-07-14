@@ -58,13 +58,24 @@
                     Identificação é Obrigatória
                 </div>
             </div>
-            <mat-form-field>
+            <mat-form-field class="example-full-width">
                 <mat-label>Tenant</mat-label>
-                <mat-select>
-                   <input (keyup)="onKey($event.target.value)">
-                  <mat-option *ngFor="let t  of selectedTenant" [value]="t.id">{{t.nome_cliente}}</mat-option>
-                </mat-select>
-              </mat-form-field>
+                <input type="text"
+                       placeholder="Selecione"
+                       matInput
+                       formControlName="tenant_id"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                  <mat-option *ngFor="let t of tenants" [value]="t.nome_cliente">
+                    {{t.nome_cliente}}
+                  </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <div *ngIf="form.controls.tenant_id.touched">
+                <div *ngIf="form.controls.tenant_id.errors?.['required']" class="text-red-600 mb-2">
+                    Tenant é Obrigatório
+                </div>
+            </div>
             <mat-form-field appearance="fill">
                 <mat-label>Perfil</mat-label>
                 <mat-select formControlName="role_id">

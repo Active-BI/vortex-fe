@@ -10,12 +10,14 @@ export interface PreRegister {
     name: string;
     email: string;
     identification: string;
+    tenant_id: string;
     role_id: string;
 }
 export interface PreRegisterUpdate {
     id: string;
     name: string;
     email: string;
+    tenant_id: string;
     identification: string;
     role_id: string;
 }

@@ -32,10 +32,20 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
         if (this.form.valid) {
             delete this.form.value.id;
             const formPayload = this.form.value as PreRegister;
-            this.adminSrv1.createPreRegister(formPayload).subscribe((e) => {
-                this.toast.success('Usuário Criado com Sucesso');
-                this.voltar();
-            });
+            this.adminSrv1
+                .createPreRegister({
+                    ...formPayload,
+                    tenant_id: (
+                        this.tenants.find(
+                            (t) =>
+                                t['nome_cliente'] === this.form.value.tenant_id
+                        ) as any
+                    ).id,
+                })
+                .subscribe((e) => {
+                    this.toast.success('Usuário Criado com Sucesso');
+                    this.voltar();
+                });
         } else {
             this.form.markAllAsTouched();
         }

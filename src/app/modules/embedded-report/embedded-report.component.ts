@@ -35,10 +35,25 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
     OpcaoPainel(evento) {
         if (evento === 'TelaCheia') this.fullscreen();
         if (evento === 'Imprimir') this.print();
-        if (evento === 'Importar') return;
+        if (evento === 'Exportar') this.Exportar();
 
         this.selected.reset();
     }
+    fileUrl: any;
+
+    Exportar() {
+        this.pmiService.exportFile().subscribe((data) => {
+            const blob = new Blob([data], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            });
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = 'export.xlsx';
+            link.click();
+        });
+    }
+
     Salvar() {
         if (this.dadosParaImportar.length > 0) {
             this.pmiService
@@ -167,7 +182,6 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
     fullscreen() {
         this.reportObj.getReport().fullscreen();
     }
-
     print() {
         this.reportObj.getReport().print();
     }
@@ -189,6 +203,7 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
     change({ value: name }) {
         this.pages.find((a) => a.name === name).setActive();
     }
+
     private getEmbedded(settings: any): void {
         this.embeddedSrv
             .getEmbeddedReportInfo(this.groupId, this.reportId)

@@ -20,7 +20,11 @@ export class PMIService {
             reportId,
         });
     }
-
+    exportFile() {
+        return this.http.get(`${this.baseUrl}InserirDadosMock`, {
+            responseType: 'blob',
+        });
+    }
     tenants() {
         return this.http.get(`${this.baseUrl}InserirDadosMock/tenants`);
     }

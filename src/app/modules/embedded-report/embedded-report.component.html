@@ -6,7 +6,6 @@
           <mat-option value="TelaCheia">Tela Cheia</mat-option>
           <mat-option value="Imprimir" >Imprimir</mat-option>
           <mat-option value="Exportar">Exportar</mat-option>
-          <mat-option value="Importar">Importar</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -25,6 +24,6 @@
 </div>
 <div *ngIf="showReport" style="height: calc(100vh - 105px);">
     <powerbi-report #reportObj [embedConfig]="config" [cssClassName]="'pbi-report'" [phasedEmbedding]="false"
-        [eventHandlers]="handlers" style="height: calc(100vh - 105px);">
+        [eventHandlers]="handlers" style="height: calc(100vh - 155px);">
     </powerbi-report>
 </div>
