@@ -68,19 +68,19 @@ const adminroutes: Route[] = [
     },
 
     {
-        data: { expectedRoles: ['User', 'Admin', 'Regional', 'Nacional'] },
+        data: { expectedRoles: ['Admin'] },
         path: 'usuarios',
         component: ListUsersComponent,
     },
 
     {
-        data: { expectedRoles: ['User', 'Admin', 'Regional', 'Nacional'] },
+        data: { expectedRoles: ['Admin'] },
 
         path: 'usuarios-criar',
         component: CreateUserComponent,
     },
     {
-        data: { expectedRoles: ['User', 'Admin', 'Regional', 'Nacional'] },
+        data: { expectedRoles: ['Admin'] },
 
         path: 'usuarios-editar/:id',
         component: EditUserComponent,

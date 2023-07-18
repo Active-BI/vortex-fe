@@ -33,6 +33,7 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
     dadosParaImportar = [];
     nomeArquivo = '';
     OpcaoPainel(evento) {
+        console.log(evento);
         if (evento === 'TelaCheia') this.fullscreen();
         if (evento === 'Imprimir') this.print();
         if (evento === 'Exportar') this.Exportar();
@@ -42,7 +43,8 @@ export class EmbeddedReportComponent implements OnInit, AfterViewInit {
     fileUrl: any;
 
     Exportar() {
-        this.pmiService.exportFile().subscribe((data) => {
+        console.log(this.type);
+        this.pmiService.exportFile(this.type).subscribe((data) => {
             const blob = new Blob([data], {
                 type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             });

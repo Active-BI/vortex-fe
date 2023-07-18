@@ -35,12 +35,6 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
             this.adminSrv1
                 .createPreRegister({
                     ...formPayload,
-                    tenant_id: (
-                        this.tenants.find(
-                            (t) =>
-                                t['nome_cliente'] === this.form.value.tenant_id
-                        ) as any
-                    ).id,
                 })
                 .subscribe((e) => {
                     this.toast.success('Usuário Criado com Sucesso');

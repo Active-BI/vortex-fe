@@ -8,7 +8,6 @@ import {
     RouterStateSnapshot,
     UrlTree,
 } from '@angular/router';
-import jwtDecode from 'jwt-decode';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -27,13 +26,13 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         if (localStorage.getItem('token')) {
             const token = JSON.parse(localStorage.getItem('token'));
             const user: any = decode(token);
-
             if (
                 route.data['expectedRoles'] === null ||
                 route.data['expectedRoles'].length === 0 ||
-                route.data['expectedRoles'].includes(user.role)
-            )
+                route.data['expectedRoles'].includes(user.role_name)
+            ) {
                 return true;
+            }
             return false;
         } else {
             localStorage.removeItem('token');

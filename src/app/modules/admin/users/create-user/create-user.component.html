@@ -58,7 +58,7 @@
                     Identificação é Obrigatória
                 </div>
             </div>
-            <mat-form-field class="example-full-width">
+            <!-- <mat-form-field class="example-full-width">
                 <mat-label>Tenant</mat-label>
                 <input type="text"
                        placeholder="Selecione"
@@ -70,19 +70,17 @@
                     {{t.nome_cliente}}
                   </mat-option>
                 </mat-autocomplete>
-            </mat-form-field>
-            <div *ngIf="form.controls.tenant_id.touched">
+            </mat-form-field> -->
+            <!-- <div *ngIf="form.controls.tenant_id.touched">
                 <div *ngIf="form.controls.tenant_id.errors?.['required']" class="text-red-600 mb-2">
                     Tenant é Obrigatório
                 </div>
-            </div>
+            </div> -->
             <mat-form-field appearance="fill">
                 <mat-label>Perfil</mat-label>
                 <mat-select formControlName="role_id">
                     <mat-option value="ca21241b-a37d-4e6f-bbb6-26643d3cdd99">User</mat-option>
                     <mat-option value="6a203390-8389-49ca-aa0e-6a14ba7815bc">Admin</mat-option>
-                    <mat-option value="24ec4e25-9431-478b-9694-bf9159e6fcc4">Regional</mat-option>
-                    <mat-option value="a8296030-c28f-45cb-9c8b-444e05218605">Nacional</mat-option>
                 </mat-select>
                 <mat-icon svgIcon="heroicons_outline:archive"></mat-icon>
 

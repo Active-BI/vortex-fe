@@ -20,8 +20,9 @@ export class PMIService {
             reportId,
         });
     }
-    exportFile() {
-        return this.http.get(`${this.baseUrl}InserirDadosMock`, {
+    exportFile(tipoRelatorio: string) {
+        console.log(tipoRelatorio);
+        return this.http.get(`${this.baseUrl}arquivos/${tipoRelatorio}`, {
             responseType: 'blob',
         });
     }

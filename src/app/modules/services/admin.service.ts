@@ -51,18 +51,16 @@ export class AdminService {
     private baseUrl = environment.baseUrl;
 
     getUsers(): Observable<getAllRequest[]> {
-        return this.http
-            .get<getAllRequest[]>(`${this.baseUrl}pre-register`)
-            .pipe(
-                catchError((err) => {
-                    ('');
-                    this.toast.error(`Erro ao consultar usuários`, null, {
-                        progressBar: true,
-                        timeOut: 2000,
-                    });
-                    return throwError(err);
-                })
-            );
+        return this.http.get<getAllRequest[]>(`${this.baseUrl}user`).pipe(
+            catchError((err) => {
+                ('');
+                this.toast.error(`Erro ao consultar usuários`, null, {
+                    progressBar: true,
+                    timeOut: 2000,
+                });
+                return throwError(err);
+            })
+        );
     }
 
     getUserById(userId: string): Observable<getAllRequest> {

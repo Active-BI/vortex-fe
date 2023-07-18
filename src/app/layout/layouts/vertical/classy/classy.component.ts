@@ -60,7 +60,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
             .subscribe((navigation: Navigation) => {
                 const role = jwtDecode(
                     JSON.parse(localStorage.getItem('token'))
-                )['role'];
+                )['role_name'];
                 const rotas = navigation.default;
                 const filteredRoutes = rotas.filter((route) => {
                     if (!route.data.roles.includes(role)) return false;

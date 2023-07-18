@@ -65,14 +65,13 @@ export class ListUsersComponent implements OnInit {
     }
     requisicoes() {
         this.adminSrv.getUsers().subscribe((e) => {
-            const users = e.map((preRegister) => ({
-                ...preRegister,
-                perfil: listRoles.find(
-                    (role) => preRegister.role_id === role.id
-                ).name,
+            const users = e.map((usuario: any) => ({
+                ...usuario,
+                perfil: listRoles.find((role) => usuario.rls_id === role.id)
+                    .name,
                 dataUltimoAcesso:
-                    preRegister.User !== null
-                        ? moment(preRegister.User.last_access).format(
+                    usuario.User_Auth.last_access !== null
+                        ? moment(usuario.User_Auth.last_access).format(
                               'DD/MM/YY'
                           )
                         : 'N/',

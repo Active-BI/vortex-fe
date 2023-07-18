@@ -29,18 +29,18 @@ export class EmbeddedService {
      */
     getEmbeddedReportInfo(groupId: string, reportId: string): Observable<any> {
         return this.http.get(
-            `${this.baseUrl}power-bi/report/${groupId}/${reportId}`
+            `${this.baseUrl}pbi-report/${groupId}/${reportId}`
         );
     }
     getEmbeddedReportInfoByType(type: string): Observable<any> {
-        return this.http.get(`${this.baseUrl}power-bi/report/type/${type}`);
+        return this.http.get(`${this.baseUrl}pbi-report/type/${type}`);
     }
     getEmbeddedDashboardInfo(
         groupId: string,
         reportId: string
     ): Observable<any> {
         return this.http.get(
-            `${this.baseUrl}power-bi/dashboard/${groupId}/${reportId}`
+            `${this.baseUrl}pbi-report/dashboard/${groupId}/${reportId}`
         );
     }
     exportReportToPDF(
