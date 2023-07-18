@@ -3,10 +3,12 @@ import { cloneDeep } from 'lodash-es';
 import { FuseNavigationItem } from '@fuse/components/navigation';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
 import {
-    ModuleRoutes,
     defaultNavigation,
+    defaultRoute,
 } from 'app/mock-api/common/navigation/data';
 import { AdminService } from '../../../modules/services/admin.service';
+import { HttpClient } from '@angular/common/http';
+import { DashboardService } from 'app/modules/services/dashboard.service';
 @Injectable({
     providedIn: 'root',
 })
@@ -16,10 +18,26 @@ export class NavigationMockApi {
     /**
      * Constructor
      */
-    constructor(private _fuseMockApiService: FuseMockApiService) {
+    constructor(
+        private _fuseMockApiService: FuseMockApiService,
+        private dashboardService: DashboardService
+    ) {
         // Register Mock API handlers
-        new ModuleRoutes().getRoutes().then((res) => {
-            this._defaultNavigation = res;
+        // new ModuleRoutes(HttpClient).getRoutes().then((res) => {
+        //     this._defaultNavigation = res;
+        // });
+
+        this.dashboardService.getDashboardsByUser().subscribe((e: any[]) => {
+            defaultRoute.push(
+                ...defaultNavigation.filter((rota) =>
+                    e.find((userDash) =>
+                        rota.link.includes(
+                            userDash.Tenant_DashBoard.Dashboard.type
+                        )
+                    )
+                )
+            );
+            this._defaultNavigation = defaultRoute;
         });
         this.registerHandlers();
     }

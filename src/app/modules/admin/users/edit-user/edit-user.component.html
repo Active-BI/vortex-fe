@@ -49,16 +49,26 @@
 
             <mat-form-field appearance="fill">
                 <mat-label>Identificação</mat-label>
-                <input type="text" formControlName="identification" matInput #first />
+                <input type="text" formControlName="profession" matInput #first />
                 <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
 
             </mat-form-field>
-            <div *ngIf="form.controls.identification.touched" class="text-red-600 mb-2">
-                <div *ngIf="form.controls.identification.errors?.['required']">
+            <div *ngIf="form.controls.profession.touched" class="text-red-600 mb-2">
+                <div *ngIf="form.controls.profession.errors?.['required']">
                     Identificação é Obrigatória
                 </div>
             </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Descrição</mat-label>
+                <input type="text" formControlName="description" matInput #first />
+                <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
 
+            </mat-form-field>
+            <div *ngIf="form.controls.description.touched" class="text-red-600 mb-2">
+                <div *ngIf="form.controls.description.errors?.['required']">
+                    Identificação é Obrigatória
+                </div>
+            </div>
             <!-- <mat-form-field class="example-full-width">
                 <mat-label>Tenant</mat-label>
                 <input type="text"
@@ -76,22 +86,25 @@
 
             <mat-form-field appearance="fill">
                 <mat-label>Perfil</mat-label>
-                <mat-select formControlName="role_id">
+                <mat-select formControlName="rls_id">
                     <mat-option value="ca21241b-a37d-4e6f-bbb6-26643d3cdd99">User</mat-option>
                     <mat-option value="6a203390-8389-49ca-aa0e-6a14ba7815bc">Admin</mat-option>
                 </mat-select>
                 <mat-icon svgIcon="heroicons_outline:archive"></mat-icon>
 
             </mat-form-field>
-            <div *ngIf="form.controls.role_id.touched">
-                <div *ngIf="form.controls.role_id.errors?.['required']" class="text-red-600 mb-2">
+            <div *ngIf="form.controls.rls_id.touched">
+                <div *ngIf="form.controls.rls_id.errors?.['required']" class="text-red-600 mb-2">
                     Perfil é Obrigatório
                 </div>
             </div>
 
         </form>
 
-
+            <p class="text-xl mb-2"> Painéis</p>
+                <section class="example-section flex flex-col">
+                    <mat-checkbox *ngFor="let item of selectedDashboardList; let i = index" (click)="checkedDash(item, i)" [checked]="item.selected">{{item.name}}</mat-checkbox>
+                </section>
 
 
         <button mat-raised-button color="primary" (click)="editar()"

@@ -43,6 +43,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MenusCreateComponent } from './menus/menus-create/menus-create.component';
 import { EbeddedReportTypeModule } from '../embedded-report-type/embedded-report.module';
 import { BiReportDefaultByTypeComponent } from './bi-report-default-tipo/bi-default-tipo.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const adminroutes: Route[] = [
     {
@@ -126,6 +127,7 @@ const adminroutes: Route[] = [
         MessagesModule,
         MatAutocompleteModule,
         MatTooltipModule,
+        MatCheckboxModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [

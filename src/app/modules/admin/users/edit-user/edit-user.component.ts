@@ -1,21 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {
-    FormBuilder,
-    Validators,
-    FormArray,
-    FormControl,
-    FormGroup,
-} from '@angular/forms';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-    AdminService,
-    getAllRequest,
-} from 'app/modules/services/admin.service';
+import { AdminService } from 'app/modules/services/admin.service';
 import { listRoles } from 'app/modules/services/roles.service';
 import { ToastrService } from 'ngx-toastr';
-import { PeriodicElement } from '../list-users/list-users.component';
 import { ordersData } from '../usersUtils';
 import { PMIService } from 'app/modules/services/PMI.service';
+import { DashboardService } from 'app/modules/services/dashboard.service';
 
 @Component({
     selector: 'app-edit-user',
@@ -49,15 +40,17 @@ export class EditUserComponent implements OnInit {
                 Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
             ],
         ],
-        // tenant_id: ['', [Validators.required]],
-        identification: ['', [Validators.required]],
-        role_id: ['', [Validators.required]],
+        profession: ['', [Validators.required]],
+        description: ['', [Validators.required]],
+        rls_id: ['', [Validators.required]],
     });
     panelOpenState = false;
     id: string;
     ordersData = ordersData;
-    user: getAllRequest;
-
+    user: any;
+    dashboardList = [];
+    selectedDashboardList = [];
+    currSelectedDashboardList = [];
     listRoles = listRoles;
     constructor(
         private fb: FormBuilder,
@@ -65,27 +58,47 @@ export class EditUserComponent implements OnInit {
         private route: ActivatedRoute,
         private toastr: ToastrService,
         private adminSrv: AdminService,
-        private pmiServices: PMIService
+        private pmiServices: PMIService,
+        private dashboardService: DashboardService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
         let editar = false;
         this.route.url.subscribe(
             (a) => (editar = a[0].path.includes('editar'))
         );
-        if (editar) {
-            this.adminSrv.getUserById(this.id).subscribe((e) => {
-                this.user = e;
-                let tenant;
+        this.dashboardService.getDashboards().subscribe((e: any[]) => {
+            this.dashboardList = e.map((tenant_dashboard) => ({
+                name: tenant_dashboard.Dashboard.name,
+                id: tenant_dashboard.id,
+                selected: false,
+            }));
+            if (editar) {
+                this.adminSrv.getUserById(this.id).subscribe((e: any) => {
+                    this.user = e;
+                    let tenant;
 
-                this.form.patchValue({
-                    id: this.user.id,
-                    name: this.user.name,
-                    email: this.user.email,
-                    role_id: this.user.role_id,
-                    identification: this.user.identification,
+                    this.selectedDashboardList = this.dashboardList.map(
+                        (dash) => ({
+                            ...dash,
+                            selected: this.user.User_Tenant_DashBoard.find(
+                                (utd) => utd.tenant_DashBoard_id === dash.id
+                            )
+                                ? true
+                                : false,
+                        })
+                    );
+
+                    this.form.patchValue({
+                        id: this.user.id,
+                        name: this.user.name,
+                        email: this.user.contact_email,
+                        rls_id: this.user.rls_id,
+                        profession: this.user.profession,
+                        description: this.user.description,
+                    });
                 });
-            });
-        }
+            }
+        });
     }
 
     ngOnInit(): void {
@@ -93,7 +106,12 @@ export class EditUserComponent implements OnInit {
     }
 
     filteredVisions = [];
-
+    checkedDash(item, index) {
+        this.selectedDashboardList[index] = {
+            ...item,
+            selected: !item.selected,
+        };
+    }
     voltar(): void {
         this.router.navigate(['app/usuarios']);
     }
@@ -104,6 +122,13 @@ export class EditUserComponent implements OnInit {
 
     editar(): void {
         if (this.form.valid && this.myControl.valid) {
+            this.dashboardService
+                .postDashboards({
+                    DashboardUserList: this.selectedDashboardList
+                        .filter((e) => e.selected)
+                        .map((e) => e.id),
+                })
+                .subscribe((e) => {});
             this.adminSrv
                 .updateUser({
                     ...this.form.value,

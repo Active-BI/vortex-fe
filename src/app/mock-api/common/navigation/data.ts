@@ -1,23 +1,29 @@
 /* tslint:disable:max-line-length */
 import { FuseNavigationItem } from '@fuse/components/navigation';
+import { DashboardService } from 'app/modules/services/dashboard.service';
 // report/group
 const dataAdmin = {
     roles: ['Admin'],
 };
 
-export class ModuleRoutes {
-    constructor() {}
-
-    getRoutes() {
-        const p = Promise.resolve(this.getRoutesAsync());
-        return p;
-    }
-
-    async getRoutesAsync() {
-        return await defaultNavigation;
-    }
-}
-
+export const defaultRoute: FuseNavigationItem[] = [
+    {
+        data: { roles: ['User', 'Admin', 'Master'] },
+        id: 'inicio',
+        title: 'Inicio',
+        type: 'basic',
+        icon: 'heroicons_outline:home',
+        link: 'inicio',
+    },
+    {
+        data: { roles: ['Master'] },
+        id: 'controles',
+        title: 'Controles',
+        type: 'basic',
+        icon: 'heroicons_outline:home',
+        link: 'controles',
+    },
+];
 export const defaultNavigation: FuseNavigationItem[] = [
     {
         data: { roles: ['User', 'Admin'] },

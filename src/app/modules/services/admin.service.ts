@@ -65,7 +65,7 @@ export class AdminService {
 
     getUserById(userId: string): Observable<getAllRequest> {
         return this.http
-            .get<getAllRequest>(`${this.baseUrl}pre-register/${userId}`)
+            .get<getAllRequest>(`${this.baseUrl}user/${userId}`)
             .pipe(
                 catchError((err) => {
                     this.toast.error(`Erro ao consultar usuário`, null, {
@@ -77,23 +77,17 @@ export class AdminService {
             );
     }
 
-    updateUser(user: any): Observable<getAllRequest> {
-        return this.http.put<getAllRequest>(
-            `${this.baseUrl}pre-register`,
-            user
-        );
+    updateUser(user: any): Observable<any> {
+        return this.http.put<any>(`${this.baseUrl}user`, user);
     }
 
-    createPreRegister(user: PreRegister): Observable<PreRegisterUpdate> {
-        return this.http.post<PreRegisterUpdate>(
-            `${this.baseUrl}pre-register`,
-            user
-        );
+    createUser(user: PreRegister): Observable<any> {
+        return this.http.post<any>(`${this.baseUrl}user`, user);
     }
 
     deleteUser(userId: string): Observable<getAllRequest> {
         return this.http
-            .delete<getAllRequest>(`${this.baseUrl}pre-register/${userId}`)
+            .delete<getAllRequest>(`${this.baseUrl}user/${userId}`)
             .pipe(
                 catchError((err) => {
                     this.toast.error(`Erro ao remover usuário`, null, {

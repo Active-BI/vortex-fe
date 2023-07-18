@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService, PreRegister } from 'app/modules/services/admin.service';
 import { PMIService } from 'app/modules/services/PMI.service';
+import { DashboardService } from 'app/modules/services/dashboard.service';
 
 @Component({
     selector: 'app-create-user',
@@ -21,9 +22,18 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
         private toast: ToastrService,
         adminSrv: AdminService,
         private adminSrv1: AdminService,
-        pmiServices: PMIService
+        pmiServices: PMIService,
+        dashboardService: DashboardService
     ) {
-        super(fb, router, route, toastr, adminSrv, pmiServices);
+        super(
+            fb,
+            router,
+            route,
+            toastr,
+            adminSrv,
+            pmiServices,
+            dashboardService
+        );
     }
 
     override ngOnInit(): void {}
@@ -31,9 +41,9 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
     criar(): void {
         if (this.form.valid) {
             delete this.form.value.id;
-            const formPayload = this.form.value as PreRegister;
+            const formPayload = this.form.value as any;
             this.adminSrv1
-                .createPreRegister({
+                .createUser({
                     ...formPayload,
                 })
                 .subscribe((e) => {
