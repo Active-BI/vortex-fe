@@ -16,13 +16,21 @@ export const defaultRoute: FuseNavigationItem[] = [
         link: 'inicio',
     },
     {
-        data: { roles: ['Master'] },
-        id: 'controles',
-        title: 'Controles',
+        data: dataAdmin,
+        id: 'usuarios.lista',
+        title: 'Gestão de Usuários',
         type: 'basic',
-        icon: 'heroicons_outline:home',
-        link: 'controles',
+        icon: 'mat_solid:person_search',
+        link: 'usuarios',
     },
+    // {
+    //     data: { roles: ['Master'] },
+    //     id: 'controles',
+    //     title: 'Controles',
+    //     type: 'basic',
+    //     icon: 'heroicons_outline:home',
+    //     link: 'controles',
+    // },
 ];
 export const defaultNavigation: FuseNavigationItem[] = [
     {
