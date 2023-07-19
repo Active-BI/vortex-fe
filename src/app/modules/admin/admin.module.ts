@@ -44,6 +44,9 @@ import { MenusCreateComponent } from './menus/menus-create/menus-create.componen
 import { EbeddedReportTypeModule } from '../embedded-report-type/embedded-report.module';
 import { BiReportDefaultByTypeComponent } from './bi-report-default-tipo/bi-default-tipo.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
+import { mockApiServices } from 'app/mock-api';
+import { FuseMockApiModule } from '@fuse/lib/mock-api';
 
 const adminroutes: Route[] = [
     {
@@ -133,6 +136,7 @@ const adminroutes: Route[] = [
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
         { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },
+        NavigationMockApi,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

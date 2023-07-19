@@ -48,7 +48,7 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
                 })
                 .subscribe((e) => {
                     this.toast.success('Usuário Criado com Sucesso');
-                    this.voltar();
+                    this.redirectToEdit(e.user_id);
                 });
         } else {
             this.form.markAllAsTouched();

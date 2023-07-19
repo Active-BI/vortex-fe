@@ -9,6 +9,7 @@ import {
 import { AdminService } from '../../../modules/services/admin.service';
 import { HttpClient } from '@angular/common/http';
 import { DashboardService } from 'app/modules/services/dashboard.service';
+import { Route, Router } from '@angular/router';
 @Injectable({
     providedIn: 'root',
 })
@@ -20,9 +21,10 @@ export class NavigationMockApi {
      */
     constructor(
         private _fuseMockApiService: FuseMockApiService,
-        private dashboardService: DashboardService
+        private dashboardService: DashboardService,
+        private router: Route
     ) {
-        this._defaultNavigation = defaultRoute;
+        console.log(this.router.path.includes('auth'));
         this.dashboardService.getDashboardsByUser().subscribe((e: any[]) => {
             defaultRoute.push(
                 ...defaultNavigation.filter((rota) =>
@@ -38,7 +40,7 @@ export class NavigationMockApi {
             this._defaultNavigation = defaultRoute;
             this.registerHandlers();
         });
-        // this.registerHandlers();
+        this.registerHandlers();
     }
 
     // -----------------------------------------------------------------------------------------------------

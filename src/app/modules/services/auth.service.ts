@@ -58,7 +58,7 @@ export class AuthService {
         return this.http.post(`${this.baseUrl}login/set-new-pass`, payload);
     }
     register(user): Observable<any> {
-        return this.http.post<any>(`${this.baseUrl}user`, user);
+        return this.http.post<any>(`${this.baseUrl}login/register`, user);
     }
     // getVisionsForUser() {
     //     // const token = this.getAccessToken();
