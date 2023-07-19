@@ -22,24 +22,23 @@ export class NavigationMockApi {
         private _fuseMockApiService: FuseMockApiService,
         private dashboardService: DashboardService
     ) {
-        // Register Mock API handlers
-        // new ModuleRoutes(HttpClient).getRoutes().then((res) => {
-        //     this._defaultNavigation = res;
-        // });
-
+        this._defaultNavigation = defaultRoute;
         this.dashboardService.getDashboardsByUser().subscribe((e: any[]) => {
             defaultRoute.push(
                 ...defaultNavigation.filter((rota) =>
                     e.find((userDash) =>
-                        rota.link.includes(
-                            userDash.Tenant_DashBoard.Dashboard.type
-                        )
+                        rota.link
+                            .toLowerCase()
+                            .includes(
+                                userDash.Tenant_DashBoard.Dashboard.type.toLowerCase()
+                            )
                     )
                 )
             );
             this._defaultNavigation = defaultRoute;
+            this.registerHandlers();
         });
-        this.registerHandlers();
+        // this.registerHandlers();
     }
 
     // -----------------------------------------------------------------------------------------------------

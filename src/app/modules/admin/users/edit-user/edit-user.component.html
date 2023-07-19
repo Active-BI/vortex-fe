@@ -69,20 +69,6 @@
                     Identificação é Obrigatória
                 </div>
             </div>
-            <!-- <mat-form-field class="example-full-width">
-                <mat-label>Tenant</mat-label>
-                <input type="text"
-                       placeholder="Selecione"
-                       matInput
-                       formControlName="tenant_id"
-                       [matAutocomplete]="auto">
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                  <mat-option *ngFor="let t of tenants" [value]="t.nome_cliente">
-                    {{t.nome_cliente}}
-                  </mat-option>
-                </mat-autocomplete>
-            </mat-form-field> -->
-
 
             <mat-form-field appearance="fill">
                 <mat-label>Perfil</mat-label>
@@ -103,7 +89,7 @@
 
             <p class="text-xl mb-2"> Painéis</p>
                 <section class="example-section flex flex-col">
-                    <mat-checkbox *ngFor="let item of selectedDashboardList; let i = index" (click)="checkedDash(item, i)" [checked]="item.selected">{{item.name}}</mat-checkbox>
+                    <mat-checkbox  *ngFor="let item of _selectedDashboardList; let i = index" (click)="checkedDash(item, i)"  [checked]="item.selected">{{item.name}}</mat-checkbox>
                 </section>
 
 

@@ -19,6 +19,7 @@ import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { listRoles } from '../usersUtils';
 import moment from 'moment';
+import jwtDecode from 'jwt-decode';
 
 export interface PeriodicElement {
     id: string;
@@ -72,10 +73,11 @@ export class ListUsersComponent implements OnInit {
                 dataUltimoAcesso:
                     usuario.User_Auth.last_access !== null
                         ? moment(usuario.User_Auth.last_access).format(
-                              'DD/MM/YY'
+                              'DD/MM/YY H:mm'
                           )
                         : 'N/',
             }));
+            // .filter((user) => user.contact_email !== decoded.contact_email);
             this.usuarios = new MatTableDataSource(users);
             this.usuariosFiltrados = new MatTableDataSource(users);
             this.usuariosFiltrados.paginator = this.paginator;
@@ -92,6 +94,11 @@ export class ListUsersComponent implements OnInit {
         this.usuariosFiltrados.paginator = this.paginator;
     }
     deletarUsuario(id): void {
+        const decoded: any = jwtDecode(localStorage.getItem('token'));
+        if (decoded.userId === id) {
+            this.toastr.error('Não é possível excluir usuário em uso');
+            return;
+        }
         this.dialog.open(DeleteModalComponent, {
             data: {
                 nome: 'Usuários',

@@ -17,8 +17,11 @@ export class DashboardService {
     getDashboardsByUser() {
         return this.http.get(`${this.baseUrl}dashboard/byuser`);
     }
-    postDashboards(dashboadList) {
-        return this.http.post(`${this.baseUrl}dashboard`, dashboadList);
+    postDashboards(dashboadList, userId) {
+        return this.http.post(
+            `${this.baseUrl}dashboard/${userId}`,
+            dashboadList
+        );
     }
     exportFile(tipoRelatorio: string) {
         console.log(tipoRelatorio);

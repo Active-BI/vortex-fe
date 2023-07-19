@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ordersData } from '../usersUtils';
 import { PMIService } from 'app/modules/services/PMI.service';
 import { DashboardService } from 'app/modules/services/dashboard.service';
+import jwtDecode from 'jwt-decode';
 
 @Component({
     selector: 'app-edit-user',
@@ -50,6 +51,14 @@ export class EditUserComponent implements OnInit {
     user: any;
     dashboardList = [];
     selectedDashboardList = [];
+    get _selectedDashboardList() {
+        if (this.form.value.rls_id === 'ca21241b-a37d-4e6f-bbb6-26643d3cdd99') {
+            return this.selectedDashboardList.filter(
+                (s) => s.name.toLowerCase() !== 'usuários'
+            );
+        }
+        return this.selectedDashboardList;
+    }
     currSelectedDashboardList = [];
     listRoles = listRoles;
     constructor(
@@ -123,11 +132,14 @@ export class EditUserComponent implements OnInit {
     editar(): void {
         if (this.form.valid && this.myControl.valid) {
             this.dashboardService
-                .postDashboards({
-                    DashboardUserList: this.selectedDashboardList
-                        .filter((e) => e.selected)
-                        .map((e) => e.id),
-                })
+                .postDashboards(
+                    {
+                        DashboardUserList: this.selectedDashboardList
+                            .filter((e) => e.selected)
+                            .map((e) => e.id),
+                    },
+                    this.id
+                )
                 .subscribe((e) => {});
             this.adminSrv
                 .updateUser({
