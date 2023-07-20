@@ -18,7 +18,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { EbeddedReportModule } from 'app/modules/embedded-report/embedded-report.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FuseAlertModule } from '@fuse/components/alert';
@@ -34,9 +33,9 @@ import { BiReportDefaultComponent } from './bi-report-default/bi-default.compone
 import { EbeddedDashboardModule } from '../embedded-dashboard/embedded-dashboard.module';
 import { BiDashboardDefaultComponent } from './bi-dashboard-default/bi-default.component';
 import { MessagesModule } from 'app/layout/common/messages/messages.module';
-import { MenusComponent } from './menus/menus.component';
+
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MenusCreateComponent } from './menus/menus-create/menus-create.component';
+
 import { EbeddedReportTypeModule } from '../embedded-report-type/embedded-report.module';
 import { BiReportDefaultByTypeComponent } from './bi-report-default-tipo/bi-default-tipo.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -95,8 +94,6 @@ const adminroutes: Route[] = [
         EditUserComponent,
         BiDashboardDefaultComponent,
         BiReportDefaultComponent,
-        MenusComponent,
-        MenusCreateComponent,
     ],
     imports: [
         CommonModule,
@@ -114,7 +111,6 @@ const adminroutes: Route[] = [
         MatButtonModule,
         MatIconModule,
         MatSelectModule,
-        EbeddedReportModule,
         EbeddedDashboardModule,
         EbeddedReportTypeModule,
         MatExpansionModule,

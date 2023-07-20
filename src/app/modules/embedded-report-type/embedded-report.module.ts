@@ -10,7 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { BiReportDefaultByTypeComponent } from '../admin/bi-report-default-tipo/bi-default-tipo.component';
-import { EmbeddedReportComponent } from '../embedded-report/embedded-report.component';
 
 @NgModule({
     declarations: [

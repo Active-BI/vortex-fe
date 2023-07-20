@@ -33,6 +33,7 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
         if (evento === 'TelaCheia') this.fullscreen();
         if (evento === 'Imprimir') this.print();
         if (evento === 'Exportar') this.Exportar();
+        if (evento === 'Baixar Template') this.BaixarTemplate();
 
         this.selected.reset();
     }
@@ -46,15 +47,26 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
         }
     }
     Exportar() {
-        console.log(this.type);
-        this.pmiService.exportFile(this.type).subscribe((data) => {
+        this.pmiService.exportDataFile(this.type).subscribe((data: any) => {
             const blob = new Blob([data], {
                 type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             });
             const downloadUrl = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = downloadUrl;
-            link.download = 'export.xlsx';
+            link.download = this.type + '_dados.xlsx';
+            link.click();
+        });
+    }
+    BaixarTemplate() {
+        this.pmiService.exportExampleFile(this.type).subscribe((data: any) => {
+            const blob = new Blob([data], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            });
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = this.type + '_template.xlsx';
             link.click();
         });
     }
