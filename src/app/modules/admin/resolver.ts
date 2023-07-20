@@ -13,9 +13,7 @@ export class NavigationResolver implements Resolve<any> {
     ) {}
 
     resolve(): any {
-        const token = localStorage.getItem('token');
-        // this.navigationMockApi.registerHandlers();
-        // this.classyLayoutComponent.ngOnInit();
-        this.navigationMockApi.getRequestHandlers();
+        // const token = localStorage.getItem('token');
+        // this.navigationMockApi.getRequestHandlers();
     }
 }

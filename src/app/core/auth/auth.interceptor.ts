@@ -33,7 +33,6 @@ export class TokenInterceptorService implements HttpInterceptor {
         // Clone the request object
         let newReq = req.clone();
 
-        console.log(this._router.url.includes('auth'));
         if (
             localStorage.getItem('token') == null &&
             this._router.url.includes('auth')
@@ -71,7 +70,7 @@ export class TokenInterceptorService implements HttpInterceptor {
                         location.hash === '#/auth/tfa' ||
                         location.hash.includes('reset-pass')
                     ) {
-                        console.log(error);
+                        // console.log(error);
                         this.toast.error(error.error.message);
                         this._router.navigate(['/auth/sign-in']);
                         return;

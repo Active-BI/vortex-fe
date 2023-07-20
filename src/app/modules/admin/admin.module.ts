@@ -1,6 +1,6 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Route, RouterModule } from '@angular/router';
+import { Route, RouterModule } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
 import { AdminComponent } from './admin.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,10 +20,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { EbeddedReportModule } from 'app/modules/embedded-report/embedded-report.module';
 import { LayoutModule } from '@angular/cdk/layout';
-
-// Compontents
-import { GestaoVulnerabilidadeComponent } from './gestao-vulnerabilidade/gestao-vulnerabilidade.component';
-
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { SharedModule } from 'app/shared/shared.module';
@@ -45,8 +41,6 @@ import { EbeddedReportTypeModule } from '../embedded-report-type/embedded-report
 import { BiReportDefaultByTypeComponent } from './bi-report-default-tipo/bi-default-tipo.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
-import { mockApiServices } from 'app/mock-api';
-import { FuseMockApiModule } from '@fuse/lib/mock-api';
 
 const adminroutes: Route[] = [
     {
@@ -140,4 +134,6 @@ const adminroutes: Route[] = [
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AdminModule {}
+export class AdminModule {
+    constructor() {}
+}

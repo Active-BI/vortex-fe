@@ -11,6 +11,7 @@ import { NavigationService } from 'app/core/navigation/navigation.service';
 import { User } from 'app/core/user/user.types';
 import { UserService } from 'app/core/user/user.service';
 import jwtDecode from 'jwt-decode';
+import { MenuItemService } from 'app/mock-api/common/navigation/data';
 
 @Component({
     selector: 'classy-layout',
@@ -32,7 +33,8 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         private _navigationService: NavigationService,
         private _userService: UserService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        private menuItemService: MenuItemService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -55,45 +57,53 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         // Subscribe to navigation data
-        this._navigationService.navigation$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((navigation: Navigation) => {
-                const role = jwtDecode(
-                    JSON.parse(localStorage.getItem('token'))
-                )['role_name'];
-                const rotas = navigation.default;
-                const filteredRoutes = rotas.filter((route) => {
-                    if (!route.data.roles.includes(role)) return false;
-                    return true;
-                });
-                const filterChildrens = filteredRoutes.filter((route) => {
-                    if (route.children) {
-                        route.children = route.children.filter((child) =>
-                            child.data.roles.includes(role)
+        Promise.all([this.menuItemService.getNewRoutes()]).then((e) => {
+            if (e[0]) {
+                this._navigationService.navigation$
+                    .pipe(takeUntil(this._unsubscribeAll))
+                    .subscribe((navigation: Navigation) => {
+                        const role = jwtDecode(
+                            JSON.parse(localStorage.getItem('token'))
+                        )['role_name'];
+
+                        const rotas = e[0];
+                        const filteredRoutes = rotas.filter((route) => {
+                            if (!route.data.roles.includes(role)) return false;
+                            return true;
+                        });
+                        const filterChildrens = filteredRoutes.filter(
+                            (route) => {
+                                if (route.children) {
+                                    route.children = route.children.filter(
+                                        (child) =>
+                                            child.data.roles.includes(role)
+                                    );
+                                }
+                                return route;
+                            }
                         );
-                    }
-                    return route;
-                });
-                console.log(filterChildrens);
-                navigation.default = filterChildrens;
-                // navigation.default = filteredRoutes;
-                this.navigation = navigation;
-            });
+                        // console.log(filterChildrens);
+                        navigation.default = filterChildrens;
+                        // navigation.default = filteredRoutes;
+                        this.navigation = navigation;
+                    });
 
-        // Subscribe to the user service
-        this._userService.user$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((user: User) => {
-                this.user = user;
-            });
+                // Subscribe to the user service
+                this._userService.user$
+                    .pipe(takeUntil(this._unsubscribeAll))
+                    .subscribe((user: User) => {
+                        this.user = user;
+                    });
 
-        // Subscribe to media changes
-        this._fuseMediaWatcherService.onMediaChange$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(({ matchingAliases }) => {
-                // Check if the screen is small
-                this.isScreenSmall = !matchingAliases.includes('md');
-            });
+                // Subscribe to media changes
+                this._fuseMediaWatcherService.onMediaChange$
+                    .pipe(takeUntil(this._unsubscribeAll))
+                    .subscribe(({ matchingAliases }) => {
+                        // Check if the screen is small
+                        this.isScreenSmall = !matchingAliases.includes('md');
+                    });
+            }
+        });
     }
 
     /**

@@ -1,6 +1,9 @@
 /* tslint:disable:max-line-length */
+import { Injectable } from '@angular/core';
 import { FuseNavigationItem } from '@fuse/components/navigation';
 import { DashboardService } from 'app/modules/services/dashboard.service';
+import jwtDecode from 'jwt-decode';
+import { ReplaySubject } from 'rxjs';
 // report/group
 const dataAdmin = {
     roles: ['Admin'],
@@ -67,3 +70,34 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link: 'usuarios',
     },
 ];
+@Injectable({
+    providedIn: 'root',
+})
+export class MenuItemService {
+    sub = new ReplaySubject();
+    intervalId: any;
+    constructor() {
+        this.getNewRoutes();
+    }
+    getNewRoutes() {
+        return Promise.all([localStorage.getItem('token')]).then((e) => {
+            if (e[0]) {
+                const decoded = jwtDecode(JSON.parse(e[0])) as any;
+                const dashUsers = decoded.dashboardUser;
+                const routes: FuseNavigationItem[] = [];
+                routes.push(
+                    ...defaultNavigation.filter((rota) =>
+                        dashUsers.find((userDash) =>
+                            rota.link
+                                .toLowerCase()
+                                .includes(
+                                    userDash.Tenant_DashBoard.Dashboard.type.toLowerCase()
+                                )
+                        )
+                    )
+                );
+                return routes;
+            }
+        });
+    }
+}

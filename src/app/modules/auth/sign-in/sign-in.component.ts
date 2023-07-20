@@ -64,9 +64,11 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
         }
         this.userService.Login(data).subscribe(
             (res) => {
-                localStorage.setItem('token', JSON.stringify(res.token));
-
-                this.redirect();
+                Promise.all([
+                    localStorage.setItem('token', JSON.stringify(res.token)),
+                ]).then(() => {
+                    this.redirect();
+                });
             },
             (err) => {
                 this.error = err.error.message;
