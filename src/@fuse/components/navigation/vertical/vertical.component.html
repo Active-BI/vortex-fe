@@ -10,7 +10,8 @@
         class="fuse-vertical-navigation-content"
         fuseScrollbar
         [fuseScrollbarOptions]="{wheelPropagation: inner, suppressScrollX: true}"
-        #navigationContent>
+        #navigationContent
+        >
 
         <!-- Content header -->
         <div class="fuse-vertical-navigation-content-header">
@@ -23,7 +24,7 @@
             <!-- Skip the hidden items -->
             <ng-container *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden">
 
-         
+
 
                 <!-- Basic -->
                 <ng-container *ngIf="item.type === 'basic'">
@@ -41,7 +42,7 @@
                 </ng-container>
 
                 <!-- Divider -->
-              
+
             </ng-container>
 
         </ng-container>

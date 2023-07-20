@@ -56,6 +56,17 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        this._userService.user$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((user: User) => {
+                this.user = user;
+            });
+        this._fuseMediaWatcherService.onMediaChange$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(({ matchingAliases }) => {
+                // Check if the screen is small
+                this.isScreenSmall = !matchingAliases.includes('md');
+            });
         // Subscribe to navigation data
         Promise.all([this.menuItemService.getNewRoutes()]).then((e) => {
             if (e[0]) {
@@ -89,19 +100,8 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                     });
 
                 // Subscribe to the user service
-                this._userService.user$
-                    .pipe(takeUntil(this._unsubscribeAll))
-                    .subscribe((user: User) => {
-                        this.user = user;
-                    });
 
                 // Subscribe to media changes
-                this._fuseMediaWatcherService.onMediaChange$
-                    .pipe(takeUntil(this._unsubscribeAll))
-                    .subscribe(({ matchingAliases }) => {
-                        // Check if the screen is small
-                        this.isScreenSmall = !matchingAliases.includes('md');
-                    });
             }
         });
     }

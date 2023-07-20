@@ -9,11 +9,7 @@ import {
 import { cloneDeep } from 'lodash-es';
 import { FuseNavigationItem } from '@fuse/components/navigation';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
-import {
-    MenuItemService,
-    defaultNavigation,
-    defaultRoute,
-} from 'app/mock-api/common/navigation/data';
+import { MenuItemService } from 'app/mock-api/common/navigation/data';
 import { AdminService } from '../../../modules/services/admin.service';
 import { HttpClient } from '@angular/common/http';
 import { DashboardService } from 'app/modules/services/dashboard.service';

@@ -53,13 +53,21 @@ export class EditUserComponent implements OnInit {
     selectedDashboardList = [];
     get _selectedDashboardList() {
         if (this.form.value.rls_id === 'ca21241b-a37d-4e6f-bbb6-26643d3cdd99') {
+            this.selectedDashboardList = this.selectedDashboardList.map((s) => {
+                if (s.name.toLowerCase() !== 'usuários') {
+                    return s;
+                }
+                return {
+                    ...s,
+                    selected: false,
+                };
+            });
             return this.selectedDashboardList.filter(
                 (s) => s.name.toLowerCase() !== 'usuários'
             );
         }
         return this.selectedDashboardList;
     }
-    currSelectedDashboardList = [];
     listRoles = listRoles;
     constructor(
         private fb: FormBuilder,

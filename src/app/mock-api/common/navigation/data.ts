@@ -18,33 +18,8 @@ export const defaultRoute: FuseNavigationItem[] = [
         icon: 'heroicons_outline:home',
         link: 'inicio',
     },
-    {
-        data: dataAdmin,
-        id: 'usuarios.lista',
-        title: 'Gestão de Usuários',
-        type: 'basic',
-        icon: 'mat_solid:person_search',
-        link: 'usuarios',
-    },
-    // {
-    //     data: { roles: ['Master'] },
-    //     id: 'controles',
-    //     title: 'Controles',
-    //     type: 'basic',
-    //     icon: 'heroicons_outline:home',
-    //     link: 'controles',
-    // },
 ];
 export const defaultNavigation: FuseNavigationItem[] = [
-    {
-        data: { roles: ['User', 'Admin'] },
-        id: 'inicio',
-        title: 'Inicio',
-        type: 'basic',
-        icon: 'heroicons_outline:home',
-        link: 'inicio',
-    },
-
     {
         data: { roles: ['User', 'Admin'] },
         id: 'rh-uncionarios',
@@ -85,6 +60,7 @@ export class MenuItemService {
                 const decoded = jwtDecode(JSON.parse(e[0])) as any;
                 const dashUsers = decoded.dashboardUser;
                 const routes: FuseNavigationItem[] = [];
+                routes.push(...defaultRoute);
                 routes.push(
                     ...defaultNavigation.filter((rota) =>
                         dashUsers.find((userDash) =>
