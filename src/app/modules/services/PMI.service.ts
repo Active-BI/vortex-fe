@@ -14,11 +14,11 @@ export class PMIService {
 
     private baseUrl = environment.baseUrl;
 
-    uploadFile(payload, reportId) {
-        return this.http.post(`${this.baseUrl}InserirDadosMock`, {
-            payload,
-            reportId,
-        });
+    uploadFile(payload, type) {
+        return this.http.post(
+            `${this.baseUrl}pbi-report/post-file/${type}`,
+            payload
+        );
     }
     exportDataFile(tipoRelatorio: string) {
         return this.http.get(

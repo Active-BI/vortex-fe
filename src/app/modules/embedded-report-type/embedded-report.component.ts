@@ -43,7 +43,7 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
                 .uploadFile(this.dadosParaImportar, this.type)
                 .subscribe((d) => console.log(d));
         } else {
-            this.toastr.error('Nenhum arquivo foi selecionado');
+            this.toastr.error('Nenhum dado foi importado');
         }
     }
     Exportar() {
@@ -74,8 +74,14 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
     Importar(e) {
         e.preventDefault();
         const fileName = e.target.files[0]?.name;
+        const file = e.target.files[0];
         this.nomeArquivo = '';
         this.dadosParaImportar = [];
+        if (Number((file.size / 1024).toFixed(2)) > 4500) {
+            this.toastr.error('Excedeu tamanho máximo de 4,5 Mb');
+            return;
+        }
+
         const reader: FileReader = new FileReader();
         reader.onload = (): void => {
             if (!fileName.endsWith('.xlsx')) {
@@ -91,13 +97,8 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
             });
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
-            let json = xlsx.utils.sheet_to_json(worksheet);
-            this.dadosParaImportar = json.map((d: any) => ({
-                ...d,
-                timestamp: new Date(d.timestamp).toISOString(),
-            }));
-
-            console.log(this.dadosParaImportar);
+            let json = xlsx.utils.sheet_to_json(worksheet, { defval: null });
+            this.dadosParaImportar = json;
         };
         reader.readAsArrayBuffer(e.target.files[0]);
     }
