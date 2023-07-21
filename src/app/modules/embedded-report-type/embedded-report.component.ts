@@ -16,6 +16,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import * as xlsx from 'xlsx';
 import { PMIService } from '../services/PMI.service';
+import jwtDecode from 'jwt-decode';
 @Component({
     selector: 'app-embedded-report-type',
     templateUrl: './embedded-report.component.html',
@@ -127,7 +128,7 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
             },
         },
     };
-
+    rlsName = '';
     constructor(
         private embeddedSrv: EmbeddedService,
         public breakpointObserver: BreakpointObserver,
@@ -135,6 +136,11 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
         private fb: FormBuilder,
         private pmiService: PMIService
     ) {
+        const token = localStorage.getItem('token');
+        if (token) {
+            this.rlsName = (jwtDecode(token) as any).role_name;
+            console.log(this.rlsName);
+        }
         this.handlers = new Map([
             ['loaded', (): void => console.log('Report loaded')],
             [

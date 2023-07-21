@@ -72,6 +72,25 @@ export class MenuItemService {
                         )
                     )
                 );
+                console.log(decoded.role_name);
+                if (decoded.role_name === 'Master') {
+                    routes.push({
+                        data: { roles: ['Master'] },
+                        id: 'gestao',
+                        title: 'Gestão',
+                        type: 'collapsable',
+                        icon: 'mat_solid:settings',
+                        children: [
+                            {
+                                data: { roles: ['Master'] },
+                                link: 'gestao/tenants',
+                                id: 'gestao-tenant',
+                                title: 'Permissão de Clientes',
+                                type: 'basic',
+                            },
+                        ],
+                    });
+                }
                 return routes;
             }
         });

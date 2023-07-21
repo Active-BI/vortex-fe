@@ -91,7 +91,7 @@ export const appRoutes: Route[] = [
         canActivateChild: [AuthGuard],
         component: LayoutComponent,
         data: {
-            expectedRoles: [],
+            expectedRoles: ['Admin', 'User', 'Master'],
         },
         resolve: {
             initialData: InitialDataResolver,
@@ -102,6 +102,27 @@ export const appRoutes: Route[] = [
                 loadChildren: () =>
                     import('app/modules/admin/admin.module').then(
                         (m) => m.AdminModule
+                    ),
+            },
+        ],
+    },
+    {
+        path: 'master',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        data: {
+            expectedRoles: ['Master'],
+        },
+        resolve: {
+            initialData: InitialDataResolver,
+        },
+        children: [
+            {
+                path: '',
+                loadChildren: () =>
+                    import('app/modules/master/master.module').then(
+                        (m) => m.MasterModule
                     ),
             },
         ],
