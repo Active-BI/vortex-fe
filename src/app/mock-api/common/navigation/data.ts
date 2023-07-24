@@ -72,7 +72,7 @@ export class MenuItemService {
                         )
                     )
                 );
-                console.log(decoded.role_name);
+                console.log(decoded.role_name, decoded.role_name === 'Master');
                 if (decoded.role_name === 'Master') {
                     routes.push({
                         data: { roles: ['Master'] },
@@ -83,9 +83,9 @@ export class MenuItemService {
                         children: [
                             {
                                 data: { roles: ['Master'] },
-                                link: 'gestao/tenants',
+                                link: '/master/gestao/tenants',
                                 id: 'gestao-tenant',
-                                title: 'Permissão de Clientes',
+                                title: 'Gestão de ambientes',
                                 type: 'basic',
                             },
                         ],

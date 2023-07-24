@@ -25,23 +25,35 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { EbeddedDashboardModule } from '../embedded-dashboard/embedded-dashboard.module';
 import { MessagesModule } from 'app/layout/common/messages/messages.module';
-
 import { MatTooltipModule } from '@angular/material/tooltip';
-
 import { EbeddedReportTypeModule } from '../embedded-report-type/embedded-report.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
 import { GestaoTenantComponent } from './gestao-tenant/gestao-tenant.component';
+import { GestaoTenantEditComponent } from './gestao-tenant-edit/gestao-tenant-edit.component';
+import { GestaoTenantCriarComponent } from './gestao-tenant-criar/gestao-tenant-criar.component';
 
 const masterRoutes: Route[] = [
     {
         path: 'gestao/tenants',
         component: GestaoTenantComponent,
     },
+    {
+        path: 'gestao/tenants/criar',
+        component: GestaoTenantEditComponent,
+    },
+    {
+        path: 'gestao/tenants/editar/:id',
+        component: GestaoTenantCriarComponent,
+    },
 ];
 
 @NgModule({
-    declarations: [GestaoTenantComponent],
+    declarations: [
+        GestaoTenantComponent,
+        GestaoTenantEditComponent,
+        GestaoTenantCriarComponent,
+    ],
     imports: [
         CommonModule,
         LayoutModule,
