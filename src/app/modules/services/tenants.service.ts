@@ -24,7 +24,7 @@ export class TenantsService {
         return this.http.post(`${this.baseUrl}tenants`, payload);
     }
     updateTenant(id: string, payload) {
-        return this.http.post(`${this.baseUrl}tenants/${id}`, payload);
+        return this.http.patch(`${this.baseUrl}tenants/${id}`, payload);
     }
     removeTenant(id) {
         return this.http.delete(`${this.baseUrl}tenants/${id}`);

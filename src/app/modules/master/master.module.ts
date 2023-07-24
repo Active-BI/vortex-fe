@@ -14,7 +14,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FuseAlertModule } from '@fuse/components/alert';
@@ -29,9 +28,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EbeddedReportTypeModule } from '../embedded-report-type/embedded-report.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
-import { GestaoTenantComponent } from './gestao-tenant/gestao-tenant.component';
-import { GestaoTenantEditComponent } from './gestao-tenant-edit/gestao-tenant-edit.component';
-import { GestaoTenantCriarComponent } from './gestao-tenant-criar/gestao-tenant-criar.component';
+import { GestaoTenantComponent } from './tenant/gestao-tenant/gestao-tenant.component';
+import { GestaoTenantEditComponent } from './tenant/gestao-tenant-edit/gestao-tenant-edit.component';
+import { GestaoTenantCriarComponent } from './tenant/gestao-tenant-criar/gestao-tenant-criar.component';
 
 const masterRoutes: Route[] = [
     {
@@ -40,11 +39,11 @@ const masterRoutes: Route[] = [
     },
     {
         path: 'gestao/tenants/criar',
-        component: GestaoTenantEditComponent,
+        component: GestaoTenantCriarComponent,
     },
     {
         path: 'gestao/tenants/editar/:id',
-        component: GestaoTenantCriarComponent,
+        component: GestaoTenantEditComponent,
     },
 ];
 

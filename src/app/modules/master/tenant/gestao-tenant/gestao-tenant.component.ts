@@ -6,14 +6,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
-import {
-    getAllRequest,
-    AdminService,
-} from 'app/modules/services/admin.service';
-import { listRoles } from 'app/modules/services/roles.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import jwtDecode from 'jwt-decode';
-import moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -25,7 +19,7 @@ export class GestaoTenantComponent implements OnInit {
     myControl = new FormControl('');
     pipe = new DatePipe('en-US');
 
-    displayedColumns: string[] = ['nome', 'opcoes'];
+    displayedColumns: string[] = ['nome', 'status', 'opcoes'];
     @ViewChild('paginator') paginator: MatPaginator;
     usuarios: MatTableDataSource<any>;
     usuariosL: number = 0;
@@ -70,7 +64,7 @@ export class GestaoTenantComponent implements OnInit {
                 data: () => {
                     this.dialog.closeAll();
                     this.tenantsService.removeTenant(id).subscribe(() => {
-                        this.toastr.success('Deletado com Sucesso');
+                        this.toastr.success('Desativado com Sucesso');
                         this.requisicoes();
                     });
                 },
