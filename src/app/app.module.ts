@@ -31,6 +31,7 @@ const routerConfig: ExtraOptions = {
         ToastrModule.forRoot({
             preventDuplicates: true,
             positionClass: 'toast-top-right',
+            timeOut: 1500,
         }),
         // Fuse, FuseConfig & FuseMockAPI
         FuseModule,

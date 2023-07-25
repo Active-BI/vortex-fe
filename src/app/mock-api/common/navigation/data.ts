@@ -22,7 +22,7 @@ export const defaultRoute: FuseNavigationItem[] = [
 export const defaultNavigation: FuseNavigationItem[] = [
     {
         data: { roles: ['User', 'Admin'] },
-        id: 'rh-uncionarios',
+        id: 'RH_FUNCIONARIOS',
         title: 'Funcionarios',
         icon: 'heroicons_outline:shield-check',
         type: 'basic',
@@ -30,7 +30,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         data: { roles: ['User', 'Admin'] },
-        id: 'gv',
+        id: 'GV',
         title: 'GV',
         icon: 'heroicons_outline:shield-check',
         type: 'basic',
@@ -38,7 +38,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         data: dataAdmin,
-        id: 'usuarios.lista',
+        id: 'USUARIOS',
         title: 'Gestão de Usuários',
         type: 'basic',
         icon: 'mat_solid:person_search',
@@ -72,11 +72,10 @@ export class MenuItemService {
                         )
                     )
                 );
-                console.log(decoded.role_name, decoded.role_name === 'Master');
                 if (decoded.role_name === 'Master') {
                     routes.push({
                         data: { roles: ['Master'] },
-                        id: 'gestao',
+                        id: 'GESTAO',
                         title: 'Gestão',
                         type: 'collapsable',
                         icon: 'mat_solid:settings',
@@ -84,8 +83,15 @@ export class MenuItemService {
                             {
                                 data: { roles: ['Master'] },
                                 link: '/master/gestao/tenants',
-                                id: 'gestao-tenant',
+                                id: 'GESTAO_TENANT',
                                 title: 'Gestão de ambientes',
+                                type: 'basic',
+                            },
+                            {
+                                data: { roles: ['Master'] },
+                                link: '/master/gestao/solicitacoes-de-cadastro',
+                                id: 'SOLICITACOES_CADASTRO',
+                                title: 'Solicitações de acesso',
                                 type: 'basic',
                             },
                         ],

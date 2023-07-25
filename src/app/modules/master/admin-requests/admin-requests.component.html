@@ -1,0 +1,66 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="text-3x-L flex-auto p-6  justify-center">
+        <div class="flex items-center justify-start">
+            <button mat-raised-button (click)="criarUsuario()"
+                class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">Cadastrar Acesso</button>
+        </div>
+
+        <div class="w-full bg-primary h-16 rounded-t-md  mt-4 flex items-center justify-between">
+            <div class="text-3xl text-white mx-4">Solicitações de Acesso Admin</div>
+            <div class="flex items-center justify-start">
+
+                <mat-form-field appearance="fill" class="w-80 mt-4 mr-4 ml-1">
+                    <mat-icon class="mr-4">search</mat-icon>
+                    <input type="text" [formControl]="myControl" placeholder="Buscar"
+                        (ngModelChange)="filtarUsuarios($event)" matInput />
+                </mat-form-field>
+            </div>
+
+        </div>
+        <div class="flex flex-col shadow-2xl" id="table">
+            <table mat-table class="" [dataSource]="usuariosFiltrados" class="pb-6">
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef> Nome </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="company_name">
+                    <th mat-header-cell *matHeaderCellDef> Nome da empresa </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.company_name }} </td>
+                </ng-container>
+                <ng-container matColumnDef="accept">
+                    <th mat-header-cell *matHeaderCellDef>Status </th>
+                    <td mat-cell *matCellDef="let element"> {{element.accept ? 'Aceito' : 'Pendente'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="created_at">
+                    <th mat-header-cell *matHeaderCellDef> Nome da empresa </th>
+                    <td mat-cell *matCellDef="let element"> {{element.created_at }} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <ng-container matColumnDef="opcoes" class="flex">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="w-full flex justify-end">
+                            <button matTooltip='Permitir' (click)="permitirUsuario(element.id, element.name)">
+                                <mat-icon color="primary" class="cursor-pointer mr-5"
+                                    svgIcon="heroicons_solid:check"></mat-icon>
+                            </button>
+                            <button matTooltip='Bloquear' (click)="deletarUsuario(element.id)">
+                                <mat-icon color="warn" class="cursor-pointer mr-5"
+                                    svgIcon="heroicons_solid:x"></mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+            </table>
+            <div class="flex bg-white justify-end">
+
+                <mat-paginator #paginator [pageSize]="10" [length]="usuariosL" showFirstLastButtons>
+                </mat-paginator>
+            </div>
+        </div>
+        <div class="flex flex-row p-4" id="table">
+        </div>
+    </div>
+</div>

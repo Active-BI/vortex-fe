@@ -31,6 +31,10 @@ import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
 import { GestaoTenantComponent } from './tenant/gestao-tenant/gestao-tenant.component';
 import { GestaoTenantEditComponent } from './tenant/gestao-tenant-edit/gestao-tenant-edit.component';
 import { GestaoTenantCriarComponent } from './tenant/gestao-tenant-criar/gestao-tenant-criar.component';
+import { AdminRequestsComponent } from './admin-requests/admin-requests.component';
+import { AdminRequestConfirmationModalComponent } from './admin-request-confirmation-modal/admin-request-confirmation-modal.component';
+import { AdminRequestBlockModalComponent } from './admin-request-block-modal/admin-request-block-modal.component';
+import { MatSelectModule } from '@angular/material/select';
 
 const masterRoutes: Route[] = [
     {
@@ -45,6 +49,10 @@ const masterRoutes: Route[] = [
         path: 'gestao/tenants/editar/:id',
         component: GestaoTenantEditComponent,
     },
+    {
+        path: 'gestao/solicitacoes-de-cadastro',
+        component: AdminRequestsComponent,
+    },
 ];
 
 @NgModule({
@@ -52,6 +60,9 @@ const masterRoutes: Route[] = [
         GestaoTenantComponent,
         GestaoTenantEditComponent,
         GestaoTenantCriarComponent,
+        AdminRequestsComponent,
+        AdminRequestConfirmationModalComponent,
+        AdminRequestBlockModalComponent,
     ],
     imports: [
         CommonModule,
@@ -78,6 +89,7 @@ const masterRoutes: Route[] = [
         MatAutocompleteModule,
         MatTooltipModule,
         MatCheckboxModule,
+        MatSelectModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [

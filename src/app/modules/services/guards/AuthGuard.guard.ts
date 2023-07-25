@@ -9,20 +9,20 @@ import {
     UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { MenuItemService } from 'app/mock-api/common/navigation/data';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
-    constructor(private router: Router) {}
-    canActivate(
+    constructor(
+        private router: Router,
+        private menuItemService: MenuItemService
+    ) {}
+    async canActivate(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
-    ):
-        | boolean
-        | UrlTree
-        | Observable<boolean | UrlTree>
-        | Promise<boolean | UrlTree> {
+    ): Promise<boolean | UrlTree> {
         if (localStorage.getItem('token')) {
             const token = JSON.parse(localStorage.getItem('token'));
             const user: any = decode(token);

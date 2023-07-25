@@ -47,18 +47,12 @@ const adminroutes: Route[] = [
         component: InicioComponent,
         pathMatch: 'full',
     },
-    {
-        path: 'view-report/:reportId/:groupId',
-        component: BiReportDefaultComponent,
-    },
+
     {
         path: 'view-report-type/:type',
         component: BiReportDefaultByTypeComponent,
     },
-    {
-        path: 'view-dashboard/:reportId/:groupId',
-        component: BiDashboardDefaultComponent,
-    },
+
     {
         path: 'inicio',
         component: InicioComponent,
