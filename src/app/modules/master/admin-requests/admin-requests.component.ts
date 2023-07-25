@@ -52,6 +52,7 @@ export class AdminRequestsComponent implements OnInit {
                 created_at: moment(a).format('DD/MM/YYYY'),
             }));
             this.usuarios = new MatTableDataSource(e);
+            console.log(this.usuarios);
             this.usuariosFiltrados = new MatTableDataSource(e);
             this.usuariosFiltrados.paginator = this.paginator;
             this.usuarios.paginator = this.paginator;
