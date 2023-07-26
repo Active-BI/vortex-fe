@@ -63,7 +63,7 @@ export class AdminRequestsComponent implements OnInit {
     usuariosFiltrados: MatTableDataSource<any>;
     filtarUsuarios(e) {
         const data = this.usuarios.data.filter((u) =>
-            u.tenant_name.toUpperCase().includes(e.toUpperCase())
+            u.name.toUpperCase().includes(e.toUpperCase())
         );
         this.usuariosFiltrados = new MatTableDataSource(data);
         this.usuariosFiltrados.paginator = this.paginator;
@@ -99,7 +99,7 @@ export class AdminRequestsComponent implements OnInit {
                     this.adminRequestService
                         .blockAdminRequests(id)
                         .subscribe(() => {
-                            this.toastr.success('Desativado com Sucesso');
+                            this.toastr.success('Bloqueado com Sucesso');
                             this.requisicoes();
                         });
                 },

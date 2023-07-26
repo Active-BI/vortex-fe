@@ -9,14 +9,14 @@
 
             <div class="w-full m-2">
                 <h1 class="text-center text-slate-700 text-2xl">
-                    CRIAR USUÁRIO
+                    CRIAR AMBIENTE
                 </h1>
             </div>
         </div>
         <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-100">
 
             <mat-form-field appearance="fill">
-                <mat-label>Nome do Tenant</mat-label>
+                <mat-label>Nome do Ambiente</mat-label>
                 <input formControlName="tenant_name" matInput #first />
                 <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
 

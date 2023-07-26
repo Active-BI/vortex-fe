@@ -14,14 +14,15 @@ export class DashboardService {
     getDashboards() {
         return this.http.get(`${this.baseUrl}dashboard`);
     }
-    getDashboardsByUser() {
-        return this.http.get(`${this.baseUrl}dashboard/byuser`);
-    }
+
     postDashboards(dashboadList, userId) {
         return this.http.post(
             `${this.baseUrl}dashboard/${userId}`,
             dashboadList
         );
+    }
+    getMasterDashBoard(tenantId) {
+        return this.http.get(`${this.baseUrl}master/dashboards/${tenantId}`);
     }
     exportFile(tipoRelatorio: string) {
         console.log(tipoRelatorio);

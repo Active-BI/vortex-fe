@@ -1,48 +1,42 @@
-<div class="w-full flex flex-row justify-center items-center">
+<div class="w-full flex flex-col  pl-4 bg-white">
 
-    <div class="flex flex-col m-10 mt-0 bg-white rounded-b-xl p-5 shadow-2xl">
-        <div class="mx-10 my-0 rounded-t-xl flex items-center bg-white py-[3px]">
+    <button (click)="voltar()" class="self-start my-2 mr-8 ml-[-40px] hover:rounded-full">
+        <mat-icon class="flex self-center text-slate-600 hover:text-slate-400" svgIcon="arrow_back"></mat-icon>
+    </button>
 
-            <button (click)="voltar()" class="self-start my-2 mr-8 ml-[-40px] hover:rounded-full">
-                <mat-icon class="flex self-center text-slate-600 hover:text-slate-400" svgIcon="arrow_back"></mat-icon>
-            </button>
+    <h1 class=" text-slate-700 text-2xl mb-6">
+        EDITAR AMBIENTE
+    </h1>
 
-            <div class="w-full m-2">
-                <h1 class="text-center text-slate-700 text-2xl">
-                    EDITAR AMBIENTE
-                </h1>
+    <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-100">
+        <mat-form-field appearance="fill">
+            <mat-label>Nome do Ambiente</mat-label>
+            <input formControlName="tenant_name" matInput #first />
+            <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
+        </mat-form-field>
+        <div *ngIf="form.controls.tenant_name.touched" class="text-red-600 mb-2">
+            <div *ngIf="form.controls.tenant_name.errors?.['required']">
+                Nome é Obrigatório
+            </div>
+            <div *ngIf="form.controls.tenant_name.errors?.['minlength']">
+                Precisa de no mínimo 3 dígitos
             </div>
         </div>
-        <!-- <h2 class="text-left mb-2 text-xl">
-        Informações do Usuário
-        </h2> -->
-        <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-100" >
+        <p>
+            <mat-checkbox formControlName="active">Ambiente está ativo?</mat-checkbox>
+        </p>
+
+        <mat-form-field class="mt-6">
+            <mat-label>Relatórios</mat-label>
+
+            <mat-select formControlName="dashboard" multiple (click)="click()">
+
+              <mat-option *ngFor="let d of dashboardsSelecteds" [value]="d.report_id" [selected]="true">{{d.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+    </form>
 
 
-                <mat-form-field appearance="fill">
-                    <mat-label>Nome do Tenant</mat-label>
-                    <input formControlName="tenant_name" matInput #first />
-                    <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
-
-                </mat-form-field>
-               <div *ngIf="form.controls.tenant_name.touched" class="text-red-600 mb-2">
-                    <div *ngIf="form.controls.tenant_name.errors?.['required']">
-                        Nome é Obrigatório
-                    </div>
-                    <div *ngIf="form.controls.tenant_name.errors?.['minlength']">
-                        Precisa de no mínimo 3 dígitos
-                    </div>
-                </div>
-
-                <p>
-                    <mat-checkbox formControlName="active">Ambiente está ativo?</mat-checkbox>
-                </p>
-
-
-        </form>
-
-
-        <button mat-raised-button color="primary" (click)="editar()"
-            class="self-end mt-2 rounded-sm text-colorText">SALVAR</button>
-    </div>
+    <button mat-raised-button color="primary" (click)="editar()"
+        class=" rounded-sm text-colorText w-20 mt-8">SALVAR</button>
 </div>

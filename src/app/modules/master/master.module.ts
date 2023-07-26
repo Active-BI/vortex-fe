@@ -35,6 +35,8 @@ import { AdminRequestsComponent } from './admin-requests/admin-requests.componen
 import { AdminRequestConfirmationModalComponent } from './admin-request-confirmation-modal/admin-request-confirmation-modal.component';
 import { AdminRequestBlockModalComponent } from './admin-request-block-modal/admin-request-block-modal.component';
 import { MatSelectModule } from '@angular/material/select';
+import { AdminRequestsCriarComponent } from './admin-requests-criar/admin-requests-criar.component';
+import { AdminRequestsEditarComponent } from './admin-requests-editar/admin-requests-editar.component';
 
 const masterRoutes: Route[] = [
     {
@@ -63,6 +65,8 @@ const masterRoutes: Route[] = [
         AdminRequestsComponent,
         AdminRequestConfirmationModalComponent,
         AdminRequestBlockModalComponent,
+        AdminRequestsCriarComponent,
+        AdminRequestsEditarComponent,
     ],
     imports: [
         CommonModule,

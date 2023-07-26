@@ -35,12 +35,16 @@ export class GestaoTenantEditComponent implements OnInit {
         id: [''],
         tenant_name: ['', [Validators.required, Validators.minLength(3)]],
         active: ['', [Validators.required]],
+        dashboard: [[], [Validators.required]],
     });
+    click() {
+        console.log(this.form.value.dashboard);
+    }
     panelOpenState = false;
     id: string;
     ordersData = ordersData;
     tenant: any;
-
+    dashboardsSelecteds = [];
     listRoles = listRoles;
     constructor(
         private fb: FormBuilder,
@@ -57,6 +61,16 @@ export class GestaoTenantEditComponent implements OnInit {
             editar = a[2].path.includes('editar');
         });
         if (editar) {
+            this.dashboardService
+                .getMasterDashBoard(this.id)
+                .subscribe((d: any[]) => {
+                    this.dashboardsSelecteds = d;
+                    this.form.patchValue({
+                        dashboard: d
+                            .filter((dash) => dash.included === true)
+                            .map((dash) => dash.report_id),
+                    });
+                });
             this.tenantsService.tenant(this.id).subscribe((e: any) => {
                 this.tenant = e;
 
