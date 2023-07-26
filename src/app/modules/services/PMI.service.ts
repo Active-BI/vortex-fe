@@ -28,6 +28,9 @@ export class PMIService {
             }
         );
     }
+    refresh(type) {
+        return this.http.get(`${this.baseUrl}pbi-report/refresh/${type}`);
+    }
     exportExampleFile(tipoRelatorio: string) {
         return this.http.get(
             `${this.baseUrl}pbi-report/get-template/${tipoRelatorio}`,

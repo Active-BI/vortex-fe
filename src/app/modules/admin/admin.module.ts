@@ -40,6 +40,7 @@ import { EbeddedReportTypeModule } from '../embedded-report-type/embedded-report
 import { BiReportDefaultByTypeComponent } from './bi-report-default-tipo/bi-default-tipo.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
+import { AuthGuardScreen } from '../services/guards/AuthGuardScreen.guard';
 
 const adminroutes: Route[] = [
     {
@@ -62,16 +63,19 @@ const adminroutes: Route[] = [
         data: { expectedRoles: ['Admin'] },
         path: 'usuarios',
         component: ListUsersComponent,
+        canActivate: [AuthGuardScreen],
     },
 
     {
         data: { expectedRoles: ['Admin'] },
+        canActivate: [AuthGuardScreen],
 
         path: 'usuarios-criar',
         component: CreateUserComponent,
     },
     {
         data: { expectedRoles: ['Admin'] },
+        canActivate: [AuthGuardScreen],
 
         path: 'usuarios-editar/:id',
         component: EditUserComponent,

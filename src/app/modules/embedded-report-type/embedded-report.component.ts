@@ -33,10 +33,19 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
     OpcaoPainel(evento) {
         if (evento === 'TelaCheia') this.fullscreen();
         if (evento === 'Imprimir') this.print();
+        if (evento === 'Atualizar') this.refreshReport();
         if (evento === 'Exportar') this.Exportar();
         if (evento === 'Baixar Template') this.BaixarTemplate();
 
         this.selected.reset();
+    }
+    refreshReport() {
+        this.pmiService.refresh(this.type).subscribe(
+            (res) => this.toastr.success('Relatório está sendo Atualizado'),
+            ({ error }) => {
+                this.toastr.error(error.message);
+            }
+        );
     }
     Salvar() {
         if (this.dadosParaImportar.length > 0) {
