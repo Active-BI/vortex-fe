@@ -6,6 +6,7 @@ import { DashboardService } from 'app/modules/services/dashboard.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import { ToastrService } from 'ngx-toastr';
 import { GestaoTenantEditComponent } from '../gestao-tenant-edit/gestao-tenant-edit.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-gestao-tenant-criar',
@@ -24,7 +25,7 @@ export class GestaoTenantCriarComponent
         toastr: ToastrService,
         private toast: ToastrService,
         private tenantsServices: TenantsService,
-        pmiServices: PMIService,
+        dialog: MatDialog,
         dashboardService: DashboardService
     ) {
         super(
@@ -33,9 +34,12 @@ export class GestaoTenantCriarComponent
             route,
             toastr,
             tenantsServices,
-            pmiServices,
+            dialog,
             dashboardService
         );
+        dashboardService.getMasterDashBoard().subscribe((d: any) => {
+            this.dashboardsSelecteds = d;
+        });
     }
 
     override ngOnInit(): void {}
@@ -50,7 +54,7 @@ export class GestaoTenantCriarComponent
                 })
                 .subscribe((e: any) => {
                     this.toast.success('Usuário Criado com Sucesso');
-                    this.redirectToEdit(e.id);
+                    this.voltar();
                 });
         } else {
             this.form.markAllAsTouched();

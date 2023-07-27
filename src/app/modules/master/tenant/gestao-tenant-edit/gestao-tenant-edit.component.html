@@ -1,14 +1,14 @@
 <div class="w-full flex flex-col  pl-4 bg-white">
-<div class="w-full flex mt-4">
+    <div class="w-full flex mt-4">
 
-    <button (click)="voltar()" class="self-start mr-4  hover:rounded-full">
-        <mat-icon class="flex self-center text-slate-600 hover:text-slate-400" svgIcon="arrow_back"></mat-icon>
-    </button>
+        <button (click)="voltar()" class="self-start mr-4  hover:rounded-full">
+            <mat-icon class="flex self-center text-slate-600 hover:text-slate-400" svgIcon="arrow_back"></mat-icon>
+        </button>
 
-    <h1 class=" text-slate-700 text-2xl mb-6">
-        EDITAR AMBIENTE
-    </h1>
-</div>
+        <h1 class=" text-slate-700 text-2xl mb-6">
+            EDITAR AMBIENTE
+        </h1>
+    </div>
 
     <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-100">
         <mat-form-field appearance="fill">
@@ -33,12 +33,19 @@
 
             <mat-select formControlName="dashboard" multiple (click)="click()">
 
-              <mat-option *ngFor="let d of dashboardsSelecteds" [value]="d.report_id" [selected]="true">{{d.name}}</mat-option>
+                <mat-option *ngFor="let d of dashboardsSelecteds" [value]="d.report_id"
+                    [selected]="true">{{d.name}}</mat-option>
             </mat-select>
-          </mat-form-field>
+        </mat-form-field>
     </form>
 
+    <div class="flex mt-6   ">
 
-    <button mat-raised-button color="primary" (click)="editar()"
-        class=" rounded-sm text-colorText w-20 mt-8">SALVAR</button>
+        <button color="warn" (click)="deletarUsuario(id)"
+            class="text-white text-center algin-middle bg-red-500 w-20 hover:bg-red-600 h-7 mr-2 font-medium rounded-md text-sm dark:bg-red-400 focus:outline-none dark:focus:ring-red-800">REMOVER</button>
+        <button color="primary" (click)="editar()"
+            class="text-white text-center algin-middle bg-blue-600 w-20 hover:bg-blue-700 h-7 mr-2 font-medium rounded-md text-sm dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-500">SALVAR</button>
+
+
+    </div>
 </div>

@@ -7,7 +7,7 @@
     <p class="">Deseja continuar?</p>
         <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col mt-4">
 
-            <mat-form-field class="w-100">
+            <mat-form-field class="w-60">
                 <mat-label>Selecionar Ambiente</mat-label>
                 <mat-select formControlName="tenant">
                     <mat-option *ngFor="let t of tenants" [value]="t.id">

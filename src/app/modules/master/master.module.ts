@@ -31,12 +31,12 @@ import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
 import { GestaoTenantComponent } from './tenant/gestao-tenant/gestao-tenant.component';
 import { GestaoTenantEditComponent } from './tenant/gestao-tenant-edit/gestao-tenant-edit.component';
 import { GestaoTenantCriarComponent } from './tenant/gestao-tenant-criar/gestao-tenant-criar.component';
-import { AdminRequestsComponent } from './admin-requests/admin-requests.component';
-import { AdminRequestConfirmationModalComponent } from './admin-request-confirmation-modal/admin-request-confirmation-modal.component';
-import { AdminRequestBlockModalComponent } from './admin-request-block-modal/admin-request-block-modal.component';
+import { AdminRequestBlockModalComponent } from './admin-request/admin-request-block-modal/admin-request-block-modal.component';
 import { MatSelectModule } from '@angular/material/select';
-import { AdminRequestsCriarComponent } from './admin-requests-criar/admin-requests-criar.component';
-import { AdminRequestsEditarComponent } from './admin-requests-editar/admin-requests-editar.component';
+import { AdminRequestConfirmationModalComponent } from './admin-request/admin-request-confirmation-modal/admin-request-confirmation-modal.component';
+import { AdminRequestsCriarComponent } from './admin-request/admin-requests-criar/admin-requests-criar.component';
+import { AdminRequestsEditarComponent } from './admin-request/admin-requests-editar/admin-requests-editar.component';
+import { AdminRequestsComponent } from './admin-request/admin-requests/admin-requests.component';
 
 const masterRoutes: Route[] = [
     {

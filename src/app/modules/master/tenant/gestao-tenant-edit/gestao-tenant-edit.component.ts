@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
 import { ordersData } from 'app/modules/admin/users/usersUtils';
-import { PMIService } from 'app/modules/services/PMI.service';
-import { AdminService } from 'app/modules/services/admin.service';
 import { DashboardService } from 'app/modules/services/dashboard.service';
 import { listRoles } from 'app/modules/services/roles.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
+import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -52,7 +53,7 @@ export class GestaoTenantEditComponent implements OnInit {
         private route: ActivatedRoute,
         private toastr: ToastrService,
         private tenantsService: TenantsService,
-        private pmiServices: PMIService,
+        private dialog: MatDialog,
         private dashboardService: DashboardService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
@@ -62,7 +63,7 @@ export class GestaoTenantEditComponent implements OnInit {
         });
         if (editar) {
             this.dashboardService
-                .getMasterDashBoard(this.id)
+                .getMasterDashBoardById(this.id)
                 .subscribe((d: any[]) => {
                     this.dashboardsSelecteds = d;
                     this.form.patchValue({
@@ -73,7 +74,7 @@ export class GestaoTenantEditComponent implements OnInit {
                 });
             this.tenantsService.tenant(this.id).subscribe((e: any) => {
                 this.tenant = e;
-
+                console.log(this.tenant);
                 this.form.patchValue({
                     id: this.tenant.id,
                     tenant_name: this.tenant.tenant_name,
@@ -92,6 +93,25 @@ export class GestaoTenantEditComponent implements OnInit {
     redirectToEdit(id) {
         this.router.navigate([`/master/gestao/tenants/editar/` + id]);
     }
+    deletarUsuario(id): void {
+        const decoded: any = jwtDecode(localStorage.getItem('token'));
+        if (decoded.userId === id) {
+            this.toastr.error('Não é possível excluir usuário em uso');
+            return;
+        }
+        this.dialog.open(DeleteModalComponent, {
+            data: {
+                nome: 'Usuários',
+                data: () => {
+                    this.dialog.closeAll();
+                    this.tenantsService.removeTenant(id).subscribe(() => {
+                        this.toastr.success('Desativado com Sucesso');
+                        this.voltar();
+                    });
+                },
+            },
+        });
+    }
 
     editar(): void {
         if (this.form.valid && this.myControl.valid) {
@@ -102,7 +122,7 @@ export class GestaoTenantEditComponent implements OnInit {
                 })
                 .subscribe((e) => {
                     this.toastr.success('Editado com Sucesso');
-                    this.voltar();
+                    // this.voltar();
                 });
         } else {
             this.form.markAllAsTouched();

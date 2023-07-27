@@ -21,8 +21,11 @@ export class DashboardService {
             dashboadList
         );
     }
-    getMasterDashBoard(tenantId) {
+    getMasterDashBoardById(tenantId) {
         return this.http.get(`${this.baseUrl}master/dashboards/${tenantId}`);
+    }
+    getMasterDashBoard() {
+        return this.http.get(`${this.baseUrl}master/dashboards`);
     }
     exportFile(tipoRelatorio: string) {
         console.log(tipoRelatorio);
