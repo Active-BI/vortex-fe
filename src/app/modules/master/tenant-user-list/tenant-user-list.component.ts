@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
 import { getAllRequest } from 'app/modules/services/admin.service';
 import { DashboardService } from 'app/modules/services/dashboard.service';
@@ -19,6 +19,7 @@ import { AddAdminAccessComponent } from './add_access_admin/add_access_admin.com
     styleUrls: ['./tenant-user-list.component.scss'],
 })
 export class TenantUserListComponent implements OnInit {
+    myControl = new FormControl('');
     id = '';
     @ViewChild('paginator') paginator: MatPaginator;
     usuarios: MatTableDataSource<getAllRequest>;
@@ -32,13 +33,16 @@ export class TenantUserListComponent implements OnInit {
     ];
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private dashboard: DashboardService,
         private toastr: ToastrService,
         private dialog: MatDialog
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
     }
-
+    voltar() {
+        this.router.navigate(['/master/gestao/tenants']);
+    }
     ngOnInit(): void {
         this.requisicoes();
     }
