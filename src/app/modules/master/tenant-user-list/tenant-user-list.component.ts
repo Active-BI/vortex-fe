@@ -81,10 +81,7 @@ export class TenantUserListComponent implements OnInit {
                 data: () => {
                     this.dialog.closeAll();
 
-                    // this.adminSrv.deleteUser(id).subscribe(() => {
-                    //     this.toastr.success('Deletado com Sucesso');
-                    //     this.requisicoes();
-                    // });
+                    this.requisicoes();
                 },
             },
         });

@@ -21,7 +21,7 @@ export class AddAdminAccessComponent implements OnInit {
     ngOnInit(): void {
         this.globalmarketCategory.setValue(
             this.usuario.dashboards
-                .filter((d) => d.included)
+                .filter((d) => d.included === true)
                 .map((d) => d.dashboard_id)
         );
     }
@@ -43,7 +43,7 @@ export class AddAdminAccessComponent implements OnInit {
     findValue() {
         return (
             this.usuario.dashboards.find(
-                (d) => d.id === this.globalmarketCategory.value[0]
+                (d) => d.dashboard_id === this.globalmarketCategory.value[0]
             )?.Dashboard.name || 'Selecione'
         );
     }
