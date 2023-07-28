@@ -75,7 +75,11 @@ export class GestaoTenantComponent implements OnInit {
     criarUsuario(): void {
         this.router.navigate(['/master/gestao/tenants/criar']);
     }
-
+    listarUsuarios(tenantId) {
+        this.router.navigate([
+            '/master/gestao/tenants/' + tenantId + '/user/list',
+        ]);
+    }
     editarUsuario(id): void {
         this.router.navigate([`/master/gestao/tenants/editar/` + id]);
     }

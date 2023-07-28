@@ -37,6 +37,8 @@ import { AdminRequestConfirmationModalComponent } from './admin-request/admin-re
 import { AdminRequestsCriarComponent } from './admin-request/admin-requests-criar/admin-requests-criar.component';
 import { AdminRequestsEditarComponent } from './admin-request/admin-requests-editar/admin-requests-editar.component';
 import { AdminRequestsComponent } from './admin-request/admin-requests/admin-requests.component';
+import { TenantUserListComponent } from './tenant-user-list/tenant-user-list.component';
+import { AddAdminAccessComponent } from './tenant-user-list/add_access_admin/add_access_admin.component';
 
 const masterRoutes: Route[] = [
     {
@@ -55,6 +57,10 @@ const masterRoutes: Route[] = [
         path: 'gestao/solicitacoes-de-cadastro',
         component: AdminRequestsComponent,
     },
+    {
+        path: 'gestao/tenants/:id/user/list',
+        component: TenantUserListComponent,
+    },
 ];
 
 @NgModule({
@@ -67,6 +73,8 @@ const masterRoutes: Route[] = [
         AdminRequestBlockModalComponent,
         AdminRequestsCriarComponent,
         AdminRequestsEditarComponent,
+        TenantUserListComponent,
+        AddAdminAccessComponent,
     ],
     imports: [
         CommonModule,
