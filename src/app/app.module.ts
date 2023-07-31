@@ -15,6 +15,7 @@ import { appRoutes } from 'app/app.routing';
 import { ToastrModule } from 'ngx-toastr';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
+import { HomeComponent } from './modules/home/home.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,

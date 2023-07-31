@@ -41,6 +41,7 @@ import { BiReportDefaultByTypeComponent } from './bi-report-default-tipo/bi-defa
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
 import { AuthGuardScreen } from '../services/guards/AuthGuardScreen.guard';
+import { HomeComponent } from '../home/home.component';
 
 const adminroutes: Route[] = [
     {
@@ -92,6 +93,7 @@ const adminroutes: Route[] = [
         EditUserComponent,
         BiDashboardDefaultComponent,
         BiReportDefaultComponent,
+        HomeComponent,
     ],
     imports: [
         CommonModule,
