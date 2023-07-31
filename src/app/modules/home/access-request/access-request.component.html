@@ -2,11 +2,16 @@
 
     <!-- Form -->
 
-    <form [formGroup]="accountForm" (submit)="$event.preventDefault()" class="flex flex-col md:w-1/2 sm:w-[90%] w-full m-6 mr-0 overflow-y-auto pr-4" >
+    <form [formGroup]="form" (submit)="$event.preventDefault()"
+        class="flex flex-col md:w-1/2 sm:w-[90%] w-full m-6 mr-0 overflow-y-auto pr-4">
 
         <div class="w-full">
-            <div class="text-3xl font-bold">Solicitar Acesso</div>
-            <div class="text-secondary">Preencha os seus dados e da empresa que deseja solicitar o acesso</div>
+            <div class="text-3xl font-bold flex items-center">
+                <mat-icon svgIcon="mat_outline:arrow_back" class=" w-5 h-5 text-black mr-5 cursor-pointer"
+                    [routerLink]="'/home'"></mat-icon>
+                Solicitar Acesso
+            </div>
+            <div class="text-secondary mr-8">Preencha os seus dados e da empresa que deseja solicitar o acesso</div>
         </div>
         <div class="w-full p-[0.5px] my-6 bg-slate-300"></div>
         <div class="text-secondary text-2xl font-bold my-4">Dados Pessoais</div>
@@ -25,7 +30,7 @@
                     <div class="text-secondary" matPrefix *ngIf="checkScreenSize()">
                         exemplo@exemplo.com
                     </div>
-                    <input [formControlName]="'email'" matInput >
+                    <input [formControlName]="'email'" matInput>
                 </mat-form-field>
             </div>
             <div class="md:col-span-2 col-span-full">
@@ -42,7 +47,7 @@
                     <input [formControlName]="'description'" matInput>
                 </mat-form-field>
             </div>
-            <div class="col-span-full" >
+            <div class="col-span-full">
                 <div class="w-full p-[0.5px] my-6 col-span-full bg-slate-300"></div>
                 <div class="text-secondary text-2xl font-bold my-4">Dados da Empresa</div>
             </div>
@@ -68,8 +73,9 @@
                 </mat-form-field>
             </div>
         </div>
-        <button mat-raised-button color="primary"
-            class="self-end mt-8 rounded-sm text-colorText bg-blue-600" >Solicitar acesso</button>
-       </form>
-       <div class="hidden sm:flex sm:items-center justify-center md:justify-end  bg-cover bg-[url(assets/images/powerBi.jpg)] bg-no-repeat bg-right  md:h-full w-1/2 py-8 px-4 sm:p-12 md:p-16 md:rounded-none sm:shadow md:shadow-none ">
-</div>
+        <button mat-raised-button color="primary" (click)="submit()" class="self-end mt-8 rounded-sm text-colorText bg-blue-600">Solicitar
+            acesso</button>
+    </form>
+    <div
+        class="hidden sm:flex sm:items-center justify-center md:justify-end  bg-cover bg-[url(assets/images/powerBi.jpg)] bg-no-repeat bg-right  md:h-full w-1/2 py-8 px-4 sm:p-12 md:p-16 md:rounded-none sm:shadow md:shadow-none ">
+    </div>

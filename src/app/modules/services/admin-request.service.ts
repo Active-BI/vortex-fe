@@ -25,4 +25,8 @@ export class AdminRequestService {
             `${this.baseUrl}admin-request/accept/${id}/${tenant_id}`
         );
     }
+
+    postAdminRequests(payload) {
+        return this.http.post(`${this.baseUrl}admin-request`, payload);
+    }
 }

@@ -5,6 +5,9 @@ import {
     UntypedFormGroup,
     Validators,
 } from '@angular/forms';
+import { Route, Router } from '@angular/router';
+import { AdminRequestService } from 'app/modules/services/admin-request.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-access-request',
@@ -12,7 +15,7 @@ import {
     styleUrls: ['./access-request.component.scss'],
 })
 export class AccessRequestComponent implements OnInit {
-    accountForm = this._formBuilder.group({
+    form = this._formBuilder.group({
         email: ['', Validators.required],
         name: ['', Validators.required],
         description: [''],
@@ -22,21 +25,23 @@ export class AccessRequestComponent implements OnInit {
         company_description: ['', Validators.required],
     });
     checkScreenSize() {
-        return window.innerWidth > 768;
+        return window.innerWidth >= 768;
     }
-    /**
-     * Constructor
-     */
-    constructor(private _formBuilder: FormBuilder) {}
+    constructor(
+        private _formBuilder: FormBuilder,
+        private toastr: ToastrService,
+        private adminRequestService: AdminRequestService,
+        private router: Router
+    ) {}
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
-    ngOnInit(): void {
-        // Create the form
+    submit() {
+        if (!this.form.valid) {
+            this.toastr.error('Campos inválidos');
+            return;
+        }
+        this.adminRequestService
+            .postAdminRequests(this.form.value)
+            .subscribe((res) => this.router.navigate(['/home']));
     }
+    ngOnInit(): void {}
 }
