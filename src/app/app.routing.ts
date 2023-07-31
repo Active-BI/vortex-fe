@@ -132,6 +132,6 @@ export const appRoutes: Route[] = [
     },
     {
         path: '**',
-        redirectTo: 'app/inicio',
+        redirectTo: 'home',
     },
 ];
