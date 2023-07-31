@@ -91,7 +91,7 @@ export class AuthSignUpComponent implements OnInit {
         delete form.passwordConfirm;
         this.authService.register(this.signUpForm.value).subscribe(
             (response) => {
-                this._router.navigateByUrl('/sign-in');
+                this._router.navigateByUrl('/auth/sign-in');
                 this.signUpForm.enable();
                 this.signUpNgForm.resetForm();
             },
