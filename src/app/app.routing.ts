@@ -6,6 +6,7 @@ import { AuthGuard } from './modules/services/guards/AuthGuard.guard';
 import { SendPassRecoverComponent } from './modules/auth/reset-send/send-pass-recover.component';
 import { ResetPassComponent } from './modules/auth/reset-pass/reset-pass.component';
 import { HomeComponent } from './modules/home/home.component';
+import { AccessRequestComponent } from './modules/home/access-request/access-request.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -24,6 +25,16 @@ export const appRoutes: Route[] = [
             {
                 path: '',
                 component: HomeComponent,
+                data: {
+                    expectedRoles: [],
+                },
+            },
+            {
+                path: 'access-request',
+                component: AccessRequestComponent,
+                data: {
+                    expectedRoles: [],
+                },
             },
         ],
     },

@@ -1,0 +1,75 @@
+<div class="w-full absolute flex inset-0 flex-row overflow-hidden">
+
+    <!-- Form -->
+
+    <form [formGroup]="accountForm" (submit)="$event.preventDefault()" class="flex flex-col md:w-1/2 sm:w-[90%] w-full m-6 mr-0 overflow-y-auto pr-4" >
+
+        <div class="w-full">
+            <div class="text-3xl font-bold">Solicitar Acesso</div>
+            <div class="text-secondary">Preencha os seus dados e da empresa que deseja solicitar o acesso</div>
+        </div>
+        <div class="w-full p-[0.5px] my-6 bg-slate-300"></div>
+        <div class="text-secondary text-2xl font-bold my-4">Dados Pessoais</div>
+
+        <div class="grid md:grid-cols-4 gap-6 w-full mt-8">
+            <div class="md:col-span-4 col-span-full">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Nome</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:user'" matPrefix></mat-icon>
+                    <input formControlName="name" matInput>
+                </mat-form-field>
+            </div>
+            <div class="md:col-span-4 col-span-full">
+                <mat-form-field class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full">
+                    <mat-label>E-mail</mat-label>
+                    <div class="text-secondary" matPrefix *ngIf="checkScreenSize()">
+                        exemplo@exemplo.com
+                    </div>
+                    <input [formControlName]="'email'" matInput >
+                </mat-form-field>
+            </div>
+            <div class="md:col-span-2 col-span-full">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Profissão</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:user'" matPrefix></mat-icon>
+                    <input [formControlName]="'profession'" matInput>
+                </mat-form-field>
+            </div>
+            <div class="md:col-span-2 col-span-full">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Descrição</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:user'" matPrefix></mat-icon>
+                    <input [formControlName]="'description'" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-span-full" >
+                <div class="w-full p-[0.5px] my-6 col-span-full bg-slate-300"></div>
+                <div class="text-secondary text-2xl font-bold my-4">Dados da Empresa</div>
+            </div>
+            <div class="md:col-span-2 col-span-full">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Empresa</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'" matPrefix></mat-icon>
+                    <input [formControlName]="'company_name'" matInput>
+                </mat-form-field>
+            </div>
+            <div class="md:col-span-2 col-span-full">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>CNPJ</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'" matPrefix></mat-icon>
+                    <input [formControlName]="'company_cnpj'" matInput>
+                </mat-form-field>
+            </div>
+            <div class="md:col-span-3 col-span-full">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Descrição Empresa</mat-label>
+                    <textarea matInput [formControlName]="'company_description'" cdkTextareaAutosize
+                        [cdkAutosizeMinRows]="5"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+        <button mat-raised-button color="primary"
+            class="self-end mt-8 rounded-sm text-colorText bg-blue-600" >Solicitar acesso</button>
+       </form>
+       <div class="hidden sm:flex sm:items-center justify-center md:justify-end  bg-cover bg-[url(assets/images/powerBi.jpg)] bg-no-repeat bg-right  md:h-full w-1/2 py-8 px-4 sm:p-12 md:p-16 md:rounded-none sm:shadow md:shadow-none ">
+</div>

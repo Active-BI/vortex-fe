@@ -33,6 +33,8 @@ import { BiReportDefaultComponent } from './bi-report-default/bi-default.compone
 import { EbeddedDashboardModule } from '../embedded-dashboard/embedded-dashboard.module';
 import { BiDashboardDefaultComponent } from './bi-dashboard-default/bi-default.component';
 import { MessagesModule } from 'app/layout/common/messages/messages.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 
@@ -42,6 +44,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
 import { AuthGuardScreen } from '../services/guards/AuthGuardScreen.guard';
 import { HomeComponent } from '../home/home.component';
+import { AccessRequestComponent } from '../home/access-request/access-request.component';
+import { MatRadioModule } from '@angular/material/radio';
 
 const adminroutes: Route[] = [
     {
@@ -94,6 +98,7 @@ const adminroutes: Route[] = [
         BiDashboardDefaultComponent,
         BiReportDefaultComponent,
         HomeComponent,
+        AccessRequestComponent,
     ],
     imports: [
         CommonModule,
@@ -114,8 +119,11 @@ const adminroutes: Route[] = [
         EbeddedDashboardModule,
         EbeddedReportTypeModule,
         MatExpansionModule,
+        MatSlideToggleModule,
         FuseAlertModule,
         SharedModule,
+        MatSidenavModule,
+        MatRadioModule,
         MatBadgeModule,
         MessagesModule,
         MatAutocompleteModule,
