@@ -39,9 +39,12 @@ export class AccessRequestComponent implements OnInit {
             this.toastr.error('Campos inválidos');
             return;
         }
-        this.adminRequestService
-            .postAdminRequests(this.form.value)
-            .subscribe((res) => this.router.navigate(['/home']));
+        this.adminRequestService.postAdminRequests(this.form.value).subscribe(
+            (res) => {
+                // this.router.navigate(['/home']);
+            },
+            ({ error }) => this.toastr.error('Falha na requisição')
+        );
     }
     ngOnInit(): void {}
 }
