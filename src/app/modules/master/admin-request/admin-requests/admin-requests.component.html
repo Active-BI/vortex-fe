@@ -47,7 +47,7 @@
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
                         <div class="w-full flex justify-end">
-                            <button matTooltip='Permitir' (click)="permitirUsuario(element.id, element.name)">
+                            <button matTooltip='Permitir' (click)="permitirUsuario(element.id, element.name, element)">
                                 <mat-icon color="primary" class="cursor-pointer mr-5"
                                     svgIcon="heroicons_solid:check"></mat-icon>
                             </button>

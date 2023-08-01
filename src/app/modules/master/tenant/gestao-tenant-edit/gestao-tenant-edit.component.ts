@@ -74,7 +74,6 @@ export class GestaoTenantEditComponent implements OnInit {
                 });
             this.tenantsService.tenant(this.id).subscribe((e: any) => {
                 this.tenant = e;
-                console.log(this.tenant);
                 this.form.patchValue({
                     id: this.tenant.id,
                     tenant_name: this.tenant.tenant_name,

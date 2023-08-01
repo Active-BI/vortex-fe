@@ -52,7 +52,6 @@ export class AdminRequestsComponent implements OnInit {
                 created_at: moment(a).format('DD/MM/YYYY'),
             }));
             this.usuarios = new MatTableDataSource(e);
-            console.log(this.usuarios);
             this.usuariosFiltrados = new MatTableDataSource(e);
             this.usuariosFiltrados.paginator = this.paginator;
             this.usuarios.paginator = this.paginator;
@@ -68,10 +67,25 @@ export class AdminRequestsComponent implements OnInit {
         this.usuariosFiltrados = new MatTableDataSource(data);
         this.usuariosFiltrados.paginator = this.paginator;
     }
-    permitirUsuario(id, nome) {
+    permitirUsuario(id, nome, element) {
         this.dialog.open(AdminRequestConfirmationModalComponent, {
             data: {
                 nome: nome,
+                user_data: element,
+                criarTenant: (tenant) => {
+                    this.dialog.closeAll();
+                    this.adminRequestService
+                        .allowAdminRequestsAndCreateTenant(id, tenant)
+                        .subscribe(
+                            () => {
+                                this.toastr.success('Usuário Admin Criado');
+                                this.requisicoes();
+                            },
+                            ({ error }) => {
+                                this.toastr.error(error.message);
+                            }
+                        );
+                },
                 data: (tenantId) => {
                     this.dialog.closeAll();
                     this.adminRequestService

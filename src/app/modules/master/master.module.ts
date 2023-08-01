@@ -34,8 +34,6 @@ import { GestaoTenantCriarComponent } from './tenant/gestao-tenant-criar/gestao-
 import { AdminRequestBlockModalComponent } from './admin-request/admin-request-block-modal/admin-request-block-modal.component';
 import { MatSelectModule } from '@angular/material/select';
 import { AdminRequestConfirmationModalComponent } from './admin-request/admin-request-confirmation-modal/admin-request-confirmation-modal.component';
-import { AdminRequestsCriarComponent } from './admin-request/admin-requests-criar/admin-requests-criar.component';
-import { AdminRequestsEditarComponent } from './admin-request/admin-requests-editar/admin-requests-editar.component';
 import { AdminRequestsComponent } from './admin-request/admin-requests/admin-requests.component';
 import { TenantUserListComponent } from './tenant-user-list/tenant-user-list.component';
 import { AddAdminAccessComponent } from './tenant-user-list/add_access_admin/add_access_admin.component';
@@ -66,15 +64,13 @@ const masterRoutes: Route[] = [
 @NgModule({
     declarations: [
         GestaoTenantComponent,
-        GestaoTenantEditComponent,
         GestaoTenantCriarComponent,
         AdminRequestsComponent,
         AdminRequestConfirmationModalComponent,
         AdminRequestBlockModalComponent,
-        AdminRequestsCriarComponent,
-        AdminRequestsEditarComponent,
         TenantUserListComponent,
         AddAdminAccessComponent,
+        GestaoTenantEditComponent,
     ],
     imports: [
         CommonModule,

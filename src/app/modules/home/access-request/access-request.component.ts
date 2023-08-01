@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {
-    FormBuilder,
-    UntypedFormBuilder,
-    UntypedFormGroup,
-    Validators,
-} from '@angular/forms';
-import { Route, Router } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AdminRequestService } from 'app/modules/services/admin-request.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -15,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./access-request.component.scss'],
 })
 export class AccessRequestComponent implements OnInit {
+    dashboardsSelecteds = [];
+
     form = this._formBuilder.group({
         email: ['', Validators.required],
         name: ['', Validators.required],
@@ -30,8 +27,8 @@ export class AccessRequestComponent implements OnInit {
     constructor(
         private _formBuilder: FormBuilder,
         private toastr: ToastrService,
-        private adminRequestService: AdminRequestService,
-        private router: Router
+        private router: Router,
+        private adminRequestService: AdminRequestService
     ) {}
 
     submit() {
@@ -41,9 +38,9 @@ export class AccessRequestComponent implements OnInit {
         }
         this.adminRequestService.postAdminRequests(this.form.value).subscribe(
             (res) => {
-                // this.router.navigate(['/home']);
+                this.router.navigate(['/home']);
             },
-            ({ error }) => this.toastr.error('Falha na requisição')
+            ({ error }) => this.toastr.error(error.message)
         );
     }
     ngOnInit(): void {}

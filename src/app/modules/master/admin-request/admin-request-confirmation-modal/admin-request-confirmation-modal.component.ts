@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { DashboardService } from 'app/modules/services/dashboard.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -13,26 +14,66 @@ import { ToastrService } from 'ngx-toastr';
 export class AdminRequestConfirmationModalComponent {
     tenants = [];
     selectedTenant = '';
+
+    isFormDisabled = false;
+    toggleForm() {
+        this.isFormDisabled = !this.isFormDisabled;
+        if (!this.isFormDisabled) {
+            this.form = this.fb.group({
+                tenant: ['', [Validators.required]],
+            });
+        }
+        if (this.isFormDisabled) {
+            this.form = this.fb.group({
+                tenant_name: [
+                    this.data.user_data.company_name,
+                    [Validators.required],
+                ],
+                tenant_cnpj: [
+                    this.data.user_data.company_cnpj,
+                    [Validators.required],
+                ],
+                tenant_desription: [
+                    this.data.user_data.company_description,
+                    [Validators.required],
+                ],
+                dashboard: [[], [Validators.required]],
+            });
+        }
+    }
+    dashboardsSelecteds = [];
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialog: MatDialog,
         private tenantsService: TenantsService,
         private fb: FormBuilder,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private dashboardService: DashboardService
     ) {
+        this.dashboardService.getMasterDashBoard().subscribe((d: any[]) => {
+            this.dashboardsSelecteds = d;
+        });
+        this.form = this.fb.group({
+            tenant: ['', [Validators.required]],
+        });
         this.tenantsService.tenants().subscribe((tenants: any[]) => {
             this.tenants = tenants;
         });
     }
-    form = this.fb.group({
-        tenant: ['', [Validators.required]],
-    });
+    form: FormGroup;
     onSubmit(): void {
         if (!this.form.valid) {
-            this.toastr.error('Ambiente não selecionado');
+            this.toastr.error('Dados incompletos');
             return;
         }
-        this.data.data(this.form.value.tenant);
+        if (this.isFormDisabled) {
+            this.data.criarTenant(this.form.value);
+        } else {
+            this.data.data(this.form.value.tenant);
+        }
+    }
+    click() {
+        console.log(this.form.value.dashboard);
     }
     voltar(): void {
         this.dialog.closeAll();

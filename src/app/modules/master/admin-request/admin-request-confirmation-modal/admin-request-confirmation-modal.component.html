@@ -1,23 +1,55 @@
-<div class="flex flex-col w-[30vw] h-60">
+<div class="flex flex-col md:w-[40vw] w-[60vw]">
     <div class="w-full flex justify-start text-center align-center">
         <mat-icon svgIcon="mat_outline:warning_amber" class="text-yellow-400 mr-1"></mat-icon>
         <div class=" text-xl mb-2">Atenção!</div>
     </div>
     <p class=""> {{data.nome}} precisa ser atribuido a um Ambiente. </p>
     <p class="">Deseja continuar?</p>
-        <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col mt-4">
+    <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col mt-4 gap-y-4">
+        <mat-checkbox (change)="toggleForm()" >Criar novo ambiente</mat-checkbox>
+        <mat-form-field class="w-full" *ngIf="!isFormDisabled">
+            <mat-label>Selecionar Ambiente</mat-label>
+            <mat-select formControlName="tenant">
+                <mat-option *ngFor="let t of tenants" [value]="t.id">
+                    {{t.tenant_name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div *ngIf="isFormDisabled">
 
-            <mat-form-field class="w-60">
-                <mat-label>Selecionar Ambiente</mat-label>
-                <mat-select formControlName="tenant">
-                    <mat-option *ngFor="let t of tenants" [value]="t.id">
-                        {{t.tenant_name}}
-                    </mat-option>
+            <div class="md:col-span-2 col-span-full">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Nome da Empresa</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'" matPrefix></mat-icon>
+                    <input formControlName="tenant_name" matInput>
+                </mat-form-field>
+            </div>
+            <div class="md:col-span-2 col-span-full">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>CNPJ</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'" matPrefix></mat-icon>
+                    <input formControlName="tenant_cnpj" matInput>
+                </mat-form-field>
+            </div>
+            <div class="md:col-span-3 col-span-full">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Descrição da Empresa</mat-label>
+                    <textarea matInput formControlName="tenant_desription" cdkTextareaAutosize [cdkAutosizeMinRows]="5"></textarea>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field class="w-full">
+                <mat-label>Relatórios</mat-label>
+
+                <mat-select formControlName="dashboard" class=" w-full" multiple (click)="click()">
+
+                    <mat-option *ngFor="let d of dashboardsSelecteds" [value]="d.report_id"
+                        [selected]="true">{{d.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
+        </div>
 
-            <!-- <mat-checkbox formControlName="anchor">Usuário Âncora?</mat-checkbox> -->
-        </form>
+    </form>
 
     <div class="flex flex-row justify-end mt-3">
         <div class="flex flex-row ">

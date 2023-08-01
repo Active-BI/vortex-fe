@@ -25,8 +25,14 @@ export class AdminRequestService {
             `${this.baseUrl}admin-request/accept/${id}/${tenant_id}`
         );
     }
+    allowAdminRequestsAndCreateTenant(id, tenant) {
+        return this.http.post(
+            `${this.baseUrl}admin-request/accept-and-create-tenant/${id}`,
+            tenant
+        );
+    }
 
     postAdminRequests(payload) {
-        return this.http.post(`${this.baseUrl}admin-request`, payload);
+        return this.http.post(`${this.baseUrl}request-access`, payload);
     }
 }
