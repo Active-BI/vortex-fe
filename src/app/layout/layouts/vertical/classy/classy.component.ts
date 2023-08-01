@@ -73,30 +73,35 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                 this._navigationService.navigation$
                     .pipe(takeUntil(this._unsubscribeAll))
                     .subscribe((navigation: Navigation) => {
-                        const role = jwtDecode(
-                            JSON.parse(localStorage.getItem('token'))
-                        )['role_name'];
+                        try {
+                            const role = jwtDecode(
+                                JSON.parse(localStorage.getItem('token'))
+                            )['role_name'];
 
-                        const rotas = e[0];
-                        const filteredRoutes = rotas.filter((route) => {
-                            if (!route.data.roles.includes(role)) return false;
-                            return true;
-                        });
-                        const filterChildrens = filteredRoutes.filter(
-                            (route) => {
-                                if (route.children) {
-                                    route.children = route.children.filter(
-                                        (child) =>
-                                            child.data.roles.includes(role)
-                                    );
+                            const rotas = e[0];
+                            const filteredRoutes = rotas.filter((route) => {
+                                if (!route.data.roles.includes(role))
+                                    return false;
+                                return true;
+                            });
+                            const filterChildrens = filteredRoutes.filter(
+                                (route) => {
+                                    if (route.children) {
+                                        route.children = route.children.filter(
+                                            (child) =>
+                                                child.data.roles.includes(role)
+                                        );
+                                    }
+                                    return route;
                                 }
-                                return route;
-                            }
-                        );
-                        // console.log(filterChildrens);
-                        navigation.default = filterChildrens;
-                        // navigation.default = filteredRoutes;
-                        this.navigation = navigation;
+                            );
+                            // console.log(filterChildrens);
+                            navigation.default = filterChildrens;
+                            // navigation.default = filteredRoutes;
+                            this.navigation = navigation;
+                        } catch (e) {
+                            this._router.navigate(['/auth/login']);
+                        }
                     });
 
                 // Subscribe to the user service

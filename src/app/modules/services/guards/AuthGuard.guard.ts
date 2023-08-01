@@ -10,6 +10,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MenuItemService } from 'app/mock-api/common/navigation/data';
+import jwtDecode from 'jwt-decode';
 
 @Injectable({
     providedIn: 'root',
@@ -25,15 +26,25 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     ): Promise<boolean | UrlTree> {
         if (localStorage.getItem('token')) {
             const token = JSON.parse(localStorage.getItem('token'));
-            const user: any = decode(token);
-            if (
-                route.data['expectedRoles'] === null ||
-                route.data['expectedRoles'].length === 0 ||
-                route.data['expectedRoles'].includes(user.role_name)
-            ) {
-                return true;
+
+            try {
+                await jwtDecode(token, {
+                    header: true,
+                });
+                const user: any = await jwtDecode(token);
+                if (
+                    route.data['expectedRoles'] === null ||
+                    route.data['expectedRoles'].length === 0 ||
+                    route.data['expectedRoles'].includes(user.role_name)
+                ) {
+                    return true;
+                }
+                return false;
+            } catch (e) {
+                localStorage.removeItem('token');
+                this.router.navigate(['/auth/sign-in']);
+                return false;
             }
-            return false;
         } else {
             localStorage.removeItem('token');
             this.router.navigate(['/auth/sign-in']);

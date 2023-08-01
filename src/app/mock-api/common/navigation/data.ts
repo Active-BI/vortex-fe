@@ -1,5 +1,6 @@
 /* tslint:disable:max-line-length */
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { FuseNavigationItem } from '@fuse/components/navigation';
 import { DashboardService } from 'app/modules/services/dashboard.service';
 import jwtDecode from 'jwt-decode';
@@ -51,13 +52,19 @@ export const defaultNavigation: FuseNavigationItem[] = [
 export class MenuItemService {
     sub = new ReplaySubject();
     intervalId: any;
-    constructor() {
+    constructor(private router: Router) {
         this.getNewRoutes();
     }
     getNewRoutes() {
         return Promise.all([localStorage.getItem('token')]).then((e) => {
             if (e[0]) {
-                const decoded = jwtDecode(JSON.parse(e[0])) as any;
+                let decoded;
+                try {
+                    decoded = jwtDecode(JSON.parse(e[0])) as any;
+                } catch (e) {
+                    localStorage.clear();
+                    this.router.navigate(['auth/loign']);
+                }
                 const dashUsers = decoded.dashboardUser;
                 const routes: FuseNavigationItem[] = [];
                 routes.push(...defaultRoute);

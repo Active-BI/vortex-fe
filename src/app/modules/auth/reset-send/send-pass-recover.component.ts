@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/modules/services/auth.service';
-import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

@@ -25,8 +25,14 @@ export class NoAuthGuard implements CanActivate {
         if (localStorage.getItem('token') === null) {
             return true;
         } else {
-            //   this.router.navigate(['/app/inicio']);
-            return false;
+            try {
+                jwtDecode(localStorage.getItem('token'));
+                this.router.navigate(['/app/inicio']);
+                return false;
+            } catch (e) {
+                localStorage.clear();
+                return true;
+            }
         }
     }
 
