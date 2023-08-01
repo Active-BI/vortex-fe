@@ -17,12 +17,12 @@
             </div>
 
         </div>
-        <div *ngIf="usuariosFiltrados.filteredData.length < 1" class="w-full  h-16   mt-4 flex items-center justify-center text-2xl">
+        <div *ngIf="usuariosFiltrados && usuariosFiltrados.filteredData.length < 1" class="w-full  h-16   mt-4 flex items-center justify-center text-2xl">
                 Nenhum solicitação pendente
 
         </div>
 
-        <div class="flex flex-col shadow-2xl" id="table" *ngIf="usuariosFiltrados.filteredData.length > 0">
+        <div class="flex flex-col shadow-2xl" id="table" *ngIf="usuariosFiltrados &&  usuariosFiltrados.filteredData.length > 0">
             <table mat-table class="" [dataSource]="usuariosFiltrados" class="pb-6" >
                 <ng-container matColumnDef="nome">
                     <th mat-header-cell *matHeaderCellDef> Nome </th>
