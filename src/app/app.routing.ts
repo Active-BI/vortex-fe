@@ -14,8 +14,8 @@ import { AccessRequestComponent } from './modules/home/access-request/access-req
 export const appRoutes: Route[] = [
     {
         path: 'home',
-        canActivate: [NoAuthGuard],
-        canActivateChild: [NoAuthGuard],
+        canActivate: [],
+        canActivateChild: [],
         component: LayoutComponent,
         data: {
             layout: 'empty',
@@ -142,7 +142,7 @@ export const appRoutes: Route[] = [
         ],
     },
     {
-        path: '**',
+        path: '*',
         redirectTo: '/home',
     },
 ];
