@@ -11,15 +11,18 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AccessRequestComponent implements OnInit {
     dashboardsSelecteds = [];
-
+    setTenat = false;
+    atualizarValor() {
+        this.setTenat = !this.setTenat;
+    }
     form = this._formBuilder.group({
-        email: ['', Validators.required],
-        name: ['', Validators.required],
+        email: ['', [Validators.required]],
+        name: ['', [Validators.required]],
         description: [''],
-        profession: ['', Validators.required],
-        company_name: ['', Validators.required],
-        company_cnpj: ['', Validators.required],
-        company_description: ['', Validators.required],
+        profession: ['', [Validators.required]],
+        company_name: [''],
+        company_cnpj: [''],
+        company_description: [''],
     });
     checkScreenSize() {
         return window.innerWidth >= 768;
@@ -32,6 +35,10 @@ export class AccessRequestComponent implements OnInit {
     ) {}
 
     submit() {
+        const validator = this.setTenat === true ? [Validators.required] : [];
+        this.form.get('company_name').setValidators(validator);
+        this.form.get('company_cnpj').setValidators(validator);
+        this.form.get('company_description').setValidators(validator);
         if (!this.form.valid) {
             this.toastr.error('Campos inválidos');
             return;

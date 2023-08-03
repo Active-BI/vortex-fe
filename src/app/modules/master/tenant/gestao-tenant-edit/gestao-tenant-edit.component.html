@@ -16,6 +16,11 @@
             <input formControlName="tenant_name" matInput #first />
             <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
         </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Cnpj</mat-label>
+            <input formControlName="tenant_cnpj" matInput #first />
+            <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
+        </mat-form-field>
         <div *ngIf="form.controls.tenant_name.touched" class="text-red-600 mb-2">
             <div *ngIf="form.controls.tenant_name.errors?.['required']">
                 Nome é Obrigatório

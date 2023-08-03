@@ -35,6 +35,7 @@ export class GestaoTenantEditComponent implements OnInit {
     form = this.fb.group({
         id: [''],
         tenant_name: ['', [Validators.required, Validators.minLength(3)]],
+        tenant_cnpj: ['', [Validators.required, Validators.minLength(3)]],
         active: ['', [Validators.required]],
         dashboard: [[], [Validators.required]],
     });
@@ -77,6 +78,7 @@ export class GestaoTenantEditComponent implements OnInit {
                 this.form.patchValue({
                     id: this.tenant.id,
                     tenant_name: this.tenant.tenant_name,
+                    tenant_cnpj: this.tenant.tenant_cnpj,
                     active: this.tenant.active,
                 });
             });

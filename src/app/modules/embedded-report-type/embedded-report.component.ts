@@ -40,6 +40,7 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
         this.selected.reset();
     }
     refreshReport() {
+        // this.refresh();
         this.pmiService.refresh(this.type).subscribe(
             (res) => this.toastr.success('Relatório está sendo Atualizado'),
             ({ error }) => {
@@ -51,7 +52,12 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
         if (this.dadosParaImportar.length > 0) {
             this.pmiService
                 .uploadFile(this.dadosParaImportar, this.type)
-                .subscribe((d) => console.log(d));
+                .subscribe(
+                    (d) => this.toastr.success('Importação concluída'),
+                    ({ error }) => {
+                        this.toastr.error(error.message);
+                    }
+                );
         } else {
             this.toastr.error('Nenhum dado foi importado');
         }
@@ -83,12 +89,12 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
 
     Importar(e) {
         e.preventDefault();
-        const fileName = e.target.files[0]?.name;
+        const fileName = e.target.files[0]?.name as string;
         const file = e.target.files[0];
         this.nomeArquivo = '';
         this.dadosParaImportar = [];
-        if (Number((file.size / 1024).toFixed(2)) > 4500) {
-            this.toastr.error('Excedeu tamanho máximo de 4,5 Mb');
+        if (Number((file.size / 1024).toFixed(2)) > 1500) {
+            this.toastr.error('Excedeu tamanho máximo de 1,5 Mb');
             return;
         }
 
@@ -98,7 +104,7 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
                 this.toastr.error('Extensão inválida');
                 return;
             }
-            this.nomeArquivo = fileName;
+            this.nomeArquivo = fileName.substring(0, 20) + '...';
 
             const data = reader.result;
             const workbook = xlsx.read(data, {

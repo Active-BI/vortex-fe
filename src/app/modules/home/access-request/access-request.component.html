@@ -3,7 +3,7 @@
     <!-- Form -->
 
     <form [formGroup]="form" (submit)="$event.preventDefault()"
-        class="flex flex-col md:w-1/2 sm:w-[90%] w-full m-6 mr-0 overflow-y-auto pr-4">
+        class="flex flex-col md:w-1/2 sm:w-[90%] w-full m-3 mr-0 overflow-y-auto pr-4">
 
         <div class="w-full">
             <div class="text-3xl font-bold flex items-center">
@@ -13,10 +13,10 @@
             </div>
             <div class="text-secondary mr-8">Preencha os seus dados e da empresa que deseja solicitar o acesso</div>
         </div>
-        <div class="w-full p-[0.5px] my-6 bg-slate-300"></div>
-        <div class="text-secondary text-2xl font-bold my-4">Dados Pessoais</div>
+        <div class="w-full p-[0.5px] mt-6 bg-slate-300"></div>
+        <div class="text-secondary text-2xl font-bold mt-6">Dados Pessoais</div>
 
-        <div class="grid md:grid-cols-4 gap-6 w-full mt-8">
+        <div class="grid md:grid-cols-4 gap-6 w-full mt-3">
             <div class="md:col-span-4 col-span-full">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Nome</mat-label>
@@ -47,34 +47,40 @@
                     <input [formControlName]="'description'" matInput>
                 </mat-form-field>
             </div>
-            <div class="col-span-full">
-                <div class="w-full p-[0.5px] my-6 col-span-full bg-slate-300"></div>
-                <div class="text-secondary text-2xl font-bold my-4">Dados da Empresa</div>
-            </div>
-            <div class="md:col-span-2 col-span-full">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Empresa</mat-label>
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'" matPrefix></mat-icon>
-                    <input [formControlName]="'company_name'" matInput>
-                </mat-form-field>
-            </div>
-            <div class="md:col-span-2 col-span-full">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>CNPJ</mat-label>
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'" matPrefix></mat-icon>
-                    <input [formControlName]="'company_cnpj'" matInput>
-                </mat-form-field>
-            </div>
-            <div class="md:col-span-3 col-span-full">
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Descrição Empresa</mat-label>
-                    <textarea matInput [formControlName]="'company_description'" cdkTextareaAutosize
-                        [cdkAutosizeMinRows]="5"></textarea>
-                </mat-form-field>
+            <mat-checkbox class="ml-4 md:col-span-2 col-span-full"  (click)="atualizarValor()" >Solicitar para Empresa</mat-checkbox>
+            <div class="col-span-full grid gap-y-6" *ngIf="setTenat">
+                <div class="w-full">
+                    <div class="w-full p-[0.5px] my-3 col-span-full bg-slate-300"></div>
+                    <div class="text-secondary text-2xl font-bold my-4">Dados da Empresa</div>
+                </div>
+                <div class="md:col-span-2 col-span-full">
+                    <mat-form-field class="fuse-mat-no-subscript w-full">
+                        <mat-label>Empresa</mat-label>
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'"
+                            matPrefix></mat-icon>
+                        <input [formControlName]="'company_name'" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="md:col-span-2 col-span-full">
+                    <mat-form-field class="fuse-mat-no-subscript w-full">
+                        <mat-label>CNPJ</mat-label>
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'"
+                            matPrefix></mat-icon>
+                        <input [formControlName]="'company_cnpj'" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="md:col-span-2 col-span-full">
+                    <mat-form-field class="fuse-mat-no-subscript w-full">
+                        <mat-label>Descrição Empresa</mat-label>
+                        <textarea matInput [formControlName]="'company_description'" cdkTextareaAutosize
+                            [cdkAutosizeMinRows]="5"></textarea>
+                    </mat-form-field>
+                </div>
             </div>
 
         </div>
-        <button mat-raised-button color="primary" (click)="submit()" class="self-end mt-8 rounded-sm text-colorText bg-blue-600">
+        <button mat-raised-button color="primary" (click)="submit()"
+            class="self-end mt-8 rounded-sm text-colorText bg-blue-600">
             Solicitar acesso</button>
     </form>
     <div
