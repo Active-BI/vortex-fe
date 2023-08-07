@@ -28,14 +28,17 @@ export class AuthGuardScreen implements CanActivate, CanActivateChild {
             const token = JSON.parse(localStorage.getItem('token'));
             const user: any = decode(token);
             const dashUsers = user.dashboardUser;
-            const sholdRender = dashUsers.find((userDash) =>
-                state.url
+
+            const shouldRender = dashUsers.find((userDash) => {
+                console.log(
+                    state.url.toLowerCase(),
+                    userDash.link.toLowerCase()
+                );
+                return state.url
                     .toLowerCase()
-                    .includes(
-                        userDash.Tenant_DashBoard.Dashboard.type.toLowerCase()
-                    )
-            );
-            if (!sholdRender) {
+                    .includes(userDash.link.toLowerCase());
+            });
+            if (!shouldRender) {
                 this.router.navigate(['/app/inicio']);
                 return false;
             }

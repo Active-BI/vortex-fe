@@ -40,6 +40,10 @@ import { AddAdminAccessComponent } from './tenant-user-list/add_access_admin/add
 
 const masterRoutes: Route[] = [
     {
+        path: 'gestao/telas',
+        component: GestaoTenantComponent,
+    },
+    {
         path: 'gestao/tenants',
         component: GestaoTenantComponent,
     },
@@ -52,12 +56,12 @@ const masterRoutes: Route[] = [
         component: GestaoTenantEditComponent,
     },
     {
-        path: 'gestao/solicitacoes-de-cadastro',
-        component: AdminRequestsComponent,
-    },
-    {
         path: 'gestao/tenants/:id/user/list',
         component: TenantUserListComponent,
+    },
+    {
+        path: 'gestao/solicitacoes-de-cadastro',
+        component: AdminRequestsComponent,
     },
 ];
 

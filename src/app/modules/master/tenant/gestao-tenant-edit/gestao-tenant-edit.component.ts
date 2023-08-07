@@ -39,9 +39,11 @@ export class GestaoTenantEditComponent implements OnInit {
         active: ['', [Validators.required]],
         dashboard: [[], [Validators.required]],
     });
+
     click() {
         console.log(this.form.value.dashboard);
     }
+
     panelOpenState = false;
     id: string;
     ordersData = ordersData;
@@ -70,7 +72,7 @@ export class GestaoTenantEditComponent implements OnInit {
                     this.form.patchValue({
                         dashboard: d
                             .filter((dash) => dash.included === true)
-                            .map((dash) => dash.report_id),
+                            .map((dash) => dash.id),
                     });
                 });
             this.tenantsService.tenant(this.id).subscribe((e: any) => {
@@ -116,7 +118,6 @@ export class GestaoTenantEditComponent implements OnInit {
 
     editar(): void {
         if (this.form.valid && this.myControl.valid) {
-            console.log(this.form.value);
             this.tenantsService
                 .updateTenant(this.id, {
                     ...this.form.value,

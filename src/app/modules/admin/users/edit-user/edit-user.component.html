@@ -89,7 +89,7 @@
 
             <p class="text-xl mb-2"> Painéis</p>
                 <section class="example-section flex flex-col">
-                    <mat-checkbox  *ngFor="let item of _selectedDashboardList; let i = index" (click)="checkedDash(item, i)"  [checked]="item.selected">{{item.name}}</mat-checkbox>
+                    <mat-checkbox  *ngFor="let item of selectedDashboardList; let i = index" (click)="checkedDash(item, i)"  [checked]="item.selected">{{item.name}}</mat-checkbox>
                 </section>
 
 

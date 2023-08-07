@@ -15,13 +15,12 @@
                     <mat-option value="Baixar Template">Baixar Template</mat-option>
                 </mat-select>
             </mat-form-field>
-      
+
             <div class="flex items-center flex-row justify-center " *ngIf="this.rlsName !== 'User'">
 
                 <form class="form-upload">
                     <label class="input-personalizado">
-                        <span class="botao-selecionar  text-white">{{nomeArquivo.length > 0 ? nomeArquivo : 'Selecione
-                            um arquivo .xlsx'}}</span>
+                        <span class="botao-selecionar  text-white">{{nomeArquivo.length > 0 ? nomeArquivo : 'Selecione um arquivo .xlsx'}}</span>
                         <img class="imagem" />
                         <input type="file" class="input-file" (change)="Importar($event)">
                     </label>

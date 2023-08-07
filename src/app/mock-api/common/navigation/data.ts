@@ -9,7 +9,70 @@ import { ReplaySubject } from 'rxjs';
 const dataAdmin = {
     roles: ['Admin'],
 };
+interface DashboardUser {
+    id: string;
+    type: string;
+    title: string;
+    link: string;
+    group_id: string;
+    report_id: string;
+    table_name: string;
+    page_group_id: string;
+    Page_Group: {
+        id: string;
+        title: string;
+        icon: string;
+    };
+    Page_Role: string[];
+}
 
+class CreateRoutes {
+    static BasicRoute(
+        roles: string[] = [],
+        id: string,
+        title: string,
+        link: string
+    ): FuseNavigationItem {
+        return {
+            data: { roles },
+            id,
+            title,
+            type: 'basic',
+            link: link,
+        };
+    }
+
+    static ReportUploadRoute(
+        roles: string[] = [],
+        id: string,
+        title: string,
+        link: string
+    ): FuseNavigationItem {
+        return {
+            data: { roles },
+            id,
+            title,
+            type: 'basic',
+            link: 'view-report-type/' + link,
+        };
+    }
+
+    static CollapsableRoute(
+        id: string,
+        title: string,
+        icon: string,
+        roles
+    ): FuseNavigationItem {
+        return {
+            data: { roles },
+            id,
+            title,
+            type: 'collapsable',
+            icon,
+            children: [],
+        };
+    }
+}
 export const defaultRoute: FuseNavigationItem[] = [
     {
         data: { roles: ['User', 'Admin', 'Master'] },
@@ -20,32 +83,7 @@ export const defaultRoute: FuseNavigationItem[] = [
         link: 'inicio',
     },
 ];
-export const defaultNavigation: FuseNavigationItem[] = [
-    {
-        data: { roles: ['User', 'Admin'] },
-        id: 'RH_FUNCIONARIOS',
-        title: 'Funcionarios',
-        icon: 'heroicons_outline:shield-check',
-        type: 'basic',
-        link: 'view-report-type/RH_FUNCIONARIOS',
-    },
-    {
-        data: { roles: ['User', 'Admin'] },
-        id: 'GV',
-        title: 'GV',
-        icon: 'heroicons_outline:shield-check',
-        type: 'basic',
-        link: 'view-report-type/GV',
-    },
-    {
-        data: dataAdmin,
-        id: 'USUARIOS',
-        title: 'Gestão de Usuários',
-        type: 'basic',
-        icon: 'mat_solid:person_search',
-        link: 'usuarios',
-    },
-];
+export const defaultNavigation: FuseNavigationItem[] = [];
 @Injectable({
     providedIn: 'root',
 })
@@ -63,47 +101,66 @@ export class MenuItemService {
                     decoded = jwtDecode(JSON.parse(e[0])) as any;
                 } catch (e) {
                     localStorage.clear();
-                    this.router.navigate(['auth/loign']);
+                    this.router.navigate(['auth/login']);
                 }
-                const dashUsers = decoded.dashboardUser;
+                const dashUsers: DashboardUser[] = decoded.dashboardUser;
+
                 const routes: FuseNavigationItem[] = [];
                 routes.push(...defaultRoute);
-                routes.push(
-                    ...defaultNavigation.filter((rota) =>
-                        dashUsers.find((userDash) =>
-                            rota.link
-                                .toLowerCase()
-                                .includes(
-                                    userDash.Tenant_DashBoard.Dashboard.type.toLowerCase()
-                                )
-                        )
-                    )
-                );
-                if (decoded.role_name === 'Master') {
-                    routes.push({
-                        data: { roles: ['Master'] },
-                        id: 'GESTAO',
-                        title: 'Gestão',
-                        type: 'collapsable',
-                        icon: 'mat_solid:settings',
-                        children: [
-                            {
-                                data: { roles: ['Master'] },
-                                link: '/master/gestao/tenants',
-                                id: 'GESTAO_TENANT',
-                                title: 'Gestão de ambientes',
-                                type: 'basic',
-                            },
-                            {
-                                data: { roles: ['Master'] },
-                                link: '/master/gestao/solicitacoes-de-cadastro',
-                                id: 'SOLICITACOES_CADASTRO',
-                                title: 'Solicitações de acesso',
-                                type: 'basic',
-                            },
-                        ],
+
+                const collapsableRoutes = dashUsers.reduce((acc, cur) => {
+                    if (!acc[cur.Page_Group.title]) {
+                        acc[cur.Page_Group.title] =
+                            CreateRoutes.CollapsableRoute(
+                                cur.Page_Group.id,
+                                cur.Page_Group.title,
+                                cur.Page_Group.icon,
+                                cur.Page_Role
+                            );
+                        return acc;
+                    }
+                    cur.Page_Role.forEach((role) => {
+                        console.log(acc[cur.Page_Group.title]);
+                        if (
+                            !(
+                                acc[cur.Page_Group.title].data.roles as string[]
+                            ).includes(role)
+                        ) {
+                            acc[cur.Page_Group.title].data.roles.push(role);
+                            return acc;
+                        }
                     });
-                }
+
+                    return acc;
+                }, {});
+                const navigationGroups: any[] =
+                    Object.values(collapsableRoutes);
+
+                dashUsers.forEach((rota) => {
+                    const findFather = navigationGroups.findIndex(
+                        (e) => e.title === rota.Page_Group.title
+                    );
+                    if (findFather >= 0) {
+                        navigationGroups[findFather].children.push(
+                            rota.type !== 'report-upload'
+                                ? CreateRoutes.BasicRoute(
+                                      rota.Page_Role,
+                                      rota.id,
+                                      rota.title,
+                                      rota.link
+                                  )
+                                : CreateRoutes.ReportUploadRoute(
+                                      rota.Page_Role,
+                                      rota.id,
+                                      rota.title,
+                                      rota.link
+                                  )
+                        );
+                        return navigationGroups;
+                    }
+                });
+
+                routes.push(...navigationGroups);
                 return routes;
             }
         });

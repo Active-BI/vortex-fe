@@ -49,6 +49,7 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
         );
     }
     Salvar() {
+        console.log(this.dadosParaImportar);
         if (this.dadosParaImportar.length > 0) {
             this.pmiService
                 .uploadFile(this.dadosParaImportar, this.type)
@@ -154,7 +155,6 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
         const token = localStorage.getItem('token');
         if (token) {
             this.rlsName = (jwtDecode(token) as any).role_name;
-            console.log(this.rlsName);
         }
         this.handlers = new Map([
             ['loaded', (): void => console.log('Report loaded')],
