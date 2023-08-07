@@ -28,9 +28,7 @@ export class BiReportDefaultByTypeComponent implements OnInit {
             const dashUsers = decoded.dashboardUser;
             if (
                 dashUsers.length < 1 ||
-                !dashUsers.find(
-                    (r) => r.Tenant_DashBoard.Dashboard.type === this.type
-                )
+                !dashUsers.find((r) => r.link === this.type)
             ) {
                 this.route.navigateByUrl('/app/inicio');
                 return;

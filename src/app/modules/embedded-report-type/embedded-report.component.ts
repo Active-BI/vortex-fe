@@ -154,7 +154,7 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
         const token = localStorage.getItem('token');
         if (token) {
             this.rlsName = (jwtDecode(token) as any).role_name;
-            console.log(this.rlsName);
+          
         }
         this.handlers = new Map([
             ['loaded', (): void => console.log('Report loaded')],

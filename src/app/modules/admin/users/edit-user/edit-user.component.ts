@@ -51,23 +51,7 @@ export class EditUserComponent implements OnInit {
     user: any;
     dashboardList = [];
     selectedDashboardList = [];
-    get _selectedDashboardList() {
-        if (this.form.value.rls_id === 'ca21241b-a37d-4e6f-bbb6-26643d3cdd99') {
-            this.selectedDashboardList = this.selectedDashboardList.map((s) => {
-                if (s.name.toLowerCase() !== 'usuários') {
-                    return s;
-                }
-                return {
-                    ...s,
-                    selected: false,
-                };
-            });
-            return this.selectedDashboardList.filter(
-                (s) => s.name.toLowerCase() !== 'usuários'
-            );
-        }
-        return this.selectedDashboardList;
-    }
+
     listRoles = listRoles;
     constructor(
         private fb: FormBuilder,
@@ -75,7 +59,6 @@ export class EditUserComponent implements OnInit {
         private route: ActivatedRoute,
         private toastr: ToastrService,
         private adminSrv: AdminService,
-        private pmiServices: PMIService,
         private dashboardService: DashboardService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
@@ -84,21 +67,23 @@ export class EditUserComponent implements OnInit {
             (a) => (editar = a[0].path.includes('editar'))
         );
         this.dashboardService.getDashboards().subscribe((e: any[]) => {
-            this.dashboardList = e.map((tenant_dashboard) => ({
-                name: tenant_dashboard.Dashboard.name,
-                id: tenant_dashboard.id,
-                selected: false,
-            }));
+            this.dashboardList = e.map((tenant_dashboard) => {
+                console.log(tenant_dashboard);
+                return {
+                    name: tenant_dashboard.Page.title,
+                    id: tenant_dashboard.id,
+                    selected: false,
+                };
+            });
             if (editar) {
                 this.adminSrv.getUserById(this.id).subscribe((e: any) => {
                     this.user = e;
                     let tenant;
-
                     this.selectedDashboardList = this.dashboardList.map(
                         (dash) => ({
                             ...dash,
-                            selected: this.user.User_Tenant_DashBoard.find(
-                                (utd) => utd.tenant_DashBoard_id === dash.id
+                            selected: this.user.User_Page.find(
+                                (utd) => utd.tenant_page_id === dash.id
                             )
                                 ? true
                                 : false,
@@ -113,6 +98,7 @@ export class EditUserComponent implements OnInit {
                         profession: this.user.profession,
                         description: this.user.description,
                     });
+                    console.log(this.selectedDashboardList);
                 });
             }
         });

@@ -25,15 +25,7 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
         pmiServices: PMIService,
         dashboardService: DashboardService
     ) {
-        super(
-            fb,
-            router,
-            route,
-            toastr,
-            adminSrv,
-            pmiServices,
-            dashboardService
-        );
+        super(fb, router, route, toastr, adminSrv, dashboardService);
     }
 
     override ngOnInit(): void {}
