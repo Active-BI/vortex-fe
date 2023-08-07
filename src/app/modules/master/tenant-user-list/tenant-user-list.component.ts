@@ -84,7 +84,7 @@ export class TenantUserListComponent implements OnInit {
                 usuario,
                 data: () => {
                     this.dialog.closeAll();
-
+                    this.toastr.success('Editado com sucesso');
                     this.requisicoes();
                 },
             },

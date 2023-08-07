@@ -38,7 +38,7 @@
 
                 <mat-select formControlName="dashboard" multiple (click)="click()">
 
-                  <mat-option *ngFor="let d of dashboardsSelecteds" [value]="d.report_id" [selected]="true">{{d.name}}</mat-option>
+                  <mat-option *ngFor="let d of dashboardsSelecteds" [value]="d.id" [selected]="true">{{d.title}}</mat-option>
                 </mat-select>
               </mat-form-field>
         </form>

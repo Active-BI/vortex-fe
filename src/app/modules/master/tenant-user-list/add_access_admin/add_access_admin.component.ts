@@ -19,20 +19,21 @@ export class AddAdminAccessComponent implements OnInit {
         this.usuario = data.usuario;
     }
     ngOnInit(): void {
-        this.globalmarketCategory.setValue(
+        console.log(this.usuario);
+        this.form.setValue(
             this.usuario.dashboards
                 .filter((d) => d.included === true)
-                .map((d) => d.dashboard_id)
+                .map((d) => d.page_id)
         );
     }
-    globalmarketCategory = new FormControl('');
+    form = new FormControl('');
 
     onSubmit(): void {
         this.dashboardService
             .postMasterDashboards(
                 {
-                    DashboardUserList: this.globalmarketCategory.value,
-                    tenant_id: this.usuario.Tenant.id,
+                    DashboardUserList: this.form.value,
+                    tenant_id: this.usuario.tenant_id,
                 },
                 this.usuario.id
             )
@@ -41,11 +42,10 @@ export class AddAdminAccessComponent implements OnInit {
             });
     }
     findValue() {
-        return (
-            this.usuario.dashboards.find(
-                (d) => d.dashboard_id === this.globalmarketCategory.value[0]
-            )?.Dashboard.name || 'Selecione'
+        const findPages = this.usuario.dashboards.find(
+            (d) => d.page_id === this.form.value[0]
         );
+        return findPages?.Page?.title || 'Selecione';
     }
 
     voltar(): void {
