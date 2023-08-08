@@ -99,6 +99,7 @@ export class ListUsersComponent implements OnInit {
             this.toastr.error('Não é possível excluir usuário em uso');
             return;
         }
+
         this.dialog.open(DeleteModalComponent, {
             data: {
                 nome: 'Usuários',
