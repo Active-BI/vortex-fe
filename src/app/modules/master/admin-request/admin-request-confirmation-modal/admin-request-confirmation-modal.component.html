@@ -1,4 +1,4 @@
-<div class="flex flex-col md:w-[40vw] w-[60vw]">
+<div class="flex flex-col md:w-[40vw] w-[60vw] h-auto overflow-y-auto">
     <div class="w-full flex justify-start text-center align-center">
         <mat-icon svgIcon="mat_outline:warning_amber" class="text-yellow-400 mr-1"></mat-icon>
         <div class=" text-xl mb-2">Atenção!</div>
@@ -6,7 +6,7 @@
     <p class=""> {{data.nome}} precisa ser atribuido a um Ambiente. </p>
     <p class="">Deseja continuar?</p>
     <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col mt-4 gap-y-4">
-        <mat-checkbox (change)="toggleForm()" >Criar novo ambiente</mat-checkbox>
+        <mat-checkbox (change)="toggleForm()">Criar novo ambiente</mat-checkbox>
         <mat-form-field class="w-full" *ngIf="!isFormDisabled">
             <mat-label>Selecionar Ambiente</mat-label>
             <mat-select formControlName="tenant">
@@ -34,19 +34,22 @@
             <div class="md:col-span-3 col-span-full">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Descrição da Empresa</mat-label>
-                    <textarea matInput formControlName="tenant_desription" cdkTextareaAutosize [cdkAutosizeMinRows]="5"></textarea>
+                    <textarea matInput formControlName="tenant_desription" cdkTextareaAutosize
+                        [cdkAutosizeMinRows]="5"></textarea>
                 </mat-form-field>
             </div>
+            <div class="md:col-span-3 col-span-full">
 
-            <mat-form-field class="w-full">
-                <mat-label>Relatórios</mat-label>
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Relatórios</mat-label>
 
-                <mat-select formControlName="dashboard" class=" w-full" multiple (click)="click()">
+                    <mat-select formControlName="dashboard" multiple (click)="click()">
 
-                    <mat-option *ngFor="let d of dashboardsSelecteds" [value]="d.report_id"
-                        [selected]="true">{{d.name}}</mat-option>
-                </mat-select>
-            </mat-form-field>
+                        <mat-option *ngFor="let d of dashboardsSelecteds" [value]="d.id"
+                            [selected]="true">{{d.title}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
         </div>
 
     </form>

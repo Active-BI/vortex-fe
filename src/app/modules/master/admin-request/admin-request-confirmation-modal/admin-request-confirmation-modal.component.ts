@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { DashboardService } from 'app/modules/services/dashboard.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import { ToastrService } from 'ngx-toastr';
@@ -41,6 +42,7 @@ export class AdminRequestConfirmationModalComponent {
             });
         }
     }
+    id = '';
     dashboardsSelecteds = [];
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -48,14 +50,20 @@ export class AdminRequestConfirmationModalComponent {
         private tenantsService: TenantsService,
         private fb: FormBuilder,
         private toastr: ToastrService,
+        private route: ActivatedRoute,
         private dashboardService: DashboardService
     ) {
-        this.dashboardService.getMasterDashBoard().subscribe((d: any[]) => {
-            this.dashboardsSelecteds = d;
-        });
+        this.id = this.route.snapshot.paramMap.get('id');
+
+        this.dashboardService
+            .getMasterDashBoardById(this.id)
+            .subscribe((d: any[]) => {
+                this.dashboardsSelecteds = d;
+            });
         this.form = this.fb.group({
             tenant: ['', [Validators.required]],
         });
+
         this.tenantsService.tenants().subscribe((tenants: any[]) => {
             this.tenants = tenants;
         });
