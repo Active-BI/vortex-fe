@@ -17,6 +17,8 @@ import { ToastrService } from 'ngx-toastr';
 import * as xlsx from 'xlsx';
 import { PMIService } from '../services/PMI.service';
 import jwtDecode from 'jwt-decode';
+import { MatDialog } from '@angular/material/dialog';
+import { LogModalComponent } from './log-modal/log-modal.component';
 @Component({
     selector: 'app-embedded-report-type',
     templateUrl: './embedded-report.component.html',
@@ -24,6 +26,7 @@ import jwtDecode from 'jwt-decode';
 })
 export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
     @Input() type: string;
+    @ViewChild('formInputs') formIputFile;
     form: FormGroup = this.fb.group({
         vision: '',
     });
@@ -33,7 +36,8 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
     OpcaoPainel(evento) {
         if (evento === 'TelaCheia') this.fullscreen();
         if (evento === 'Imprimir') this.print();
-        if (evento === 'Atualizar') this.refreshReport();
+        if (evento === 'Atualizar Dataflow') this.refreshReportDataflow();
+        if (evento === 'Atualizar Dataset') this.refreshReport();
         if (evento === 'Exportar') this.Exportar();
         if (evento === 'Baixar Template') this.BaixarTemplate();
 
@@ -41,15 +45,23 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
     }
     refreshReport() {
         // this.refresh();
-        this.pmiService.refresh(this.type).subscribe(
+        this.pmiService.refreshDataset(this.type).subscribe(
             (res) => this.toastr.success('Relatório está sendo Atualizado'),
             ({ error }) => {
                 this.toastr.error(error.message);
             }
         );
     }
+    refreshReportDataflow() {
+        // this.refresh();
+        this.pmiService.refreshDataflow(this.type).subscribe(
+            (res) => this.toastr.success('Dataflow está sendo Atualizado'),
+            ({ error }) => {
+                this.toastr.error(error.message);
+            }
+        );
+    }
     Salvar() {
-        console.log(this.dadosParaImportar);
         if (this.dadosParaImportar.length > 0) {
             this.pmiService
                 .uploadFile(this.dadosParaImportar, this.type)
@@ -57,6 +69,27 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
                     (d) => this.toastr.success('Importação concluída'),
                     ({ error }) => {
                         this.toastr.error(error.message);
+
+                        if (error.log) {
+                            this.dialog.open(LogModalComponent, {
+                                data: {
+                                    erro: error.log,
+                                    data: () => {
+                                        const inputElement: HTMLInputElement =
+                                            document.querySelector(
+                                                '.input-file'
+                                            );
+                                        console.log(inputElement);
+                                        if (inputElement) {
+                                            inputElement.value = ''; // Limpar o valor do campo de entrada
+                                            this.dadosParaImportar = [];
+                                            this.nomeArquivo = '';
+                                        }
+                                        this.dialog.closeAll();
+                                    },
+                                },
+                            });
+                        }
                     }
                 );
         } else {
@@ -90,10 +123,10 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
 
     Importar(e) {
         e.preventDefault();
-        const fileName = e.target.files[0]?.name as string;
-        const file = e.target.files[0];
         this.nomeArquivo = '';
         this.dadosParaImportar = [];
+        const fileName = e.target.files[0]?.name as string;
+        const file = e.target.files[0];
         if (Number((file.size / 1024).toFixed(2)) > 1500) {
             this.toastr.error('Excedeu tamanho máximo de 1,5 Mb');
             return;
@@ -114,7 +147,9 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
             });
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
-            let json = xlsx.utils.sheet_to_json(worksheet, { defval: null });
+            let json = xlsx.utils.sheet_to_json(worksheet, {
+                defval: undefined,
+            });
             this.dadosParaImportar = json;
         };
         reader.readAsArrayBuffer(e.target.files[0]);
@@ -150,7 +185,8 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
         public breakpointObserver: BreakpointObserver,
         private toastr: ToastrService,
         private fb: FormBuilder,
-        private pmiService: PMIService
+        private pmiService: PMIService,
+        public dialog: MatDialog
     ) {
         const token = localStorage.getItem('token');
         if (token) {
