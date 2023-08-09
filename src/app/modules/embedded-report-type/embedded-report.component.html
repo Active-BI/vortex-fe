@@ -11,18 +11,19 @@
                     <mat-option value="TelaCheia">Tela Cheia</mat-option>
                     <mat-option value="Imprimir">Imprimir</mat-option>
                     <mat-option value="Exportar">Exportar</mat-option>
-                    <mat-option value="Atualizar">Atualizar</mat-option>
                     <mat-option value="Baixar Template">Baixar Template</mat-option>
+                    <mat-option value="Atualizar Dataflow">Atualizar DataFlow</mat-option>
+                    <mat-option value="Atualizar Dataset">Atualizar Dataset</mat-option>
                 </mat-select>
             </mat-form-field>
 
             <div class="flex items-center flex-row justify-center " *ngIf="this.rlsName !== 'User'">
 
-                <form class="form-upload">
+                <form  class="form-upload">
                     <label class="input-personalizado">
                         <span class="botao-selecionar  text-white">{{nomeArquivo.length > 0 ? nomeArquivo : 'Selecione um arquivo .xlsx'}}</span>
                         <img class="imagem" />
-                        <input type="file" class="input-file" (change)="Importar($event)">
+                        <input type="file" #formInputs class="input-file" (change)="Importar($event)">
                     </label>
                 </form>
                 <button mat-raised-button color="primary" class=" rounded-sm text-white h-8 w-28 bg-blue-700"

@@ -46,6 +46,8 @@ import { AuthGuardScreen } from '../services/guards/AuthGuardScreen.guard';
 import { HomeComponent } from '../home/home.component';
 import { AccessRequestComponent } from '../home/access-request/access-request.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { RequestModalComponent } from '../home/access-request/request-modal/request-modal.component';
+import { LogModalComponent } from '../embedded-report-type/log-modal/log-modal.component';
 
 const adminroutes: Route[] = [
     {
@@ -99,6 +101,8 @@ const adminroutes: Route[] = [
         BiReportDefaultComponent,
         HomeComponent,
         AccessRequestComponent,
+        RequestModalComponent,
+        LogModalComponent,
     ],
     imports: [
         CommonModule,

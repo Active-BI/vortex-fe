@@ -1,0 +1,21 @@
+<div class="flex flex-col w-auto h-auto">
+    <div class="w-full flex justify-start text-center align-center">
+        <mat-icon svgIcon="mat_outline:warning_amber" class="text-yellow-400 mr-1"></mat-icon>
+        <div class=" text-xl mb-2">Solicitação Enviada!</div>
+
+
+    </div>
+        <p class="text-black font-bold">
+            {{data.dados.name}},
+        </p>seus dados foram enviados para análise.
+        <br>
+        <p >Enviaremos um e-mail dentro de 72 horas com o resultado.</p>
+        <br>
+        <p class="font-light">verifique a caixa de span</p>
+
+
+    <button (click)="voltar()" type="button"
+        class="text-white px-2  self-end text-center mt-3 w-auto algin-middle bg-blue-500 max-w-50 hover:bg-blue-600 h-6 font-medium rounded-lg text-sm dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-800">
+        voltar ao início
+    </button>
+</div>

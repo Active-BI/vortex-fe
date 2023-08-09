@@ -28,8 +28,13 @@ export class PMIService {
             }
         );
     }
-    refresh(type) {
+    refreshDataset(type) {
         return this.http.get(`${this.baseUrl}pbi-report/refresh/${type}`);
+    }
+    refreshDataflow(type) {
+        return this.http.get(
+            `${this.baseUrl}pbi-report/refresh-dataflow/${type}`
+        );
     }
     exportExampleFile(tipoRelatorio: string) {
         return this.http.get(
