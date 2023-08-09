@@ -68,8 +68,8 @@ export class EditUserComponent implements OnInit {
         );
         this.dashboardService.getDashboards().subscribe((e: any[]) => {
             this.dashboardList = e.map((tenant_dashboard) => {
-                console.log(tenant_dashboard);
                 return {
+                    page_group: tenant_dashboard.Page.Page_Group.title,
                     name: tenant_dashboard.Page.title,
                     id: tenant_dashboard.id,
                     selected: false,
@@ -98,7 +98,6 @@ export class EditUserComponent implements OnInit {
                         profession: this.user.profession,
                         description: this.user.description,
                     });
-                    console.log(this.selectedDashboardList);
                 });
             }
         });
