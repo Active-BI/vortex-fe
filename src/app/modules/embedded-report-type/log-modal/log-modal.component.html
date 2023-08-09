@@ -1,0 +1,19 @@
+<div class="flex flex-col w-auto h-auto">
+    <div class="w-full flex justify-start text-center align-center">
+        <mat-icon svgIcon="mat_outline:warning_amber" class="text-yellow-400 mr-1"></mat-icon>
+        <div class=" text-2xl mb-2  font-bold">Log</div>
+    </div>
+        <p class="text-black font-bold">
+            {{data.erro.message}},
+        </p>
+        <br>
+        <p >Linha: {{data.erro.path[0] + 1}}</p>
+        <p >Campo: {{data.erro.path[1]}}</p>
+        <br>
+
+
+    <button (click)="voltar()" type="button"
+        class="text-white px-2  self-end text-center mt-3 w-auto algin-middle bg-blue-500 max-w-50 hover:bg-blue-600 h-6 font-medium rounded-lg text-sm dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-800">
+        Voltar
+    </button>
+</div>
