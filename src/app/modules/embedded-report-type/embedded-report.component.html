@@ -3,6 +3,8 @@
     <div class="flex flex-col flex-auto min-w-0">
 
         <div class="flex justify-between mt-[-20px] gap-2 items-center">
+
+            <div class="flex gap-x-2">
             <mat-icon svgIcon="mat_outline:settings" class="absolute w-8 h-8"></mat-icon>
 
             <mat-form-field class="opacity-0 w-6 h-6 bg-slate-400 mb-5 mt-[-10px]">
@@ -16,6 +18,9 @@
                     <mat-option value="Atualizar Dataset">Atualizar Dataset</mat-option>
                 </mat-select>
             </mat-form-field>
+
+            <mat-icon svgIcon="mat_outline:refresh" (click)="refresh()" class=" w-8 h-8 cursor-pointer"></mat-icon>
+        </div>
 
             <div class="flex items-center flex-row justify-center " *ngIf="this.rlsName !== 'User'">
 

@@ -24,7 +24,7 @@ import { LogModalComponent } from './log-modal/log-modal.component';
     templateUrl: './embedded-report.component.html',
     styleUrls: ['./embedded-report.component.css'],
 })
-export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
+export class EmbeddedReportByTypeComponent implements OnInit {
     @Input() type: string;
     @ViewChild('formInputs') formIputFile;
     form: FormGroup = this.fb.group({
@@ -226,22 +226,20 @@ export class EmbeddedReportByTypeComponent implements OnInit, AfterViewInit {
                         layoutType: 0,
                         background: 0,
                     };
-                    // console.log(this.report)
-                    // this.report.updateSettings(this.settings);
                 }
             });
 
         this.getEmbedded(this.settings);
     }
 
-    ngAfterViewInit(): void {
-        if (this.reportObj) {
-        }
-    }
     async refresh() {
         this.reportObj
             .getReport()
-            .getPages()
+            .refresh()
+            .then((e) => console.log(e));
+        this.reportObj
+            .getReport()
+            .reload()
             .then((e) => console.log(e));
     }
     fullscreen() {
