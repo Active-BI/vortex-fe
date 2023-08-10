@@ -5,7 +5,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { AuthService } from 'app/modules/services/auth/auth.service';
 import { UserService } from 'app/modules/services/login/login';
@@ -36,14 +36,21 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
         private router: Router,
         private userService: UserService,
         private authService: AuthService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private route: ActivatedRoute
     ) {}
     ngAfterViewInit(): void {
         if (this.authService.isLoggedIn()) {
             this.router.navigateByUrl('app/inicio');
         }
     }
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.route.queryParams.subscribe((params) => {
+            if (params.email) {
+                this.email.setValue(params.email);
+            }
+        });
+    }
 
     redirect(): void {
         this.router.navigate(['/app/inicio']);

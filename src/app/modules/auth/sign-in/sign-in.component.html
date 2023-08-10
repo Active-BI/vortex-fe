@@ -2,7 +2,8 @@
     id="main-bg">
     <div
         class="flex items-center justify-center md:justify-end w-full h-full bg-cover bg-[url(assets/images/powerBi.jpg)] bg-no-repeat bg-right  md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 md:rounded-none sm:shadow md:shadow-none ">
-        <mat-icon svgIcon="mat_outline:arrow_back" class="fixed w-10 h-10 text-white top-5 left-5 cursor-pointer" [routerLink]="'/home'"></mat-icon>
+        <mat-icon svgIcon="mat_outline:arrow_back" class="fixed w-10 h-10 text-white top-5 left-5 cursor-pointer"
+            [routerLink]="'/home'"></mat-icon>
         <div class="w-full max-w-100 sm:w-100  mx-auto sm:mx-0 bg-white rounded-md p-12">
             <!-- Logo -->
 
@@ -55,17 +56,16 @@
                     <mat-progress-spinner *ngIf="showSpinner" [diameter]="24"
                         [mode]="'indeterminate'"></mat-progress-spinner>
                 </button>
-                <div class="flex md:flex md:items-center items-baseline mt-4 font-small">
-                    <div>Não tem uma conta?</div>
-                    <a class="ml-1 text-primary underline" [routerLink]="['/auth/sign-up']">Cadastra-se
-                    </a>
-
-                </div>
-                <!-- <div class="flex md:flex md:items-center items-baseline mt-1 font-small">
-                    <div>Esqueceu a senha?</div>
-                    <a class="ml-1 text-primary underline" [routerLink]="['/auth/reset-send']">Redefinir
-                    </a>
-                </div> -->
+                <button [routerLink]="['/auth/sign-up']" class="mt-2 text-md text-primary font-extrabold tracking-tight leading-tight  w-full border-2 rounded-sm p-3 border-spacing-3 border-gray-800"
+                    color="primary">
+                    <span>
+                        <p class="text-gray-800">
+                            Cadastrar-se
+                        </p>
+                    </span>
+                    <mat-progress-spinner *ngIf="showSpinner" [diameter]="24"
+                        [mode]="'indeterminate'"></mat-progress-spinner>
+                </button>
             </form>
         </div>
     </div>
