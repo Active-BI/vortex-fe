@@ -4,11 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
 import { getAllRequest } from 'app/modules/services/admin.service';
-import { DashboardService } from 'app/modules/services/dashboard.service';
-import { listRoles } from 'app/modules/services/roles.service';
-import jwtDecode from 'jwt-decode';
+import { PageService } from 'app/modules/services/page.service';
 import moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { AddAdminAccessComponent } from './add_access_admin/add_access_admin.component';
@@ -34,7 +31,7 @@ export class TenantUserListComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private dashboard: DashboardService,
+        private pageService: PageService,
         private toastr: ToastrService,
         private dialog: MatDialog
     ) {
@@ -48,7 +45,7 @@ export class TenantUserListComponent implements OnInit {
     }
 
     requisicoes() {
-        this.dashboard
+        this.pageService
             .getAdminUsersByTenantId(this.id)
             .subscribe((e: any[]) => {
                 const users = e.map((usuario: any) => ({

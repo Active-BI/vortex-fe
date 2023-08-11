@@ -5,7 +5,7 @@ import { AdminService } from 'app/modules/services/admin.service';
 import { listRoles } from 'app/modules/services/roles.service';
 import { ToastrService } from 'ngx-toastr';
 import { ordersData } from '../usersUtils';
-import { DashboardService } from 'app/modules/services/dashboard.service';
+import { PageService } from 'app/modules/services/page.service';
 
 @Component({
     selector: 'app-edit-user',
@@ -60,14 +60,14 @@ export class EditUserComponent implements OnInit {
         private route: ActivatedRoute,
         private toastr: ToastrService,
         private adminSrv: AdminService,
-        private dashboardService: DashboardService
+        private pageService: PageService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
         let editar = false;
         this.route.url.subscribe(
             (a) => (editar = a[0].path.includes('editar'))
         );
-        this.dashboardService.getDashboards().subscribe((e: any[]) => {
+        this.pageService.getDashboards().subscribe((e: any[]) => {
             this.dashboardList = e.map((tenant_dashboard) => {
                 return {
                     page_group: tenant_dashboard.Page.Page_Group.title,
@@ -144,7 +144,7 @@ export class EditUserComponent implements OnInit {
 
     editar(): void {
         if (this.form.valid && this.myControl.valid) {
-            this.dashboardService
+            this.pageService
                 .postDashboards(
                     {
                         DashboardUserList: this.visoes.value,

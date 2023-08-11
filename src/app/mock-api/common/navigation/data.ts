@@ -2,7 +2,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { FuseNavigationItem } from '@fuse/components/navigation';
-import { DashboardService } from 'app/modules/services/dashboard.service';
 import jwtDecode from 'jwt-decode';
 import { ReplaySubject } from 'rxjs';
 // report/group

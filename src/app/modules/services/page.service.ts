@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable({
     providedIn: 'root',
 })
-export class DashboardService {
+export class PageService {
     constructor(private http: HttpClient) {}
 
     private baseUrl = environment.baseUrl;

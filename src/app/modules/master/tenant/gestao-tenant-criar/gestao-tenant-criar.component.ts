@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DashboardService } from 'app/modules/services/dashboard.service';
+import { PageService } from 'app/modules/services/page.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import { ToastrService } from 'ngx-toastr';
 import { GestaoTenantEditComponent } from '../gestao-tenant-edit/gestao-tenant-edit.component';
@@ -25,18 +25,10 @@ export class GestaoTenantCriarComponent
         private toast: ToastrService,
         private tenantsServices: TenantsService,
         dialog: MatDialog,
-        dashboardService: DashboardService
+        pageService: PageService
     ) {
-        super(
-            fb,
-            router,
-            route,
-            toastr,
-            tenantsServices,
-            dialog,
-            dashboardService
-        );
-        dashboardService.getMasterDashBoard().subscribe((d: any) => {
+        super(fb, router, route, toastr, tenantsServices, dialog, pageService);
+        pageService.getMasterDashBoard().subscribe((d: any) => {
             this.dashboardsSelecteds = d;
         });
     }

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { DashboardService } from 'app/modules/services/dashboard.service';
+import { PageService } from 'app/modules/services/page.service';
 
 @Component({
     selector: 'add_access_admin',
@@ -14,7 +14,7 @@ export class AddAdminAccessComponent implements OnInit {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialog: MatDialog,
-        private dashboardService: DashboardService
+        private pageService: PageService
     ) {
         this.usuario = data.usuario;
     }
@@ -29,7 +29,7 @@ export class AddAdminAccessComponent implements OnInit {
     form = new FormControl('');
 
     onSubmit(): void {
-        this.dashboardService
+        this.pageService
             .postMasterDashboards(
                 {
                     DashboardUserList: this.form.value,

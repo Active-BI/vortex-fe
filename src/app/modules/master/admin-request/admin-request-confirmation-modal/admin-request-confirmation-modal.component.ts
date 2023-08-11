@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { DashboardService } from 'app/modules/services/dashboard.service';
+import { PageService } from 'app/modules/services/page.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -51,11 +51,11 @@ export class AdminRequestConfirmationModalComponent {
         private fb: FormBuilder,
         private toastr: ToastrService,
         private route: ActivatedRoute,
-        private dashboardService: DashboardService
+        private pageService: PageService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
 
-        this.dashboardService
+        this.pageService
             .getMasterDashBoardById(this.id)
             .subscribe((d: any[]) => {
                 this.dashboardsSelecteds = d;

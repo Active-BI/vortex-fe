@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
 import { ordersData } from 'app/modules/admin/users/usersUtils';
-import { DashboardService } from 'app/modules/services/dashboard.service';
+import { PageService } from 'app/modules/services/page.service';
 import { listRoles } from 'app/modules/services/roles.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import jwtDecode from 'jwt-decode';
@@ -57,7 +57,7 @@ export class GestaoTenantEditComponent implements OnInit {
         private toastr: ToastrService,
         private tenantsService: TenantsService,
         private dialog: MatDialog,
-        private dashboardService: DashboardService
+        private pageService: PageService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
         let editar = false;
@@ -65,7 +65,7 @@ export class GestaoTenantEditComponent implements OnInit {
             editar = a[2].path.includes('editar');
         });
         if (editar) {
-            this.dashboardService
+            this.pageService
                 .getMasterDashBoardById(this.id)
                 .subscribe((d: any[]) => {
                     this.dashboardsSelecteds = d;
