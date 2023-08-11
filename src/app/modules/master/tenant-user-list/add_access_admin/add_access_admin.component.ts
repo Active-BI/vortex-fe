@@ -12,6 +12,7 @@ import { PageService } from 'app/modules/services/page.service';
 })
 export class AddAdminAccessComponent implements OnInit {
     usuario;
+    dashboardListReduced;
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialog: MatDialog,

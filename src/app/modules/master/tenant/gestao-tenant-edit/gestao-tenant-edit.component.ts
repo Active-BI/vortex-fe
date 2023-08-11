@@ -51,6 +51,8 @@ export class GestaoTenantEditComponent implements OnInit {
     tenant: any;
     dashboardsSelecteds = [];
     listRoles = listRoles;
+
+    dashboardListReduced = [];
     constructor(
         private fb: FormBuilder,
         private router: Router,
@@ -70,6 +72,35 @@ export class GestaoTenantEditComponent implements OnInit {
                 .getPageById(this.id)
                 .subscribe((d: any[]) => {
                     this.dashboardsSelecteds = d;
+
+                    const dashboardList = d.map((page) => {
+                        return {
+                            page_group: page.Page_Group.title,
+                            name: page.title,
+                            id: page.id,
+                            selected: page.included,
+                        };
+                    });
+
+                    this.dashboardListReduced = dashboardList.reduce(
+                        (acc, cur) => {
+                            const findItem = acc.findIndex(
+                                (a) => a.page_group === cur.page_group
+                            );
+                            if (findItem >= 0) {
+                                acc[findItem].children.push(cur);
+                                return acc;
+                            }
+                            acc.push({
+                                page_group: cur.page_group,
+                                children: [cur],
+                            });
+
+                            return acc;
+                        },
+                        []
+                    );
+                    console.log(d);
                     this.form.patchValue({
                         dashboard: d
                             .filter((dash) => dash.included === true)
