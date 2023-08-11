@@ -78,6 +78,7 @@ export class EditUserComponent implements OnInit {
             });
             this.dashboardListReduced = this.dashboardList.reduce(
                 (acc, cur) => {
+                    console.log(cur);
                     const findItem = acc.findIndex(
                         (a) => a.page_group === cur.page_group
                     );
@@ -86,9 +87,10 @@ export class EditUserComponent implements OnInit {
                         return acc;
                     }
                     acc.push({
-                        group_name: cur.page_group,
+                        page_group: cur.page_group,
                         children: [cur],
                     });
+
                     return acc;
                 },
                 []
@@ -147,7 +149,7 @@ export class EditUserComponent implements OnInit {
             this.pageService
                 .postDashboards(
                     {
-                        DashboardUserList: this.visoes.value,
+                        PageUserList: this.visoes.value,
                     },
                     this.id
                 )
