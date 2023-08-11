@@ -5,10 +5,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getAllRequest } from 'app/modules/services/admin.service';
-import { PageService } from 'app/modules/services/page.service';
 import moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { AddAdminAccessComponent } from './add_access_admin/add_access_admin.component';
+import { PageMasterService } from 'app/modules/services/page-master.service';
 
 @Component({
     selector: 'app-tenant-user-list',
@@ -31,7 +31,7 @@ export class TenantUserListComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private pageService: PageService,
+        private pageMasterService: PageMasterService,
         private toastr: ToastrService,
         private dialog: MatDialog
     ) {
@@ -45,7 +45,7 @@ export class TenantUserListComponent implements OnInit {
     }
 
     requisicoes() {
-        this.pageService
+        this.pageMasterService
             .getAdminUsersByTenantId(this.id)
             .subscribe((e: any[]) => {
                 const users = e.map((usuario: any) => ({

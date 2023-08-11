@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
 import { ordersData } from 'app/modules/admin/users/usersUtils';
+import { PageMasterService } from 'app/modules/services/page-master.service';
 import { PageService } from 'app/modules/services/page.service';
 import { listRoles } from 'app/modules/services/roles.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
@@ -57,7 +58,7 @@ export class GestaoTenantEditComponent implements OnInit {
         private toastr: ToastrService,
         private tenantsService: TenantsService,
         private dialog: MatDialog,
-        private pageService: PageService
+        private pageMasterService: PageMasterService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
         let editar = false;
@@ -65,8 +66,8 @@ export class GestaoTenantEditComponent implements OnInit {
             editar = a[2].path.includes('editar');
         });
         if (editar) {
-            this.pageService
-                .getMasterDashBoardById(this.id)
+            this.pageMasterService
+                .getPageById(this.id)
                 .subscribe((d: any[]) => {
                     this.dashboardsSelecteds = d;
                     this.form.patchValue({

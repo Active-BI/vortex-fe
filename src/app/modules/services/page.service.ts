@@ -21,23 +21,7 @@ export class PageService {
             dashboadList
         );
     }
-    postMasterDashboards(dashboadList, userId) {
-        return this.http.post(
-            `${this.baseUrl}master/dashboards/${userId}`,
-            dashboadList
-        );
-    }
-    getMasterDashBoardById(tenantId) {
-        return this.http.get(`${this.baseUrl}master/dashboards/${tenantId}`);
-    }
-    getAdminUsersByTenantId(tenantId) {
-        return this.http.get(
-            `${this.baseUrl}master/dashboards/user/${tenantId}`
-        );
-    }
-    getMasterDashBoard() {
-        return this.http.get(`${this.baseUrl}master/dashboards`);
-    }
+
     exportFile(tipoRelatorio: string) {
         console.log(tipoRelatorio);
         return this.http.get(`${this.baseUrl}arquivos/${tipoRelatorio}`, {

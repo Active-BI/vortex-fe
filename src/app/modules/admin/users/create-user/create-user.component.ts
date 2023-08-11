@@ -3,8 +3,7 @@ import { EditUserComponent } from '../edit-user/edit-user.component';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AdminService, PreRegister } from 'app/modules/services/admin.service';
-import { PMIService } from 'app/modules/services/PMI.service';
+import { AdminService } from 'app/modules/services/admin.service';
 import { PageService } from 'app/modules/services/page.service';
 
 @Component({
@@ -22,7 +21,6 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
         private toast: ToastrService,
         adminSrv: AdminService,
         private adminSrv1: AdminService,
-        pmiServices: PMIService,
         pageService: PageService
     ) {
         super(fb, router, route, toastr, adminSrv, pageService);
