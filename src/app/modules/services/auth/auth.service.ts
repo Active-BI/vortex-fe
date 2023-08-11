@@ -3,42 +3,39 @@ import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class AuthService {
-  private jwtItils = new JwtHelperService()
+    private jwtItils = new JwtHelperService();
 
-  constructor() { }
+    constructor() {}
 
-  // userLoggedIn: string
+    // userLoggedIn: string
 
-  private _user: ReplaySubject<any> = new ReplaySubject<any>(1);
+    private _user: ReplaySubject<any> = new ReplaySubject<any>(1);
 
-  set user(value: any)
-  {
-      // Store the value
-      this._user.next(value);
-  }
-
-  get user$(): Observable<any>
-  {
-      return this._user.asObservable();
-  }
-
-
-  isLoggedIn(): boolean {
-    
-    const token = localStorage.getItem('token');
-    if (!token) {
-      return false
+    set user(value: any) {
+        // Store the value
+        this._user.next(value);
     }
-    try {
-      this.jwtItils.decodeToken(token);
-      return true;
-    } catch (Error) {
-      localStorage.removeItem('token');
-      // window.location.assign('/login')
-      return false;
+
+    get user$(): Observable<any> {
+        return this._user.asObservable();
     }
-  }
+
+    isLoggedIn(): boolean {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            return false;
+        }
+        try {
+            this.jwtItils.decodeToken(token);
+            return true;
+        } catch (Error) {
+            localStorage.removeItem('token');
+            localStorage.clear();
+            // window.location.assign('/login')
+            return false;
+        }
+    }
 }

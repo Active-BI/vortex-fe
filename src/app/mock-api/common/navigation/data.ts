@@ -94,75 +94,61 @@ export class MenuItemService {
         this.getNewRoutes();
     }
     getNewRoutes() {
-        return Promise.all([localStorage.getItem('token')]).then((e) => {
-            if (e[0]) {
-                let decoded;
-                try {
-                    decoded = jwtDecode(JSON.parse(e[0])) as any;
-                } catch (e) {
-                    localStorage.clear();
-                    this.router.navigate(['auth/login']);
-                }
-                const dashUsers: DashboardUser[] = decoded.dashboardUser;
+        const dashUsers = JSON.parse(localStorage.getItem('userRoutes'));
 
-                const routes: FuseNavigationItem[] = [];
-                routes.push(...defaultRoute);
+        const routes: FuseNavigationItem[] = [];
+        routes.push(...defaultRoute);
 
-                const collapsableRoutes = dashUsers.reduce((acc, cur) => {
-                    if (!acc[cur.Page_Group.title]) {
-                        acc[cur.Page_Group.title] =
-                            CreateRoutes.CollapsableRoute(
-                                cur.Page_Group.id,
-                                cur.Page_Group.title,
-                                cur.Page_Group.icon,
-                                cur.Page_Role
-                            );
-                        return acc;
-                    }
-                    cur.Page_Role.forEach((role) => {
-                        console.log(acc[cur.Page_Group.title]);
-                        if (
-                            !(
-                                acc[cur.Page_Group.title].data.roles as string[]
-                            ).includes(role)
-                        ) {
-                            acc[cur.Page_Group.title].data.roles.push(role);
-                            return acc;
-                        }
-                    });
-
+        const collapsableRoutes = dashUsers.reduce((acc, cur) => {
+            if (!acc[cur.Page_Group.title]) {
+                acc[cur.Page_Group.title] = CreateRoutes.CollapsableRoute(
+                    cur.Page_Group.id,
+                    cur.Page_Group.title,
+                    cur.Page_Group.icon,
+                    cur.Page_Role
+                );
+                return acc;
+            }
+            cur.Page_Role.forEach((role) => {
+                if (
+                    !(
+                        acc[cur.Page_Group.title].data.roles as string[]
+                    ).includes(role)
+                ) {
+                    acc[cur.Page_Group.title].data.roles.push(role);
                     return acc;
-                }, {});
-                const navigationGroups: any[] =
-                    Object.values(collapsableRoutes);
+                }
+            });
 
-                dashUsers.forEach((rota) => {
-                    const findFather = navigationGroups.findIndex(
-                        (e) => e.title === rota.Page_Group.title
-                    );
-                    if (findFather >= 0) {
-                        navigationGroups[findFather].children.push(
-                            rota.type !== 'report-upload'
-                                ? CreateRoutes.BasicRoute(
-                                      rota.Page_Role,
-                                      rota.id,
-                                      rota.title,
-                                      rota.link
-                                  )
-                                : CreateRoutes.ReportUploadRoute(
-                                      rota.Page_Role,
-                                      rota.id,
-                                      rota.title,
-                                      rota.link
-                                  )
-                        );
-                        return navigationGroups;
-                    }
-                });
+            return acc;
+        }, {});
+        const navigationGroups: any[] = Object.values(collapsableRoutes);
 
-                routes.push(...navigationGroups);
-                return routes;
+        dashUsers.forEach((rota) => {
+            const findFather = navigationGroups.findIndex(
+                (e) => e.title === rota.Page_Group.title
+            );
+            if (findFather >= 0) {
+                navigationGroups[findFather].children.push(
+                    rota.type !== 'report-upload'
+                        ? CreateRoutes.BasicRoute(
+                              rota.Page_Role,
+                              rota.id,
+                              rota.title,
+                              rota.link
+                          )
+                        : CreateRoutes.ReportUploadRoute(
+                              rota.Page_Role,
+                              rota.id,
+                              rota.title,
+                              rota.link
+                          )
+                );
+                return navigationGroups;
             }
         });
+
+        routes.push(...navigationGroups);
+        return routes;
     }
 }

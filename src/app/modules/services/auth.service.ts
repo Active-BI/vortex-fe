@@ -77,7 +77,7 @@ export class AuthService {
         const decodedToken = decode<any>(localStorage.getItem('ApiToken'));
         localStorage.removeItem(tokenIdKey);
         localStorage.removeItem(tokenAccessKey);
-        localStorage.removeItem('ApiToken');
+        localStorage.clear();
         this.router.navigate(['login']);
     }
 

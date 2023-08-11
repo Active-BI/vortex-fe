@@ -5,10 +5,11 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { AuthService } from 'app/modules/services/auth/auth.service';
 import { UserService } from 'app/modules/services/login/login';
+import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 
 interface User {
@@ -36,7 +37,9 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
         private router: Router,
         private userService: UserService,
         private authService: AuthService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private route: ActivatedRoute,
+        private pageService: PageService.
     ) {}
     ngAfterViewInit(): void {
         if (this.authService.isLoggedIn()) {
@@ -67,7 +70,19 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
                 Promise.all([
                     localStorage.setItem('token', JSON.stringify(res.token)),
                 ]).then(() => {
-                    this.redirect();
+                    const token = jwtDecode(res.token) as any;
+                    Promise.all([
+                        this.pageService
+                            .getDashboardsByUserId(token.userId)
+                            .then((rotas: any) => {
+                                const dashUsers = rotas;
+                                localStorage.setItem(
+                                    'userRoutes',
+                                    JSON.stringify(dashUsers)
+                                );
+                            })
+                            .then(() => this.redirect()),
+                    ]);
                 });
             },
             (err) => {
