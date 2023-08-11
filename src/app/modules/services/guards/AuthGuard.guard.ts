@@ -41,12 +41,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                 }
                 return false;
             } catch (e) {
-                localStorage.removeItem('token');
+                localStorage.clear();
                 this.router.navigate(['/auth/sign-in']);
                 return false;
             }
         } else {
-            localStorage.removeItem('token');
+            localStorage.clear();
             this.router.navigate(['/auth/sign-in']);
             return false;
         }

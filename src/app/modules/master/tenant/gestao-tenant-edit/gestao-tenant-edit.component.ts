@@ -4,7 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
 import { ordersData } from 'app/modules/admin/users/usersUtils';
-import { DashboardService } from 'app/modules/services/dashboard.service';
+import { PageMasterService } from 'app/modules/services/page-master.service';
+import { PageService } from 'app/modules/services/page.service';
 import { listRoles } from 'app/modules/services/roles.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import jwtDecode from 'jwt-decode';
@@ -50,6 +51,8 @@ export class GestaoTenantEditComponent implements OnInit {
     tenant: any;
     dashboardsSelecteds = [];
     listRoles = listRoles;
+
+    dashboardListReduced = [];
     constructor(
         private fb: FormBuilder,
         private router: Router,
@@ -57,7 +60,7 @@ export class GestaoTenantEditComponent implements OnInit {
         private toastr: ToastrService,
         private tenantsService: TenantsService,
         private dialog: MatDialog,
-        private dashboardService: DashboardService
+        private pageMasterService: PageMasterService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
         let editar = false;
@@ -65,10 +68,39 @@ export class GestaoTenantEditComponent implements OnInit {
             editar = a[2].path.includes('editar');
         });
         if (editar) {
-            this.dashboardService
-                .getMasterDashBoardById(this.id)
+            this.pageMasterService
+                .getPageById(this.id)
                 .subscribe((d: any[]) => {
                     this.dashboardsSelecteds = d;
+
+                    const dashboardList = d.map((page) => {
+                        return {
+                            page_group: page.Page_Group.title,
+                            name: page.title,
+                            id: page.id,
+                            selected: page.included,
+                        };
+                    });
+
+                    this.dashboardListReduced = dashboardList.reduce(
+                        (acc, cur) => {
+                            const findItem = acc.findIndex(
+                                (a) => a.page_group === cur.page_group
+                            );
+                            if (findItem >= 0) {
+                                acc[findItem].children.push(cur);
+                                return acc;
+                            }
+                            acc.push({
+                                page_group: cur.page_group,
+                                children: [cur],
+                            });
+
+                            return acc;
+                        },
+                        []
+                    );
+                    console.log(d);
                     this.form.patchValue({
                         dashboard: d
                             .filter((dash) => dash.included === true)

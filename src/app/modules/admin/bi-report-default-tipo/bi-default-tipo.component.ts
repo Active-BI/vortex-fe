@@ -19,13 +19,8 @@ export class BiReportDefaultByTypeComponent implements OnInit {
         this.router.params.subscribe((e) => {
             this.enable = false;
             this.type = e.type;
-            const token = localStorage.getItem('token');
-            if (!token) {
-                localStorage.clear();
-                window.location.reload();
-            }
-            const decoded = jwtDecode(JSON.parse(token)) as any;
-            const dashUsers = decoded.dashboardUser;
+            const dashUsers = JSON.parse(localStorage.getItem('userRoutes'));
+
             if (
                 dashUsers.length < 1 ||
                 !dashUsers.find((r) => r.link === this.type)
