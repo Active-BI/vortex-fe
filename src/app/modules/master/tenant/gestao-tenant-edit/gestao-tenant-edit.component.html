@@ -33,13 +33,16 @@
             <mat-checkbox formControlName="active">Ambiente está ativo?</mat-checkbox>
         </p>
 
-        <mat-form-field class="mt-6">
-            <mat-label>Relatórios</mat-label>
+        <mat-form-field>
+            <mat-label>Visões</mat-label>
+            <mat-select formControlName="dashboard" multiple="">
 
-            <mat-select formControlName="dashboard" multiple (click)="click()">
-
-                <mat-option *ngFor="let d of dashboardsSelecteds" [value]="d.id"
-                    [selected]="true">{{d.title}}</mat-option>
+                <mat-optgroup *ngFor="let group of dashboardListReduced" [label]="group.page_group"
+                    >
+                    <mat-option *ngFor="let page of group.children" [value]="page.id">
+                        {{page.name}}
+                    </mat-option>
+                </mat-optgroup>
             </mat-select>
         </mat-form-field>
     </form>

@@ -2,12 +2,15 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { FuseNavigationItem } from '@fuse/components/navigation';
-import { DashboardService } from 'app/modules/services/dashboard.service';
+import { PageService } from 'app/modules/services/page.service';
 import jwtDecode from 'jwt-decode';
 import { ReplaySubject } from 'rxjs';
 // report/group
 const dataAdmin = {
     roles: ['Admin'],
+};
+const dataAdminUser = {
+    roles: ['Admin', 'User'],
 };
 interface DashboardUser {
     id: string;
@@ -90,7 +93,7 @@ export const defaultNavigation: FuseNavigationItem[] = [];
 export class MenuItemService {
     sub = new ReplaySubject();
     intervalId: any;
-    constructor(private router: Router) {
+    constructor(private router: Router, private pageService: PageService) {
         this.getNewRoutes();
     }
     getNewRoutes() {

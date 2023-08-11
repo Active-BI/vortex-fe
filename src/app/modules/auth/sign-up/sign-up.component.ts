@@ -7,11 +7,13 @@ import {
     AbstractControl,
     FormControl,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/modules/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { SignUpModalComponent } from './sign-up-modal/sign-up-modal.component';
 
 @Component({
     selector: 'auth-sign-up',
@@ -36,7 +38,8 @@ export class AuthSignUpComponent implements OnInit {
         private _formBuilder: UntypedFormBuilder,
         private toastr: ToastrService,
         private _router: Router,
-        private authService: AuthService
+        private authService: AuthService,
+        private dialog: MatDialog
     ) {}
     ngOnInit(): void {}
 
@@ -89,20 +92,23 @@ export class AuthSignUpComponent implements OnInit {
         }
         const form = this.signUpForm.value;
         delete form.passwordConfirm;
-        this.authService.register(this.signUpForm.value).subscribe(
-            (response) => {
-                this._router.navigateByUrl('/auth/sign-in');
-                this.signUpForm.enable();
-                this.signUpNgForm.resetForm();
-            },
-            (response) => {
-                // Re-enable the form
-                // this.signUpForm.enable();
-                // // Reset the form
-                // this.signUpNgForm.resetForm();
-                // // Show the alert
-                // this.showAlert = true;
-            }
-        );
+        this.authService
+            .register(this.signUpForm.value)
+            .subscribe((response) => {
+                this.dialog.open(SignUpModalComponent, {
+                    data: {
+                        data: () => {
+                            this.dialog.closeAll();
+                            this._router.navigate(['/auth/sign-in'], {
+                                queryParams: {
+                                    email: this.signUpForm.value.email,
+                                },
+                            });
+                            this.signUpForm.enable();
+                            this.signUpNgForm.resetForm();
+                        },
+                    },
+                });
+            });
     }
 }

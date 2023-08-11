@@ -1,19 +1,8 @@
-import {
-    EventEmitter,
-    Injectable,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { cloneDeep } from 'lodash-es';
 import { FuseNavigationItem } from '@fuse/components/navigation';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
 import { MenuItemService } from 'app/mock-api/common/navigation/data';
-import { AdminService } from '../../../modules/services/admin.service';
-import { HttpClient } from '@angular/common/http';
-import { DashboardService } from 'app/modules/services/dashboard.service';
-import { Route, Router } from '@angular/router';
 @Injectable({
     providedIn: 'root',
 })

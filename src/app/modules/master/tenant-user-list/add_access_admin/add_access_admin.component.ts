@@ -2,7 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { DashboardService } from 'app/modules/services/dashboard.service';
+import { PageMasterService } from 'app/modules/services/page-master.service';
+import { PageService } from 'app/modules/services/page.service';
 
 @Component({
     selector: 'add_access_admin',
@@ -11,15 +12,15 @@ import { DashboardService } from 'app/modules/services/dashboard.service';
 })
 export class AddAdminAccessComponent implements OnInit {
     usuario;
+    dashboardListReduced;
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialog: MatDialog,
-        private dashboardService: DashboardService
+        private pageMasterService: PageMasterService
     ) {
         this.usuario = data.usuario;
     }
     ngOnInit(): void {
-        console.log(this.usuario);
         this.form.setValue(
             this.usuario.dashboards
                 .filter((d) => d.included === true)
@@ -29,8 +30,8 @@ export class AddAdminAccessComponent implements OnInit {
     form = new FormControl('');
 
     onSubmit(): void {
-        this.dashboardService
-            .postMasterDashboards(
+        this.pageMasterService
+            .postPage(
                 {
                     DashboardUserList: this.form.value,
                     tenant_id: this.usuario.tenant_id,

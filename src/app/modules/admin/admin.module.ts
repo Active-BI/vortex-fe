@@ -48,6 +48,8 @@ import { AccessRequestComponent } from '../home/access-request/access-request.co
 import { MatRadioModule } from '@angular/material/radio';
 import { RequestModalComponent } from '../home/access-request/request-modal/request-modal.component';
 import { LogModalComponent } from '../embedded-report-type/log-modal/log-modal.component';
+import { SignUpModalComponent } from '../auth/sign-up/sign-up-modal/sign-up-modal.component';
+import { PageMasterService } from '../services/page-master.service';
 
 const adminroutes: Route[] = [
     {
@@ -103,6 +105,7 @@ const adminroutes: Route[] = [
         AccessRequestComponent,
         RequestModalComponent,
         LogModalComponent,
+        SignUpModalComponent,
     ],
     imports: [
         CommonModule,

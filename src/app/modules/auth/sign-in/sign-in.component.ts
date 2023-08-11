@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { AuthService } from 'app/modules/services/auth/auth.service';
 import { UserService } from 'app/modules/services/login/login';
+import { PageService } from 'app/modules/services/page.service';
 import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 
@@ -39,14 +40,20 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
         private authService: AuthService,
         private toastr: ToastrService,
         private route: ActivatedRoute,
-        private pageService: PageService.
+        private pageService: PageService
     ) {}
     ngAfterViewInit(): void {
         if (this.authService.isLoggedIn()) {
             this.router.navigateByUrl('app/inicio');
         }
     }
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.route.queryParams.subscribe((params) => {
+            if (params.email) {
+                this.email.setValue(params.email);
+            }
+        });
+    }
 
     redirect(): void {
         this.router.navigate(['/app/inicio']);

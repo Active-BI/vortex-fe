@@ -5,9 +5,7 @@ import { AdminService } from 'app/modules/services/admin.service';
 import { listRoles } from 'app/modules/services/roles.service';
 import { ToastrService } from 'ngx-toastr';
 import { ordersData } from '../usersUtils';
-import { PMIService } from 'app/modules/services/PMI.service';
-import { DashboardService } from 'app/modules/services/dashboard.service';
-import jwtDecode from 'jwt-decode';
+import { PageService } from 'app/modules/services/page.service';
 
 @Component({
     selector: 'app-edit-user',
@@ -18,6 +16,7 @@ export class EditUserComponent implements OnInit {
     myControl = new FormControl('');
     tenants: string[] = [];
     selectedTenant = this.tenants;
+    visoes = new FormControl([]);
 
     onKey(value) {
         this.selectedTenant = this.search(value);
@@ -39,6 +38,7 @@ export class EditUserComponent implements OnInit {
             [
                 Validators.required,
                 Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+                Validators.email,
             ],
         ],
         profession: ['', [Validators.required]],
@@ -52,6 +52,7 @@ export class EditUserComponent implements OnInit {
     dashboardList = [];
     selectedDashboardList = [];
 
+    dashboardListReduced = [];
     listRoles = listRoles;
     constructor(
         private fb: FormBuilder,
@@ -59,14 +60,14 @@ export class EditUserComponent implements OnInit {
         private route: ActivatedRoute,
         private toastr: ToastrService,
         private adminSrv: AdminService,
-        private dashboardService: DashboardService
+        private pageService: PageService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
         let editar = false;
         this.route.url.subscribe(
             (a) => (editar = a[0].path.includes('editar'))
         );
-        this.dashboardService.getDashboards().subscribe((e: any[]) => {
+        this.pageService.getDashboards().subscribe((e: any[]) => {
             this.dashboardList = e.map((tenant_dashboard) => {
                 return {
                     page_group: tenant_dashboard.Page.Page_Group.title,
@@ -75,19 +76,40 @@ export class EditUserComponent implements OnInit {
                     selected: false,
                 };
             });
+            this.dashboardListReduced = this.dashboardList.reduce(
+                (acc, cur) => {
+                    console.log(cur);
+                    const findItem = acc.findIndex(
+                        (a) => a.page_group === cur.page_group
+                    );
+                    if (findItem >= 0) {
+                        acc[findItem].children.push(cur);
+                        return acc;
+                    }
+                    acc.push({
+                        page_group: cur.page_group,
+                        children: [cur],
+                    });
+
+                    return acc;
+                },
+                []
+            );
+
             if (editar) {
                 this.adminSrv.getUserById(this.id).subscribe((e: any) => {
                     this.user = e;
-                    let tenant;
                     this.selectedDashboardList = this.dashboardList.map(
-                        (dash) => ({
-                            ...dash,
-                            selected: this.user.User_Page.find(
-                                (utd) => utd.tenant_page_id === dash.id
-                            )
-                                ? true
-                                : false,
-                        })
+                        (dash) => {
+                            this.user.User_Page.find((utd) => {
+                                if (utd.tenant_page_id === dash.id) {
+                                    this.visoes.setValue([
+                                        ...this.visoes.value,
+                                        dash.id,
+                                    ]);
+                                }
+                            });
+                        }
                     );
 
                     this.form.patchValue({
@@ -124,12 +146,10 @@ export class EditUserComponent implements OnInit {
 
     editar(): void {
         if (this.form.valid && this.myControl.valid) {
-            this.dashboardService
+            this.pageService
                 .postDashboards(
                     {
-                        DashboardUserList: this.selectedDashboardList
-                            .filter((e) => e.selected)
-                            .map((e) => e.id),
+                        PageUserList: this.visoes.value,
                     },
                     this.id
                 )
