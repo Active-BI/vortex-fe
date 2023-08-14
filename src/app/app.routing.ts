@@ -7,6 +7,7 @@ import { SendPassRecoverComponent } from './modules/auth/reset-send/send-pass-re
 import { ResetPassComponent } from './modules/auth/reset-pass/reset-pass.component';
 import { HomeComponent } from './modules/home/home.component';
 import { AccessRequestComponent } from './modules/home/access-request/access-request.component';
+import { TfaComponent } from './modules/auth/tfa/tfa.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -65,6 +66,10 @@ export const appRoutes: Route[] = [
             {
                 path: 'reset-send',
                 component: SendPassRecoverComponent,
+            },
+            {
+                path: 'tfa',
+                component: TfaComponent,
             },
             {
                 path: 'reset-pass/:token',

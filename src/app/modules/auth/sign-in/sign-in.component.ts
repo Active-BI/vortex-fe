@@ -72,29 +72,18 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
             this.toastr.error('Campos inválidos');
             return;
         }
+
         this.userService.Login(data).subscribe(
             (res) => {
-                Promise.all([
-                    localStorage.setItem('token', JSON.stringify(res.token)),
-                ]).then(() => {
-                    const token = jwtDecode(res.token) as any;
-                    Promise.all([
-                        this.pageService
-                            .getDashboardsByUserId(token.userId)
-                            .then((rotas: any) => {
-                                const dashUsers = rotas;
-                                localStorage.setItem(
-                                    'userRoutes',
-                                    JSON.stringify(dashUsers)
-                                );
-                            })
-                            .then(() => this.redirect()),
-                    ]);
-                });
+                localStorage.setItem('tempToken', res.token);
+                this.redirectTfa();
             },
             (err) => {
                 this.error = err.error.message;
             }
         );
+    }
+    redirectTfa(): void {
+        this.router.navigate(['/auth/tfa']);
     }
 }
