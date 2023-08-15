@@ -42,15 +42,17 @@ export class TfaComponent implements OnInit {
                         pin: value,
                         token: localStorage.getItem('tempToken'),
                     })
-                    .subscribe((res) => {
-                        Promise.all([
+                    .subscribe(async (res) => {
+                        await Promise.all([
+                            jwtDecode(res.token),
                             localStorage.setItem(
                                 'token',
                                 JSON.stringify(res.token)
                             ),
-                        ]).then(() => {
+                        ]).then(async (data) => {
+                            console.log(data);
                             const token = jwtDecode(res.token) as any;
-                            Promise.all([
+                            await Promise.all([
                                 this.pageService
                                     .getDashboardsByUserId(token.userId)
                                     .then((rotas: any) => {
@@ -59,15 +61,10 @@ export class TfaComponent implements OnInit {
                                             'userRoutes',
                                             JSON.stringify(dashUsers)
                                         );
-                                    })
-                                    .then(() => this.redirect()),
+                                    }),
+                                localStorage.removeItem('tempToken'),
+                                this.redirect(),
                             ]);
-                            localStorage.setItem(
-                                'token',
-                                JSON.stringify(res.token)
-                            );
-                            localStorage.removeItem('tempToken');
-                            this.redirect();
                         });
                     });
             }
