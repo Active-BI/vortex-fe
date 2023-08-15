@@ -164,8 +164,9 @@ export class MenuItemService {
                 return routes;
             });
         } catch (e) {
+            // console.log(this.router.routerState);
             localStorage.clear();
-            this.router.navigate(['/auth/sign-in']);
+            // this.router.navigate(['/auth/sign-in']);
         }
     }
 }

@@ -57,7 +57,7 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'sign-up',
+                path: 'sign-up/:token',
                 loadChildren: () =>
                     import('app/modules/auth/sign-up/sign-up.module').then(
                         (m) => m.AuthSignUpModule

@@ -33,7 +33,7 @@
                 [formGroup]="signUpForm"
                 #signUpNgForm="ngForm">
 
-                <mat-form-field class="w-full ">
+                <mat-form-field class="w-full "  >
                     <mat-label>E-mail</mat-label>
                     <input
                     id="email"
@@ -74,6 +74,7 @@
                     <mat-error *ngIf="signUpForm.get('password').hasError('required')">
                         * Obrigatório
                     </mat-error>
+
                     <mat-error *ngIf="signUpForm.get('password').hasError('specialChar')">
                         * Deve possuir 1 caractere especial
                     </mat-error>
@@ -109,10 +110,10 @@
                     <mat-error *ngIf="signUpForm.get('passwordConfirm').hasError('required')">
                         * Obrigatório
                     </mat-error>
-                    <mat-error *ngIf="signUpForm.get('passwordConfirm').hasError('PassNotEqual')">
-                        * As senhas devem ser iguais
-                    </mat-error>
                 </mat-form-field>
+                <mat-error class="-mt-4" *ngIf="!signUpForm.get('passwordConfirm').hasError('required') && signUpForm.hasError('mismatch')">
+                    * As senhas devem ser iguais
+                </mat-error>
                 <!-- Submit button -->
 
                 <button

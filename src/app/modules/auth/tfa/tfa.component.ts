@@ -36,7 +36,6 @@ export class TfaComponent implements OnInit {
             jwtDecode(localStorage.getItem('tempToken'), {
                 header: true,
             });
-            console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
         } catch (e) {
             localStorage.clear();
             this.router.navigate(['/auth/sign-in']);

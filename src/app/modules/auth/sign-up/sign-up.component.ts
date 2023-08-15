@@ -6,14 +6,17 @@ import {
     Validators,
     AbstractControl,
     FormControl,
+    FormGroup,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/modules/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { SignUpModalComponent } from './sign-up-modal/sign-up-modal.component';
+import jwtDecode from 'jwt-decode';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
     selector: 'auth-sign-up',
@@ -38,24 +41,48 @@ export class AuthSignUpComponent implements OnInit {
         private _formBuilder: UntypedFormBuilder,
         private toastr: ToastrService,
         private _router: Router,
+        private _ActRouter: ActivatedRoute,
         private authService: AuthService,
         private dialog: MatDialog
     ) {}
-    ngOnInit(): void {}
+    id = '';
+    email = '';
+    token = '';
+    async ngOnInit() {
+        try {
+            this.token = this._ActRouter.snapshot.paramMap.get('token');
+            await jwtDecode(this.token, {
+                header: true,
+            });
 
-    signUpForm = this._formBuilder.group({
-        email: ['', [Validators.required, Validators.email]],
-        passwordConfirm: ['', [Validators.required]],
-        password: [
-            '',
-            [
-                Validators.required,
-                Validators.minLength(6),
-                this.valilateSpecialCharacterPassword,
-                this.valilateUpperCaseLetter,
+            const decoded: any = await jwtDecode(this.token);
+
+            this.email = decoded.contact_email;
+            this.signUpForm.patchValue({
+                email: decoded.contact_email,
+            });
+        } catch (e) {
+            localStorage.clear();
+            this._router.navigate(['/auth/sign-in']);
+        }
+    }
+
+    signUpForm = this._formBuilder.group(
+        {
+            email: [{ value: '', disabled: true }],
+            passwordConfirm: ['', [Validators.required]],
+            password: [
+                '',
+                [
+                    Validators.required,
+                    Validators.minLength(6),
+                    this.valilateSpecialCharacterPassword,
+                    this.valilateUpperCaseLetter,
+                ],
             ],
-        ],
-    });
+        },
+        { validators: this.passwordMatchValidator }
+    );
     valilateSpecialCharacterPassword(control: FormControl) {
         // verifica se existe algum caractere especial
         return !(control.value as string).match(/^[a-zA-Z0-9\s]*$/)
@@ -68,6 +95,11 @@ export class AuthSignUpComponent implements OnInit {
         return /[A-Z]/.test(control.value as string)
             ? true
             : { UpperCaseLetter: true };
+    }
+    passwordMatchValidator(group: FormGroup) {
+        const password = group.get('password').value;
+        const confirmPassword = group.get('passwordConfirm').value;
+        return password === confirmPassword ? null : { mismatch: true };
     }
     valilateIfPasswordAreEquals() {
         const password = this.signUpForm.value['password'];
@@ -93,7 +125,7 @@ export class AuthSignUpComponent implements OnInit {
         const form = this.signUpForm.value;
         delete form.passwordConfirm;
         this.authService
-            .register(this.signUpForm.value)
+            .register({ ...this.signUpForm.value, email: this.email })
             .subscribe((response) => {
                 this.dialog.open(SignUpModalComponent, {
                     data: {
