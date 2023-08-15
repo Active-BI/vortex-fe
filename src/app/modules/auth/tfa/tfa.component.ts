@@ -7,6 +7,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JwtModule } from '@auth0/angular-jwt';
 import { AuthService } from 'app/modules/services/auth.service';
 import { PageService } from 'app/modules/services/page.service';
 import jwtDecode from 'jwt-decode';
@@ -30,7 +31,19 @@ export class TfaComponent implements OnInit {
         private authService: AuthService,
         private pageService: PageService
     ) {}
-    ngOnInit(): void {
+    validate() {
+        try {
+            jwtDecode(localStorage.getItem('tempToken'), {
+                header: true,
+            });
+            console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+        } catch (e) {
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+        }
+    }
+    ngOnInit() {
+        this.validate();
         this.tfaForm = this.fb.group({
             tfa: ['', [Validators.required, Validators.maxLength(7)]],
         });
