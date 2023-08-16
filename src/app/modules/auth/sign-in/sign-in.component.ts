@@ -75,33 +75,21 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
 
         this.userService.Login(data).subscribe(
             (res) => {
-                console.log(res);
                 if (res.pass === true) {
                     Promise.all([
                         localStorage.setItem(
                             'token',
                             JSON.stringify(res.token)
                         ),
+                        localStorage.setItem(
+                            'userRoutes',
+                            JSON.stringify(res.userRoutes)
+                        ),
                     ]).then(async () => {
-                        const token = jwtDecode(res.token) as any;
-                        await Promise.all([
-                            this.pageService
-                                .getDashboardsByUserId(token.userId)
-                                .then((rotas: any) => {
-                                    const dashUsers = rotas;
-                                    localStorage.setItem(
-                                        'userRoutes',
-                                        JSON.stringify(dashUsers)
-                                    );
-                                })
-                                .then(() => this.redirect()),
-                            localStorage.setItem(
-                                'token',
-                                JSON.stringify(res.token)
-                            ),
-                            localStorage.removeItem('tempToken'),
-                            this.redirect(),
-                        ]);
+                        localStorage.removeItem('tempToken');
+                        setTimeout(() => {
+                            this.redirect();
+                        }, 500);
                     });
                 }
                 Promise.all([

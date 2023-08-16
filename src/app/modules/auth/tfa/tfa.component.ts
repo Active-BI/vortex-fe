@@ -56,28 +56,38 @@ export class TfaComponent implements OnInit {
                     })
                     .subscribe(async (res) => {
                         await Promise.all([
-                            jwtDecode(res.token),
                             localStorage.setItem(
                                 'token',
                                 JSON.stringify(res.token)
                             ),
-                        ]).then(async (data) => {
-                            console.log(data);
-                            const token = jwtDecode(res.token) as any;
-                            await Promise.all([
-                                this.pageService
-                                    .getDashboardsByUserId(token.userId)
-                                    .then((rotas: any) => {
-                                        const dashUsers = rotas;
-                                        localStorage.setItem(
-                                            'userRoutes',
-                                            JSON.stringify(dashUsers)
-                                        );
-                                    }),
-                                localStorage.removeItem('tempToken'),
-                                this.redirect(),
-                            ]);
-                        });
+                            localStorage.setItem(
+                                'userRoutes',
+                                JSON.stringify(res.userRoutes)
+                            ),
+                        ])
+                            .then(async () => {
+                                localStorage.removeItem('tempToken');
+                                setTimeout(() => {
+                                    this.redirect();
+                                }, 500);
+                            })
+                            .then(async (data) => {
+                                console.log(data);
+                                const token = jwtDecode(res.token) as any;
+                                await Promise.all([
+                                    this.pageService
+                                        .getDashboardsByUserId(token.userId)
+                                        .then((rotas: any) => {
+                                            const dashUsers = rotas;
+                                            localStorage.setItem(
+                                                'userRoutes',
+                                                JSON.stringify(dashUsers)
+                                            );
+                                        }),
+                                    localStorage.removeItem('tempToken'),
+                                    this.redirect(),
+                                ]);
+                            });
                     });
             }
         });
