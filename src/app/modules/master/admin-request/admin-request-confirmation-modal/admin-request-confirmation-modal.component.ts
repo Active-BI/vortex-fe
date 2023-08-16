@@ -44,6 +44,7 @@ export class AdminRequestConfirmationModalComponent {
     }
     id = '';
     dashboardsSelecteds = [];
+    dashboardListReduced = [];
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialog: MatDialog,
@@ -55,8 +56,32 @@ export class AdminRequestConfirmationModalComponent {
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
 
-        this.pageMasterService.getPageById(this.id).subscribe((d: any[]) => {
+        this.pageMasterService.getPageById(this.id).subscribe((d: any) => {
             this.dashboardsSelecteds = d;
+            const dashMap = d.map((tenant_dashboard) => {
+                return {
+                    page_group: tenant_dashboard.Page_Group.title,
+                    name: tenant_dashboard.title,
+                    id: tenant_dashboard.id,
+                    selected: tenant_dashboard.included,
+                };
+            });
+            this.dashboardListReduced = dashMap.reduce((acc, cur) => {
+                const findItem = acc.findIndex(
+                    (a) => a.page_group === cur.page_group
+                );
+                if (findItem >= 0) {
+                    acc[findItem].children.push(cur);
+                    return acc;
+                }
+                acc.push({
+                    page_group: cur.page_group,
+                    children: [cur],
+                });
+
+                return acc;
+            }, []);
+            console.log(this.dashboardListReduced);
         });
         this.form = this.fb.group({
             tenant: ['', [Validators.required]],
@@ -83,5 +108,11 @@ export class AdminRequestConfirmationModalComponent {
     }
     voltar(): void {
         this.dialog.closeAll();
+    }
+    findValue() {
+        const findPages = this.dashboardsSelecteds.find(
+            (d) => d.page_id === this.form.value[0]
+        );
+        return findPages?.title || 'Selecione';
     }
 }
