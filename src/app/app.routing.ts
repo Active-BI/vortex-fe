@@ -64,6 +64,13 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
+                path: 'request-access/:token',
+                loadChildren: () =>
+                    import(
+                        'app/modules/auth/request-access/request-access.module'
+                    ).then((m) => m.AuthRequestAccessModule),
+            },
+            {
                 path: 'reset-send',
                 component: SendPassRecoverComponent,
             },
