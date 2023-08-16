@@ -4,7 +4,7 @@ import decode from 'jwt-decode';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'environments/environment';
 import { User } from 'app/models/User';
@@ -23,7 +23,6 @@ export const LIMIT_TFA = 5;
 export class AuthService {
     constructor(
         private router: Router,
-        private route: ActivatedRoute,
         private http: HttpClient,
         private toast: ToastrService
     ) {
@@ -39,6 +38,18 @@ export class AuthService {
     userLogged = new EventEmitter<User>();
     updateUserLogin(user: User) {
         this.userLogged.emit(user);
+    }
+
+    tfa(pin): Observable<any> {
+        return this.http.post<any>(`${this.baseUrl}login/tfa`, pin).pipe(
+            map((result) => {
+                return result;
+            }),
+            catchError((err) => {
+                if (err.status === 400) this.toast.error(err.error.message);
+                return err;
+            })
+        );
     }
 
     userName: string;
@@ -60,18 +71,6 @@ export class AuthService {
     register(user): Observable<any> {
         return this.http.post<any>(`${this.baseUrl}login/register`, user);
     }
-    // getVisionsForUser() {
-    //     // const token = this.getAccessToken();
-    //     const decodedToken: any = decode(token);
-    //     const visions = decodedToken.visions;
-    //     return visions;
-    // }
-
-    // getRolesFromUser() {
-    //     // const token = this.getAccessToken();
-    //     const roles = this.getRoles(token);
-    //     return roles;
-    // }
 
     logout() {
         const decodedToken = decode<any>(localStorage.getItem('ApiToken'));

@@ -7,6 +7,7 @@ import { SendPassRecoverComponent } from './modules/auth/reset-send/send-pass-re
 import { ResetPassComponent } from './modules/auth/reset-pass/reset-pass.component';
 import { HomeComponent } from './modules/home/home.component';
 import { AccessRequestComponent } from './modules/home/access-request/access-request.component';
+import { TfaComponent } from './modules/auth/tfa/tfa.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -56,15 +57,26 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'sign-up',
+                path: 'sign-up/:token',
                 loadChildren: () =>
                     import('app/modules/auth/sign-up/sign-up.module').then(
                         (m) => m.AuthSignUpModule
                     ),
             },
             {
+                path: 'request-access/:token',
+                loadChildren: () =>
+                    import(
+                        'app/modules/auth/request-access/request-access.module'
+                    ).then((m) => m.AuthRequestAccessModule),
+            },
+            {
                 path: 'reset-send',
                 component: SendPassRecoverComponent,
+            },
+            {
+                path: 'tfa',
+                component: TfaComponent,
             },
             {
                 path: 'reset-pass/:token',

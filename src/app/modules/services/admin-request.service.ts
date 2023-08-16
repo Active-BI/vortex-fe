@@ -32,6 +32,10 @@ export class AdminRequestService {
         );
     }
 
+    getConfirmationAdminRequests(token) {
+        return this.http.get(`${this.baseUrl}request-access/${token}`);
+    }
+
     postAdminRequests(payload) {
         return this.http.post(`${this.baseUrl}request-access`, payload);
     }

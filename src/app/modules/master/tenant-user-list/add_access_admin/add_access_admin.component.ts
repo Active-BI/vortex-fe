@@ -20,7 +20,34 @@ export class AddAdminAccessComponent implements OnInit {
     ) {
         this.usuario = data.usuario;
     }
+    dashboardList;
     ngOnInit(): void {
+        console.log(this.usuario.dashboards);
+        this.dashboardList = this.usuario.dashboards.map((tenant_dashboard) => {
+            return {
+                page_group: tenant_dashboard.Page.Page_Group.title,
+                name: tenant_dashboard.Page.title,
+                id: tenant_dashboard.page_id,
+                selected: tenant_dashboard.included,
+            };
+        });
+        this.dashboardListReduced = this.dashboardList.reduce((acc, cur) => {
+            const findItem = acc.findIndex(
+                (a) => a.page_group === cur.page_group
+            );
+            if (findItem >= 0) {
+                acc[findItem].children.push(cur);
+                return acc;
+            }
+            acc.push({
+                page_group: cur.page_group,
+                children: [cur],
+            });
+
+            return acc;
+        }, []);
+        console.log(this.dashboardListReduced);
+
         this.form.setValue(
             this.usuario.dashboards
                 .filter((d) => d.included === true)

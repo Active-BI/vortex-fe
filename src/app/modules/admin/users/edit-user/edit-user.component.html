@@ -201,9 +201,9 @@
                 <mat-label>Visões</mat-label>
                 <mat-select [formControl]="visoes" multiple="">
 
-                    <mat-optgroup *ngFor="let group of dashboardListReduced" [label]="group.page_group"
+                    <mat-optgroup  *ngFor="let group of dashboardListReduced" [label]="group.page_group"
                         >
-                        <mat-option *ngFor="let page of group.children" [value]="page.id">
+                        <mat-option  class="ml-4" *ngFor="let page of group.children" [value]="page.id">
                             {{page.name}}
                         </mat-option>
                     </mat-optgroup>

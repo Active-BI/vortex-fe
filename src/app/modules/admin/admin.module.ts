@@ -50,6 +50,7 @@ import { RequestModalComponent } from '../home/access-request/request-modal/requ
 import { LogModalComponent } from '../embedded-report-type/log-modal/log-modal.component';
 import { SignUpModalComponent } from '../auth/sign-up/sign-up-modal/sign-up-modal.component';
 import { PageMasterService } from '../services/page-master.service';
+import { TfaComponent } from '../auth/tfa/tfa.component';
 
 const adminroutes: Route[] = [
     {
@@ -106,6 +107,7 @@ const adminroutes: Route[] = [
         RequestModalComponent,
         LogModalComponent,
         SignUpModalComponent,
+        TfaComponent,
     ],
     imports: [
         CommonModule,

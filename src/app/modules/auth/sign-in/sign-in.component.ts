@@ -72,29 +72,50 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
             this.toastr.error('Campos inválidos');
             return;
         }
+
         this.userService.Login(data).subscribe(
             (res) => {
-                Promise.all([
-                    localStorage.setItem('token', JSON.stringify(res.token)),
-                ]).then(() => {
-                    const token = jwtDecode(res.token) as any;
+                console.log(res);
+                if (res.pass === true) {
                     Promise.all([
-                        this.pageService
-                            .getDashboardsByUserId(token.userId)
-                            .then((rotas: any) => {
-                                const dashUsers = rotas;
-                                localStorage.setItem(
-                                    'userRoutes',
-                                    JSON.stringify(dashUsers)
-                                );
-                            })
-                            .then(() => this.redirect()),
-                    ]);
+                        localStorage.setItem(
+                            'token',
+                            JSON.stringify(res.token)
+                        ),
+                    ]).then(async () => {
+                        const token = jwtDecode(res.token) as any;
+                        await Promise.all([
+                            this.pageService
+                                .getDashboardsByUserId(token.userId)
+                                .then((rotas: any) => {
+                                    const dashUsers = rotas;
+                                    localStorage.setItem(
+                                        'userRoutes',
+                                        JSON.stringify(dashUsers)
+                                    );
+                                })
+                                .then(() => this.redirect()),
+                            localStorage.setItem(
+                                'token',
+                                JSON.stringify(res.token)
+                            ),
+                            localStorage.removeItem('tempToken'),
+                            this.redirect(),
+                        ]);
+                    });
+                }
+                Promise.all([
+                    localStorage.setItem('tempToken', res.token),
+                ]).then(async () => {
+                    this.redirectTfa();
                 });
             },
             (err) => {
                 this.error = err.error.message;
             }
         );
+    }
+    redirectTfa(): void {
+        this.router.navigate(['/auth/tfa']);
     }
 }
