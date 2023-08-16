@@ -2,31 +2,31 @@
 
     <div class="flex flex-col flex-auto min-w-0">
 
-        <div class="flex justify-between mt-[-20px] gap-2 items-center">
+        <div class="flex justify-between flex-row-reverse mt-[-20px] gap-2 items-center">
 
-            <div class="flex gap-x-2">
-            <mat-icon svgIcon="mat_outline:settings" class="absolute w-8 h-8"></mat-icon>
+            <div class="flex gap-x-2 items-center">
+                <mat-icon svgIcon="mat_outline:settings" class="absolute w-8 h-8"></mat-icon>
+                <mat-form-field class="opacity-0 w-6 h-6 bg-slate-400 mb-5 mt-[-10px]">
+                    <mat-select (selectionChange)="OpcaoPainel($event.value)" placeholder="Selecione" class=""
+                        style="height: 10px;" [formControl]="selected">
+                        <mat-option value="Imprimir">Imprimir</mat-option>
+                        <mat-option value="Exportar">Exportar</mat-option>
+                        <mat-option value="Baixar Template">Baixar Template</mat-option>
+                        <mat-option value="Atualizar Dataflow">Atualizar DataFlow</mat-option>
+                        <mat-option value="Atualizar Dataset">Atualizar Dataset</mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-            <mat-form-field class="opacity-0 w-6 h-6 bg-slate-400 mb-5 mt-[-10px]">
-                <mat-select (selectionChange)="OpcaoPainel($event.value)" placeholder="Selecione" class=""
-                    style="height: 10px;" [formControl]="selected">
-                    <mat-option value="TelaCheia">Tela Cheia</mat-option>
-                    <mat-option value="Imprimir">Imprimir</mat-option>
-                    <mat-option value="Exportar">Exportar</mat-option>
-                    <mat-option value="Baixar Template">Baixar Template</mat-option>
-                    <mat-option value="Atualizar Dataflow">Atualizar DataFlow</mat-option>
-                    <mat-option value="Atualizar Dataset">Atualizar Dataset</mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-icon svgIcon="mat_outline:refresh" (click)="refresh()" class=" w-8 h-8 cursor-pointer"></mat-icon>
-        </div>
+                <mat-icon svgIcon="mat_outline:refresh" (click)="refresh()" class=" w-8 h-8 cursor-pointer"></mat-icon>
+                <mat-icon svgIcon="fullscreen" (click)="fullscreen()" class=" w-9 h-9 cursor-pointer -m-2"></mat-icon>
+            </div>
 
             <div class="flex items-center flex-row justify-center " *ngIf="this.rlsName !== 'User'">
 
-                <form  class="form-upload">
+                <form class="form-upload">
                     <label class="input-personalizado">
-                        <span class="botao-selecionar  text-white">{{nomeArquivo.length > 0 ? nomeArquivo : 'Selecione um arquivo .xlsx'}}</span>
+                        <span class="botao-selecionar  text-white">
+                            {{nomeArquivo.length > 0 ? nomeArquivo : 'Selecione um arquivo .xlsx'}}</span>
                         <img class="imagem" />
                         <input type="file" #formInputs class="input-file" (change)="Importar($event)">
                     </label>
