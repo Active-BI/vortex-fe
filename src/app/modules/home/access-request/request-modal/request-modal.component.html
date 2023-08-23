@@ -2,18 +2,17 @@
     <div class="w-full flex justify-start text-center align-center">
         <mat-icon svgIcon="mat_outline:warning_amber" class="text-yellow-400 mr-1"></mat-icon>
         <div class=" text-xl mb-2">Estamos quase lá!</div>
-
-
     </div>
-        <p class="text-black font-bold">
-            {{data.dados.name}},
-        </p>Foi enviado um email de confirmação para que possamos prosseguir com sua solicitação.
-        <br>
-        <br>
-        <p >Esse email ficará válido por 24 horas.</p>
-        <br>
-        <p class="font-light">verifique a caixa de spam</p>
-
+    <br>
+    <p class="text-black font-bold ">
+        {{data.dados.name}},
+    </p>
+    <br>
+    Foi enviado um email de confirmação para que possamos
+    <br> prosseguir com sua solicitação.
+    <p>Esse email ficará válido por 24 horas.</p>
+    <p class="font-light">verifique a caixa de spam</p>
+    <br>
 
     <button (click)="voltar()" type="button"
         class="text-white px-2  self-end text-center mt-3 w-auto algin-middle bg-blue-500 max-w-50 hover:bg-blue-600 h-6 font-medium rounded-lg text-sm dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-800">
