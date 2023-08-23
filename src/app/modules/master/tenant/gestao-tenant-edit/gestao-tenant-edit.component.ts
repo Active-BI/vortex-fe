@@ -41,10 +41,6 @@ export class GestaoTenantEditComponent implements OnInit {
         dashboard: [[], [Validators.required]],
     });
 
-    click() {
-        console.log(this.form.value.dashboard);
-    }
-
     panelOpenState = false;
     id: string;
     ordersData = ordersData;
@@ -100,7 +96,6 @@ export class GestaoTenantEditComponent implements OnInit {
                         },
                         []
                     );
-                    console.log(d);
                     this.form.patchValue({
                         dashboard: d
                             .filter((dash) => dash.included === true)

@@ -79,7 +79,6 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                                             document.querySelector(
                                                 '.input-file'
                                             );
-                                        console.log(inputElement);
                                         if (inputElement) {
                                             inputElement.value = ''; // Limpar o valor do campo de entrada
                                             this.dadosParaImportar = [];
@@ -212,7 +211,6 @@ export class EmbeddedReportByTypeComponent implements OnInit {
             .observe([Breakpoints.Handset])
             .subscribe((state: BreakpointState) => {
                 if (state.matches) {
-                    console.log('Viewport width is less than handset!');
                     this.settings = {
                         ...this.settings,
                         layoutType: 2,
@@ -236,11 +234,11 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         this.reportObj
             .getReport()
             .refresh()
-            .then((e) => console.log(e));
+            .then((e) => {});
         this.reportObj
             .getReport()
             .reload()
-            .then((e) => console.log(e));
+            .then((e) => {});
     }
     fullscreen() {
         this.reportObj.getReport().fullscreen();
@@ -258,9 +256,8 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                 this.form.patchValue({
                     vision: this.pages[0].name,
                 });
-            } catch (error) {
-                console.log(error);
-            }
+                console.log(pages)
+            } catch (error) {}
         };
         get();
     }

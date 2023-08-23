@@ -28,7 +28,6 @@ export class PageService {
     }
 
     exportFile(tipoRelatorio: string) {
-        console.log(tipoRelatorio);
         return this.http.get(`${this.baseUrl}arquivos/${tipoRelatorio}`, {
             responseType: 'blob',
         });
