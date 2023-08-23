@@ -79,7 +79,6 @@ export class FuseVerticalNavigationBasicItemComponent
      * On destroy
      */
     configRoute(item) {
-        console.log('/' + item);
         return this.router.navigate(['/usuarios']);
     }
     ngOnDestroy(): void {

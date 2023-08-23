@@ -22,7 +22,6 @@ export class AddAdminAccessComponent implements OnInit {
     }
     dashboardList;
     ngOnInit(): void {
-        console.log(this.usuario.dashboards);
         this.dashboardList = this.usuario.dashboards.map((tenant_dashboard) => {
             return {
                 page_group: tenant_dashboard.Page.Page_Group.title,
@@ -46,8 +45,6 @@ export class AddAdminAccessComponent implements OnInit {
 
             return acc;
         }, []);
-        console.log(this.dashboardListReduced);
-
         this.form.setValue(
             this.usuario.dashboards
                 .filter((d) => d.included === true)

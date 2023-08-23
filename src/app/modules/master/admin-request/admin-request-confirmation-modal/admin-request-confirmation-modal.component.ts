@@ -81,7 +81,6 @@ export class AdminRequestConfirmationModalComponent {
 
                 return acc;
             }, []);
-            console.log(this.dashboardListReduced);
         });
         this.form = this.fb.group({
             tenant: ['', [Validators.required]],
@@ -102,9 +101,6 @@ export class AdminRequestConfirmationModalComponent {
         } else {
             this.data.data(this.form.value.tenant);
         }
-    }
-    click() {
-        console.log(this.form.value.dashboard);
     }
     voltar(): void {
         this.dialog.closeAll();

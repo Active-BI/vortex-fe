@@ -46,7 +46,6 @@ export class AuthRequestAccessComponent implements OnInit {
             const decoded: any = await jwtDecode(this.token);
 
             this.email = decoded.email;
-            console.log(decoded);
         } catch (e) {
             localStorage.clear();
             this._router.navigate(['/auth/sign-in']);
@@ -56,7 +55,6 @@ export class AuthRequestAccessComponent implements OnInit {
             .getConfirmationAdminRequests(this.token)
             .subscribe(
                 (res) => {
-                    console.log(res);
                     this.submit();
                 },
                 ({ error }) => {

@@ -65,7 +65,6 @@ export class AuthService {
     }
 
     setNewPass(payload: { password: string; token: string }): Observable<any> {
-        console.log(payload);
         return this.http.post(`${this.baseUrl}login/set-new-pass`, payload);
     }
     register(user): Observable<any> {
@@ -73,7 +72,6 @@ export class AuthService {
     }
 
     logout() {
-        const decodedToken = decode<any>(localStorage.getItem('ApiToken'));
         localStorage.removeItem(tokenIdKey);
         localStorage.removeItem(tokenAccessKey);
         localStorage.clear();

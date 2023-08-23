@@ -96,7 +96,6 @@ export class AdminRequestsComponent implements OnInit {
                                 this.requisicoes();
                             },
                             ({ error }) => {
-                                console.log(error);
                                 this.toastr.error(error.message);
                             }
                         );

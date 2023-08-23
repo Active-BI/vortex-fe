@@ -33,7 +33,6 @@ export class EmbeddedService {
         );
     }
     getEmbeddedReportInfoByType(type: string): Observable<any> {
-        console.log(type);
         return this.http.get(`${this.baseUrl}pbi-report/type/${type}`);
     }
     getEmbeddedDashboardInfo(
