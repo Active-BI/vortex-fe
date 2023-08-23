@@ -1,13 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-    FormBuilder,
-    FormControl,
-    NgForm,
-    UntypedFormBuilder,
-    Validators,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { JwtModule } from '@auth0/angular-jwt';
 import { AuthService } from 'app/modules/services/auth.service';
 import { PageService } from 'app/modules/services/page.service';
 import jwtDecode from 'jwt-decode';
@@ -28,8 +21,7 @@ export class TfaComponent implements OnInit {
         private fb: FormBuilder,
         private toastr: ToastrService,
         private router: Router,
-        private authService: AuthService,
-        private pageService: PageService
+        private authService: AuthService
     ) {}
     validate() {
         try {
