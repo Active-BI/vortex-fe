@@ -15,14 +15,11 @@ export class PMIService {
     private baseUrl = environment.baseUrl;
 
     uploadFile(payload, type) {
-        return this.http.post(
-            `${this.baseUrl}pbi-report/post-file/${type}`,
-            payload
-        );
+        return this.http.post(`${this.baseUrl}files/upload/${type}`, payload);
     }
     exportDataFile(tipoRelatorio: string) {
         return this.http.get(
-            `${this.baseUrl}pbi-report/get-file/${tipoRelatorio}`,
+            `${this.baseUrl}files/download-pbi-data/${tipoRelatorio}`,
             {
                 responseType: 'blob',
             }
@@ -38,7 +35,7 @@ export class PMIService {
     }
     exportExampleFile(tipoRelatorio: string) {
         return this.http.get(
-            `${this.baseUrl}pbi-report/get-template/${tipoRelatorio}`,
+            `${this.baseUrl}files/get-template/${tipoRelatorio}`,
             {
                 responseType: 'blob',
             }
