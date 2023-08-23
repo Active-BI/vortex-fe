@@ -35,7 +35,7 @@
                     (click)="Salvar()">Subir Arquivo</button>
             </div>
         </div>
-        <div *ngIf="showReport" style="height: calc(100vh - 105px);">
+        <div *ngIf="showReport" style="height: calc(100vh - 105px);" class="">
             <powerbi-report #reportObj [embedConfig]="config" [cssClassName]="'pbi-report'" [phasedEmbedding]="false"
                 [eventHandlers]="handlers" style="height: calc(100vh - 105px);">
             </powerbi-report>
