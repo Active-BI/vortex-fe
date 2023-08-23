@@ -1,10 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    Input,
-    OnInit,
-    ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { EmbeddedService } from '../services/embedded/embedded.service';
 import { PowerBIReportEmbedComponent } from 'powerbi-client-angular';
 import {
@@ -27,9 +21,8 @@ import { LogModalComponent } from './log-modal/log-modal.component';
 export class EmbeddedReportByTypeComponent implements OnInit {
     @Input() type: string;
     @ViewChild('formInputs') formIputFile;
-    form: FormGroup = this.fb.group({
-        vision: '',
-    });
+    report_page = new FormControl('');
+
     selected = new FormControl('');
     dadosParaImportar = [];
     nomeArquivo = '';
@@ -165,6 +158,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
     report: any;
     pages: any = [];
     handlers;
+    title;
     settings = {
         visualRenderedEvents: true,
         layoutType: 0,
@@ -192,17 +186,23 @@ export class EmbeddedReportByTypeComponent implements OnInit {
             this.rlsName = (jwtDecode(token) as any).role_name;
         }
         this.handlers = new Map([
-            ['loaded', (): void => console.log('Report loaded')],
+            ['loaded', (): void => {}],
+            [
+                'pageChanged',
+                (event): void => {
+                    this.title = event.detail.newPage.displayName;
+                    // this.pages.find((page) => page.name === value).setActive();
+                },
+            ],
             [
                 'rendered',
-                (): void => {
+                () => {
                     if (this.pages.length < 1) {
                         this.selectItems();
                     }
-                    console.log('Report rendered');
                 },
             ],
-            ['error', (event): void => console.log(event.detail)],
+            ['error', (event): void => {}],
         ]);
     }
 
@@ -248,21 +248,22 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         this.reportObj.getReport().print();
     }
     selectItems() {
-        const get = async () => {
+        const get = () => {
             try {
-                const pages = await this.reportObj.getReport().getPages();
-
-                this.pages = pages.filter((e) => e.visibility === 0);
-                this.form.patchValue({
-                    vision: this.pages[0].name,
-                });
-                console.log(pages)
+                Promise.all([this.reportObj.getReport().getPages()]).then(
+                    (result) => {
+                        const pages = result[0];
+                        this.pages = pages.filter((e) => e.visibility === 0);
+                        this.report_page.setValue(pages[0].name);
+                        console.log(pages, pages[0].name);
+                    }
+                );
             } catch (error) {}
         };
         get();
     }
-    change({ value: name }) {
-        this.pages.find((a) => a.name === name).setActive();
+    change({ value }) {
+        this.pages.find((page) => page.name === value).setActive();
     }
     private getEmbedded(settings: any): void {
         this.embeddedSrv.getEmbeddedReportInfoByType(this.type).subscribe(
