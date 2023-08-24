@@ -37,11 +37,18 @@ import { AdminRequestConfirmationModalComponent } from './admin-request/admin-re
 import { AdminRequestsComponent } from './admin-request/admin-requests/admin-requests.component';
 import { TenantUserListComponent } from './tenant-user-list/tenant-user-list.component';
 import { AddAdminAccessComponent } from './tenant-user-list/add_access_admin/add_access_admin.component';
+import { GestaoDeTelasComponent } from './gestao-de-telas/gestao-de-telas.component';
+import { EdicaoCriacaoGrupoComponent } from './edicao-criacao-grupo/edicao-criacao-grupo.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 const masterRoutes: Route[] = [
     {
         path: 'gestao/telas',
-        component: GestaoTenantComponent,
+        component: GestaoDeTelasComponent,
+    },
+    {
+        path: 'gestao/telas/grupo/:id',
+        component: EdicaoCriacaoGrupoComponent,
     },
     {
         path: 'gestao/tenants',
@@ -75,6 +82,8 @@ const masterRoutes: Route[] = [
         TenantUserListComponent,
         AddAdminAccessComponent,
         GestaoTenantEditComponent,
+        GestaoDeTelasComponent,
+        EdicaoCriacaoGrupoComponent,
     ],
     imports: [
         CommonModule,
@@ -102,6 +111,10 @@ const masterRoutes: Route[] = [
         MatTooltipModule,
         MatCheckboxModule,
         MatSelectModule,
+        MatChipsModule,
+        MatIconModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [
