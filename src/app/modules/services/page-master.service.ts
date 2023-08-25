@@ -1,3 +1,4 @@
+import { group } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
@@ -9,6 +10,10 @@ export class PageMasterService {
     constructor(private http: HttpClient) {}
 
     private baseUrl = environment.baseUrl;
+    postGroup(group_name) {
+        return this.http.post(`${this.baseUrl}master/group`, group_name);
+    }
+
     postPage(dashboadList, userId) {
         return this.http.post(
             `${this.baseUrl}master/pages/${userId}`,

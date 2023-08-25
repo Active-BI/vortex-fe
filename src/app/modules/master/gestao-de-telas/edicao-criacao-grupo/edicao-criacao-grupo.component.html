@@ -1,0 +1,14 @@
+<div class="flex flex-col flex-auto w-auto">
+
+    <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex w-100">
+
+        <mat-form-field appearance="fill" class=" w-full ">
+            <mat-label>Nome do grupo</mat-label>
+            <input formControlName="name" matInput #first />
+        </mat-form-field>
+
+
+    </form>
+    <button mat-raised-button (click)="criarGrupo()"
+    class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">criar</button>
+</div>

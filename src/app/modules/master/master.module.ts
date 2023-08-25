@@ -38,8 +38,9 @@ import { AdminRequestsComponent } from './admin-request/admin-requests/admin-req
 import { TenantUserListComponent } from './tenant-user-list/tenant-user-list.component';
 import { AddAdminAccessComponent } from './tenant-user-list/add_access_admin/add_access_admin.component';
 import { GestaoDeTelasComponent } from './gestao-de-telas/gestao-de-telas.component';
-import { EdicaoCriacaoGrupoComponent } from './edicao-criacao-grupo/edicao-criacao-grupo.component';
+import { EdicaoCriacaoGrupoComponent } from './gestao-de-telas/edicao-criacao-grupo/edicao-criacao-grupo.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { RotasAninhadasComponent } from './gestao-de-telas/rotas-aninhadas/rotas-aninhadas.component';
 
 const masterRoutes: Route[] = [
     {
@@ -47,8 +48,12 @@ const masterRoutes: Route[] = [
         component: GestaoDeTelasComponent,
     },
     {
-        path: 'gestao/telas/grupo/:id',
+        path: 'gestao/telas/grupo/editar/:id',
         component: EdicaoCriacaoGrupoComponent,
+    },
+    {
+        path: 'gestao/telas/grupo/:id',
+        component: RotasAninhadasComponent,
     },
     {
         path: 'gestao/tenants',
@@ -84,6 +89,7 @@ const masterRoutes: Route[] = [
         GestaoTenantEditComponent,
         GestaoDeTelasComponent,
         EdicaoCriacaoGrupoComponent,
+        RotasAninhadasComponent,
     ],
     imports: [
         CommonModule,

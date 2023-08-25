@@ -9,6 +9,7 @@ import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-moda
 import { PageMasterService } from 'app/modules/services/page-master.service';
 import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
+import { EdicaoCriacaoGrupoComponent } from './edicao-criacao-grupo/edicao-criacao-grupo.component';
 
 function agregarRoles(objeto) {
     if (objeto.children) {
@@ -102,7 +103,19 @@ export class GestaoDeTelasComponent implements OnInit {
         return false;
     }
     criarUsuario(): void {
-        this.router.navigate(['/master/gestao/tenants/criar']);
+        this.dialog.open(EdicaoCriacaoGrupoComponent, {
+            data: {
+                nome: 'Usuários',
+                data: () => {
+                    this.dialog.closeAll();
+                    // this.tenantsService.removeTenant(id).subscribe(() => {
+                    //     this.toastr.success('Desativado com Sucesso');
+                    //     this.requisicoes();
+                    // });
+                },
+            },
+        });
+        // this.router.navigate(['/master/gestao/telas/grupo/criar']);
     }
     listarUsuarios(tenantId) {
         this.router.navigate([
