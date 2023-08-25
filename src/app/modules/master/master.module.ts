@@ -41,6 +41,7 @@ import { GestaoDeTelasComponent } from './gestao-de-telas/gestao-de-telas.compon
 import { EdicaoCriacaoGrupoComponent } from './gestao-de-telas/edicao-criacao-grupo/edicao-criacao-grupo.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { RotasAninhadasComponent } from './gestao-de-telas/rotas-aninhadas/rotas-aninhadas.component';
+import { DeletarGrupoComponent } from './gestao-de-telas/deletar-grupo/deletar-grupo.component';
 
 const masterRoutes: Route[] = [
     {
@@ -90,6 +91,7 @@ const masterRoutes: Route[] = [
         GestaoDeTelasComponent,
         EdicaoCriacaoGrupoComponent,
         RotasAninhadasComponent,
+        DeletarGrupoComponent,
     ],
     imports: [
         CommonModule,

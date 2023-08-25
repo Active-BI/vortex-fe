@@ -1,7 +1,7 @@
 <div class="flex flex-col flex-auto min-w-0">
     <div class="text-3x-L flex-auto p-6  justify-center">
         <div class="flex items-center justify-start">
-            <button mat-raised-button (click)="criarUsuario()"
+            <button mat-raised-button (click)="criarGrupo()"
                 class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">criar novo grupo</button>
         </div>
 
@@ -12,7 +12,7 @@
                 <mat-form-field appearance="fill" class="w-80 mt-4 mr-4 ml-1">
                     <mat-icon class="mr-4">search</mat-icon>
                     <input type="text" [formControl]="myControl" placeholder="Buscar"
-                        (ngModelChange)="filtarUsuarios($event)" matInput />
+                        (ngModelChange)="filtarGrupos($event)" matInput />
                 </mat-form-field>
             </div>
 
@@ -47,6 +47,10 @@
                             <button class="text-violet-900" matTooltip='Editar' (click)="editarGrupo(element.id)">
                                 <mat-icon class="cursor-pointer mr-5 text-blue-700" svgIcon="edit_note"></mat-icon>
 
+                            </button>
+                            <button matTooltip='Deletar' (click)="deletarGrupo(element.id)">
+                                <mat-icon color="warn" class="cursor-pointer mr-5"
+                                    svgIcon="heroicons_solid:trash"></mat-icon>
                             </button>
                         </div>
                     </td>

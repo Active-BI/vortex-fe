@@ -10,6 +10,7 @@ import { PageMasterService } from 'app/modules/services/page-master.service';
 import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 import { EdicaoCriacaoGrupoComponent } from './edicao-criacao-grupo/edicao-criacao-grupo.component';
+import { DeletarGrupoComponent } from './deletar-grupo/deletar-grupo.component';
 
 function agregarRoles(objeto) {
     if (objeto.children) {
@@ -67,51 +68,37 @@ export class GestaoDeTelasComponent implements OnInit {
         this.usuariosL = this.usuarios?.data.length;
     }
     usuariosFiltrados: MatTableDataSource<any>;
-    filtarUsuarios(e) {
+    filtarGrupos(e) {
         const data = this.usuarios.data.filter((u) =>
             u.page_group.toUpperCase().includes(e.toUpperCase())
         );
         this.usuariosFiltrados = new MatTableDataSource(data);
         this.usuariosFiltrados.paginator = this.paginator;
     }
-    deletarUsuario(id): void {
-        const decoded: any = jwtDecode(localStorage.getItem('token'));
-        if (decoded.userId === id) {
-            this.toastr.error('Não é possível excluir usuário em uso');
-            return;
-        }
-        this.dialog.open(DeleteModalComponent, {
+    deletarGrupo(id): void {
+        this.dialog.open(DeletarGrupoComponent, {
             data: {
-                nome: 'Usuários',
                 data: () => {
                     this.dialog.closeAll();
-                    // this.tenantsService.removeTenant(id).subscribe(() => {
-                    //     this.toastr.success('Desativado com Sucesso');
-                    //     this.requisicoes();
-                    // });
+                    this.pageMasterService.deleteGroup(id).subscribe(
+                        () => {
+                            this.toastr.success('Grupo deletado');
+                            this.requisicoes();
+                        },
+                        ({ error }) => {
+                            this.toastr.error('Falha ao deletar grupo');
+                        }
+                    );
                 },
             },
         });
     }
-    selected;
-    toggleDetails(id) {
-        if (this.selected === id) {
-            this.selected = '';
-            return true;
-        }
-        this.selected = id;
-        return false;
-    }
-    criarUsuario(): void {
+    criarGrupo(): void {
         this.dialog.open(EdicaoCriacaoGrupoComponent, {
             data: {
                 nome: 'Usuários',
                 data: () => {
                     this.dialog.closeAll();
-                    // this.tenantsService.removeTenant(id).subscribe(() => {
-                    //     this.toastr.success('Desativado com Sucesso');
-                    //     this.requisicoes();
-                    // });
                 },
             },
         });

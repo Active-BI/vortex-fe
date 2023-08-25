@@ -13,7 +13,9 @@ export class PageMasterService {
     postGroup(group_name) {
         return this.http.post(`${this.baseUrl}master/group`, group_name);
     }
-
+    deleteGroup(group_id) {
+        return this.http.delete(`${this.baseUrl}master/group/${group_id}`);
+    }
     postPage(dashboadList, userId) {
         return this.http.post(
             `${this.baseUrl}master/pages/${userId}`,

@@ -35,6 +35,7 @@ export class EdicaoCriacaoGrupoComponent {
         }
         this.pageMasterService.postGroup(this.form.value.name).subscribe(
             (res) => {
+                this.dialog.closeAll();
                 this.toastr.success('Grupo criado com sucesso');
                 this.router.navigate(['/master/gestao/telas']);
             },
