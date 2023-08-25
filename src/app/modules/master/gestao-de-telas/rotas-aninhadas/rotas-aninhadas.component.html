@@ -1,6 +1,10 @@
 <div class="flex flex-col flex-auto min-w-0">
 
     <div class="text-3x-L flex-auto p-6  justify-center">
+        <button (click)="voltar()" class="self-start mb-4  hover:rounded-full">
+            <mat-icon class="flex self-center text-slate-600 hover:text-slate-400"
+                svgIcon="arrow_back"></mat-icon>
+        </button>
         <div class="flex w-full">
             <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex  w-full ">
 
@@ -8,13 +12,19 @@
                     <mat-label>Nome do grupo</mat-label>
                     <input formControlName="name" matInput #first />
                 </mat-form-field>
-                <button mat-raised-button
+                <button mat-raised-button (click)="AtualizarGrupo()"
                 class="self-center mx-4 mt-1 rounded-sm text-colorText bg-[#006cbe] text-white">salvar</button>
+
+                <div class="w-2/3 flex justify-end items-center">
+
+                    <button mat-raised-button (click)="AdicionarRota()"
+                    class="  mx-4 mt-1 rounded-sm text-colorText bg-[#006cbe] text-white">adicionar rota</button>
+                </div>
 
             </form>
         </div>
         <div class="w-full bg-primary h-16 rounded-t-md  mt-4 flex items-center justify-between">
-            <div class="text-3xl text-white mx-4">Rotas Aninhadas - {{form.value.name}} </div>
+            <div class="xl:text-3xl md:text-2xl text-md text-white mx-4">Rotas Aninhadas - {{form.value.name}} </div>
             <div class="flex items-center justify-start">
 
                 <mat-form-field appearance="fill" class="w-80 mt-4 mr-4 ml-1">
@@ -56,7 +66,7 @@
 
                             </button>
 
-                            <button matTooltip='Deletar' (click)="deletarUsuario(element.id)">
+                            <button matTooltip='Deletar' (click)="deletarRotaAninhada(element.id)">
                                 <mat-icon color="warn" class="cursor-pointer mr-5"
                                     svgIcon="heroicons_solid:trash"></mat-icon>
                             </button>

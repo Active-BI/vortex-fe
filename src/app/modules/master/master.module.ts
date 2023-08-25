@@ -38,10 +38,11 @@ import { AdminRequestsComponent } from './admin-request/admin-requests/admin-req
 import { TenantUserListComponent } from './tenant-user-list/tenant-user-list.component';
 import { AddAdminAccessComponent } from './tenant-user-list/add_access_admin/add_access_admin.component';
 import { GestaoDeTelasComponent } from './gestao-de-telas/gestao-de-telas.component';
-import { EdicaoCriacaoGrupoComponent } from './gestao-de-telas/edicao-criacao-grupo/edicao-criacao-grupo.component';
+import { EdicaoCriacaoGrupoComponent } from './gestao-de-telas/modais/criacao-grupo/edicao-criacao-grupo.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { RotasAninhadasComponent } from './gestao-de-telas/rotas-aninhadas/rotas-aninhadas.component';
-import { DeletarGrupoComponent } from './gestao-de-telas/deletar-grupo/deletar-grupo.component';
+import { DeletarGrupoComponent } from './gestao-de-telas/modais/deletar-grupo/deletar-grupo.component';
+import { DeletarRotaAninhadaComponent } from './gestao-de-telas/modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
 
 const masterRoutes: Route[] = [
     {
@@ -92,6 +93,7 @@ const masterRoutes: Route[] = [
         EdicaoCriacaoGrupoComponent,
         RotasAninhadasComponent,
         DeletarGrupoComponent,
+        DeletarRotaAninhadaComponent,
     ],
     imports: [
         CommonModule,

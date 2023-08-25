@@ -16,6 +16,17 @@ export class PageMasterService {
     deleteGroup(group_id) {
         return this.http.delete(`${this.baseUrl}master/group/${group_id}`);
     }
+    updateGroup({ group_id, group_name }) {
+        return this.http.patch(
+            `${this.baseUrl}master/group/${group_id}`,
+            group_name
+        );
+    }
+
+    deleteChildrenPage(page_id) {
+        return this.http.delete(`${this.baseUrl}master/page/${page_id}`);
+    }
+
     postPage(dashboadList, userId) {
         return this.http.post(
             `${this.baseUrl}master/pages/${userId}`,

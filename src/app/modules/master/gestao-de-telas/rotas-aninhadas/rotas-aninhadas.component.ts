@@ -9,7 +9,8 @@ import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-moda
 import { PageMasterService } from 'app/modules/services/page-master.service';
 import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
-import { EdicaoCriacaoGrupoComponent } from '../edicao-criacao-grupo/edicao-criacao-grupo.component';
+import { EdicaoCriacaoGrupoComponent } from '../modais/criacao-grupo/edicao-criacao-grupo.component';
+import { DeletarRotaAninhadaComponent } from '../modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
 
 function agregarRoles(objeto) {
     if (objeto.children) {
@@ -62,7 +63,6 @@ export class RotasAninhadasComponent implements OnInit {
         const acessos = agregarRoles(
             await this.pageMasterService.getPagesByGroup(this.id)
         );
-        console.log(acessos);
         this.form.patchValue({
             name: acessos.page_group,
         });
@@ -75,60 +75,54 @@ export class RotasAninhadasComponent implements OnInit {
     usuariosFiltrados: MatTableDataSource<any>;
     filtarUsuarios(e) {
         const data = this.usuarios.data.filter((u) =>
-            u.page_group.toUpperCase().includes(e.toUpperCase())
+            u.name.toUpperCase().includes(e.toUpperCase())
         );
         this.usuariosFiltrados = new MatTableDataSource(data);
         this.usuariosFiltrados.paginator = this.paginator;
     }
-    deletarUsuario(id): void {
-        const decoded: any = jwtDecode(localStorage.getItem('token'));
-        if (decoded.userId === id) {
-            this.toastr.error('Não é possível excluir usuário em uso');
+    AtualizarGrupo() {
+        if (!this.form.valid) {
+            this.toastr.error('Nome do grupo precisa ser preenchido');
             return;
         }
-        this.dialog.open(DeleteModalComponent, {
+        this.pageMasterService
+            .updateGroup({
+                group_id: this.id,
+                group_name: this.form.value.name,
+            })
+            .subscribe(
+                (res) => {
+                    this.toastr.success('Grupo Atualizado');
+                },
+                ({ error }) => {
+                    this.toastr.error('Falha ao atualizar grupo');
+                }
+            );
+    }
+
+    AdicionarRota() {}
+    deletarRotaAninhada(page_id): void {
+        this.dialog.open(DeletarRotaAninhadaComponent, {
             data: {
-                nome: 'Usuários',
                 data: () => {
                     this.dialog.closeAll();
-                    // this.tenantsService.removeTenant(id).subscribe(() => {
-                    //     this.toastr.success('Desativado com Sucesso');
-                    //     this.requisicoes();
-                    // });
+                    this.pageMasterService
+                        .deleteChildrenPage(page_id)
+                        .subscribe(
+                            () => {
+                                this.toastr.success('Rota excluída');
+                                this.requisicoes();
+                            },
+                            ({ error }) => {
+                                this.toastr.error('Falha ao excluir rota');
+                            }
+                        );
                 },
             },
         });
     }
-    selected;
-    toggleDetails(id) {
-        if (this.selected === id) {
-            this.selected = '';
-            return true;
-        }
-        this.selected = id;
-        return false;
-    }
-    criarUsuario(): void {
-        this.dialog.open(EdicaoCriacaoGrupoComponent, {
-            data: {
-                nome: 'Usuários',
-                data: () => {
-                    this.dialog.closeAll();
-                    // this.tenantsService.removeTenant(id).subscribe(() => {
-                    //     this.toastr.success('Desativado com Sucesso');
-                    //     this.requisicoes();
-                    // });
-                },
-            },
-        });
-        // this.router.navigate(['/master/gestao/tenants/criar']);
-    }
-    listarUsuarios(tenantId) {
-        this.router.navigate([
-            '/master/gestao/telas/' + tenantId + '/user/list',
-        ]);
-    }
-    editarGrupo(id): void {
-        this.router.navigate([`/master/gestao/telas/grupo/` + id]);
+
+    voltar(): void {
+        this.router.navigate([`/master/gestao/telas`]);
     }
 }

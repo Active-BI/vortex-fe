@@ -9,8 +9,8 @@ import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-moda
 import { PageMasterService } from 'app/modules/services/page-master.service';
 import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
-import { EdicaoCriacaoGrupoComponent } from './edicao-criacao-grupo/edicao-criacao-grupo.component';
-import { DeletarGrupoComponent } from './deletar-grupo/deletar-grupo.component';
+import { EdicaoCriacaoGrupoComponent } from './modais/criacao-grupo/edicao-criacao-grupo.component';
+import { DeletarGrupoComponent } from './modais/deletar-grupo/deletar-grupo.component';
 
 function agregarRoles(objeto) {
     if (objeto.children) {
