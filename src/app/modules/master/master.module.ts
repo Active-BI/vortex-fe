@@ -50,30 +50,18 @@ const masterRoutes: Route[] = [
     {
         path: 'gestao/telas',
         component: GestaoDeTelasComponent,
-        data: {
-            expectedRoles: ['Master'],
-        },
     },
     {
         path: 'gestao/telas/grupo/:id',
         component: RotasAninhadasComponent,
-        data: {
-            expectedRoles: ['Master'],
-        },
     },
     {
         path: 'gestao/telas/criar-tela-aninhada/groupId/:groupId',
         component: CriarRotaComponent,
-        data: {
-            expectedRoles: ['Master'],
-        },
     },
     {
-        path: 'gestao/telas/editar-tela-aninhada/teste/:groupId',
+        path: 'gestao/telas/editar-tela-aninhada/groupId/:groupId/screenId/:screenId',
         component: EditarRotaComponent,
-        data: {
-            expectedRoles: ['Master'],
-        },
     },
 
     {
