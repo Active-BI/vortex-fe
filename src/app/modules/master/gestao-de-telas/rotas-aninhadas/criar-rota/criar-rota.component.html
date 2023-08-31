@@ -15,7 +15,7 @@
         <div *ngIf="form.value.page_group_id !== ''" class="grid grid-cols-2 gap-x-2 gap-y-4 col-span-full">
             <mat-form-field class="md:col-span-1 fuse-mat-dense col-span-full ">
                 <mat-label>Tipo da página</mat-label>
-                <mat-select (selectionChange)="change()" formControlName="type">
+                <mat-select (selectionChange)="change()" formControlName="report_type">
                     <mat-option *ngFor="let item of screenType" [value]="item">{{item}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -33,7 +33,7 @@
                 <input [disabled]="true" formControlName="link" matInput />
             </mat-form-field>
 
-            <div *ngIf="form.value.type !== 'page'"
+            <div *ngIf="form.value.report_type !== 'page'"
                 class="bg-slate-200 p-4 rounded-md fuse-mat-dense col-span-full grid grid-cols-2 gap-x-2 gap-y-4">
 
                 <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full ">
@@ -41,11 +41,11 @@
                     <input formControlName="group_id" matInput #first />
                 </mat-form-field>
                 <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full ">
-                    <mat-label>ID do {{form.value.type.includes('dashboard') ? 'Dashboard' : 'Relatório'}}</mat-label>
+                    <mat-label>ID do {{form.value.report_type.includes('dashboard') ? 'Dashboard' : 'Relatório'}}</mat-label>
                     <input formControlName="report_id" matInput #first />
                 </mat-form-field>
                 <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full ">
-                    <mat-label>Descrição do {{form.value.type.includes('dashboard') ? 'Dashboard' :
+                    <mat-label>Descrição do {{form.value.report_type.includes('dashboard') ? 'Dashboard' :
                         'Relatório'}}</mat-label>
                     <input formControlName="descricao_painel" matInput #first />
                 </mat-form-field>

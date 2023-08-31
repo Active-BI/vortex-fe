@@ -33,8 +33,10 @@ export class PageMasterService {
             dashboadList
         );
     }
-    getPageById(tenantId) {
-        return this.http.get(`${this.baseUrl}master/pages/${tenantId}`);
+    getPageByTenantId(tenantId) {
+        return this.http.get(
+            `${this.baseUrl}master/pages/by-tenant/${tenantId}`
+        );
     }
     getAdminUsersByTenantId(tenantId) {
         return this.http.get(`${this.baseUrl}master/pages/user/${tenantId}`);
@@ -42,7 +44,11 @@ export class PageMasterService {
     getPages() {
         return this.http.get(`${this.baseUrl}master/pages`);
     }
-
+    async getPageById(id) {
+        return await this.http
+            .get<any[]>(`${this.baseUrl}master/pages/` + id)
+            .toPromise();
+    }
     async getPagesByGroup(id = '') {
         const res = await this.http
             .get<any[]>(`${this.baseUrl}master/pages`)
@@ -72,6 +78,7 @@ export class PageMasterService {
             acc.push({
                 page_group: cur.page_group,
                 id: cur.page_group_id,
+                page_id: cur.id,
                 children: [cur],
             });
 

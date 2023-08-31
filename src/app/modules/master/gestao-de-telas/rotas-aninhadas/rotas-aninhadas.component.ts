@@ -5,14 +5,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
 import { PageMasterService } from 'app/modules/services/page-master.service';
-import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
-import { EdicaoCriacaoGrupoComponent } from '../modais/criacao-grupo/edicao-criacao-grupo.component';
 import { DeletarRotaAninhadaComponent } from '../modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
 
 function agregarRoles(objeto) {
+    console.log(objeto);
     if (objeto.children) {
         const rolesSet = new Set(); // Usamos um Set para garantir roles únicas
         for (const child of objeto.children) {
