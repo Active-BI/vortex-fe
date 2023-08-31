@@ -1,0 +1,76 @@
+<div class="flex flex-col flex-auto w-auto">
+
+    <form (submit)="$event.preventDefault()" [formGroup]="form"
+        class="grid grid-cols-2 gap-x-2 gap-y-4 w-full sm:w-[60%] md:w-[80%] m-8">
+        <div class="grid grid-cols-2 col-span-full">
+            <mat-form-field class="md:col-span-1 fuse-mat-dense col-span-full ">
+                <mat-label>Grupo</mat-label>
+                <mat-select (selectionChange)="change()" formControlName="page_group_id">
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2">Option 2 (disabled)</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div *ngIf="form.value.page_group_id !== ''" class="grid grid-cols-2 gap-x-2 gap-y-4 col-span-full">
+            <mat-form-field class="md:col-span-1 fuse-mat-dense col-span-full ">
+                <mat-label>Tipo da página</mat-label>
+                <mat-select (selectionChange)="change()" formControlName="type">
+                    <mat-option *ngFor="let item of screenType" [value]="item">{{item}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="fuse-mat-dense md:col-span-1 col-span-full ">
+                <mat-label>Nome da Página</mat-label>
+                <input (input)="change()" formControlName="title" matInput #first />
+            </mat-form-field>
+            <mat-form-field appearance="fill"
+                class="fuse-mat-emphasized-affix md:col-span-1 fuse-mat-dense col-span-full ">
+                <mat-label>Link da Página</mat-label>
+
+                <!-- <div matPrefix>{{form.value.page_group_id}}</div> -->
+
+                <input [disabled]="true" formControlName="link" matInput />
+            </mat-form-field>
+
+
+            <div *ngIf="form.value.type !== 'page'"
+                class="bg-slate-200 p-4 rounded-md fuse-mat-dense col-span-full grid grid-cols-2 gap-x-2 gap-y-4">
+
+                <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full ">
+                    <mat-label>ID do grupo</mat-label>
+                    <input formControlName="group_id" matInput #first />
+                </mat-form-field>
+                <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full ">
+                    <mat-label>ID do {{form.value.type.includes('dashboard') ? 'Dashboard' : 'Relatório'}}</mat-label>
+                    <input formControlName="report_id" matInput #first />
+                </mat-form-field>
+                <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full ">
+                    <mat-label>Descrição do {{form.value.type.includes('dashboard') ? 'Dashboard' :
+                        'Relatório'}}</mat-label>
+                    <input formControlName="descricao_painel" matInput #first />
+                </mat-form-field>
+                <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full ">
+                    <mat-label>Responsável</mat-label>
+                    <input formControlName="responsavel" matInput #first />
+                </mat-form-field>
+            </div>
+            <div class="col-span-full flex gap-x-4">
+
+                <section class="example-section" class=" col-span-w ">
+                    <mat-checkbox (change)="change()" formControlName="restrict" class="example-margin">Página
+                        restrita?</mat-checkbox>
+                </section>
+                <section class="example-section">
+                    <mat-checkbox formControlName="possui_dados_sensiveis" class="example-margin">Possui dados
+                        sensíveis?</mat-checkbox>
+                </section>
+            </div>
+
+            <div class="col-span-full md:col-span-1">
+                <button mat-raised-button (click)="criarRota()"
+                    class="self-start mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">criar</button>
+            </div>
+        </div>
+    </form>
+</div>

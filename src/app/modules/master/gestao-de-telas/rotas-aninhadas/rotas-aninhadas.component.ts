@@ -100,7 +100,11 @@ export class RotasAninhadasComponent implements OnInit {
             );
     }
 
-    AdicionarRota() {}
+    AdicionarRota() {
+        this.router.navigate([
+            '/master/gestao/telas/criar-tela-aninhada/groupId/' + this.id,
+        ]);
+    }
     deletarRotaAninhada(page_id): void {
         this.dialog.open(DeletarRotaAninhadaComponent, {
             data: {

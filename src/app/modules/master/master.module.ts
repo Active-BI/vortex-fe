@@ -43,6 +43,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { RotasAninhadasComponent } from './gestao-de-telas/rotas-aninhadas/rotas-aninhadas.component';
 import { DeletarGrupoComponent } from './gestao-de-telas/modais/deletar-grupo/deletar-grupo.component';
 import { DeletarRotaAninhadaComponent } from './gestao-de-telas/modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
+import { CriarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota/criar-rota.component';
 
 const masterRoutes: Route[] = [
     {
@@ -50,8 +51,8 @@ const masterRoutes: Route[] = [
         component: GestaoDeTelasComponent,
     },
     {
-        path: 'gestao/telas/grupo/editar/:id',
-        component: EdicaoCriacaoGrupoComponent,
+        path: 'gestao/telas/criar-tela-aninhada/groupId/:groupId',
+        component: CriarRotaComponent,
     },
     {
         path: 'gestao/telas/grupo/:id',
@@ -94,6 +95,7 @@ const masterRoutes: Route[] = [
         RotasAninhadasComponent,
         DeletarGrupoComponent,
         DeletarRotaAninhadaComponent,
+        CriarRotaComponent,
     ],
     imports: [
         CommonModule,
