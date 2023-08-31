@@ -16,10 +16,7 @@ import jwtDecode from 'jwt-decode';
     providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
-    constructor(
-        private router: Router,
-        private menuItemService: MenuItemService
-    ) {}
+    constructor(private router: Router) {}
     async canActivate(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
@@ -31,7 +28,14 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                 await jwtDecode(token, {
                     header: true,
                 });
+
                 const user: any = await jwtDecode(token);
+                console.log(
+                    route.data['expectedRoles'] === null ||
+                        route.data['expectedRoles'].length === 0 ||
+                        route.data['expectedRoles'].includes(user.role_name)
+                );
+
                 if (
                     route.data['expectedRoles'] === null ||
                     route.data['expectedRoles'].length === 0 ||

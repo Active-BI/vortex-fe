@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PageMasterService } from 'app/modules/services/page-master.service';
 import { ToastrService } from 'ngx-toastr';
 
-const screenTypes = {
+export const screenTypes = {
     DASHBOARD: 'dashboard',
     REPORT: 'report',
     REPORT_UPLOAD: 'report-upload',
@@ -22,12 +22,9 @@ export class CriarRotaComponent implements OnInit {
     groupId = '';
     screenType = Object.values(screenTypes);
     constructor(
-        private router: Router,
         private route: ActivatedRoute,
         public dialog: MatDialog,
-        public fb: FormBuilder,
-        private toastr: ToastrService,
-        private pageMasterService: PageMasterService
+        public fb: FormBuilder
     ) {
         this.groupId = this.route.snapshot.paramMap.get('groupId');
     }
@@ -49,22 +46,21 @@ export class CriarRotaComponent implements OnInit {
     change() {
         const pathByGroup = this.form.value.page_group_id;
         const title = this.form.value.title;
-        let pathByType;
+        let pathByType = '/';
         if (
             this.form.value.type.includes('report') ||
             this.form.value.type.includes('dashboard')
         ) {
             pathByType = this.form.value.type.includes('report')
-                ? 'view-report'
-                : 'view-dashboard';
+                ? pathByType + 'view-report/'
+                : pathByType + 'view-dashboard/';
         }
         if (this.form.value.restrict) {
-            pathByType = 'master' + '/' + pathByType;
+            pathByType = '/master' + pathByType;
         } else {
-            pathByType = pathByType;
         }
         this.form.patchValue({
-            link: `${pathByType}/${pathByGroup}/${title}`,
+            link: `${pathByType}${pathByGroup}/${title}`,
         });
     }
     criarRota() {}

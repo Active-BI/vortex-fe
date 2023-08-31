@@ -44,20 +44,38 @@ import { RotasAninhadasComponent } from './gestao-de-telas/rotas-aninhadas/rotas
 import { DeletarGrupoComponent } from './gestao-de-telas/modais/deletar-grupo/deletar-grupo.component';
 import { DeletarRotaAninhadaComponent } from './gestao-de-telas/modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
 import { CriarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota/criar-rota.component';
+import { EditarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota/editar-rota.component';
 
 const masterRoutes: Route[] = [
     {
         path: 'gestao/telas',
         component: GestaoDeTelasComponent,
-    },
-    {
-        path: 'gestao/telas/criar-tela-aninhada/groupId/:groupId',
-        component: CriarRotaComponent,
+        data: {
+            expectedRoles: ['Master'],
+        },
     },
     {
         path: 'gestao/telas/grupo/:id',
         component: RotasAninhadasComponent,
+        data: {
+            expectedRoles: ['Master'],
+        },
     },
+    {
+        path: 'gestao/telas/criar-tela-aninhada/groupId/:groupId',
+        component: CriarRotaComponent,
+        data: {
+            expectedRoles: ['Master'],
+        },
+    },
+    {
+        path: 'gestao/telas/editar-tela-aninhada/teste/:groupId',
+        component: EditarRotaComponent,
+        data: {
+            expectedRoles: ['Master'],
+        },
+    },
+
     {
         path: 'gestao/tenants',
         component: GestaoTenantComponent,
@@ -96,6 +114,7 @@ const masterRoutes: Route[] = [
         DeletarGrupoComponent,
         DeletarRotaAninhadaComponent,
         CriarRotaComponent,
+        EditarRotaComponent,
     ],
     imports: [
         CommonModule,
