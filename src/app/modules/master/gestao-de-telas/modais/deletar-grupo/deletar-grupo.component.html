@@ -3,17 +3,26 @@
         <mat-icon svgIcon="mat_outline:warning_amber" class="text-yellow-400 mr-1"></mat-icon>
         <div class=" text-xl mb-2">Atenção!</div>
     </div>
-    <p class="">Esse grupo será deletado permanentemente.</p>
+    <p class="font-bold underline prevent-select my-2">{{data.nome}}</p>
+    <div >Esse grupo será deletado permanentemente.</div>
     <p class="">Todas as rotas aninhadas também serão excluídas durante a operação.</p>
     <p class="">Deseja continuar?</p>
 
+    <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col gap-x-2  w-full ">
+        <!-- <p class="font-bold underline prevent-select">{{data.nome}}</p> -->
+        <mat-form-field appearance="fill" class="w-full mt-4">
+            <mat-label>Digite o nome do grupo</mat-label>
+            <input formControlName="name" matInput #first />
+        </mat-form-field>
+    </form>
     <div class="flex flex-row justify-end mt-3">
         <div class="flex flex-row-reverse ">
-            <button (click)="onSubmit()" type="button"
-                class="text-white text-center algin-middle bg-red-500 w-20 hover:bg-red-600 h-6font-medium rounded-lg text-sm dark:bg-red-400 focus:outline-none dark:focus:ring-red-800">
+            <button (click)="onSubmit()" [disabled]="form.controls['name'].invalid" type="button"
+            [ngClass]="form.controls['name'].invalid ? 'bg-gray-500 w-20 hover:bg-gray-600': 'bg-red-500 w-20 hover:bg-red-600'"
+                class="text-white text-center algin-middle  h-6font-medium rounded-lg text-sm ">
                 CONFIRMAR
             </button>
-            <button (click)="voltar()"  type="button"
+            <button (click)="voltar()" type="button"
                 class="text-white text-center algin-middle bg-blue-500 w-20 hover:bg-blue-600 h-6  mr-2  font-medium rounded-lg text-sm dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-800">
                 CANCELAR
             </button>

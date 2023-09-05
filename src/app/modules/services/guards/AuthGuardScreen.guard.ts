@@ -34,7 +34,6 @@ export class AuthGuardScreen implements CanActivate, CanActivateChild {
                     .toLowerCase()
                     .includes(userDash.link.toLowerCase());
             });
-            console.log({ shouldRender });
             if (!shouldRender) {
                 this.router.navigate(['/app/inicio']);
                 return false;

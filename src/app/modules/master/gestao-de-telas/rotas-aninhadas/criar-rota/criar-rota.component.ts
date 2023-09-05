@@ -22,9 +22,9 @@ export class CriarRotaComponent implements OnInit {
     groupId = '';
     screenType = Object.values(screenTypes);
     constructor(
-        private route: ActivatedRoute,
         public dialog: MatDialog,
-        public fb: FormBuilder
+        public fb: FormBuilder,
+        private route: ActivatedRoute
     ) {
         this.groupId = this.route.snapshot.paramMap.get('groupId');
     }

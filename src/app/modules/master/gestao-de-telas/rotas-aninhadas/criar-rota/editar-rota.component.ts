@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { PageMasterService } from 'app/modules/services/page-master.service';
-import { ToastrService } from 'ngx-toastr';
-import { CriarRotaComponent, screenTypes } from './criar-rota.component';
+import { CriarRotaComponent } from './criar-rota.component';
 
 @Component({
     selector: 'app-criar-rota',
@@ -19,7 +18,7 @@ export class EditarRotaComponent extends CriarRotaComponent {
         public fb: FormBuilder,
         private pageMasterService: PageMasterService
     ) {
-        super(_route, dialog, fb);
+        super(dialog, fb, _route);
         this.screenId = this._route.snapshot.paramMap.get('screenId');
         this.requisicoes();
     }

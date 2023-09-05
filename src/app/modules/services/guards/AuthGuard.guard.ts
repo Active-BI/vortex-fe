@@ -30,11 +30,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                 });
 
                 const user: any = await jwtDecode(token);
-                console.log(
-                    route.data['expectedRoles'] === null ||
-                        route.data['expectedRoles'].length === 0 ||
-                        route.data['expectedRoles'].includes(user.role_name)
-                );
 
                 if (
                     route.data['expectedRoles'] === null ||

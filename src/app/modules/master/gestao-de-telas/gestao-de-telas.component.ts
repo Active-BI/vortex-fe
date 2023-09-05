@@ -75,9 +75,10 @@ export class GestaoDeTelasComponent implements OnInit {
         this.usuariosFiltrados = new MatTableDataSource(data);
         this.usuariosFiltrados.paginator = this.paginator;
     }
-    deletarGrupo(id): void {
+    deletarGrupo(id, nome): void {
         this.dialog.open(DeletarGrupoComponent, {
             data: {
+                nome,
                 data: () => {
                     this.dialog.closeAll();
                     this.pageMasterService.deleteGroup(id).subscribe(

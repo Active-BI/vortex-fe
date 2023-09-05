@@ -11,15 +11,15 @@ export class PageMasterService {
 
     private baseUrl = environment.baseUrl;
     postGroup(group_name) {
-        return this.http.post(`${this.baseUrl}master/group`, group_name);
+        return this.http.post(`${this.baseUrl}master/groups`, group_name);
     }
     deleteGroup(group_id) {
-        return this.http.delete(`${this.baseUrl}master/group/${group_id}`);
+        return this.http.delete(`${this.baseUrl}master/groups/${group_id}`);
     }
-    updateGroup({ group_id, group_name }) {
+    updateGroup(group_id, group) {
         return this.http.patch(
-            `${this.baseUrl}master/group/${group_id}`,
-            group_name
+            `${this.baseUrl}master/groups/${group_id}`,
+            group
         );
     }
 
@@ -57,6 +57,7 @@ export class PageMasterService {
         const pageList = res.map((page) => {
             return {
                 page_group: page.Page_Group.title,
+                page_group_icon: page.Page_Group.icon,
                 page_group_id: page.Page_Group.id,
                 link: page.link,
                 report_id: page.report_id,
@@ -77,6 +78,7 @@ export class PageMasterService {
             }
             acc.push({
                 page_group: cur.page_group,
+                icon: cur.page_group_icon,
                 id: cur.page_group_id,
                 page_id: cur.id,
                 children: [cur],

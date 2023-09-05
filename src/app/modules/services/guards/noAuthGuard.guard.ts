@@ -22,8 +22,6 @@ export class NoAuthGuard implements CanActivate {
         | UrlTree
         | Observable<boolean | UrlTree>
         | Promise<boolean | UrlTree> {
-        console.log(localStorage.getItem('token') === null);
-
         if (localStorage.getItem('token') === null) {
             return true;
         } else {

@@ -10,7 +10,6 @@ import { ToastrService } from 'ngx-toastr';
 import { DeletarRotaAninhadaComponent } from '../modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
 
 function agregarRoles(objeto) {
-    console.log(objeto);
     if (objeto.children) {
         const rolesSet = new Set(); // Usamos um Set para garantir roles únicas
         for (const child of objeto.children) {
@@ -54,6 +53,7 @@ export class RotasAninhadasComponent implements OnInit {
     }
     form = this.fb.group({
         name: ['', Validators.required],
+        icon: ['', Validators.required],
     });
     pages = [];
     pagesReduced = [];
@@ -63,6 +63,7 @@ export class RotasAninhadasComponent implements OnInit {
         );
         this.form.patchValue({
             name: acessos.page_group,
+            icon: acessos.icon,
         });
         this.usuarios = new MatTableDataSource(acessos.children);
         this.usuariosFiltrados = new MatTableDataSource(acessos.children);
@@ -84,9 +85,10 @@ export class RotasAninhadasComponent implements OnInit {
             return;
         }
         this.pageMasterService
-            .updateGroup({
-                group_id: this.id,
-                group_name: this.form.value.name,
+            .updateGroup(this.id, {
+                id: this.id,
+                title: this.form.value.name,
+                icon: this.form.value.icon,
             })
             .subscribe(
                 (res) => {
