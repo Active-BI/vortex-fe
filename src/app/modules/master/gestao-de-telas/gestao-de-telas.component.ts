@@ -14,12 +14,10 @@ import { DeletarGrupoComponent } from './modais/deletar-grupo/deletar-grupo.comp
 import { GroupMasterService } from 'app/modules/services/group-master.service';
 
 function agregarRoles(objeto) {
-    if (objeto?.children) {
+    if (objeto?.roles) {
         const rolesSet = new Set(); // Usamos um Set para garantir roles únicas
-        for (const child of objeto.children) {
-            if (child.roles) {
-                child.roles.forEach((role) => rolesSet.add(role));
-            }
+        for (const roles of objeto.roles) {
+            roles.forEach((role) => rolesSet.add(role));
         }
         objeto.children_roles = Array.from(rolesSet).sort();
     }

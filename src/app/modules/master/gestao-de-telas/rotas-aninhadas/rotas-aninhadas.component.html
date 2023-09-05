@@ -2,8 +2,7 @@
 
     <div class="text-3x-L flex-auto p-6  justify-center">
         <button (click)="voltar()" class="self-start mb-4  hover:rounded-full">
-            <mat-icon class="flex self-center text-slate-600 hover:text-slate-400"
-                svgIcon="arrow_back"></mat-icon>
+            <mat-icon class="flex self-center text-slate-600 hover:text-slate-400" svgIcon="arrow_back"></mat-icon>
         </button>
         <div class="flex flex-col w-full">
             <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex gap-x-2  w-full ">
@@ -16,18 +15,16 @@
                     <mat-label>Icon</mat-label>
                     <input formControlName="icon" matInput #first />
 
-                <mat-icon [svgIcon]="form.value.icon"></mat-icon>
+                    <mat-icon [svgIcon]="form.value.icon"></mat-icon>
 
                 </mat-form-field>
                 <button mat-raised-button (click)="AtualizarGrupo()"
-                class="self-center mx-4 mt-1 rounded-sm text-colorText bg-[#006cbe] text-white">salvar</button>
-
-
+                    class="self-center mx-4 mt-1 rounded-sm text-colorText bg-[#006cbe] text-white">salvar</button>
 
             </form>
             <div class="w-2/3 flex justify-self-end items-center">
                 <button mat-raised-button (click)="AdicionarRota()"
-                class=" mt-1 rounded-sm text-colorText bg-[#006cbe] text-white">adicionar rota</button>
+                    class=" mt-1 rounded-sm text-colorText bg-[#006cbe] text-white">adicionar rota</button>
             </div>
         </div>
         <div class="w-full bg-primary h-16 rounded-t-md  mt-4 flex items-center justify-between">
@@ -54,10 +51,11 @@
 
                         <div class="flex justify-center">
 
-                            <div *ngFor="let item of element.roles" color="primary" class=" p-1 mx-2 rounded-full bg-gray-100">
-                            {{item}}
+                            <div *ngFor="let item of element.roles" color="primary"
+                                class=" p-1 mx-2 rounded-full bg-gray-100">
+                                {{item}}
+                            </div>
                         </div>
-                    </div>
                     </td>
                 </ng-container>
 
