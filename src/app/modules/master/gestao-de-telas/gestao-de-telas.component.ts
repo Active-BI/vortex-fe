@@ -11,9 +11,10 @@ import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 import { EdicaoCriacaoGrupoComponent } from './modais/criacao-grupo/edicao-criacao-grupo.component';
 import { DeletarGrupoComponent } from './modais/deletar-grupo/deletar-grupo.component';
+import { GroupMasterService } from 'app/modules/services/group-master.service';
 
 function agregarRoles(objeto) {
-    if (objeto.children) {
+    if (objeto?.children) {
         const rolesSet = new Set(); // Usamos um Set para garantir roles únicas
         for (const child of objeto.children) {
             if (child.roles) {
@@ -47,7 +48,8 @@ export class GestaoDeTelasComponent implements OnInit {
         private router: Router,
         public dialog: MatDialog,
         private toastr: ToastrService,
-        private pageMasterService: PageMasterService
+        private pageMasterService: PageMasterService,
+        private groupMasterService: GroupMasterService
     ) {
         this.requisicoes();
     }
@@ -58,7 +60,7 @@ export class GestaoDeTelasComponent implements OnInit {
     pages = [];
     pagesReduced = [];
     async requisicoes() {
-        const acessos = (await this.pageMasterService.getPagesByGroup()).map(
+        const acessos = (await this.groupMasterService.getGroups()).map(
             (objeto) => agregarRoles(objeto)
         );
         this.usuarios = new MatTableDataSource(acessos);

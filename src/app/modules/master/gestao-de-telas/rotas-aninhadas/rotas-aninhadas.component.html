@@ -15,6 +15,9 @@
                 <mat-form-field appearance="fill" class="md:w-1/4 w-full">
                     <mat-label>Icon</mat-label>
                     <input formControlName="icon" matInput #first />
+
+                <mat-icon [svgIcon]="form.value.icon"></mat-icon>
+
                 </mat-form-field>
                 <button mat-raised-button (click)="AtualizarGrupo()"
                 class="self-center mx-4 mt-1 rounded-sm text-colorText bg-[#006cbe] text-white">salvar</button>

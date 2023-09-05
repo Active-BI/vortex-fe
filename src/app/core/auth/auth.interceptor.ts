@@ -32,7 +32,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     ): Observable<HttpEvent<any>> {
         // Clone the request object
         let newReq = req.clone();
-
+        req.url;
         if (
             localStorage.getItem('token') == null &&
             this._router.url.includes('auth')

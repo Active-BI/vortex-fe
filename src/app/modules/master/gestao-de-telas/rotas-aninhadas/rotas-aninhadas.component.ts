@@ -8,9 +8,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PageMasterService } from 'app/modules/services/page-master.service';
 import { ToastrService } from 'ngx-toastr';
 import { DeletarRotaAninhadaComponent } from '../modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
+import { GroupMasterService } from 'app/modules/services/group-master.service';
+import { HelperService } from 'app/modules/services/helper.service';
 
 function agregarRoles(objeto) {
-    if (objeto.children) {
+    if (objeto?.children) {
         const rolesSet = new Set(); // Usamos um Set para garantir roles únicas
         for (const child of objeto.children) {
             if (child.roles) {
@@ -35,16 +37,18 @@ export class RotasAninhadasComponent implements OnInit {
     usuarios: MatTableDataSource<any>;
     usuariosL: number = 0;
     id = '';
+    icones = [];
     constructor(
         private router: Router,
         private route: ActivatedRoute,
         public dialog: MatDialog,
         public fb: FormBuilder,
         private toastr: ToastrService,
-        private pageMasterService: PageMasterService
+        private pageMasterService: PageMasterService,
+        private groupMasterService: GroupMasterService,
+        private helperService: HelperService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
-
         this.requisicoes();
     }
 
@@ -59,7 +63,7 @@ export class RotasAninhadasComponent implements OnInit {
     pagesReduced = [];
     async requisicoes() {
         const acessos = agregarRoles(
-            await this.pageMasterService.getPagesByGroup(this.id)
+            await this.groupMasterService.getGroup(this.id)
         );
         this.form.patchValue({
             name: acessos.page_group,

@@ -20,9 +20,7 @@ export class DeletarGrupoComponent {
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialog: MatDialog,
         private fb: FormBuilder
-    ) {
-        console.log(this.data);
-    }
+    ) {}
     form = this.fb.group({
         name: [
             '',

@@ -23,7 +23,8 @@ export class EdicaoCriacaoGrupoComponent {
     }
 
     form = this.fb.group({
-        name: ['', Validators.required],
+        title: ['', Validators.required],
+        icon: ['', Validators.required],
     });
 
     async requisicoes() {}
@@ -33,7 +34,7 @@ export class EdicaoCriacaoGrupoComponent {
             this.toastr.error('Nome Precisa ser preenchido');
             return;
         }
-        this.pageMasterService.postGroup(this.form.value.name).subscribe(
+        this.pageMasterService.postGroup(this.form.value).subscribe(
             (res) => {
                 this.dialog.closeAll();
                 this.toastr.success('Grupo criado com sucesso');
