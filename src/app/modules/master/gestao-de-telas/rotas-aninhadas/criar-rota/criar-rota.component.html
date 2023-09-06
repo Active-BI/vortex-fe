@@ -2,16 +2,8 @@
 
     <form (submit)="$event.preventDefault()" [formGroup]="form"
         class="grid grid-cols-2 gap-x-2 gap-y-4 w-full sm:w-[60%] md:w-[80%] m-8">
-        <div class="grid grid-cols-2 col-span-full">
-            <mat-form-field class="md:col-span-1 fuse-mat-dense col-span-full ">
-                <mat-label>Grupo</mat-label>
-                <mat-select (selectionChange)="change()" formControlName="page_group_id">
-                    <mat-option value="option1">Option 1</mat-option>
-                    <mat-option value="option2">Option 2 (disabled)</mat-option>
-                    <mat-option value="option3">Option 3</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+
+        <p class="text-2xl mb-6 font-bold col-span-full">{{form.value.page_group_title}}</p>
         <div *ngIf="form.value.page_group_id !== ''" class="grid grid-cols-2 gap-x-2 gap-y-4 col-span-full">
             <mat-form-field class="md:col-span-1 fuse-mat-dense col-span-full ">
                 <mat-label>Tipo da página</mat-label>
@@ -24,8 +16,7 @@
                 <mat-label>Nome da Página</mat-label>
                 <input (input)="change()" formControlName="title" matInput #first />
             </mat-form-field>
-            <mat-form-field appearance="fill"
-                class="fuse-mat-emphasized-affix md:col-span-1 fuse-mat-dense col-span-full ">
+            <mat-form-field appearance="fill" class="fuse-mat-emphasized-affix  fuse-mat-dense col-span-full ">
                 <mat-label>Link da Página</mat-label>
 
                 <!-- <div matPrefix>{{form.value.page_group_id}}</div> -->
@@ -41,7 +32,8 @@
                     <input formControlName="group_id" matInput #first />
                 </mat-form-field>
                 <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full ">
-                    <mat-label>ID do {{form.value.report_type.includes('dashboard') ? 'Dashboard' : 'Relatório'}}</mat-label>
+                    <mat-label>ID do {{form.value.report_type.includes('dashboard') ? 'Dashboard' :
+                        'Relatório'}}</mat-label>
                     <input formControlName="report_id" matInput #first />
                 </mat-form-field>
                 <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full ">
@@ -54,7 +46,7 @@
                     <input formControlName="responsavel" matInput #first />
                 </mat-form-field>
             </div>
-            <div class="col-span-full flex gap-x-4">
+            <div class="col-span-full flex gap-x-4 items-center">
 
                 <section class="example-section" class=" col-span-w ">
                     <mat-checkbox (change)="change()" formControlName="restrict" class="example-margin">Página
@@ -65,11 +57,15 @@
                         sensíveis?</mat-checkbox>
                 </section>
             </div>
+            <div class="col-span-full md:col-span-1 flex ">
+                <button mat-raised-button (click)="page_context === 'criar' ? criarRota() : editarRota()"
+                    class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">{{page_context}}</button>
 
-            <div class="col-span-full md:col-span-1">
-                <button mat-raised-button (click)="criarRota()"
-                    class="self-start mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">criar</button>
-            </div>
+                    <button mat-raised-button (click)="voltar()"
+                    class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">voltar</button>
+
+                </div>
+
         </div>
     </form>
 </div>

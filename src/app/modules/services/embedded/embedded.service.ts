@@ -32,8 +32,8 @@ export class EmbeddedService {
             `${this.baseUrl}pbi-report/${groupId}/${reportId}`
         );
     }
-    getEmbeddedReportInfoByType(type: string): Observable<any> {
-        return this.http.get(`${this.baseUrl}pbi-report/type/${type}`);
+    getEmbeddedReportInfoByType(group, type: string): Observable<any> {
+        return this.http.get(`${this.baseUrl}pbi-report/${group}/${type}`);
     }
     getEmbeddedDashboardInfo(
         groupId: string,

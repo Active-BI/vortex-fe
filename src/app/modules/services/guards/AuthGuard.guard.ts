@@ -23,7 +23,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     ): Promise<boolean | UrlTree> {
         if (localStorage.getItem('token')) {
             const token = JSON.parse(localStorage.getItem('token'));
-
             try {
                 await jwtDecode(token, {
                     header: true,

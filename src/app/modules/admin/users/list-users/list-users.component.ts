@@ -115,9 +115,9 @@ export class ListUsersComponent implements OnInit {
     }
 
     criarUsuario(): void {
-        this.router.navigate(['app/usuarios-criar']);
+        this.router.navigate(['app/administrador/usuarios-criar']);
     }
     editarUsuario(id): void {
-        this.router.navigate([`app/usuarios-editar/${id}`]);
+        this.router.navigate([`app/administrador/usuarios-editar/${id}`]);
     }
 }

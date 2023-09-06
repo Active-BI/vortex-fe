@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class BiReportDefaultByTypeComponent implements OnInit {
     type = '';
+    group = '';
     enable = false;
     layout = 'desktop';
     parametro$ = Observable<Data>;
@@ -19,11 +20,16 @@ export class BiReportDefaultByTypeComponent implements OnInit {
         this.router.params.subscribe((e) => {
             this.enable = false;
             this.type = e.type;
+            this.group = e.group;
             const dashUsers = JSON.parse(localStorage.getItem('userRoutes'));
-
+            console.log(e);
             if (
                 dashUsers.length < 1 ||
-                !dashUsers.find((r) => r.link === this.type)
+                !dashUsers.find(
+                    (r) =>
+                        r.link.includes(this.type) &&
+                        r.link.includes(this.group)
+                )
             ) {
                 this.route.navigateByUrl('/app/inicio');
                 return;

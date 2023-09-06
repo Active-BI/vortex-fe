@@ -58,37 +58,36 @@ const adminroutes: Route[] = [
         component: InicioComponent,
         pathMatch: 'full',
     },
-
-    {
-        path: 'view-report-type/:type',
-        component: BiReportDefaultByTypeComponent,
-    },
-
     {
         path: 'inicio',
         component: InicioComponent,
     },
-
     {
-        data: { expectedRoles: ['Admin'] },
-        path: 'usuarios',
-        component: ListUsersComponent,
-        canActivate: [AuthGuardScreen],
-    },
-
-    {
-        data: { expectedRoles: ['Admin'] },
-        canActivate: [AuthGuardScreen],
-
-        path: 'usuarios-criar',
-        component: CreateUserComponent,
+        path: 'view-report/:group/:type',
+        component: BiReportDefaultByTypeComponent,
     },
     {
-        data: { expectedRoles: ['Admin'] },
-        canActivate: [AuthGuardScreen],
-
-        path: 'usuarios-editar/:id',
-        component: EditUserComponent,
+        path: 'administrador',
+        children: [
+            {
+                data: { expectedRoles: ['Admin'] },
+                path: 'usuarios',
+                component: ListUsersComponent,
+                canActivate: [AuthGuardScreen],
+            },
+            {
+                data: { expectedRoles: ['Admin'] },
+                canActivate: [AuthGuardScreen],
+                path: 'usuarios-criar',
+                component: CreateUserComponent,
+            },
+            {
+                data: { expectedRoles: ['Admin'] },
+                canActivate: [AuthGuardScreen],
+                path: 'usuarios-editar/:id',
+                component: EditUserComponent,
+            },
+        ],
     },
 ];
 

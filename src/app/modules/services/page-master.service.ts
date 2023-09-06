@@ -45,6 +45,9 @@ export class PageMasterService {
     getPages() {
         return this.http.get(`${this.baseUrl}master/pages`);
     }
+    patchPages(id: string, page) {
+        return this.http.patch(`${this.baseUrl}master/pages/${id}`, page);
+    }
     async getPageById(id) {
         return await this.http
             .get<any[]>(`${this.baseUrl}master/pages/` + id)

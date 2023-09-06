@@ -20,13 +20,25 @@ export const screenTypes = {
 })
 export class CriarRotaComponent implements OnInit {
     groupId = '';
+    page_context = 'criar';
     screenType = Object.values(screenTypes);
     constructor(
         public dialog: MatDialog,
         public fb: FormBuilder,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router
     ) {
         this.groupId = this.route.snapshot.paramMap.get('groupId');
+        this.page_context = this.router.url.includes('criar')
+            ? 'criar'
+            : 'editar';
+    }
+    voltar() {
+        this.groupId.length > 0
+            ? this.router.navigate([
+                  '/master/gestao/telas/grupo/' + this.groupId,
+              ])
+            : this.router.navigate(['/master/gestao/telas/']);
     }
     form = this.fb.group({
         id: ['', [Validators.required]],
@@ -37,6 +49,7 @@ export class CriarRotaComponent implements OnInit {
         report_id: [''],
         restrict: [false, [Validators.required]],
         table_name: [''],
+        page_group_title: ['', [Validators.required]],
         page_group_id: ['', [Validators.required]],
         possui_dados_sensiveis: ['', [Validators.required]],
         descricao_painel: ['', [Validators.required]],
@@ -44,9 +57,19 @@ export class CriarRotaComponent implements OnInit {
     });
     ngOnInit(): void {}
     change() {
-        const pathByGroup = this.form.value.page_group_id;
-        const title = this.form.value.title;
-        let pathByType = '/';
+        const pathByGroup = this.form.value.page_group_title
+            .toLowerCase()
+            .split(' ')
+            .join('-')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+        const title = this.form.value.title
+            .toLowerCase()
+            .split(' ')
+            .join('-')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+        let pathByType = '';
         if (
             this.form.value.report_type.includes('report') ||
             this.form.value.report_type.includes('dashboard')
@@ -56,7 +79,7 @@ export class CriarRotaComponent implements OnInit {
                 : pathByType + 'view-dashboard/';
         }
         if (this.form.value.restrict) {
-            pathByType = '/master' + pathByType;
+            pathByType = '/master/' + pathByType;
         } else {
         }
         this.form.patchValue({

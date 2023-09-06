@@ -136,11 +136,11 @@ export class EditUserComponent implements OnInit {
         };
     }
     voltar(): void {
-        this.router.navigate(['app/usuarios']);
+        this.router.navigate(['app/administrador/usuarios']);
     }
 
     redirectToEdit(id) {
-        this.router.navigate([`app/usuarios-editar/${id}`]);
+        this.router.navigate([`app/administrador/usuarios-editar/${id}`]);
     }
 
     editar(): void {
