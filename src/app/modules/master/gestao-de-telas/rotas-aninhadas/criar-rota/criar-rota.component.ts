@@ -70,13 +70,19 @@ export class CriarRotaComponent implements OnInit {
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '');
         let pathByType = '';
+        const isReportTypeNull = this.form.value.report_type === null;
+        if (isReportTypeNull) {
+            this.form.patchValue({
+                report_type: 'report',
+            });
+        }
         if (
             this.form.value.report_type.includes('report') ||
             this.form.value.report_type.includes('dashboard')
         ) {
             pathByType = this.form.value.report_type.includes('report')
-                ? pathByType + 'view-report/'
-                : pathByType + 'view-dashboard/';
+                ? pathByType + 'view-report'
+                : pathByType + 'view-dashboard';
         }
         if (this.form.value.restrict) {
             pathByType = '/master/' + pathByType;

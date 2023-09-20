@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import decode from 'jwt-decode';
 import {
     ActivatedRouteSnapshot,
     CanActivate,
@@ -9,7 +8,6 @@ import {
     UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MenuItemService } from 'app/mock-api/common/navigation/data';
 import jwtDecode from 'jwt-decode';
 
 @Injectable({

@@ -4,10 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageMasterService } from 'app/modules/services/page-master.service';
 import { CriarRotaComponent } from './criar-rota.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-criar-rota',
-    templateUrl: './criar-rota.component.html',
+    templateUrl: './editar-rota.component.html',
     styleUrls: ['./criar-rota.component.scss'],
 })
 export class EditarRotaComponent extends CriarRotaComponent {
@@ -17,7 +18,8 @@ export class EditarRotaComponent extends CriarRotaComponent {
         public dialog: MatDialog,
         public fb: FormBuilder,
         private pageMasterService: PageMasterService,
-        private _router: Router
+        _router: Router,
+        private toastr: ToastrService
     ) {
         super(dialog, fb, _route, _router);
         this.screenId = this._route.snapshot.paramMap.get('screenId');
@@ -39,6 +41,7 @@ export class EditarRotaComponent extends CriarRotaComponent {
             responsavel,
             Page_Group: { title: page_group_title },
         }: any = await this.pageMasterService.getPageById(this.screenId);
+
         this.form.patchValue({
             id,
             title,
@@ -59,8 +62,15 @@ export class EditarRotaComponent extends CriarRotaComponent {
     }
     editarRota() {
         const { page_group_title, page_group_id, ...dados } = this.form.value;
-        this.pageMasterService
-            .patchPages(dados.id, dados)
-            .subscribe((res) => console.log(res));
+        if (!this.form.valid) {
+            this.toastr.error('Dados inválidos');
+            return;
+        }
+        this.pageMasterService.patchPages(dados.id, dados).subscribe(
+            (res) => this.toastr.success('Rota edtada com sucesso'),
+            ({ error }) => {
+                this.toastr.error('Falha ao atualizar rota');
+            }
+        );
     }
 }
