@@ -26,7 +26,9 @@ export class CriarRotaComponent implements OnInit {
         public dialog: MatDialog,
         public fb: FormBuilder,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private pageMasterService: PageMasterService,
+        private toastr: ToastrService
     ) {
         this.groupId = this.route.snapshot.paramMap.get('groupId');
         this.page_context = this.router.url.includes('criar')
@@ -45,17 +47,22 @@ export class CriarRotaComponent implements OnInit {
         report_type: ['report', [Validators.required]],
         title: ['', [Validators.required]],
         link: [''],
+        type: ['basic'],
         group_id: [''],
         report_id: [''],
         restrict: [false, [Validators.required]],
         table_name: [''],
         page_group_title: ['', [Validators.required]],
-        page_group_id: ['', [Validators.required]],
+        page_group_id: [this.groupId, [Validators.required]],
         possui_dados_sensiveis: ['', [Validators.required]],
         descricao_painel: ['', [Validators.required]],
         responsavel: ['', [Validators.required]],
     });
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.form.patchValue({
+            page_group_id: this.groupId,
+        });
+    }
     change() {
         const pathByGroup = this.form.value.page_group_title
             .toLowerCase()
@@ -63,6 +70,7 @@ export class CriarRotaComponent implements OnInit {
             .join('-')
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '');
+        console.log({ pathByGroup, typeof: typeof pathByGroup });
         const title = this.form.value.title
             .toLowerCase()
             .split(' ')
@@ -81,16 +89,35 @@ export class CriarRotaComponent implements OnInit {
             this.form.value.report_type.includes('dashboard')
         ) {
             pathByType = this.form.value.report_type.includes('report')
-                ? pathByType + 'view-report'
-                : pathByType + 'view-dashboard';
+                ? pathByType + 'view-report/'
+                : pathByType + 'view-dashboard/';
         }
         if (this.form.value.restrict) {
             pathByType = '/master/' + pathByType;
-        } else {
         }
-        this.form.patchValue({
-            link: `${pathByType}${pathByGroup}/${title}`,
-        });
+        console.log(pathByGroup);
+        if (pathByGroup === '') {
+            this.form.patchValue({
+                link: `${pathByType}${title}`,
+            });
+        } else {
+            this.form.patchValue({
+                link: `${pathByType}${pathByGroup}/${title}`,
+            });
+        }
     }
-    criarRota() {}
+    criarRota() {
+        if (this.form.valid) {
+            this.toastr.error('Formulário inválido');
+        }
+        const { page_group_title, possui_dados_sensiveis, id, ...args } =
+            this.form.value;
+        this.pageMasterService.postPage(args).subscribe(
+            (res) => {
+                this.toastr.success('Rota criada com sucesso');
+                this.router.navigate(['/master/gestao/telas/']);
+            },
+            ({ error }) => this.toastr.error('Falha ao criar rota')
+        );
+    }
 }

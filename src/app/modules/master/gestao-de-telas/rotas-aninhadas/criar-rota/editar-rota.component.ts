@@ -17,11 +17,11 @@ export class EditarRotaComponent extends CriarRotaComponent {
         public _route: ActivatedRoute,
         public dialog: MatDialog,
         public fb: FormBuilder,
-        private pageMasterService: PageMasterService,
+        private _pageMasterService: PageMasterService,
         _router: Router,
-        private toastr: ToastrService
+        private _toastr: ToastrService
     ) {
-        super(dialog, fb, _route, _router);
+        super(dialog, fb, _route, _router, _pageMasterService, _toastr);
         this.screenId = this._route.snapshot.paramMap.get('screenId');
         this.requisicoes();
     }
@@ -40,7 +40,7 @@ export class EditarRotaComponent extends CriarRotaComponent {
             report_type,
             responsavel,
             Page_Group: { title: page_group_title },
-        }: any = await this.pageMasterService.getPageById(this.screenId);
+        }: any = await this._pageMasterService.getPageById(this.screenId);
 
         this.form.patchValue({
             id,
@@ -63,13 +63,13 @@ export class EditarRotaComponent extends CriarRotaComponent {
     editarRota() {
         const { page_group_title, page_group_id, ...dados } = this.form.value;
         if (!this.form.valid) {
-            this.toastr.error('Dados inválidos');
+            this._toastr.error('Dados inválidos');
             return;
         }
-        this.pageMasterService.patchPages(dados.id, dados).subscribe(
-            (res) => this.toastr.success('Rota edtada com sucesso'),
+        this._pageMasterService.patchPages(dados.id, dados).subscribe(
+            (res) => this._toastr.success('Rota edtada com sucesso'),
             ({ error }) => {
-                this.toastr.error('Falha ao atualizar rota');
+                this._toastr.error('Falha ao atualizar rota');
             }
         );
     }

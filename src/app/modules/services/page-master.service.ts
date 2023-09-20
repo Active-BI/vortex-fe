@@ -25,10 +25,10 @@ export class PageMasterService {
     }
 
     deleteChildrenPage(page_id) {
-        return this.http.delete(`${this.baseUrl}master/page/${page_id}`);
+        return this.http.delete(`${this.baseUrl}master/pages/${page_id}`);
     }
 
-    postPage(dashboadList, userId) {
+    postReportsToTennant(dashboadList, userId) {
         return this.http.post(
             `${this.baseUrl}master/pages/${userId}`,
             dashboadList
@@ -48,11 +48,20 @@ export class PageMasterService {
     patchPages(id: string, page) {
         return this.http.patch(`${this.baseUrl}master/pages/${id}`, page);
     }
+    postPage(page) {
+        return this.http.post(`${this.baseUrl}master/pages`, page);
+    }
+
+    deletePage(id) {
+        return this.http.delete(`${this.baseUrl}master/pages/${id}`);
+    }
+
     async getPageById(id) {
         return await this.http
             .get<any[]>(`${this.baseUrl}master/pages/` + id)
             .toPromise();
     }
+
     async getPagesByGroup(id = '') {
         const res = await this.http
             .get<any[]>(`${this.baseUrl}master/pages`)
