@@ -12,6 +12,20 @@ export const screenTypes = {
     DASHBOARD_UPLOAD: 'dashboard-upload',
     PAGE: 'page',
 };
+const ROLES = {
+    User: 'ca21241b-a37d-4e6f-bbb6-26643d3cdd99',
+    Admin: '6a203390-8389-49ca-aa0e-6a14ba7815bc',
+};
+export const roles = [
+    {
+        name: 'User',
+        id: ROLES.User,
+    },
+    {
+        name: 'Admin',
+        id: ROLES.Admin,
+    },
+];
 
 @Component({
     selector: 'app-criar-rota',
@@ -22,6 +36,7 @@ export class CriarRotaComponent implements OnInit {
     groupId = '';
     page_context = 'criar';
     screenType = Object.values(screenTypes);
+    roles = roles;
     constructor(
         public dialog: MatDialog,
         public fb: FormBuilder,
@@ -57,11 +72,19 @@ export class CriarRotaComponent implements OnInit {
         possui_dados_sensiveis: ['', [Validators.required]],
         descricao_painel: ['', [Validators.required]],
         responsavel: ['', [Validators.required]],
+        roles: [[], [Validators.required]],
     });
     ngOnInit(): void {
         this.form.patchValue({
             page_group_id: this.groupId,
         });
+    }
+    findRole(id) {
+        console.log(id);
+        if (id) {
+            return this.roles.find((r) => r.id === id).name;
+        }
+        return '';
     }
     change() {
         const pathByGroup = this.form.value.page_group_title
