@@ -1,9 +1,6 @@
-import { group } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 
-const key = 'AIzaSyBh5kIKDAOuK5VqAWfVeVenFFK9hg6r1vs';
 @Injectable({
     providedIn: 'root',
 })
