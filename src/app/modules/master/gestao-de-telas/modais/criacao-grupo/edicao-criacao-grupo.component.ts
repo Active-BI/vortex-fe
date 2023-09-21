@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageMasterService } from 'app/modules/services/page-master.service';
 import { ToastrService } from 'ngx-toastr';
@@ -15,6 +15,7 @@ export class EdicaoCriacaoGrupoComponent {
         private router: Router,
         private route: ActivatedRoute,
         public dialog: MatDialog,
+        @Inject(MAT_DIALOG_DATA) public data,
         public fb: FormBuilder,
         private toastr: ToastrService,
         private pageMasterService: PageMasterService
@@ -34,11 +35,13 @@ export class EdicaoCriacaoGrupoComponent {
             this.toastr.error('Nome Precisa ser preenchido');
             return;
         }
+        this.form.value.title;
         this.pageMasterService.postGroup(this.form.value).subscribe(
             (res) => {
                 this.dialog.closeAll();
                 this.toastr.success('Grupo criado com sucesso');
                 this.router.navigate(['/master/gestao/telas']);
+                this.data.data();
             },
             ({ error }) => {
                 this.toastr.error('Falha ao criar grupo');

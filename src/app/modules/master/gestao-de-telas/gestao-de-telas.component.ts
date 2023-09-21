@@ -5,9 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
 import { PageMasterService } from 'app/modules/services/page-master.service';
-import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 import { EdicaoCriacaoGrupoComponent } from './modais/criacao-grupo/edicao-criacao-grupo.component';
 import { DeletarGrupoComponent } from './modais/deletar-grupo/deletar-grupo.component';
@@ -100,6 +98,7 @@ export class GestaoDeTelasComponent implements OnInit {
                 nome: 'Usuários',
                 data: () => {
                     this.dialog.closeAll();
+                    this.requisicoes();
                 },
             },
         });
