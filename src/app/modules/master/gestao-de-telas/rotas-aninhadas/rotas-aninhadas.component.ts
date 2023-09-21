@@ -9,7 +9,6 @@ import { PageMasterService } from 'app/modules/services/page-master.service';
 import { ToastrService } from 'ngx-toastr';
 import { DeletarRotaAninhadaComponent } from '../modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
 import { GroupMasterService } from 'app/modules/services/group-master.service';
-import { HelperService } from 'app/modules/services/helper.service';
 
 function agregarRoles(objeto) {
     if (objeto?.children) {
