@@ -1,0 +1,20 @@
+<div class="flex flex-col w-[30vw] h-auto">
+    <div class="w-full flex justify-start text-center align-center">
+        <mat-icon svgIcon="mat_outline:warning_amber" class="text-yellow-400 mr-1"></mat-icon>
+        <div class=" text-xl mb-2">Atenção!</div>
+    </div>
+    <p class="">Essa rota será deletada permanentemente.</p>
+    <p class="">Deseja continuar?</p>
+
+    <div class="flex flex-row justify-end mt-3">
+        <div class="flex flex-row-reverse ">
+            <button (click)="onSubmit()" type="button"
+                class="text-white text-center algin-middle bg-red-500 w-20 hover:bg-red-600 h-6font-medium rounded-lg text-sm dark:bg-red-400 focus:outline-none dark:focus:ring-red-800">
+                CONFIRMAR
+            </button>
+            <button (click)="voltar()"  type="button"
+                class="text-white text-center algin-middle bg-blue-500 w-20 hover:bg-blue-600 h-6  mr-2  font-medium rounded-lg text-sm dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-800">
+                CANCELAR
+            </button>
+        </div>
+    </div>

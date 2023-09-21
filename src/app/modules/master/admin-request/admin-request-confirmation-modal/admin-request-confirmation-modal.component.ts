@@ -56,32 +56,34 @@ export class AdminRequestConfirmationModalComponent {
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
 
-        this.pageMasterService.getPageById(this.id).subscribe((d: any) => {
-            this.dashboardsSelecteds = d;
-            const dashMap = d.map((tenant_dashboard) => {
-                return {
-                    page_group: tenant_dashboard.Page_Group.title,
-                    name: tenant_dashboard.title,
-                    id: tenant_dashboard.id,
-                    selected: tenant_dashboard.included,
-                };
-            });
-            this.dashboardListReduced = dashMap.reduce((acc, cur) => {
-                const findItem = acc.findIndex(
-                    (a) => a.page_group === cur.page_group
-                );
-                if (findItem >= 0) {
-                    acc[findItem].children.push(cur);
-                    return acc;
-                }
-                acc.push({
-                    page_group: cur.page_group,
-                    children: [cur],
+        this.pageMasterService
+            .getPageByTenantId(this.id)
+            .subscribe((d: any) => {
+                this.dashboardsSelecteds = d;
+                const dashMap = d.map((tenant_dashboard) => {
+                    return {
+                        page_group: tenant_dashboard.Page_Group.title,
+                        name: tenant_dashboard.title,
+                        id: tenant_dashboard.id,
+                        selected: tenant_dashboard.included,
+                    };
                 });
+                this.dashboardListReduced = dashMap.reduce((acc, cur) => {
+                    const findItem = acc.findIndex(
+                        (a) => a.page_group === cur.page_group
+                    );
+                    if (findItem >= 0) {
+                        acc[findItem].children.push(cur);
+                        return acc;
+                    }
+                    acc.push({
+                        page_group: cur.page_group,
+                        children: [cur],
+                    });
 
-                return acc;
-            }, []);
-        });
+                    return acc;
+                }, []);
+            });
         this.form = this.fb.group({
             tenant: ['', [Validators.required]],
         });

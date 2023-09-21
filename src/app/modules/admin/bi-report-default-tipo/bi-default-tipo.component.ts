@@ -10,8 +10,10 @@ import { Observable } from 'rxjs';
 })
 export class BiReportDefaultByTypeComponent implements OnInit {
     type = '';
+    group = '';
     enable = false;
     layout = 'desktop';
+    report_type = '';
     parametro$ = Observable<Data>;
     constructor(private router: ActivatedRoute, private route: Router) {}
 
@@ -19,15 +21,26 @@ export class BiReportDefaultByTypeComponent implements OnInit {
         this.router.params.subscribe((e) => {
             this.enable = false;
             this.type = e.type;
-            const dashUsers = JSON.parse(localStorage.getItem('userRoutes'));
+            this.group = e.group;
 
+            const dashUsers = JSON.parse(localStorage.getItem('userRoutes'));
+            console.log(e);
             if (
                 dashUsers.length < 1 ||
-                !dashUsers.find((r) => r.link === this.type)
+                !dashUsers.find(
+                    (r) =>
+                        r.link.includes(this.type) &&
+                        r.link.includes(this.group)
+                )
             ) {
                 this.route.navigateByUrl('/app/inicio');
                 return;
             }
+            const route = dashUsers.find(
+                (r) => r.link.includes(this.type) && r.link.includes(this.group)
+            );
+            console.log(route, route.report_type);
+            this.report_type = route.report_type;
             setTimeout(() => {
                 this.enable = true;
             }, 300);

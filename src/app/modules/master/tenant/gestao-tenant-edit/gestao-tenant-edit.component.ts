@@ -65,7 +65,7 @@ export class GestaoTenantEditComponent implements OnInit {
         });
         if (editar) {
             this.pageMasterService
-                .getPageById(this.id)
+                .getPageByTenantId(this.id)
                 .subscribe((d: any[]) => {
                     this.dashboardsSelecteds = d;
 

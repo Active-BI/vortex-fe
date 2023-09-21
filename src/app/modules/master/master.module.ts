@@ -37,12 +37,33 @@ import { AdminRequestConfirmationModalComponent } from './admin-request/admin-re
 import { AdminRequestsComponent } from './admin-request/admin-requests/admin-requests.component';
 import { TenantUserListComponent } from './tenant-user-list/tenant-user-list.component';
 import { AddAdminAccessComponent } from './tenant-user-list/add_access_admin/add_access_admin.component';
+import { GestaoDeTelasComponent } from './gestao-de-telas/gestao-de-telas.component';
+import { EdicaoCriacaoGrupoComponent } from './gestao-de-telas/modais/criacao-grupo/edicao-criacao-grupo.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { RotasAninhadasComponent } from './gestao-de-telas/rotas-aninhadas/rotas-aninhadas.component';
+import { DeletarGrupoComponent } from './gestao-de-telas/modais/deletar-grupo/deletar-grupo.component';
+import { DeletarRotaAninhadaComponent } from './gestao-de-telas/modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
+import { CriarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota/criar-rota.component';
+import { EditarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota/editar-rota.component';
 
 const masterRoutes: Route[] = [
     {
         path: 'gestao/telas',
-        component: GestaoTenantComponent,
+        component: GestaoDeTelasComponent,
     },
+    {
+        path: 'gestao/telas/grupo/:id',
+        component: RotasAninhadasComponent,
+    },
+    {
+        path: 'gestao/telas/criar-tela-aninhada/groupId/:groupId',
+        component: CriarRotaComponent,
+    },
+    {
+        path: 'gestao/telas/editar-tela-aninhada/groupId/:groupId/screenId/:screenId',
+        component: EditarRotaComponent,
+    },
+
     {
         path: 'gestao/tenants',
         component: GestaoTenantComponent,
@@ -75,6 +96,13 @@ const masterRoutes: Route[] = [
         TenantUserListComponent,
         AddAdminAccessComponent,
         GestaoTenantEditComponent,
+        GestaoDeTelasComponent,
+        EdicaoCriacaoGrupoComponent,
+        RotasAninhadasComponent,
+        DeletarGrupoComponent,
+        DeletarRotaAninhadaComponent,
+        CriarRotaComponent,
+        EditarRotaComponent,
     ],
     imports: [
         CommonModule,
@@ -102,6 +130,10 @@ const masterRoutes: Route[] = [
         MatTooltipModule,
         MatCheckboxModule,
         MatSelectModule,
+        MatChipsModule,
+        MatIconModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [

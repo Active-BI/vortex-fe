@@ -1,10 +1,7 @@
 <div class="flex flex-col flex-auto min-w-0 h-[100vh]">
 
     <div class="flex flex-col flex-auto min-w-0">
-        <!-- <div class=" text-xl mb-10">
-            {{title}}
-        </div> -->
-        <div class="flex justify-between flex-row-reverse mt-[-20px] gap-2 items-center">
+        <div *ngIf="report_type.includes('upload')" class="flex justify-between flex-row-reverse mt-[-20px] gap-2 items-center">
 
             <div class="flex gap-x-2 items-center">
                 <mat-icon svgIcon="mat_outline:settings" class="absolute w-6 h-6"></mat-icon>
@@ -23,12 +20,6 @@
                 <mat-icon svgIcon="fullscreen" (click)="fullscreen()" class=" w-7 h-7 cursor-pointer -m-1"></mat-icon>
             </div>
 
-            <!-- <mat-form-field class=" w-1/4 ">
-                <mat-select (selectionChange)="change($event)" placeholder="Selecione" class=""
-                     [formControl]="report_page">
-                    <mat-option *ngFor="let page of pages" [value]="page.name">{{page.displayName}}</mat-option>
-                </mat-select>
-            </mat-form-field> -->
             <div class="flex items-center flex-row justify-center " *ngIf="this.rlsName !== 'User'">
 
                 <form class="form-upload">

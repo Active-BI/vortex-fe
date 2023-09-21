@@ -55,7 +55,7 @@ export class AddAdminAccessComponent implements OnInit {
 
     onSubmit(): void {
         this.pageMasterService
-            .postPage(
+            .postReportsToTennant(
                 {
                     DashboardUserList: this.form.value,
                     tenant_id: this.usuario.tenant_id,

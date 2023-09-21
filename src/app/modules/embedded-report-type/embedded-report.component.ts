@@ -20,6 +20,9 @@ import { LogModalComponent } from './log-modal/log-modal.component';
 })
 export class EmbeddedReportByTypeComponent implements OnInit {
     @Input() type: string;
+    @Input() group: string;
+    @Input() report_type: string;
+
     @ViewChild('formInputs') formIputFile;
     report_page = new FormControl('');
 
@@ -38,7 +41,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
     }
     refreshReport() {
         // this.refresh();
-        this.pmiService.refreshDataset(this.type).subscribe(
+        this.pmiService.refreshDataset(this.group, this.type).subscribe(
             (res) => this.toastr.success('Relatório está sendo Atualizado'),
             ({ error }) => {
                 this.toastr.error(error.message);
@@ -46,8 +49,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         );
     }
     refreshReportDataflow() {
-        // this.refresh();
-        this.pmiService.refreshDataflow(this.type).subscribe(
+        this.pmiService.refreshDataflow(this.group, this.type).subscribe(
             (res) => this.toastr.success('Dataflow está sendo Atualizado'),
             ({ error }) => {
                 this.toastr.error(error.message);
@@ -57,7 +59,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
     Salvar() {
         if (this.dadosParaImportar.length > 0) {
             this.pmiService
-                .uploadFile(this.dadosParaImportar, this.type)
+                .uploadFile(this.dadosParaImportar, this.group, this.type)
                 .subscribe(
                     (d) => this.toastr.success('Importação concluída'),
                     ({ error }) => {
@@ -89,28 +91,32 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         }
     }
     Exportar() {
-        this.pmiService.exportDataFile(this.type).subscribe((data: any) => {
-            const blob = new Blob([data], {
-                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        this.pmiService
+            .exportDataFile(this.group, this.type)
+            .subscribe((data: any) => {
+                const blob = new Blob([data], {
+                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                });
+                const downloadUrl = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                link.download = this.type + '_dados.xlsx';
+                link.click();
             });
-            const downloadUrl = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = downloadUrl;
-            link.download = this.type + '_dados.xlsx';
-            link.click();
-        });
     }
     BaixarTemplate() {
-        this.pmiService.exportExampleFile(this.type).subscribe((data: any) => {
-            const blob = new Blob([data], {
-                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        this.pmiService
+            .exportExampleFile(this.group, this.type)
+            .subscribe((data: any) => {
+                const blob = new Blob([data], {
+                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                });
+                const downloadUrl = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                link.download = this.type + '_template.xlsx';
+                link.click();
             });
-            const downloadUrl = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = downloadUrl;
-            link.download = this.type + '_template.xlsx';
-            link.click();
-        });
     }
 
     Importar(e) {
@@ -266,43 +272,45 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         this.pages.find((page) => page.name === value).setActive();
     }
     private getEmbedded(settings: any): void {
-        this.embeddedSrv.getEmbeddedReportInfoByType(this.type).subscribe(
-            (res) => {
-                this.token = res.embedToken;
-                this.config = {
-                    type: 'report',
-                    tokenType: 1,
-                    embedUrl: res.reportsDetail[0].embedUrl,
-                    id: res.reportsDetail[0].reportId,
-                    accessToken: this.token.token,
-                    hostname: 'https://app.powerbi.com',
-                    settings: {
-                        ...settings,
-                    },
-                };
-                this.configDashboard = {
-                    type: 'dashboard',
-                    tokenType: 1,
-                    embedUrl: res.reportsDetail[0].embedUrl,
-                    id: res.reportsDetail[0].reportId,
-                    accessToken: this.token.token,
-                    hostname: 'https://app.powerbi.com',
-                    settings: {
-                        visualRenderedEvents: true,
-                        panes: {
-                            filters: {
-                                visible: false,
-                            },
-                            pageNavigation: {
-                                visible: false,
+        this.embeddedSrv
+            .getEmbeddedReportInfoByType(this.group, this.type)
+            .subscribe(
+                (res) => {
+                    this.token = res.embedToken;
+                    this.config = {
+                        type: 'report',
+                        tokenType: 1,
+                        embedUrl: res.reportsDetail[0].embedUrl,
+                        id: res.reportsDetail[0].reportId,
+                        accessToken: this.token.token,
+                        hostname: 'https://app.powerbi.com',
+                        settings: {
+                            ...settings,
+                        },
+                    };
+                    this.configDashboard = {
+                        type: 'dashboard',
+                        tokenType: 1,
+                        embedUrl: res.reportsDetail[0].embedUrl,
+                        id: res.reportsDetail[0].reportId,
+                        accessToken: this.token.token,
+                        hostname: 'https://app.powerbi.com',
+                        settings: {
+                            visualRenderedEvents: true,
+                            panes: {
+                                filters: {
+                                    visible: false,
+                                },
+                                pageNavigation: {
+                                    visible: false,
+                                },
                             },
                         },
-                    },
-                };
+                    };
 
-                this.showReport = true;
-            },
-            (err) => {}
-        );
+                    this.showReport = true;
+                },
+                (err) => {}
+            );
     }
 }

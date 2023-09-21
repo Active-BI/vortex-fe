@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import decode from 'jwt-decode';
 import {
     ActivatedRouteSnapshot,
     CanActivate,
@@ -9,29 +8,26 @@ import {
     UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MenuItemService } from 'app/mock-api/common/navigation/data';
 import jwtDecode from 'jwt-decode';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
-    constructor(
-        private router: Router,
-        private menuItemService: MenuItemService
-    ) {}
+    constructor(private router: Router) {}
     async canActivate(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Promise<boolean | UrlTree> {
         if (localStorage.getItem('token')) {
             const token = JSON.parse(localStorage.getItem('token'));
-
             try {
                 await jwtDecode(token, {
                     header: true,
                 });
+
                 const user: any = await jwtDecode(token);
+
                 if (
                     route.data['expectedRoles'] === null ||
                     route.data['expectedRoles'].length === 0 ||
