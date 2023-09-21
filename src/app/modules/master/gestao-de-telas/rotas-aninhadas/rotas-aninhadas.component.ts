@@ -45,8 +45,7 @@ export class RotasAninhadasComponent implements OnInit {
         public fb: FormBuilder,
         private toastr: ToastrService,
         private pageMasterService: PageMasterService,
-        private groupMasterService: GroupMasterService,
-        private helperService: HelperService
+        private groupMasterService: GroupMasterService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
         this.requisicoes();
