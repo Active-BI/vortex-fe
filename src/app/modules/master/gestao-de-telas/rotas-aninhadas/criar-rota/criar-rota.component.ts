@@ -63,6 +63,7 @@ export class CriarRotaComponent implements OnInit {
         title: ['', [Validators.required]],
         link: [''],
         type: ['basic'],
+        formated_title: [''],
         group_id: [''],
         report_id: [''],
         restrict: [false, [Validators.required]],
@@ -100,6 +101,9 @@ export class CriarRotaComponent implements OnInit {
             .join('-')
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '');
+        this.form.patchValue({
+            formated_title: title,
+        });
         let pathByType = '';
         const isReportTypeNull = this.form.value.report_type === null;
         if (isReportTypeNull) {

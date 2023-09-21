@@ -13,6 +13,7 @@ export class BiReportDefaultByTypeComponent implements OnInit {
     group = '';
     enable = false;
     layout = 'desktop';
+    report_type = '';
     parametro$ = Observable<Data>;
     constructor(private router: ActivatedRoute, private route: Router) {}
 
@@ -21,6 +22,7 @@ export class BiReportDefaultByTypeComponent implements OnInit {
             this.enable = false;
             this.type = e.type;
             this.group = e.group;
+
             const dashUsers = JSON.parse(localStorage.getItem('userRoutes'));
             console.log(e);
             if (
@@ -34,6 +36,11 @@ export class BiReportDefaultByTypeComponent implements OnInit {
                 this.route.navigateByUrl('/app/inicio');
                 return;
             }
+            const route = dashUsers.find(
+                (r) => r.link.includes(this.type) && r.link.includes(this.group)
+            );
+            console.log(route, route.report_type);
+            this.report_type = route.report_type;
             setTimeout(() => {
                 this.enable = true;
             }, 300);

@@ -21,6 +21,8 @@ import { LogModalComponent } from './log-modal/log-modal.component';
 export class EmbeddedReportByTypeComponent implements OnInit {
     @Input() type: string;
     @Input() group: string;
+    @Input() report_type: string;
+
     @ViewChild('formInputs') formIputFile;
     report_page = new FormControl('');
 
@@ -47,7 +49,6 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         );
     }
     refreshReportDataflow() {
-        // this.refresh();
         this.pmiService.refreshDataflow(this.group, this.type).subscribe(
             (res) => this.toastr.success('Dataflow está sendo Atualizado'),
             ({ error }) => {

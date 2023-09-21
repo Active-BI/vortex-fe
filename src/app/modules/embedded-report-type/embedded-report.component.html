@@ -1,7 +1,7 @@
 <div class="flex flex-col flex-auto min-w-0 h-[100vh]">
 
     <div class="flex flex-col flex-auto min-w-0">
-        <div class="flex justify-between flex-row-reverse mt-[-20px] gap-2 items-center">
+        <div *ngIf="report_type.includes('upload')" class="flex justify-between flex-row-reverse mt-[-20px] gap-2 items-center">
 
             <div class="flex gap-x-2 items-center">
                 <mat-icon svgIcon="mat_outline:settings" class="absolute w-6 h-6"></mat-icon>

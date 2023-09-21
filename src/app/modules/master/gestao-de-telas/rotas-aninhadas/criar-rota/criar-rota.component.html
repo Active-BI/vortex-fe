@@ -4,6 +4,9 @@
         class="grid grid-cols-2 gap-x-2 gap-y-4 w-full sm:w-[60%] md:w-[80%] m-8">
 
         <p class="text-2xl mb-6 font-bold col-span-full">{{form.value.page_group_title}}</p>
+            <p class="text-xl">
+                {{form.value.link}}
+            </p>
         <div class="grid grid-cols-2 gap-x-2 gap-y-4 col-span-full">
             <mat-form-field class="md:col-span-1 fuse-mat-dense col-span-full ">
                 <mat-label>Tipo da página</mat-label>
@@ -16,10 +19,7 @@
                 <mat-label>Nome da Página</mat-label>
                 <input (input)="change()" formControlName="title" matInput #first />
             </mat-form-field>
-            <mat-form-field appearance="fill" class="fuse-mat-emphasized-affix  fuse-mat-dense col-span-full ">
-                <mat-label>Link da Página</mat-label>
-                <input [disabled]="true" formControlName="link" matInput />
-            </mat-form-field>
+
 
             <div *ngIf="form.value.report_type !== 'page'"
                 class="bg-slate-200 p-4 rounded-md fuse-mat-dense col-span-full grid grid-cols-2 gap-x-2 gap-y-4">
