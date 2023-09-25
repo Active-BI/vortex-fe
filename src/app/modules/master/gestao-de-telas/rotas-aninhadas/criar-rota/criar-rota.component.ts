@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GroupMasterService } from 'app/modules/services/group-master.service';
 import { PageMasterService } from 'app/modules/services/page-master.service';
 import { ToastrService } from 'ngx-toastr';
+import { agregarRoles } from '../rotas-aninhadas.component';
 
 export const screenTypes = {
     DASHBOARD: 'dashboard',
@@ -43,13 +45,24 @@ export class CriarRotaComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private pageMasterService: PageMasterService,
+        private groupMasterService: GroupMasterService,
         private toastr: ToastrService
     ) {
         this.groupId = this.route.snapshot.paramMap.get('groupId');
         this.page_context = this.router.url.includes('criar')
             ? 'criar'
             : 'editar';
+        this.requisicoes();
     }
+    async requisicoes() {
+        const acessos = agregarRoles(
+            await this.groupMasterService.getGroup(this.groupId)
+        );
+        this.form.patchValue({
+            page_group_title: acessos.page_group,
+        });
+    }
+
     voltar() {
         this.groupId.length > 0
             ? this.router.navigate([
@@ -79,9 +92,9 @@ export class CriarRotaComponent implements OnInit {
         this.form.patchValue({
             page_group_id: this.groupId,
         });
+        this.change();
     }
     findRole(id) {
-        console.log(id);
         if (id) {
             return this.roles.find((r) => r.id === id).name;
         }
@@ -94,7 +107,6 @@ export class CriarRotaComponent implements OnInit {
             .join('-')
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '');
-        console.log({ pathByGroup, typeof: typeof pathByGroup });
         const title = this.form.value.title
             .toLowerCase()
             .split(' ')
@@ -134,8 +146,9 @@ export class CriarRotaComponent implements OnInit {
         }
     }
     criarRota() {
-        if (this.form.valid) {
+        if (!this.form.valid) {
             this.toastr.error('Formulário inválido');
+            return;
         }
         const { page_group_title, possui_dados_sensiveis, id, ...args } =
             this.form.value;

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PageMasterService } from 'app/modules/services/page-master.service';
 import { CriarRotaComponent } from './criar-rota.component';
 import { ToastrService } from 'ngx-toastr';
+import { GroupMasterService } from 'app/modules/services/group-master.service';
 
 @Component({
     selector: 'app-criar-rota',
@@ -18,10 +19,19 @@ export class EditarRotaComponent extends CriarRotaComponent {
         public dialog: MatDialog,
         public fb: FormBuilder,
         private _pageMasterService: PageMasterService,
+        private _groupMasterService: GroupMasterService,
         _router: Router,
         private _toastr: ToastrService
     ) {
-        super(dialog, fb, _route, _router, _pageMasterService, _toastr);
+        super(
+            dialog,
+            fb,
+            _route,
+            _router,
+            _pageMasterService,
+            _groupMasterService,
+            _toastr
+        );
         this.screenId = this._route.snapshot.paramMap.get('screenId');
         this.requisicoes();
     }

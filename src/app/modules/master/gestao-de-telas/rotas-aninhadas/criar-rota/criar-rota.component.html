@@ -2,16 +2,18 @@
 
     <form (submit)="$event.preventDefault()" [formGroup]="form"
         class="grid grid-cols-2 gap-x-2 gap-y-4 w-full sm:w-[60%] md:w-[80%] m-8">
-
-        <p class="text-2xl mb-6 font-bold col-span-full">{{form.value.page_group_title}}</p>
+        <div class="col-span-full flex justify-between w-full">
+            <p class="text-2xl mb-6 font-bold col-span-full">{{form.value.page_group_title}}</p>
             <p class="text-xl">
-                {{form.value.link}}
+                Link: {{form.value.link}}
             </p>
+        </div>
+
         <div class="grid grid-cols-2 gap-x-2 gap-y-4 col-span-full">
             <mat-form-field class="md:col-span-1 fuse-mat-dense col-span-full ">
                 <mat-label>Tipo da página</mat-label>
                 <mat-select (selectionChange)="change()" formControlName="report_type">
-                    <mat-option *ngFor="let item of screenType" [value]="item">{{item}}</mat-option>
+                    <mat-option *ngFor="let item of screenType" [value]="item" [disabled]="item !== 'report' && item !== 'report-upload'">{{item}}</mat-option>
                 </mat-select>
             </mat-form-field>
 

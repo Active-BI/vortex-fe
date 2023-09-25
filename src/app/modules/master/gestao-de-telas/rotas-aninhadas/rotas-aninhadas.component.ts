@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DeletarRotaAninhadaComponent } from '../modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
 import { GroupMasterService } from 'app/modules/services/group-master.service';
 
-function agregarRoles(objeto) {
+export function agregarRoles(objeto) {
     if (objeto?.children) {
         const rolesSet = new Set(); // Usamos um Set para garantir roles únicas
         for (const child of objeto.children) {
