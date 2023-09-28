@@ -71,7 +71,7 @@ export class CriarRotaComponent implements OnInit {
             : this.router.navigate(['/master/gestao/telas/']);
     }
     form = this.fb.group({
-        id: ['', [Validators.required]],
+        id: [''],
         report_type: ['report', [Validators.required]],
         title: ['', [Validators.required]],
         link: [''],
@@ -79,11 +79,11 @@ export class CriarRotaComponent implements OnInit {
         formated_title: [''],
         group_id: [''],
         report_id: [''],
-        restrict: [false, [Validators.required]],
+        restrict: [false],
         table_name: [''],
         page_group_title: ['', [Validators.required]],
         page_group_id: [this.groupId, [Validators.required]],
-        possui_dados_sensiveis: ['', [Validators.required]],
+        possui_dados_sensiveis: [false, [Validators.required]],
         descricao_painel: ['', [Validators.required]],
         responsavel: ['', [Validators.required]],
         roles: [[], [Validators.required]],
@@ -155,7 +155,9 @@ export class CriarRotaComponent implements OnInit {
         this.pageMasterService.postPage(args).subscribe(
             (res) => {
                 this.toastr.success('Rota criada com sucesso');
-                this.router.navigate(['/master/gestao/telas/']);
+                this.router.navigate([
+                    '/master/gestao/telas/grupo/' + this.groupId,
+                ]);
             },
             ({ error }) => this.toastr.error('Falha ao criar rota')
         );
