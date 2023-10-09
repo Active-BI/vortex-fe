@@ -29,9 +29,6 @@
                 Precisa de no mínimo 3 dígitos
             </div>
         </div>
-        <p>
-            <mat-checkbox formControlName="active">Ambiente está ativo?</mat-checkbox>
-        </p>
 
         <mat-form-field>
             <mat-label>Visões</mat-label>
@@ -43,6 +40,14 @@
                         {{page.name}}
                     </mat-option>
                 </mat-optgroup>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Soluções Externas</mat-label>
+            <mat-select  formControlName="solutions" multiple="">
+                    <mat-option class="ml-4" *ngFor="let s of solutions" [value]="s.id">
+                        {{s.name}}
+                    </mat-option>
             </mat-select>
         </mat-form-field>
     </form>

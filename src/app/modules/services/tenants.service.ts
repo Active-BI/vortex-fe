@@ -13,7 +13,12 @@ export class TenantsService {
     constructor(private http: HttpClient, private toast: ToastrService) {}
 
     private baseUrl = environment.baseUrl;
-
+    tenantsSolution(id: string) {
+        return this.http.get(`${this.baseUrl}external-services/${id}`);
+    }
+    solutions() {
+        return this.http.get(`${this.baseUrl}external-services`);
+    }
     tenants() {
         return this.http.get(`${this.baseUrl}tenants`);
     }

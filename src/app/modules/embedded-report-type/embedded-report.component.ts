@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { EmbeddedService } from '../services/embedded/embedded.service';
 import { PowerBIReportEmbedComponent } from 'powerbi-client-angular';
 import {
@@ -118,9 +118,18 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                 link.click();
             });
     }
+    cleanFile() {
+        if (this.dadosParaImportar.length > 0) {
+            this.nomeArquivo = '';
+            this.dadosParaImportar = [];
+            this.formInputs.nativeElement.value = '';
+        }
+    }
+    @ViewChild('formInputs') formInputs: ElementRef<HTMLInputElement>;
 
     Importar(e) {
         e.preventDefault();
+        console.log('processou');
         this.nomeArquivo = '';
         this.dadosParaImportar = [];
         const fileName = e.target.files[0]?.name as string;
@@ -149,8 +158,10 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                 defval: undefined,
             });
             this.dadosParaImportar = json;
+            this.formInputs.nativeElement.value = '';
         };
         reader.readAsArrayBuffer(e.target.files[0]);
+        this.formInputs.nativeElement.value = '';
     }
     @ViewChild(PowerBIReportEmbedComponent)
     reportObj!: PowerBIReportEmbedComponent;

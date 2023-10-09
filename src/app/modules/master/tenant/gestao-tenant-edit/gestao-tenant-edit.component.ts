@@ -32,6 +32,7 @@ export class GestaoTenantEditComponent implements OnInit {
         );
     }
 
+    solutions = [];
     visionsSelecteds = [];
     form = this.fb.group({
         id: [''],
@@ -39,6 +40,7 @@ export class GestaoTenantEditComponent implements OnInit {
         tenant_cnpj: ['', [Validators.required, Validators.minLength(3)]],
         active: ['', [Validators.required]],
         dashboard: [[], [Validators.required]],
+        solution: [[], [Validators.required]],
     });
 
     panelOpenState = false;
@@ -63,10 +65,18 @@ export class GestaoTenantEditComponent implements OnInit {
         this.route.url.subscribe((a) => {
             editar = a[2].path.includes('editar');
         });
+        this.tenantsService.solutions().subscribe((res: any[]) => {
+            this.solutions = res;
+        });
         if (editar) {
             this.pageMasterService
                 .getPageByTenantId(this.id)
                 .subscribe((d: any[]) => {
+                    this.tenantsService
+                        .tenantsSolution(this.id)
+                        .subscribe((res) => {
+                            console.log(res);
+                        });
                     this.dashboardsSelecteds = d;
 
                     const dashboardList = d.map((page) => {
