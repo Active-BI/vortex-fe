@@ -20,7 +20,11 @@ export class EmbeddedService {
         this.handSetStatus = layout;
         this.handSetEmitter.emit(this.handSetStatus);
     }
-
+    checkIfReportHasData(groupId: string, reportId: string) {
+        return this.http.get(
+            `${this.baseUrl}pbi-report/data/${groupId}/${reportId}`
+        );
+    }
     /**
      *
      * @param groupId é o Id do Workspace do relatório

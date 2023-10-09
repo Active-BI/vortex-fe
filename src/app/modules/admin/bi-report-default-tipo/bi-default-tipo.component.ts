@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Data, Route, Router } from '@angular/router';
+import { EmbeddedService } from 'app/modules/services/embedded/embedded.service';
 import jwtDecode from 'jwt-decode';
 import { Observable } from 'rxjs';
 
@@ -12,19 +13,20 @@ export class BiReportDefaultByTypeComponent implements OnInit {
     type = '';
     group = '';
     enable = false;
+    hasData = true;
     layout = 'desktop';
     report_type = '';
     parametro$ = Observable<Data>;
-    constructor(private router: ActivatedRoute, private route: Router) {}
-
-    ngOnInit(): void {
+    constructor(
+        private router: ActivatedRoute,
+        private route: Router,
+        private embeddedSrv: EmbeddedService
+    ) {
         this.router.params.subscribe((e) => {
             this.enable = false;
             this.type = e.type;
             this.group = e.group;
-
             const dashUsers = JSON.parse(localStorage.getItem('userRoutes'));
-            console.log(e);
             if (
                 dashUsers.length < 1 ||
                 !dashUsers.find(
@@ -36,14 +38,22 @@ export class BiReportDefaultByTypeComponent implements OnInit {
                 this.route.navigateByUrl('/app/inicio');
                 return;
             }
-            const route = dashUsers.find(
+            const approute = dashUsers.find(
                 (r) => r.link.includes(this.type) && r.link.includes(this.group)
             );
-            console.log(route, route.report_type);
-            this.report_type = route.report_type;
+
+            this.report_type = approute.report_type;
+            console.log(this.report_type, this.report_type.includes('upload'));
+            if (this.report_type.includes('upload')) {
+                this.embeddedSrv
+                    .checkIfReportHasData(this.group, this.type)
+                    .subscribe((res: boolean) => (this.hasData = res));
+            }
             setTimeout(() => {
                 this.enable = true;
             }, 300);
         });
     }
+
+    ngOnInit(): void {}
 }

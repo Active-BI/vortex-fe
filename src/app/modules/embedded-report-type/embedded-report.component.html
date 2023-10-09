@@ -38,7 +38,12 @@
             </div>
 
         </div>
-        <div *ngIf="showReport" style="height: calc(100vh - 105px);" class="">
+        <div class="text-center w-full flex justify-center">
+            <div *ngIf="!hasData" class="text-4xl text-white p-2 bg-blue-700  mt-30 rounded-full max-w-100">
+                Sem dados no momento
+            </div>
+        </div>
+        <div *ngIf="showReport && hasData" style="height: calc(100vh - 105px);" class="">
             <powerbi-report #reportObj [embedConfig]="config" [cssClassName]="'pbi-report'" [phasedEmbedding]="false"
                 [eventHandlers]="handlers" style="height: calc(100vh - 105px);">
             </powerbi-report>

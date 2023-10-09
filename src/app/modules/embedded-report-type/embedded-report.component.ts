@@ -22,6 +22,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
     @Input() type: string;
     @Input() group: string;
     @Input() report_type: string;
+    @Input() hasData: boolean = true;
 
     @ViewChild('formInputs') formIputFile;
     report_page = new FormControl('');
@@ -199,6 +200,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         public dialog: MatDialog
     ) {
         const token = localStorage.getItem('token');
+
         if (token) {
             this.rlsName = (jwtDecode(token) as any).role_name;
         }
