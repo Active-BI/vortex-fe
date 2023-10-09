@@ -33,21 +33,21 @@
                     <input [formControlName]="'email'" matInput>
                 </mat-form-field>
             </div>
-            <div class="md:col-span-2 col-span-full">
+            <!-- <div class="md:col-span-2 col-span-full">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Profissão</mat-label>
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:user'" matPrefix></mat-icon>
                     <input [formControlName]="'profession'" matInput>
                 </mat-form-field>
-            </div>
-            <div class="md:col-span-2 col-span-full">
+            </div> -->
+            <!-- <div class="md:col-span-2 col-span-full">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Descrição</mat-label>
+                    <mat-label>Descrição da Empresa</mat-label>
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:user'" matPrefix></mat-icon>
                     <input [formControlName]="'description'" matInput>
                 </mat-form-field>
-            </div>
-            <mat-checkbox class="ml-4 md:col-span-2 col-span-full"  (click)="atualizarValor()" >Associar a uma Empresa</mat-checkbox>
+            </div> -->
+            <mat-checkbox class="ml-4 col-span-full" [value]="setTenat" [checked]="setTenat" (click)="atualizarValor()" >Associar a uma Empresa</mat-checkbox>
             <div class="col-span-full grid gap-y-6" *ngIf="setTenat">
                 <div class="w-full">
                     <div class="w-full p-[0.5px] my-3 col-span-full bg-slate-300"></div>
