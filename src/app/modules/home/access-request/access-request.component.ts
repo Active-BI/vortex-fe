@@ -13,45 +13,14 @@ import { RequestModalComponent } from './request-modal/request-modal.component';
 })
 export class AccessRequestComponent implements OnInit {
     dashboardsSelecteds = [];
-    setTenat = false;
-    atualizarValor() {
-        this.setTenat = !this.setTenat;
-        console.log(this.setTenat);
-        if (this.setTenat) {
-            this.form = this._formBuilder.group({
-                email: [
-                    this.form.value.email,
-                    [Validators.required, Validators.email],
-                ],
-                name: [this.form.value.name, [Validators.required]],
 
-                company_name: [
-                    this.form.value.company_name,
-                    [Validators.required],
-                ],
-                company_cnpj: [
-                    this.form.value.company_cnpj,
-                    [Validators.required],
-                ],
-                company_description: [
-                    this.form.value.company_description,
-                    [Validators.required],
-                ],
-            });
-        } else {
-            this.form = this._formBuilder.group({
-                email: [
-                    this.form.value.email,
-                    [Validators.required, Validators.email],
-                ],
-                name: [this.form.value.name, [Validators.required]],
-                company_name: [this.form.value.company_name],
-                company_cnpj: [this.form.value.company_cnpj],
-                company_description: [this.form.value.company_description],
-            });
-        }
-    }
-    form;
+    form = this._formBuilder.group({
+        email: ['', [Validators.required, Validators.email]],
+        name: ['', [Validators.required]],
+        company_name: ['', [Validators.required]],
+        company_cnpj: ['', [Validators.required]],
+        company_description: ['', [Validators.required]],
+    });
     checkScreenSize() {
         return window.innerWidth >= 768;
     }
@@ -61,15 +30,7 @@ export class AccessRequestComponent implements OnInit {
         private router: Router,
         private adminRequestService: AdminRequestService,
         public dialog: MatDialog
-    ) {
-        this.form = this._formBuilder.group({
-            email: ['', [Validators.required, Validators.email]],
-            name: ['', [Validators.required]],
-            company_name: [''],
-            company_cnpj: [''],
-            company_description: [''],
-        });
-    }
+    ) {}
 
     submit() {
         if (!this.form.valid) {
