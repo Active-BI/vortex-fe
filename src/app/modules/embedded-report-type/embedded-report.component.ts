@@ -16,7 +16,7 @@ import { LogModalComponent } from './log-modal/log-modal.component';
 @Component({
     selector: 'app-embedded-report-type',
     templateUrl: './embedded-report.component.html',
-    styleUrls: ['./embedded-report.component.css'],
+    styleUrls: ['./embedded-report.component.scss'],
 })
 export class EmbeddedReportByTypeComponent implements OnInit {
     @Input() type: string;
@@ -62,7 +62,10 @@ export class EmbeddedReportByTypeComponent implements OnInit {
             this.pmiService
                 .uploadFile(this.dadosParaImportar, this.group, this.type)
                 .subscribe(
-                    (d) => this.toastr.success('Importação concluída'),
+                    (d) => {
+                        this.toastr.success('Importação concluída');
+                        this.cleanFile();
+                    },
                     ({ error }) => {
                         this.toastr.error(error.message);
 
@@ -76,6 +79,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                                                 '.input-file'
                                             );
                                         if (inputElement) {
+                                            this.cleanFile();
                                             inputElement.value = ''; // Limpar o valor do campo de entrada
                                             this.dadosParaImportar = [];
                                             this.nomeArquivo = '';
@@ -123,6 +127,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         if (this.dadosParaImportar.length > 0) {
             this.nomeArquivo = '';
             this.dadosParaImportar = [];
+            this.formIputFile = '';
             this.formInputs.nativeElement.value = '';
         }
     }
@@ -130,9 +135,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
 
     Importar(e) {
         e.preventDefault();
-        console.log('processou');
-        this.nomeArquivo = '';
-        this.dadosParaImportar = [];
+        this.cleanFile();
         const fileName = e.target.files[0]?.name as string;
         const file = e.target.files[0];
         if (Number((file.size / 1024).toFixed(2)) > 1500) {

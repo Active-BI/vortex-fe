@@ -1,7 +1,7 @@
 <div class="flex flex-col flex-auto min-w-0 h-[100vh]">
 
     <div class="flex flex-col flex-auto min-w-0">
-        <div class="flex justify-between flex-row-reverse mt-[-20px] gap-2 items-center">
+        <div class="flex justify-between flex-row-reverse mt-[-20px] gap-2 items-center mb-4">
 
             <div class="flex gap-x-2 items-center">
                 <div  class="flex gap-x-2 items-center" *ngIf="report_type.includes('upload')">
@@ -25,21 +25,26 @@
 
             <div class="flex items-center flex-row justify-center " *ngIf="this.rlsName !== 'User'">
 
-                <form class="form-upload" *ngIf="report_type.includes('upload')">
-                    <label class="input-personalizado">
-                        <span class="botao-selecionar  text-white">
-                            {{nomeArquivo.length > 0 ? nomeArquivo : 'Selecione um arquivo .xlsx'}}</span>
-                        <img class="imagem" />
-                        <input type="file" #formInputs class="input-file" (change)="Importar($event)">
-                    </label>
+                <form class="file"  *ngIf="report_type.includes('upload') && !nomeArquivo.length > 0">
+                    <!-- <label class="input-personalizado"> -->
+                        <!-- <span class="botao-selecionar  text-white">
+                            {{nomeArquivo.length > 0 ? nomeArquivo : 'Selecione um arquivo .xlsx'}}</span> -->
+                        <!-- <img class="imagem" /> -->
+                        <!-- <input type="file" #formInputs id='file' class="input-file" (change)="Importar($event)"> -->
+                        <span class="file-custom"></span>
+                        <label class="custom-file-upload">
+                            <input type="file" (change)="Importar($event)"/>
+                            Selecionar planilha
+                        </label>
+                    <!-- </label> -->
                 </form>
-                <button mat-raised-button color="primary" *ngIf="report_type.includes('upload')"  class=" rounded-sm text-white h-8 w-28 bg-blue-700"
+                <button mat-raised-button color="primary" *ngIf="report_type.includes('upload') && nomeArquivo.length > 0"  class=" rounded-sm text-white h-8 w-28 bg-blue-700"
                     (click)="Salvar()">Subir Arquivo</button>
             </div>
 
         </div>
         <div class="text-center w-full flex justify-center">
-            <div *ngIf="!hasData" class="text-4xl text-white p-2 bg-blue-700  mt-30 rounded-full max-w-100">
+            <div *ngIf="!hasData" class="text-4xl text-white p-2 border-blue-700  mt-30 rounded-full max-w-100">
                 Sem dados no momento
             </div>
         </div>
