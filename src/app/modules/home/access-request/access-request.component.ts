@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AdminRequestService } from 'app/modules/services/admin-request.service';
@@ -13,42 +13,26 @@ import { RequestModalComponent } from './request-modal/request-modal.component';
 })
 export class AccessRequestComponent implements OnInit {
     dashboardsSelecteds = [];
-    setTenat = false;
-    atualizarValor() {
-        this.setTenat = !this.setTenat;
-
-        if (this.setTenat) {
-            this.form = this._formBuilder.group({
-                email: [this.form.value.email, [Validators.required]],
-                name: [this.form.value.name, [Validators.required]],
-                description: [this.form.value.description],
-                profession: [this.form.value.profession, [Validators.required]],
-                company_name: [
-                    this.form.value.company_name,
-                    [Validators.required],
-                ],
-                company_cnpj: [
-                    this.form.value.company_cnpj,
-                    [Validators.required],
-                ],
-                company_description: [
-                    this.form.value.company_description,
-                    [Validators.required],
-                ],
-            });
-        } else {
-            this.form = this._formBuilder.group({
-                email: [this.form.value.email, [Validators.required]],
-                name: [this.form.value.name, [Validators.required]],
-                description: [this.form.value.description],
-                profession: [this.form.value.profession, [Validators.required]],
-                company_name: [this.form.value.company_name],
-                company_cnpj: [this.form.value.company_cnpj],
-                company_description: [this.form.value.company_description],
-            });
-        }
+    foods = [
+        { value: 'comercio', viewValue: 'Comércio' },
+        { value: 'saude', viewValue: 'Saúde' },
+        { value: 'varejo', viewValue: 'Varejo' },
+        { value: 'moda', viewValue: 'Moda' },
+        { value: 'investimento', viewValue: 'Investimento' },
+        { value: 'tecnnologia', viewValue: 'Tecnologia' },
+    ].sort((a, b) => a.viewValue.localeCompare(b.viewValue));
+    form = this._formBuilder.group({
+        email: ['', [Validators.required, Validators.email]],
+        name: ['', [Validators.required]],
+        // segmento: ['', [Validators.required]],
+        tenant: ['', [Validators.required]],
+        company_name: ['', [Validators.required]],
+        company_cnpj: ['', [Validators.required]],
+        company_description: ['', [Validators.required]],
+    });
+    OpcaoPainel(value) {
+        console.log(value);
     }
-    form;
     checkScreenSize() {
         return window.innerWidth >= 768;
     }
@@ -58,17 +42,7 @@ export class AccessRequestComponent implements OnInit {
         private router: Router,
         private adminRequestService: AdminRequestService,
         public dialog: MatDialog
-    ) {
-        this.form = this._formBuilder.group({
-            email: ['', [Validators.required, Validators.email]],
-            name: ['', [Validators.required]],
-            description: [''],
-            profession: ['', [Validators.required]],
-            company_name: [''],
-            company_cnpj: [''],
-            company_description: [''],
-        });
-    }
+    ) {}
 
     submit() {
         if (!this.form.valid) {

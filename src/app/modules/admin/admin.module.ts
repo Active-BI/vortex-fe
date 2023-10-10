@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgForOf } from '@angular/common';
 import { Route, RouterModule } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
 import { AdminComponent } from './admin.component';
@@ -44,13 +44,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
 import { AuthGuardScreen } from '../services/guards/AuthGuardScreen.guard';
 import { HomeComponent } from '../home/home.component';
-import { AccessRequestComponent } from '../home/access-request/access-request.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { RequestModalComponent } from '../home/access-request/request-modal/request-modal.component';
 import { LogModalComponent } from '../embedded-report-type/log-modal/log-modal.component';
 import { SignUpModalComponent } from '../auth/sign-up/sign-up-modal/sign-up-modal.component';
 import { PageMasterService } from '../services/page-master.service';
 import { TfaComponent } from '../auth/tfa/tfa.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 const adminroutes: Route[] = [
     {
@@ -102,7 +102,7 @@ const adminroutes: Route[] = [
         BiDashboardDefaultComponent,
         BiReportDefaultComponent,
         HomeComponent,
-        AccessRequestComponent,
+        // AccessRequestComponent,
         RequestModalComponent,
         LogModalComponent,
         SignUpModalComponent,
@@ -137,6 +137,11 @@ const adminroutes: Route[] = [
         MatAutocompleteModule,
         MatTooltipModule,
         MatCheckboxModule,
+        MatMenuModule,
+        FormsModule,
+        MatFormFieldModule,
+        NgForOf,
+        MatInputModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [

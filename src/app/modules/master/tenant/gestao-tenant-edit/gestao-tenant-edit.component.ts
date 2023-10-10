@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
 import { ordersData } from 'app/modules/admin/users/usersUtils';
 import { PageMasterService } from 'app/modules/services/page-master.service';
-import { PageService } from 'app/modules/services/page.service';
 import { listRoles } from 'app/modules/services/roles.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import jwtDecode from 'jwt-decode';
@@ -32,6 +31,7 @@ export class GestaoTenantEditComponent implements OnInit {
         );
     }
 
+    solutions = [];
     visionsSelecteds = [];
     form = this.fb.group({
         id: [''],
@@ -39,6 +39,7 @@ export class GestaoTenantEditComponent implements OnInit {
         tenant_cnpj: ['', [Validators.required, Validators.minLength(3)]],
         active: ['', [Validators.required]],
         dashboard: [[], [Validators.required]],
+        solution: [[], [Validators.required]],
     });
 
     panelOpenState = false;
@@ -63,6 +64,7 @@ export class GestaoTenantEditComponent implements OnInit {
         this.route.url.subscribe((a) => {
             editar = a[2].path.includes('editar');
         });
+
         if (editar) {
             this.pageMasterService
                 .getPageByTenantId(this.id)

@@ -62,7 +62,20 @@ export class AdminService {
             })
         );
     }
-
+    resendEmail(body: { email: string; id: string }) {
+        return this.http
+            .post<getAllRequest[]>(`${this.baseUrl}user/resend`, body)
+            .pipe(
+                catchError((err) => {
+                    ('');
+                    this.toast.error(`Erro ao reenviar email`, null, {
+                        progressBar: true,
+                        timeOut: 2000,
+                    });
+                    return throwError(err);
+                })
+            );
+    }
     getUserById(userId: string): Observable<getAllRequest> {
         return this.http
             .get<getAllRequest>(`${this.baseUrl}user/${userId}`)

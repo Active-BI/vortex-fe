@@ -12,6 +12,8 @@ import { SharedModule } from 'app/shared/shared.module';
 import { AuthRequestAccessComponent } from './request-access.component';
 import { authRequestRoutes } from './request-access.routing';
 import { RequestConfirmModalComponent } from './request-access/request-modal.component';
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [AuthRequestAccessComponent, RequestConfirmModalComponent],
@@ -26,6 +28,9 @@ import { RequestConfirmModalComponent } from './request-access/request-modal.com
         FuseCardModule,
         FuseAlertModule,
         SharedModule,
+        MatSelectModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
     ],
 })
 export class AuthRequestAccessModule {}

@@ -93,6 +93,15 @@ export class ListUsersComponent implements OnInit {
         this.usuariosFiltrados = new MatTableDataSource(data);
         this.usuariosFiltrados.paginator = this.paginator;
     }
+    reenviarEmail(user) {
+        console.log(user);
+        this.adminSrv
+            .resendEmail({ email: user.contact_email, id: user.id })
+            .subscribe(() => {
+                this.toastr.success('Enviado com Sucesso');
+                this.requisicoes();
+            });
+    }
     deletarUsuario(id): void {
         const decoded: any = jwtDecode(localStorage.getItem('token'));
         if (decoded.userId === id) {

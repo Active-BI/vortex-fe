@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { EmbeddedService } from '../services/embedded/embedded.service';
 import { PowerBIReportEmbedComponent } from 'powerbi-client-angular';
 import {
@@ -16,12 +16,13 @@ import { LogModalComponent } from './log-modal/log-modal.component';
 @Component({
     selector: 'app-embedded-report-type',
     templateUrl: './embedded-report.component.html',
-    styleUrls: ['./embedded-report.component.css'],
+    styleUrls: ['./embedded-report.component.scss'],
 })
 export class EmbeddedReportByTypeComponent implements OnInit {
     @Input() type: string;
     @Input() group: string;
     @Input() report_type: string;
+    @Input() hasData: boolean = true;
 
     @ViewChild('formInputs') formIputFile;
     report_page = new FormControl('');
@@ -61,7 +62,12 @@ export class EmbeddedReportByTypeComponent implements OnInit {
             this.pmiService
                 .uploadFile(this.dadosParaImportar, this.group, this.type)
                 .subscribe(
-                    (d) => this.toastr.success('Importação concluída'),
+                    (d) => {
+                        this.toastr.success('Importação concluída');
+                        this.cleanFile();
+                        console.log('aaaaaaaasdasdasdsaasdiahsdoasjdosajodj');
+                        this.refresh();
+                    },
                     ({ error }) => {
                         this.toastr.error(error.message);
 
@@ -75,6 +81,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                                                 '.input-file'
                                             );
                                         if (inputElement) {
+                                            this.cleanFile();
                                             inputElement.value = ''; // Limpar o valor do campo de entrada
                                             this.dadosParaImportar = [];
                                             this.nomeArquivo = '';
@@ -84,6 +91,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                                 },
                             });
                         }
+                        this.cleanFile();
                     }
                 );
         } else {
@@ -118,11 +126,20 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                 link.click();
             });
     }
+    cleanFile() {
+        if (this.dadosParaImportar.length > 0) {
+            this.nomeArquivo = '';
+            this.dadosParaImportar = [];
+            this.formIputFile = '';
+            console.log(this.formInputs);
+            // this.formInputs.nativeElement.value = '';
+        }
+    }
+    @ViewChild('formInputs') formInputs: ElementRef<HTMLInputElement>;
 
     Importar(e) {
         e.preventDefault();
-        this.nomeArquivo = '';
-        this.dadosParaImportar = [];
+        this.cleanFile();
         const fileName = e.target.files[0]?.name as string;
         const file = e.target.files[0];
         if (Number((file.size / 1024).toFixed(2)) > 1500) {
@@ -149,8 +166,10 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                 defval: undefined,
             });
             this.dadosParaImportar = json;
+            this.formInputs.nativeElement.value = '';
         };
         reader.readAsArrayBuffer(e.target.files[0]);
+        this.formInputs.nativeElement.value = '';
     }
     @ViewChild(PowerBIReportEmbedComponent)
     reportObj!: PowerBIReportEmbedComponent;
@@ -188,6 +207,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         public dialog: MatDialog
     ) {
         const token = localStorage.getItem('token');
+
         if (token) {
             this.rlsName = (jwtDecode(token) as any).role_name;
         }
@@ -237,6 +257,21 @@ export class EmbeddedReportByTypeComponent implements OnInit {
     }
 
     async refresh() {
+        if (this.report_type.includes('upload')) {
+            this.embeddedSrv
+                .checkIfReportHasData(this.group, this.type)
+                .subscribe((res: boolean) => {
+                    this.hasData = res;
+                    if (!this.hasData) {
+                        this.ngOnInit();
+                    }
+                });
+        }
+        if (!this.reportObj.getReport().refresh()) {
+            console.log(this.report_type, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+            this.ngOnInit();
+        }
+
         this.reportObj
             .getReport()
             .refresh()
