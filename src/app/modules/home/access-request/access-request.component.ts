@@ -25,7 +25,7 @@ export class AccessRequestComponent implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         name: ['', [Validators.required]],
         // segmento: ['', [Validators.required]],
-        tenant: ['', [Validators.required]],
+        // tenant: ['', [Validators.required]],
         company_name: ['', [Validators.required]],
         company_cnpj: ['', [Validators.required]],
         company_description: ['', [Validators.required]],
