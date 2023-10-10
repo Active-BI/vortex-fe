@@ -41,7 +41,6 @@ export class EditUserComponent implements OnInit {
                 Validators.email,
             ],
         ],
-        profession: ['', [Validators.required]],
         description: ['', [Validators.required]],
         rls_id: ['', [Validators.required]],
     });
@@ -116,7 +115,6 @@ export class EditUserComponent implements OnInit {
                         name: this.user.name,
                         email: this.user.contact_email,
                         rls_id: this.user.rls_id,
-                        profession: this.user.profession,
                         description: this.user.description,
                     });
                 });

@@ -57,7 +57,11 @@
                                 <mat-icon class="cursor-pointer mr-5 text-blue-700" svgIcon="edit_note"></mat-icon>
 
                             </button>
-                            <button matTooltip='Deletar' (click)="deletarUsuario(element.id)">
+                            <button class="text-violet-900" matTooltip='Reenviar Email' (click)="reenviarEmail(element)">
+
+                            <mat-icon class="cursor-pointer mr-5 text-blue-700" svgIcon="mat_outline:send"></mat-icon>
+                        </button>
+                        <button matTooltip='Deletar' (click)="deletarUsuario(element.id)">
                                 <mat-icon color="warn" class="cursor-pointer mr-5"
                                     svgIcon="heroicons_solid:trash"></mat-icon>
                             </button>
