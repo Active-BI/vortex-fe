@@ -24,7 +24,7 @@ export class AccessRequestComponent implements OnInit {
     form = this._formBuilder.group({
         email: ['', [Validators.required, Validators.email]],
         name: ['', [Validators.required]],
-        segmento: ['', [Validators.required]],
+        // segmento: ['', [Validators.required]],
         tenant: ['', [Validators.required]],
         company_name: ['', [Validators.required]],
         company_cnpj: ['', [Validators.required]],
