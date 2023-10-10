@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AdminRequestService } from 'app/modules/services/admin-request.service';
@@ -13,14 +13,26 @@ import { RequestModalComponent } from './request-modal/request-modal.component';
 })
 export class AccessRequestComponent implements OnInit {
     dashboardsSelecteds = [];
-
+    foods = [
+        { value: 'comercio', viewValue: 'Comércio' },
+        { value: 'saude', viewValue: 'Saúde' },
+        { value: 'varejo', viewValue: 'Varejo' },
+        { value: 'moda', viewValue: 'Moda' },
+        { value: 'investimento', viewValue: 'Investimento' },
+        { value: 'tecnnologia', viewValue: 'Tecnologia' },
+    ].sort((a, b) => a.viewValue.localeCompare(b.viewValue));
     form = this._formBuilder.group({
         email: ['', [Validators.required, Validators.email]],
         name: ['', [Validators.required]],
+        segmento: ['', [Validators.required]],
+        tenant: ['', [Validators.required]],
         company_name: ['', [Validators.required]],
         company_cnpj: ['', [Validators.required]],
         company_description: ['', [Validators.required]],
     });
+    OpcaoPainel(value) {
+        console.log(value);
+    }
     checkScreenSize() {
         return window.innerWidth >= 768;
     }

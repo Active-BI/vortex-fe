@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
 import { ordersData } from 'app/modules/admin/users/usersUtils';
 import { PageMasterService } from 'app/modules/services/page-master.service';
-import { PageService } from 'app/modules/services/page.service';
 import { listRoles } from 'app/modules/services/roles.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import jwtDecode from 'jwt-decode';
@@ -65,18 +64,11 @@ export class GestaoTenantEditComponent implements OnInit {
         this.route.url.subscribe((a) => {
             editar = a[2].path.includes('editar');
         });
-        this.tenantsService.solutions().subscribe((res: any[]) => {
-            this.solutions = res;
-        });
+
         if (editar) {
             this.pageMasterService
                 .getPageByTenantId(this.id)
                 .subscribe((d: any[]) => {
-                    this.tenantsService
-                        .tenantsSolution(this.id)
-                        .subscribe((res) => {
-                            console.log(res);
-                        });
                     this.dashboardsSelecteds = d;
 
                     const dashboardList = d.map((page) => {

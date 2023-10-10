@@ -65,6 +65,8 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                     (d) => {
                         this.toastr.success('Importação concluída');
                         this.cleanFile();
+                        console.log('aaaaaaaasdasdasdsaasdiahsdoasjdosajodj');
+                        this.refresh();
                     },
                     ({ error }) => {
                         this.toastr.error(error.message);
@@ -89,6 +91,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                                 },
                             });
                         }
+                        this.cleanFile();
                     }
                 );
         } else {
@@ -128,7 +131,8 @@ export class EmbeddedReportByTypeComponent implements OnInit {
             this.nomeArquivo = '';
             this.dadosParaImportar = [];
             this.formIputFile = '';
-            this.formInputs.nativeElement.value = '';
+            console.log(this.formInputs);
+            // this.formInputs.nativeElement.value = '';
         }
     }
     @ViewChild('formInputs') formInputs: ElementRef<HTMLInputElement>;
@@ -253,6 +257,21 @@ export class EmbeddedReportByTypeComponent implements OnInit {
     }
 
     async refresh() {
+        if (this.report_type.includes('upload')) {
+            this.embeddedSrv
+                .checkIfReportHasData(this.group, this.type)
+                .subscribe((res: boolean) => {
+                    this.hasData = res;
+                    if (!this.hasData) {
+                        this.ngOnInit();
+                    }
+                });
+        }
+        if (!this.reportObj.getReport().refresh()) {
+            console.log(this.report_type, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+            this.ngOnInit();
+        }
+
         this.reportObj
             .getReport()
             .refresh()
