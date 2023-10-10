@@ -71,8 +71,8 @@ export class ListUsersComponent implements OnInit {
                 perfil: listRoles.find((role) => usuario.rls_id === role.id)
                     .name,
                 dataUltimoAcesso:
-                    usuario.User_Auth.last_access !== null
-                        ? moment(usuario.User_Auth.last_access).format(
+                    usuario.User_Auth?.last_access !== null
+                        ? moment(usuario.User_Auth?.last_access).format(
                               'DD/MM/YY H:mm'
                           )
                         : 'N/',
