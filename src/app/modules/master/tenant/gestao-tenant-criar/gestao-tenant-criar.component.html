@@ -16,11 +16,6 @@
                 <input formControlName="tenant_name" matInput #first />
                 <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
             </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Cnpj</mat-label>
-                <input formControlName="tenant_cnpj" matInput #first />
-                <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
-            </mat-form-field>
             <div *ngIf="form.controls.tenant_name.touched" class="text-red-600 mb-2">
                 <div *ngIf="form.controls.tenant_name.errors?.['required']">
                     Nome é Obrigatório
@@ -29,15 +24,24 @@
                     Precisa de no mínimo 3 dígitos
                 </div>
             </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Cnpj</mat-label>
+                <input formControlName="tenant_cnpj" matInput #first />
+                <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
+            </mat-form-field>
 
-            <mat-form-field class="mt-6">
-                <mat-label>Relatórios</mat-label>
+            <mat-form-field>
+                <mat-label>Visões</mat-label>
+                <mat-select formControlName="dashboard" multiple="">
 
-                <mat-select formControlName="dashboard" multiple>
-
-                  <mat-option *ngFor="let d of dashboardsSelecteds" [value]="d.id" [selected]="true">{{d.title}}</mat-option>
+                    <mat-optgroup  *ngFor="let group of dashboardListReduced" [label]="group.page_group"
+                        >
+                        <mat-option class="ml-4" *ngFor="let page of group.children" [value]="page.id">
+                            {{page.name}}
+                        </mat-option>
+                    </mat-optgroup>
                 </mat-select>
-              </mat-form-field>
+            </mat-form-field>
         </form>
 
 

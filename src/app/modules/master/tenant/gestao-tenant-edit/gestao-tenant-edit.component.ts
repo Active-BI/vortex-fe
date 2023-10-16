@@ -31,15 +31,12 @@ export class GestaoTenantEditComponent implements OnInit {
         );
     }
 
-    solutions = [];
     visionsSelecteds = [];
     form = this.fb.group({
         id: [''],
         tenant_name: ['', [Validators.required, Validators.minLength(3)]],
         tenant_cnpj: ['', [Validators.required, Validators.minLength(3)]],
-        active: ['', [Validators.required]],
         dashboard: [[], [Validators.required]],
-        solution: [[], [Validators.required]],
     });
 
     panelOpenState = false;
@@ -60,6 +57,9 @@ export class GestaoTenantEditComponent implements OnInit {
         private pageMasterService: PageMasterService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
+    }
+
+    ngOnInit(): void {
         let editar = false;
         this.route.url.subscribe((a) => {
             editar = a[2].path.includes('editar');
@@ -110,13 +110,10 @@ export class GestaoTenantEditComponent implements OnInit {
                     id: this.tenant.id,
                     tenant_name: this.tenant.tenant_name,
                     tenant_cnpj: this.tenant.tenant_cnpj,
-                    active: this.tenant.active,
                 });
             });
         }
     }
-
-    ngOnInit(): void {}
 
     voltar(): void {
         this.router.navigate(['master/gestao/tenants']);
