@@ -26,7 +26,7 @@ export class GestaoTenantCriarComponent
         private toast: ToastrService,
         private tenantsServices: TenantsService,
         dialog: MatDialog,
-        pageMasterService: PageMasterService
+        private pageMasterServices: PageMasterService
     ) {
         super(
             fb,
@@ -35,16 +35,47 @@ export class GestaoTenantCriarComponent
             toastr,
             tenantsServices,
             dialog,
-            pageMasterService
+            pageMasterServices
         );
-        pageMasterService.getPages().subscribe((d: any) => {
+    }
+
+    override ngOnInit(): void {
+        this.pageMasterServices.getPages().subscribe((d: any) => {
             this.dashboardsSelecteds = d;
+            const dashboardList = d.map((page) => {
+                return {
+                    page_group: page.Page_Group.title,
+                    name: page.title,
+                    id: page.id,
+                    selected: page.included,
+                };
+            });
+
+            this.dashboardListReduced = dashboardList.reduce((acc, cur) => {
+                const findItem = acc.findIndex(
+                    (a) => a.page_group === cur.page_group
+                );
+                if (findItem >= 0) {
+                    acc[findItem].children.push(cur);
+                    return acc;
+                }
+                acc.push({
+                    page_group: cur.page_group,
+                    children: [cur],
+                });
+
+                return acc;
+            }, []);
+            this.form.patchValue({
+                dashboard: d
+                    .filter((dash) => dash.included === true)
+                    .map((dash) => dash.id),
+            });
         });
     }
 
-    override ngOnInit(): void {}
-
     criar(): void {
+        console.log(this.form.controls);
         if (this.form.valid) {
             delete this.form.value.id;
             const formPayload = this.form.value as any;
