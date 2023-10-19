@@ -4,11 +4,7 @@
 
     <form [formGroup]="form" (submit)="$event.preventDefault()"
         class="flex flex-col md:w-1/2 sm:w-[90%] w-full m-3 mr-0 overflow-y-auto pr-4">
-        <div class="md:col-span-2 col-span-full">
-            <!-- <mat-form-field>
-                <mat-label>Favorite food</mat-label>
-            </mat-form-field> -->
-        </div>
+
         <div class="w-full">
             <div class="text-3xl font-bold flex items-center">
                 <mat-icon svgIcon="mat_outline:arrow_back" class=" w-5 h-5 text-black mr-5 cursor-pointer"
@@ -38,49 +34,65 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-span-full grid gap-y-6">
-                <div class="w-full">
-                    <div class="w-full p-[0.5px] my-3 col-span-full bg-slate-300"></div>
-                    <div class="text-secondary text-2xl font-bold my-4">Dados da Empresa</div>
-                </div>
-                <div class="md:col-span-2 col-span-full">
+            <div class="w-full col-span-full">
+                <div class="w-full p-[0.5px] my-3 col-span-full bg-slate-300"></div>
+                <div class="text-secondary text-2xl font-bold my-4">Dados da Empresa</div>
+            </div>
+            <div class="col-span-full">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Empresa</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'" matPrefix></mat-icon>
+                    <input [formControlName]="'company_name'" matInput>
+                </mat-form-field>
+            </div>
+
+                <mat-form-field class="fuse-mat-no-subscript col-span-full">
+                    <mat-label>CNPJ</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'" matPrefix></mat-icon>
+                    <input [formControlName]="'company_cnpj'" matInput>
+                </mat-form-field>
+                <div class="md:col-span-1 col-span-full">
                     <mat-form-field class="fuse-mat-no-subscript w-full">
-                        <mat-label>Empresa</mat-label>
-                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'"
-                            matPrefix></mat-icon>
-                        <input [formControlName]="'company_name'" matInput>
-                    </mat-form-field>
-                </div>
-                <div class="md:col-span-2 col-span-full">
-                    <mat-form-field class="fuse-mat-no-subscript w-full">
-                        <mat-label>CNPJ</mat-label>
-                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'"
-                            matPrefix></mat-icon>
-                        <input [formControlName]="'company_cnpj'" matInput>
-                    </mat-form-field>
-                </div>
-<!--
-                <div class="md:col-span-2 col-span-full">
-                    <mat-form-field class="fuse-mat-no-subscript w-full">
-                        <mat-label>Segmento</mat-label>
-                        <mat-select [formControlName]="'segmento'">
-                            <mat-option *ngFor="let food of foods" [value]="food.value">
-                                {{food.viewValue}}
+                        <mat-label>UF</mat-label>
+                        <mat-select formControlName="company_uf" class="">
+                            <mat-option class="" *ngFor="let uf of ufs" [value]="uf">
+                                {{uf}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                </div> -->
+                </div>
+
+                <div class="md:col-span-1 col-span-full">
+                    <mat-form-field class="fuse-mat-no-subscript w-full">
+                        <mat-label>Porte</mat-label>
+                        <mat-select formControlName="company_size" class="">
+                            <mat-option class="" *ngFor="let s of size" [value]="s">
+                                {{s}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
                 <div class="md:col-span-2 col-span-full">
+                    <mat-form-field class="fuse-mat-no-subscript w-full">
+                        <mat-label>Segmentos</mat-label>
+                        <mat-select formControlName="company_segment" class="">
+                            <mat-option class="" *ngFor="let s of segments" [value]="s">
+                                {{s}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-span-full">
                     <mat-form-field class="fuse-mat-no-subscript w-full">
                         <mat-label>Descrição Empresa</mat-label>
                         <textarea matInput [formControlName]="'company_description'" cdkTextareaAutosize
                             [cdkAutosizeMinRows]="5"></textarea>
                     </mat-form-field>
                 </div>
+
             </div>
 
-        </div>
-        <button mat-raised-button color="primary" (click)="submit()"
+         <button mat-raised-button color="primary" (click)="submit()"
             class="self-end mt-8 rounded-sm text-colorText bg-blue-600">
             Solicitar acesso</button>
     </form>

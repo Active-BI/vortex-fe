@@ -15,7 +15,6 @@ import { ToastrService } from 'ngx-toastr';
 export class AdminRequestConfirmationModalComponent {
     tenants = [];
     selectedTenant = '';
-
     isFormDisabled = false;
     toggleForm() {
         this.isFormDisabled = !this.isFormDisabled;
@@ -36,6 +35,18 @@ export class AdminRequestConfirmationModalComponent {
                 ],
                 tenant_desription: [
                     this.data.user_data.company_description,
+                    [Validators.required],
+                ],
+                company_uf: [
+                    this.data.user_data.company_uf,
+                    [Validators.required],
+                ],
+                company_segment: [
+                    this.data.user_data.company_segment,
+                    [Validators.required],
+                ],
+                company_size: [
+                    this.data.user_data.company_size,
                     [Validators.required],
                 ],
                 dashboard: [[], [Validators.required]],
