@@ -12,6 +12,9 @@ import { RequestModalComponent } from './request-modal/request-modal.component';
     styleUrls: ['./access-request.component.scss'],
 })
 export class AccessRequestComponent implements OnInit {
+    ufs = ufsBrasileiras;
+    size = porte;
+    segments = segmentos;
     dashboardsSelecteds = [];
     foods = [
         { value: 'comercio', viewValue: 'Comércio' },
@@ -28,6 +31,9 @@ export class AccessRequestComponent implements OnInit {
         // tenant: ['', [Validators.required]],
         company_name: ['', [Validators.required]],
         company_cnpj: ['', [Validators.required]],
+        company_uf: ['', [Validators.required]],
+        company_segment: ['', [Validators.required]],
+        company_size: ['', [Validators.required]],
         company_description: ['', [Validators.required]],
     });
     OpcaoPainel(value) {
@@ -66,3 +72,61 @@ export class AccessRequestComponent implements OnInit {
     }
     ngOnInit(): void {}
 }
+const ufsBrasileiras = [
+    'AC', // Acre
+    'AL', // Alagoas
+    'AP', // Amapá
+    'AM', // Amazonas
+    'BA', // Bahia
+    'CE', // Ceará
+    'DF', // Distrito Federal
+    'ES', // Espírito Santo
+    'GO', // Goiás
+    'MA', // Maranhão
+    'MT', // Mato Grosso
+    'MS', // Mato Grosso do Sul
+    'MG', // Minas Gerais
+    'PA', // Pará
+    'PB', // Paraíba
+    'PR', // Paraná
+    'PE', // Pernambuco
+    'PI', // Piauí
+    'RJ', // Rio de Janeiro
+    'RN', // Rio Grande do Norte
+    'RS', // Rio Grande do Sul
+    'RO', // Rondônia
+    'RR', // Roraima
+    'SC', // Santa Catarina
+    'SP', // São Paulo
+    'SE', // Sergipe
+    'TO', // Tocantins
+];
+const segmentos = [
+    'Agricultura',
+    'Alimentos e Bebidas',
+    'Artesanato',
+    'Beleza',
+    'Construção e Reforma',
+    'Economia Criativa',
+    'Mercado Digital',
+    'Mercearia e Supermercados',
+    'Metal Mecânico',
+    'Moda',
+    'Móveis e Decoração',
+    'Pecuária',
+    'Petroquímico e Mineração',
+    'Saúde e Bem-estar',
+    'Tecnologia',
+    'Turismo',
+    'Veículos',
+    'Outros',
+];
+const porte = [
+    'MEI',
+    'EI',
+    'EIRELI',
+    'Ltda',
+    'SS',
+    'SA',
+    'Sem fins lucrativos',
+];
