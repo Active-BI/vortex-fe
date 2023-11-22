@@ -45,46 +45,47 @@ import { DeletarGrupoComponent } from './gestao-de-telas/modais/deletar-grupo/de
 import { DeletarRotaAninhadaComponent } from './gestao-de-telas/modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
 import { CriarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota/criar-rota.component';
 import { EditarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota/editar-rota.component';
+import { ColorPickerComponent } from './tenant/gestao-tenant-edit/color_picker';
 
-const masterRoutes: Route[] = [
-    {
-        path: 'gestao/telas',
-        component: GestaoDeTelasComponent,
-    },
-    {
-        path: 'gestao/telas/grupo/:id',
-        component: RotasAninhadasComponent,
-    },
-    {
-        path: 'gestao/telas/criar-tela-aninhada/groupId/:groupId',
-        component: CriarRotaComponent,
-    },
-    {
-        path: 'gestao/telas/editar-tela-aninhada/groupId/:groupId/screenId/:screenId',
-        component: EditarRotaComponent,
-    },
+    const masterRoutes: Route[] = [
+        {
+            path: 'gestao/telas',
+            component: GestaoDeTelasComponent,
+        },
+        {
+            path: 'gestao/telas/grupo/:id',
+            component: RotasAninhadasComponent,
+        },
+        {
+            path: 'gestao/telas/criar-tela-aninhada/groupId/:groupId',
+            component: CriarRotaComponent,
+        },
+        {
+            path: 'gestao/telas/editar-tela-aninhada/groupId/:groupId/screenId/:screenId',
+            component: EditarRotaComponent,
+        },
 
-    {
-        path: 'gestao/tenants',
-        component: GestaoTenantComponent,
-    },
-    {
-        path: 'gestao/tenants/criar',
-        component: GestaoTenantCriarComponent,
-    },
-    {
-        path: 'gestao/tenants/editar/:id',
-        component: GestaoTenantEditComponent,
-    },
-    {
-        path: 'gestao/tenants/:id/user/list',
-        component: TenantUserListComponent,
-    },
-    {
-        path: 'gestao/solicitacoes-de-cadastro',
-        component: AdminRequestsComponent,
-    },
-];
+        {
+            path: 'gestao/tenants',
+            component: GestaoTenantComponent,
+        },
+        {
+            path: 'gestao/tenants/criar',
+            component: GestaoTenantCriarComponent,
+        },
+        {
+            path: 'gestao/tenants/editar/:id',
+            component: GestaoTenantEditComponent,
+        },
+        {
+            path: 'gestao/tenants/:id/user/list',
+            component: TenantUserListComponent,
+        },
+        {
+            path: 'gestao/solicitacoes-de-cadastro',
+            component: AdminRequestsComponent,
+        },
+    ];
 
 @NgModule({
     declarations: [
@@ -103,6 +104,7 @@ const masterRoutes: Route[] = [
         DeletarRotaAninhadaComponent,
         CriarRotaComponent,
         EditarRotaComponent,
+        ColorPickerComponent
     ],
     imports: [
         CommonModule,

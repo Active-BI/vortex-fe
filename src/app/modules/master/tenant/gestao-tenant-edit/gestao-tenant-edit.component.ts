@@ -31,11 +31,37 @@ export class GestaoTenantEditComponent implements OnInit {
         );
     }
 
+    onColorSelected(color: string) {
+      this.form.patchValue({
+        tenant_color: color
+      })
+    }
+    clearFileSelection() {
+        this.form.patchValue({
+            tenant_image: ''
+        })
+    }
+    onFileSelected(event: any) {
+        const file = event.target.files[0];
+        
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.form.patchValue({
+                tenant_image:  reader.result as string
+            })
+          };
+    
+          reader.readAsDataURL(file);
+        }
+      }
     visionsSelecteds = [];
     form = this.fb.group({
         id: [''],
         tenant_name: ['', [Validators.required, Validators.minLength(3)]],
         tenant_cnpj: ['', [Validators.required, Validators.minLength(3)]],
+        tenant_color: ['#fffffff', [Validators.required, Validators.minLength(3)]],
+        tenant_image: ['', [Validators.required, Validators.minLength(3)]],
         dashboard: [[], [Validators.required]],
     });
 
@@ -110,6 +136,8 @@ export class GestaoTenantEditComponent implements OnInit {
                     id: this.tenant.id,
                     tenant_name: this.tenant.tenant_name,
                     tenant_cnpj: this.tenant.tenant_cnpj,
+                    tenant_color: this.tenant.tenant_color,
+                    tenant_image: this.tenant.tenant_image,
                 });
             });
         }
@@ -143,6 +171,7 @@ export class GestaoTenantEditComponent implements OnInit {
     }
 
     editar(): void {
+        console.log(this.form.controls)
         if (this.form.valid && this.myControl.valid) {
             this.tenantsService
                 .updateTenant(this.id, {

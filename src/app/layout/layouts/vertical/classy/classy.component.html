@@ -2,7 +2,7 @@
 <fuse-loading-bar></fuse-loading-bar>
 
 <fuse-vertical-navigation
-    class="dark bg-primary print:hidden"
+    class="print:hidden" [style]="'background-color:' + color "
     [mode]="isScreenSmall ? 'over' : 'side'"
     [name]="'mainNavigation'"
     [navigation]="navigation.default"
@@ -13,6 +13,9 @@
             <!-- Logo -->
             <div class="flex items-center justify-center">
                 Active Embedded
+            </div>
+            <div class="flex items-center justify-center">
+                <img [src]="image" alt="">
             </div>
             <!-- Components -->
             <div class="flex items-center ml-auto">

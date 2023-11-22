@@ -27,6 +27,9 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     /**
      * Constructor
      */
+
+    color= ''
+    image= ''
     constructor(
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
@@ -35,7 +38,10 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService,
         private menuItemService: MenuItemService
-    ) {}
+    ) {
+        this.color = JSON.parse(localStorage.getItem('tenant_color'))
+        this.image = JSON.parse(localStorage.getItem('tenant_image'))
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
