@@ -76,7 +76,15 @@ export class ListUsersComponent implements OnInit {
                               'DD/MM/YY H:mm'
                           )
                         : 'N/',
-            }));
+            })).sort((a,b) => {
+                if (a.name < b.name) {
+                    return 1;
+                  }
+                  if (a.name > b.name) {
+                    return -1;
+                  }
+                  return 0;
+            });
             // .filter((user) => user.contact_email !== decoded.contact_email);
             this.usuarios = new MatTableDataSource(users);
             this.usuariosFiltrados = new MatTableDataSource(users);

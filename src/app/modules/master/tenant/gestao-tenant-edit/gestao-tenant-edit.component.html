@@ -6,13 +6,13 @@
         </button>
 
         <h1 class=" text-slate-700 text-2xl mb-6">
-            EDITAR AMBIENTE
+            EDITAR CLIENTE
         </h1>
     </div>
 
     <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-100">
         <mat-form-field appearance="fill">
-            <mat-label>Nome do Ambiente</mat-label>
+            <mat-label>Nome do Cliente</mat-label>
             <input formControlName="tenant_name" matInput #first />
             <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
         </mat-form-field>
@@ -35,9 +35,13 @@
                 <span>Selecionar imagem</span>
                 <input type="file" (click)="clearFileSelection()" (change)="onFileSelected($event)" class="" />
             </div>
-            <img *ngIf="this.form.value.tenant_image.length > 0" [src]="this.form.value.tenant_image" class="h-8 w-auto"/>
+            <img *ngIf="this.form.value.tenant_image.length > 0" [src]="this.form.value.tenant_image" class="h-6 w-auto"/>
         </div>
-
+        <div *ngIf="form.controls.tenant_image.touched" class="text-red-600 mb-2">
+            <div *ngIf="form.controls.tenant_image.errors?.['required']">
+                Logo é Obrigatório
+            </div>
+        </div>
         <mat-form-field appearance="fill">
             <mat-label>Cor</mat-label>
             <app-color-picker (colorSelected)="onColorSelected($event)"

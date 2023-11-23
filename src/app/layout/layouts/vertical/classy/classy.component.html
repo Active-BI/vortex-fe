@@ -2,25 +2,20 @@
 <fuse-loading-bar></fuse-loading-bar>
 
 <fuse-vertical-navigation
-    class="print:hidden" [style]="'background-color:' + color "
+    [class]="text_color" [style]="'background-color:' + color "
     [mode]="isScreenSmall ? 'over' : 'side'"
     [name]="'mainNavigation'"
     [navigation]="navigation.default"
     [opened]="!isScreenSmall">
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
-        <div class="flex items-center w-full p-4 pl-6">
+        <div class="flex items-center justify-between w-full p-4 pl-6">
             <!-- Logo -->
             <div class="flex items-center justify-center">
-                Active Embedded
+                Embedded
             </div>
-            <div class="flex items-center justify-center">
-                <img [src]="image" alt="">
-            </div>
-            <!-- Components -->
-            <div class="flex items-center ml-auto">
-                <!-- <notifications></notifications> -->
-                <!-- <user [showAvatar]="false"></user> -->
+            <div>
+                <img *ngIf="image && image.length > 0" [src]="image" alt="" class="h-6">
             </div>
         </div>
     </ng-container>
@@ -39,7 +34,8 @@
         </button>
         <div class="w-full flex flex-row">
             <div class="justify-center flex w-full text-primary text-xl     ">
-                Portal de Indicadores Active BI
+                Portal de Indicadores
+                
             </div>
             <!-- <img src="\assets\images\active_logo.png" class="w-30 mr-6"> -->
 

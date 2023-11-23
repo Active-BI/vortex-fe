@@ -16,7 +16,6 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./gestao-tenant-edit.component.scss'],
 })
 export class GestaoTenantEditComponent implements OnInit {
-    myControl = new FormControl('');
     tenants: string[] = [];
     selectedTenant = this.tenants;
 
@@ -60,8 +59,8 @@ export class GestaoTenantEditComponent implements OnInit {
         id: [''],
         tenant_name: ['', [Validators.required, Validators.minLength(3)]],
         tenant_cnpj: ['', [Validators.required, Validators.minLength(3)]],
-        tenant_color: ['#fffffff', [Validators.required, Validators.minLength(3)]],
-        tenant_image: ['', [Validators.required, Validators.minLength(3)]],
+        tenant_color: ['#fffffff', [Validators.required, Validators.minLength(6)]],
+        tenant_image: ['', [Validators.required]],
         dashboard: [[], [Validators.required]],
     });
 
@@ -172,7 +171,7 @@ export class GestaoTenantEditComponent implements OnInit {
 
     editar(): void {
         console.log(this.form.controls)
-        if (this.form.valid && this.myControl.valid) {
+        if (this.form.valid) {
             this.tenantsService
                 .updateTenant(this.id, {
                     ...this.form.value,
