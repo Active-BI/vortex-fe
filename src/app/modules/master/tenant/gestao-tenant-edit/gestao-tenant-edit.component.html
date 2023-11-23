@@ -66,7 +66,7 @@
                 <span>Selecionar imagem</span>
                 <input type="file" (click)="clearFileSelection()" (change)="onFileSelected($event)" class="" />
             </div>
-            <img *ngIf="this.form.value.tenant_image.length > 0" [src]="this.form.value.tenant_image" class="h-8  w-auto"/>
+            <img *ngIf="form.value.tenant_image && form.value.tenant_image.length > 0" [src]="this.form.value.tenant_image" class="h-8  w-auto"/>
         </div>
         <div *ngIf="form.controls.tenant_image.touched" class="text-red-600 mb-2">
             <div *ngIf="form.controls.tenant_image.errors?.['required']">
