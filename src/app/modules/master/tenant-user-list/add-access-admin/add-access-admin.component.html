@@ -1,0 +1,20 @@
+<form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-full sm:w-100">
+
+    <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput #first />
+        <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
+
+    </mat-form-field>
+
+    
+    <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input formControlName="name" matInput #first />
+        <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
+
+    </mat-form-field>
+    <button color="primary" (click)="onSubmit()"
+        class="text-white text-center  self-end bg-blue-600 w-20 hover:bg-blue-700 h-7 mr-2 font-medium rounded-md text-sm dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-500">SALVAR</button>
+
+</form>

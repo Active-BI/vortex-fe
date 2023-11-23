@@ -4,11 +4,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { getAllRequest } from 'app/modules/services/admin.service';
+import { AdminService, getAllRequest } from 'app/modules/services/admin.service';
 import moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
-import { AddAdminAccessComponent } from './add_access_admin/add_access_admin.component';
+import { EditAdminAccessComponent } from './edit_access_admin/edit_access_admin.component';
 import { PageMasterService } from 'app/modules/services/page-master.service';
+import { AddAccessAdminComponent } from './add-access-admin/add-access-admin.component';
+import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
 
 @Component({
     selector: 'app-tenant-user-list',
@@ -33,7 +35,8 @@ export class TenantUserListComponent implements OnInit {
         private router: Router,
         private pageMasterService: PageMasterService,
         private toastr: ToastrService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private adminService: AdminService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
     }
@@ -76,13 +79,48 @@ export class TenantUserListComponent implements OnInit {
         this.usuariosFiltrados.paginator = this.paginator;
     }
     editarUsuario(usuario) {
-        this.dialog.open(AddAdminAccessComponent, {
+        this.dialog.open(EditAdminAccessComponent, {
             data: {
                 usuario,
                 data: () => {
                     this.dialog.closeAll();
                     this.toastr.success('Editado com sucesso');
                     this.requisicoes();
+                },
+            },
+        });
+    }
+
+
+    criarUsuario(tenant_id) {
+        this.dialog.open(AddAccessAdminComponent, {
+            data: {
+                tenant_id,
+                data: () => {
+                    this.dialog.closeAll();
+                    this.toastr.success('Criado com sucesso');
+                    this.requisicoes();
+                },
+            },
+        });
+    }
+
+    reenviarEmail(user) {
+        this.adminService.resendTenant({user_id: user.id, email: user.contact_email}).subscribe((res) => {
+            this.toastr.success('Enviado com sucesso');
+        })
+    }
+
+    deletarUsuario(id): void {
+        this.dialog.open(DeleteModalComponent, {
+            data: {
+                nome: 'Usuários',
+                data: () => {
+                    this.dialog.closeAll();
+                    this.adminService.deleteUser(id).subscribe(() => {
+                        this.toastr.success('Deletado com Sucesso');
+                        this.requisicoes();
+                    });
                 },
             },
         });

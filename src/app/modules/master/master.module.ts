@@ -36,7 +36,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { AdminRequestConfirmationModalComponent } from './admin-request/admin-request-confirmation-modal/admin-request-confirmation-modal.component';
 import { AdminRequestsComponent } from './admin-request/admin-requests/admin-requests.component';
 import { TenantUserListComponent } from './tenant-user-list/tenant-user-list.component';
-import { AddAdminAccessComponent } from './tenant-user-list/add_access_admin/add_access_admin.component';
+import { EditAdminAccessComponent } from './tenant-user-list/edit_access_admin/edit_access_admin.component';
 import { GestaoDeTelasComponent } from './gestao-de-telas/gestao-de-telas.component';
 import { EdicaoCriacaoGrupoComponent } from './gestao-de-telas/modais/criacao-grupo/edicao-criacao-grupo.component';
 import { MatChipsModule } from '@angular/material/chips';
@@ -46,6 +46,7 @@ import { DeletarRotaAninhadaComponent } from './gestao-de-telas/modais/deletar-r
 import { CriarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota/criar-rota.component';
 import { EditarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota/editar-rota.component';
 import { ColorPickerComponent } from './tenant/gestao-tenant-edit/color_picker';
+import { AddAccessAdminComponent } from './tenant-user-list/add-access-admin/add-access-admin.component';
 
     const masterRoutes: Route[] = [
         {
@@ -89,13 +90,14 @@ import { ColorPickerComponent } from './tenant/gestao-tenant-edit/color_picker';
 
 @NgModule({
     declarations: [
+        AddAccessAdminComponent,
         GestaoTenantComponent,
         GestaoTenantCriarComponent,
         AdminRequestsComponent,
         AdminRequestConfirmationModalComponent,
         AdminRequestBlockModalComponent,
         TenantUserListComponent,
-        AddAdminAccessComponent,
+        EditAdminAccessComponent,
         GestaoTenantEditComponent,
         GestaoDeTelasComponent,
         EdicaoCriacaoGrupoComponent,
@@ -104,7 +106,7 @@ import { ColorPickerComponent } from './tenant/gestao-tenant-edit/color_picker';
         DeletarRotaAninhadaComponent,
         CriarRotaComponent,
         EditarRotaComponent,
-        ColorPickerComponent
+        ColorPickerComponent,
     ],
     imports: [
         CommonModule,
