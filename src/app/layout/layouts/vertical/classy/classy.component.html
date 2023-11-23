@@ -10,12 +10,11 @@
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
         <div class="flex items-center justify-between w-full p-4 pl-6">
-            <!-- Logo -->
-            <div class="flex items-center justify-center">
-                Embedded
+            <div class="flex items-center">
+                <img src="assets/images/CRTI.png" alt="" class="h-8">
             </div>
-            <div>
-                <img *ngIf="image && image.length > 0" [src]="image" alt="" class="h-6">
+            <div class="flex items-center">
+                <img *ngIf="image && image.length > 0" [src]="image" alt="" class="h-7">
             </div>
         </div>
     </ng-container>
