@@ -51,6 +51,8 @@ import { SignUpModalComponent } from '../auth/sign-up/sign-up-modal/sign-up-moda
 import { PageMasterService } from '../services/page-master.service';
 import { TfaComponent } from '../auth/tfa/tfa.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { PageService } from '../services/page.service';
+import { MenuItemService } from 'app/mock-api/common/navigation/data';
 
 const adminroutes: Route[] = [
     {
@@ -152,5 +154,14 @@ const adminroutes: Route[] = [
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AdminModule {
-    constructor() {}
+    constructor(private MenuItemService: MenuItemService, private pageService: PageService) {
+        this.callRoutes()
+    }
+    async callRoutes() {
+        if (localStorage.getItem('token') || localStorage.getItem('token').length > 0) {
+            return await Promise.all([this.pageService.getUserRoutes().toPromise()]).then(async bruto => {
+                    await this.MenuItemService.tratarRotas(bruto[0].userRoutes)
+            })
+        }
+    }
 }

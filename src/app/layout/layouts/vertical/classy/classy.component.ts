@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import {
+    FuseNavigationItem,
     FuseNavigationService,
     FuseVerticalNavigationComponent,
 } from '@fuse/components/navigation';
@@ -55,10 +56,35 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         this.color = JSON.parse(localStorage.getItem('tenant_color')) || '#0f172a'
         const corContrastante = getContrastColor(this.color);
         this.text_color = 'print:hidden text-[' + corContrastante + ']'
-        console.log(this.text_color)
         this.image = JSON.parse(localStorage.getItem('tenant_image'))
     }
+    createNavigation(route) {
+        this._navigationService.navigation$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((navigation: Navigation) => {
+                try {
+                    const rotas = route;
 
+                    // console.log(filterChildrens);
+                    navigation.default = JSON.parse(localStorage.getItem('userRoutes')) as FuseNavigationItem[]
+                    navigation.default = navigation.default.sort((a,b) => {
+                        if (a.title === 'Administrador') {
+                            return 1
+                        }
+                        return -1
+                    }).sort((a,b) => {
+                        if (a.title === 'Inicio') {
+                            return -1
+                        }
+                        return  1
+                    })
+                    this.navigation = navigation
+
+                } catch (e) {
+                    // this._router.navigate(['/auth/login']);
+                }
+            });
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
     // -----------------------------------------------------------------------------------------------------
@@ -90,46 +116,12 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
         // Subscribe to navigation data
-        Promise.all([this.menuItemService.getNewRoutes()]).then((e) => {
+        Promise.all([JSON.parse(localStorage.getItem('userRoutes'))]).then(async (e) => {
             if (e[0]) {
-                this._navigationService.navigation$
-                    .pipe(takeUntil(this._unsubscribeAll))
-                    .subscribe((navigation: Navigation) => {
-                        try {
-                            const role = jwtDecode(
-                                JSON.parse(localStorage.getItem('token'))
-                            )['role_name'];
-
-                            const rotas = e[0];
-                            const filteredRoutes = rotas.filter((route) => {
-                                if (!route.data.roles.includes(role))
-                                    return false;
-                                return true;
-                            });
-                            const filterChildrens = filteredRoutes.filter(
-                                (route) => {
-                                    if (route.children) {
-                                        route.children = route.children.filter(
-                                            (child) =>
-                                                child.data.roles.includes(role)
-                                        );
-                                    }
-                                    return route;
-                                }
-                            );
-                            // console.log(filterChildrens);
-                            navigation.default = filterChildrens;
-                            // navigation.default = filteredRoutes;
-                            this.navigation = navigation;
-                        } catch (e) {
-                            this._router.navigate(['/auth/login']);
-                        }
-                    });
-
-                // Subscribe to the user service
-
-                // Subscribe to media changes
+                this.createNavigation(e[0])
             }
+                const rotasTratadas = await this.menuItemService.getNewRoutes()
+                this.createNavigation(rotasTratadas)
         });
     }
 

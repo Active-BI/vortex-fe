@@ -15,7 +15,9 @@ export class PageService {
     getDashboards() {
         return this.http.get(`${this.baseUrl}page`);
     }
-
+    getUserRoutes(): Observable<any> {
+        return this.http.get(`${this.baseUrl}login/routes`);
+      }
     async getDashboardsByUserId(userId) {
         const response = await this.http
             .get(`${this.baseUrl}page/${userId}`)

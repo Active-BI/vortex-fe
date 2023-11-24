@@ -25,30 +25,33 @@ export class BiReportDefaultByTypeComponent implements OnInit {
         this.router.params.subscribe((e) => {
             this.enable = false;
             this.type = e.type;
-            this.group = e.group;
+            this.group = e.group;            const currentUrl = window.location.href;
+
             const dashUsers = JSON.parse(localStorage.getItem('userRoutes'));
             if (
                 dashUsers.length < 1 ||
-                !dashUsers.find(
-                    (r) =>
-                        r.link.includes(this.type) &&
-                        r.link.includes(this.group)
-                )
+                !dashUsers.find((dr) => {
+                    if (dr.children) {
+                        return dr.children.find(r => r.link === currentUrl.split('app/')[1])
+                    } else {
+                        return false
+                    }
+                })
             ) {
                 this.route.navigateByUrl('/app/inicio');
                 return;
             }
-            const approute = dashUsers.find(
-                (r) => r.link.includes(this.type) && r.link.includes(this.group)
-            );
+            // const approute = dashUsers.find(
+            //     (r) => r.link.includes(this.type) && r.link.includes(this.group)
+            // );
 
-            this.report_type = approute.report_type;
-            console.log(this.report_type, this.report_type.includes('upload'));
-            if (this.report_type.includes('upload')) {
-                this.embeddedSrv
-                    .checkIfReportHasData(this.group, this.type)
-                    .subscribe((res: boolean) => (this.hasData = res));
-            }
+            // this.report_type = approute.report_type;
+            // console.log(this.report_type, this.report_type.includes('upload'));
+            // if (this.report_type.includes('upload')) {
+            //     this.embeddedSrv
+            //         .checkIfReportHasData(this.group, this.type)
+            //         .subscribe((res: boolean) => (this.hasData = res));
+            // }
             setTimeout(() => {
                 this.enable = true;
             }, 300);
