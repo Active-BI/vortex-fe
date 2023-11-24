@@ -38,7 +38,7 @@ import { AdminRequestsComponent } from './admin-request/admin-requests/admin-req
 import { TenantUserListComponent } from './tenant-user-list/tenant-user-list.component';
 import { EditAdminAccessComponent } from './tenant-user-list/edit_access_admin/edit_access_admin.component';
 import { GestaoDeTelasComponent } from './gestao-de-telas/gestao-de-telas.component';
-import { EdicaoCriacaoGrupoComponent } from './gestao-de-telas/modais/criacao-grupo/edicao-criacao-grupo.component';
+import { EdicaoCriacaoGrupoComponent, EdicaoGrupoComponent } from './gestao-de-telas/modais/criacao-grupo/edicao-criacao-grupo.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { RotasAninhadasComponent } from './gestao-de-telas/rotas-aninhadas/rotas-aninhadas.component';
 import { DeletarGrupoComponent } from './gestao-de-telas/modais/deletar-grupo/deletar-grupo.component';
@@ -101,6 +101,7 @@ import { AddAccessAdminComponent } from './tenant-user-list/add-access-admin/add
         GestaoTenantEditComponent,
         GestaoDeTelasComponent,
         EdicaoCriacaoGrupoComponent,
+        EdicaoGrupoComponent,
         RotasAninhadasComponent,
         DeletarGrupoComponent,
         DeletarRotaAninhadaComponent,

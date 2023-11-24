@@ -73,13 +73,13 @@
                 Logo é Obrigatório
             </div>
         </div>
-        <div>
+        <div class="mb-8">
             <p>* A logo deve ser png/jpeg</p>
             <p>* altura máxima de 28px</p>
             <p>* tamanho até 110px</p>
         </div>
         <mat-form-field appearance="fill">
-            <mat-label>Cor</mat-label>
+            <mat-label>Cor do menu lateral</mat-label>
             <app-color-picker (colorSelected)="onColorSelected($event)"
                 [selectedColor]="this.form.value.tenant_color"></app-color-picker>
             <input formControlName="tenant_color" matInput #first />
