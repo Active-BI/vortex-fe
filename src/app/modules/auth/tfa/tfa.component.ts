@@ -60,17 +60,11 @@ export class TfaComponent implements OnInit {
                                 JSON.stringify(res.tenant_image)
                             ),
                         ]).then(() => {
-                            Promise.all([
-                                localStorage.setItem(
-                                    'userRoutes',
-                                    JSON.stringify(res.userRoutes)
-                                ),
-                            ]).then(() => {
+                 
                                 localStorage.removeItem('tempToken');
                                 setTimeout(() => {
                                     this.redirect();
                                 }, 500);
-                            });
                         });
                     });
             }

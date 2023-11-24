@@ -81,10 +81,10 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
                             'token',
                             JSON.stringify(res.token)
                         ),
-                        localStorage.setItem(
-                            'userRoutes',
-                            JSON.stringify(res.userRoutes)
-                        ),
+                        // localStorage.setItem(
+                        //     'userRoutes',
+                        //     JSON.stringify(res.userRoutes)
+                        // ),
                     ]).then(async () => {
                         localStorage.removeItem('tempToken');
                         setTimeout(() => {
