@@ -62,7 +62,7 @@ export class GestaoTenantEditComponent implements OnInit {
         id: [''],
         tenant_name: ['', [Validators.required, Validators.minLength(3)]],
         tenant_cnpj: ['', [Validators.required, Validators.minLength(3)]],
-        tenant_color: ['#fffffff', [Validators.required, Validators.minLength(6)]],
+        tenant_color: ['www', [Validators.required, Validators.minLength(6)]],
         tenant_image: ['', [Validators.required]],
         company_uf: ['', [Validators.required]],
         company_size: ['', [Validators.required]],

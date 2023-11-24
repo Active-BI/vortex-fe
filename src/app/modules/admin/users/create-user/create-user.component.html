@@ -45,12 +45,6 @@
                     </div>
                 </div>
 
-
-                <!-- <div *ngIf="form.controls.profession.touched" class="text-red-600 mb-2">
-                    <div *ngIf="form.controls.profession.errors?.['required']">
-                        Identificação é Obrigatória
-                    </div>
-                </div> -->
                 <mat-form-field appearance="fill">
                     <mat-label>Descrição</mat-label>
                     <input type="text" formControlName="description" matInput #first />
@@ -62,7 +56,6 @@
                         Identificação é Obrigatória
                     </div>
                 </div>
-
                 <mat-form-field appearance="fill">
                     <mat-label>Perfil</mat-label>
                     <mat-select formControlName="rls_id">
@@ -70,7 +63,6 @@
                         <mat-option value="6a203390-8389-49ca-aa0e-6a14ba7815bc">Admin</mat-option>
                     </mat-select>
                     <mat-icon svgIcon="heroicons_outline:archive"></mat-icon>
-
                 </mat-form-field>
                 <div *ngIf="form.controls.rls_id.touched">
                     <div *ngIf="form.controls.rls_id.errors?.['required']" class="text-red-600 mb-2">
