@@ -94,8 +94,13 @@
                     <mat-optgroup  *ngFor="let group of dashboardListReduced" [label]="group.page_group"
                         >
                         <mat-option  class="ml-4" *ngFor="let page of group.children" [value]="page.id">
-                            {{page.name}}
-                        </mat-option>
+                            <div class=" flex flex-nowrap">
+
+                                {{page.name}} - <p class="text-gray-500 ml-1">
+                                    {{page.roles}}
+                                </p>
+                            </div>
+                            </mat-option>
                     </mat-optgroup>
                 </mat-select>
             </mat-form-field>
