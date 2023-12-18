@@ -6,7 +6,7 @@
         </div>
 
         <div class="w-full bg-primary h-16 rounded-t-md  mt-4 flex items-center justify-between">
-            <div class="text-3xl text-white mx-4">Grupos de Menus</div>
+            <div class="text-3xl text-white mx-4">Grupos de Relatórios</div>
             <div class="flex items-center justify-start">
 
                 <mat-form-field appearance="fill" class="w-80 mt-4 mr-4 ml-1">
@@ -31,14 +31,13 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="paginas" >
-                    <th mat-header-cell *matHeaderCellDef class="text-center"> Páginas aninhadas </th>
+                    <th mat-header-cell *matHeaderCellDef class="text-center"> Relatórios </th>
                     <td mat-cell *matCellDef="let element" class="text-center"> {{element.pages_length }} </td>
                 </ng-container>
                 <ng-container matColumnDef="acessos premitidos" >
                     <th mat-header-cell *matHeaderCellDef class="text-center"> Acessos Permititos</th>
                     <td mat-cell *matCellDef="let element" class="text-center">
                         <div class="flex justify-center">
-
                             <div *ngFor="let item of element.children_roles" color="primary" class=" p-1 mx-2 rounded-full bg-gray-100">
                             {{item}}
                         </div>

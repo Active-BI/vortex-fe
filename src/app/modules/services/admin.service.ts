@@ -62,9 +62,26 @@ export class AdminService {
             })
         );
     }
+    
     resendEmail(body: { email: string; id: string }) {
         return this.http
             .post<getAllRequest[]>(`${this.baseUrl}user/resend`, body)
+            .pipe(
+                catchError((err) => {
+                    ('');
+                    this.toast.error(`Erro ao reenviar email`, null, {
+                        progressBar: true,
+                        timeOut: 2000,
+                    });
+                    return throwError(err);
+                })
+            );
+    }
+
+    // master
+    resendTenant(body: { email: string; user_id: string }) {
+        return this.http
+            .post<getAllRequest[]>(`${this.baseUrl}user/resend-tenant`, body)
             .pipe(
                 catchError((err) => {
                     ('');

@@ -62,6 +62,10 @@ export class EditUserComponent implements OnInit {
         private pageService: PageService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
+  
+        this.changeReports()
+    }
+     changeReports(value = null) {
         let editar = false;
         this.route.url.subscribe(
             (a) => (editar = a[0].path.includes('editar'))
@@ -73,6 +77,7 @@ export class EditUserComponent implements OnInit {
                     name: tenant_dashboard.Page.title,
                     id: tenant_dashboard.id,
                     selected: false,
+                    roles: tenant_dashboard.Page.Page_Role.map(r => r.Rls.name)
                 };
             });
             this.dashboardListReduced = this.dashboardList.reduce(
@@ -109,19 +114,18 @@ export class EditUserComponent implements OnInit {
                             });
                         }
                     );
-
+                        console.log(value)
                     this.form.patchValue({
                         id: this.user.id,
                         name: this.user.name,
                         email: this.user.contact_email,
-                        rls_id: this.user.rls_id,
+                        rls_id: value ? value : this.user.rls_id,
                         description: this.user.description,
                     });
                 });
             }
         });
     }
-
     ngOnInit(): void {
         this.form.controls.email.disable();
     }

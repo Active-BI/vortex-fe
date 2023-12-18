@@ -51,18 +51,20 @@ export class TfaComponent implements OnInit {
                                 'token',
                                 JSON.stringify(res.token)
                             ),
+                            localStorage.setItem(
+                                'tenant_color',
+                                JSON.stringify(res.tenant_color)
+                            ),
+                            localStorage.setItem(
+                                'tenant_image',
+                                JSON.stringify(res.tenant_image)
+                            ),
                         ]).then(() => {
-                            Promise.all([
-                                localStorage.setItem(
-                                    'userRoutes',
-                                    JSON.stringify(res.userRoutes)
-                                ),
-                            ]).then(() => {
+                 
                                 localStorage.removeItem('tempToken');
                                 setTimeout(() => {
                                     this.redirect();
                                 }, 500);
-                            });
                         });
                     });
             }

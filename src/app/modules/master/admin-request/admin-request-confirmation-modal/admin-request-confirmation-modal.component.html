@@ -3,12 +3,12 @@
         <mat-icon svgIcon="mat_outline:warning_amber" class="text-yellow-400 mr-1"></mat-icon>
         <div class=" text-xl mb-2">Atenção!</div>
     </div>
-    <p class=""> {{data.nome}} precisa ser atribuido a um Ambiente. </p>
+    <p class=""> {{data.nome}} precisa ser atribuido a um Cliente. </p>
     <p class="">Deseja continuar?</p>
     <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col mt-4 gap-y-4">
-        <mat-checkbox (change)="toggleForm()">Criar novo ambiente</mat-checkbox>
+        <mat-checkbox (change)="toggleForm()">Criar novo Cliente</mat-checkbox>
         <mat-form-field class="w-full" *ngIf="!isFormDisabled">
-            <mat-label>Selecionar Ambiente</mat-label>
+            <mat-label>Selecionar Cliente</mat-label>
             <mat-select formControlName="tenant">
                 <mat-option *ngFor="let t of tenants" [value]="t.id">
                     {{t.tenant_name}}
@@ -41,7 +41,7 @@
             <div class="md:col-span-3 col-span-full">
 
                 <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Acessos do ambiente</mat-label>
+                    <mat-label>Acessos do Cliente</mat-label>
                     <mat-select formControlName="dashboard" multiple class="">
                         <mat-select-trigger>
                             {{ findValue() || '' }}

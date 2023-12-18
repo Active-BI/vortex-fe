@@ -42,6 +42,10 @@ export class PageMasterService {
     getAdminUsersByTenantId(tenantId) {
         return this.http.get(`${this.baseUrl}master/pages/user/${tenantId}`);
     }
+
+    PostAdminUsersByTenantId(tenantId, body) {
+        return this.http.post(`${this.baseUrl}master/pages/user/${tenantId}`, body);
+    }
     getPages() {
         return this.http.get(`${this.baseUrl}master/pages`);
     }

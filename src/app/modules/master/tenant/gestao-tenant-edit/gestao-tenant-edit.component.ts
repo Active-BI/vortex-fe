@@ -16,10 +16,12 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./gestao-tenant-edit.component.scss'],
 })
 export class GestaoTenantEditComponent implements OnInit {
-    myControl = new FormControl('');
     tenants: string[] = [];
     selectedTenant = this.tenants;
-
+    ufs = ufsBrasileiras;
+    size = porte;
+    segments = segmentos;
+    value = '';
     onKey(value) {
         this.selectedTenant = this.search(value);
     }
@@ -31,11 +33,41 @@ export class GestaoTenantEditComponent implements OnInit {
         );
     }
 
+    onColorSelected(color: string) {
+      this.form.patchValue({
+        tenant_color: color
+      })
+    }
+    clearFileSelection() {
+        this.form.patchValue({
+            tenant_image: ''
+        })
+    }
+    onFileSelected(event: any) {
+        const file = event.target.files[0];
+        
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.form.patchValue({
+                tenant_image:  reader.result as string
+            })
+          };
+    
+          reader.readAsDataURL(file);
+        }
+      }
     visionsSelecteds = [];
     form = this.fb.group({
         id: [''],
         tenant_name: ['', [Validators.required, Validators.minLength(3)]],
         tenant_cnpj: ['', [Validators.required, Validators.minLength(3)]],
+        tenant_color: ['www', [Validators.required, Validators.minLength(6)]],
+        tenant_image: ['', [Validators.required]],
+        company_uf: ['', [Validators.required]],
+        company_size: ['', [Validators.required]],
+        company_segment: ['', [Validators.required]],
+        company_description: ['', ],
         dashboard: [[], [Validators.required]],
     });
 
@@ -110,6 +142,12 @@ export class GestaoTenantEditComponent implements OnInit {
                     id: this.tenant.id,
                     tenant_name: this.tenant.tenant_name,
                     tenant_cnpj: this.tenant.tenant_cnpj,
+                    tenant_color: this.tenant.tenant_color || '#fffffff',
+                    tenant_image: this.tenant.tenant_image,
+                    company_description: this.tenant.company_description,
+                    company_segment: this.tenant.company_segment,
+                    company_size: this.tenant.company_size,
+                    company_uf: this.tenant.company_uf,
                 });
             });
         }
@@ -143,7 +181,8 @@ export class GestaoTenantEditComponent implements OnInit {
     }
 
     editar(): void {
-        if (this.form.valid && this.myControl.valid) {
+        console.log(this.form.controls)
+        if (this.form.valid) {
             this.tenantsService
                 .updateTenant(this.id, {
                     ...this.form.value,
@@ -157,3 +196,62 @@ export class GestaoTenantEditComponent implements OnInit {
         }
     }
 }
+
+const ufsBrasileiras = [
+    'AC', // Acre
+    'AL', // Alagoas
+    'AP', // Amapá
+    'AM', // Amazonas
+    'BA', // Bahia
+    'CE', // Ceará
+    'DF', // Distrito Federal
+    'ES', // Espírito Santo
+    'GO', // Goiás
+    'MA', // Maranhão
+    'MT', // Mato Grosso
+    'MS', // Mato Grosso do Sul
+    'MG', // Minas Gerais
+    'PA', // Pará
+    'PB', // Paraíba
+    'PR', // Paraná
+    'PE', // Pernambuco
+    'PI', // Piauí
+    'RJ', // Rio de Janeiro
+    'RN', // Rio Grande do Norte
+    'RS', // Rio Grande do Sul
+    'RO', // Rondônia
+    'RR', // Roraima
+    'SC', // Santa Catarina
+    'SP', // São Paulo
+    'SE', // Sergipe
+    'TO', // Tocantins
+];
+const segmentos = [
+    'Agricultura',
+    'Alimentos e Bebidas',
+    'Artesanato',
+    'Beleza',
+    'Construção e Reforma',
+    'Economia Criativa',
+    'Mercado Digital',
+    'Mercearia e Supermercados',
+    'Metal Mecânico',
+    'Moda',
+    'Móveis e Decoração',
+    'Pecuária',
+    'Petroquímico e Mineração',
+    'Saúde e Bem-estar',
+    'Tecnologia',
+    'Turismo',
+    'Veículos',
+    'Outros',
+];
+const porte = [
+    'MEI',
+    'EI',
+    'EIRELI',
+    'Ltda',
+    'SS',
+    'SA',
+    'Sem fins lucrativos',
+];

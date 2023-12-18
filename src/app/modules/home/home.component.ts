@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     constructor() {}
     redirecionar() {
-        window.location.href = 'https://www.activebi.com.br/';
+        window.location.href = 'https://crti.com.br/';
     }
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks

@@ -7,12 +7,40 @@
             <input formControlName="title" matInput #first />
         </mat-form-field>
 
+        <mat-form-field class="example-full-width">
+            <mat-label>Ícones</mat-label>
+            <mat-icon class="icon-size-5 hover:cursor-pointer" (click)="clearSelection()" matPrefix
+                [svgIcon]="'feather:x'"></mat-icon>
 
-        <mat-form-field appearance="fill" class=" w-full ">
-            <mat-label>Ícone</mat-label>
-            <input formControlName="icon" matInput #first />
+            <input type="text" placeholder="escolha o ícone" aria-label="ícone" matInput formControlName="search">
+            <mat-icon class="icon-size-5" matSuffix [svgIcon]="form.value.icon"></mat-icon>
         </mat-form-field>
+        <div class="flex justify-between items-center mb-6">
+
+            total - {{_filter(form.value.search || '').length }}
+            <button (click)="showAllFunc()" 
+            class="flex items-center text-center self-center px-2  min-w-22 bg-[#006cbe] text-white w-auto ">Mostrar
+            {{showAll ? 'Menos' : 'Mais'}}
+            <mat-icon svgIcon="feather:plus" class="text-white "></mat-icon>
+        </button>
+    </div>
+
+
+        <div class="w-100 max-h-50 h-auto  overflow-y-auto overflow-x-hidden" cdkScrollable>
+
+            <div class="text-xl h-20 text-center font-thin" *ngIf="_filter(form.value.search || '').length == 0">
+                Ícone não encontrado
+                </div>
+                <div class="flex flex-wrap" *ngIf="_filter(form.value.search || '').length > 0">
+
+                <div  *ngFor="let opt of filteredOptions | async" [value]="opt"
+                    class="p-1 bg-gray-100 hover:bg-white cursor-pointer shadow-sm "
+                    (click)="selectIcon(opt)">
+                    <mat-icon [svgIcon]="opt.type + ':' + opt.icon" class="text-black "></mat-icon>
+                </div>
+            </div>
+        </div>
     </form>
-    <button mat-raised-button (click)="criarGrupo()"
-    class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">criar</button>
+    <button (click)="criarGrupo()"
+        class="mt-4 self-end p-1 mb-6 min-w-22 w-1/5 bg-[#006cbe] text-white">{{state}}</button>
 </div>

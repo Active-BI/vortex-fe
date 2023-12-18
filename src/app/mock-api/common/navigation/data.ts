@@ -94,18 +94,23 @@ export class MenuItemService {
     sub = new ReplaySubject();
     intervalId: any;
     constructor(private router: Router, private pageService: PageService) {
-        this.getNewRoutes();
+        // this.getNewRoutes();
     }
-    async getNewRoutes() {
+    async getNewRoutes(params = []) {
         let rotas;
         try {
-            return await Promise.all([
-                JSON.parse(localStorage.getItem('userRoutes')),
-            ]).then((res) => {
-                if (!res[0]) {
-                    throw new Error();
-                }
-                rotas = res[0];
+            if (localStorage.getItem('token')) {
+                return await Promise.all([this.pageService.getUserRoutes().toPromise()]).then(res => {
+                    rotas = params.length > 0 ? params : res[0].userRoutes
+                    return this.tratarRotas(rotas)
+                })
+            }
+        } catch (e) {
+        }
+    }
+    async tratarRotas(_rotas) {
+        try {
+                const rotas = _rotas
                 const routes: FuseNavigationItem[] = [];
                 routes.push(...defaultRoute);
 
@@ -161,12 +166,12 @@ export class MenuItemService {
                 });
 
                 routes.push(...navigationGroups);
+                
+                localStorage.setItem('userRoutes', JSON.stringify(routes))
+
                 return routes;
-            });
         } catch (e) {
-            // console.log(this.router.routerState);
             localStorage.clear();
-            // this.router.navigate(['/auth/sign-in']);
         }
     }
 }

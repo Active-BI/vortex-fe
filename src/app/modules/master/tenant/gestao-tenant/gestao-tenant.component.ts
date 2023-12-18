@@ -19,7 +19,7 @@ export class GestaoTenantComponent implements OnInit {
     myControl = new FormControl('');
     pipe = new DatePipe('en-US');
 
-    displayedColumns: string[] = ['nome', 'status', 'opcoes'];
+    displayedColumns: string[] = ['nome', 'segmento', 'opcoes'];
     @ViewChild('paginator') paginator: MatPaginator;
     usuarios: MatTableDataSource<any>;
     usuariosL: number = 0;

@@ -2,11 +2,11 @@
     <div class="text-3x-L flex-auto p-6  justify-center">
         <div class="flex items-center justify-start">
             <button mat-raised-button (click)="criarUsuario()"
-                class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">Criar Ambientes</button>
+                class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">Criar Clientes</button>
         </div>
 
         <div class="w-full bg-primary h-16 rounded-t-md  mt-4 flex items-center justify-between">
-            <div class="text-3xl text-white mx-4">Ambientes</div>
+            <div class="text-3xl text-white mx-4">Clientes</div>
             <div class="flex items-center justify-start">
 
                 <mat-form-field appearance="fill" class="w-80 mt-4 mr-4 ml-1">
@@ -23,9 +23,9 @@
                     <th mat-header-cell *matHeaderCellDef> Nome </th>
                     <td mat-cell *matCellDef="let element"> {{element.tenant_name}} </td>
                 </ng-container>
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef> Status </th>
-                    <td mat-cell *matCellDef="let element"> {{element.active ? 'Ativo' : 'Inativo'}} </td>
+                <ng-container matColumnDef="segmento">
+                    <th mat-header-cell *matHeaderCellDef> Segmento </th>
+                    <td mat-cell *matCellDef="let element"> {{element.company_segment  }} </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -37,7 +37,6 @@
                         <div class="w-full flex justify-end">
                             <button class="text-violet-900" matTooltip='Editar' (click)="editarUsuario(element.id)">
                                 <mat-icon class="cursor-pointer mr-5 text-blue-700" svgIcon="edit_note"></mat-icon>
-
                             </button>
                             <button class="text-violet-900" matTooltip='Administradores' (click)="listarUsuarios(element.id)">
                                 <mat-icon color="warn" class="cursor-pointer mr-5  text-blue-700"

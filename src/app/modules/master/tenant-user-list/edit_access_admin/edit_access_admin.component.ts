@@ -6,11 +6,11 @@ import { PageMasterService } from 'app/modules/services/page-master.service';
 import { PageService } from 'app/modules/services/page.service';
 
 @Component({
-    selector: 'add_access_admin',
-    templateUrl: './add_access_admin.component.html',
-    styleUrls: ['./add_access_admin.component.scss'],
+    selector: 'edit_access_admin',
+    templateUrl: './edit_access_admin.component.html',
+    styleUrls: ['./edit_access_admin.component.scss'],
 })
-export class AddAdminAccessComponent implements OnInit {
+export class EditAdminAccessComponent implements OnInit {
     usuario;
     dashboardListReduced;
     constructor(

@@ -30,13 +30,13 @@ export const appRoutes: Route[] = [
                     expectedRoles: [],
                 },
             },
-            {
-                path: 'access-request',
-                component: AccessRequestComponent,
-                data: {
-                    expectedRoles: [],
-                },
-            },
+            // {
+            //     path: 'access-request',
+            //     component: AccessRequestComponent,
+            //     data: {
+            //         expectedRoles: [],
+            //     },
+            // },
         ],
     },
     {
@@ -63,13 +63,13 @@ export const appRoutes: Route[] = [
                         (m) => m.AuthSignUpModule
                     ),
             },
-            {
-                path: 'request-access/:token',
-                loadChildren: () =>
-                    import(
-                        'app/modules/auth/request-access/request-access.module'
-                    ).then((m) => m.AuthRequestAccessModule),
-            },
+            // {
+            //     path: 'request-access/:token',
+            //     loadChildren: () =>
+            //         import(
+            //             'app/modules/auth/request-access/request-access.module'
+            //         ).then((m) => m.AuthRequestAccessModule),
+            // },
             {
                 path: 'reset-send',
                 component: SendPassRecoverComponent,

@@ -36,73 +36,78 @@ import { MatSelectModule } from '@angular/material/select';
 import { AdminRequestConfirmationModalComponent } from './admin-request/admin-request-confirmation-modal/admin-request-confirmation-modal.component';
 import { AdminRequestsComponent } from './admin-request/admin-requests/admin-requests.component';
 import { TenantUserListComponent } from './tenant-user-list/tenant-user-list.component';
-import { AddAdminAccessComponent } from './tenant-user-list/add_access_admin/add_access_admin.component';
+import { EditAdminAccessComponent } from './tenant-user-list/edit_access_admin/edit_access_admin.component';
 import { GestaoDeTelasComponent } from './gestao-de-telas/gestao-de-telas.component';
-import { EdicaoCriacaoGrupoComponent } from './gestao-de-telas/modais/criacao-grupo/edicao-criacao-grupo.component';
+import { EdicaoCriacaoGrupoComponent, EdicaoGrupoComponent } from './gestao-de-telas/modais/criacao-grupo/edicao-criacao-grupo.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { RotasAninhadasComponent } from './gestao-de-telas/rotas-aninhadas/rotas-aninhadas.component';
 import { DeletarGrupoComponent } from './gestao-de-telas/modais/deletar-grupo/deletar-grupo.component';
 import { DeletarRotaAninhadaComponent } from './gestao-de-telas/modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
 import { CriarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota/criar-rota.component';
 import { EditarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota/editar-rota.component';
+import { ColorPickerComponent } from './tenant/gestao-tenant-edit/color_picker';
+import { AddAccessAdminComponent } from './tenant-user-list/add-access-admin/add-access-admin.component';
 
-const masterRoutes: Route[] = [
-    {
-        path: 'gestao/telas',
-        component: GestaoDeTelasComponent,
-    },
-    {
-        path: 'gestao/telas/grupo/:id',
-        component: RotasAninhadasComponent,
-    },
-    {
-        path: 'gestao/telas/criar-tela-aninhada/groupId/:groupId',
-        component: CriarRotaComponent,
-    },
-    {
-        path: 'gestao/telas/editar-tela-aninhada/groupId/:groupId/screenId/:screenId',
-        component: EditarRotaComponent,
-    },
+    const masterRoutes: Route[] = [
+        {
+            path: 'gestao/telas',
+            component: GestaoDeTelasComponent,
+        },
+        {
+            path: 'gestao/telas/grupo/:id',
+            component: RotasAninhadasComponent,
+        },
+        {
+            path: 'gestao/telas/criar-tela-aninhada/groupId/:groupId',
+            component: CriarRotaComponent,
+        },
+        {
+            path: 'gestao/telas/editar-tela-aninhada/groupId/:groupId/screenId/:screenId',
+            component: EditarRotaComponent,
+        },
 
-    {
-        path: 'gestao/tenants',
-        component: GestaoTenantComponent,
-    },
-    {
-        path: 'gestao/tenants/criar',
-        component: GestaoTenantCriarComponent,
-    },
-    {
-        path: 'gestao/tenants/editar/:id',
-        component: GestaoTenantEditComponent,
-    },
-    {
-        path: 'gestao/tenants/:id/user/list',
-        component: TenantUserListComponent,
-    },
-    {
-        path: 'gestao/solicitacoes-de-cadastro',
-        component: AdminRequestsComponent,
-    },
-];
+        {
+            path: 'gestao/tenants',
+            component: GestaoTenantComponent,
+        },
+        {
+            path: 'gestao/tenants/criar',
+            component: GestaoTenantCriarComponent,
+        },
+        {
+            path: 'gestao/tenants/editar/:id',
+            component: GestaoTenantEditComponent,
+        },
+        {
+            path: 'gestao/tenants/:id/user/list',
+            component: TenantUserListComponent,
+        },
+        {
+            path: 'gestao/solicitacoes-de-cadastro',
+            component: AdminRequestsComponent,
+        },
+    ];
 
 @NgModule({
     declarations: [
+        AddAccessAdminComponent,
         GestaoTenantComponent,
         GestaoTenantCriarComponent,
         AdminRequestsComponent,
         AdminRequestConfirmationModalComponent,
         AdminRequestBlockModalComponent,
         TenantUserListComponent,
-        AddAdminAccessComponent,
+        EditAdminAccessComponent,
         GestaoTenantEditComponent,
         GestaoDeTelasComponent,
         EdicaoCriacaoGrupoComponent,
+        EdicaoGrupoComponent,
         RotasAninhadasComponent,
         DeletarGrupoComponent,
         DeletarRotaAninhadaComponent,
         CriarRotaComponent,
         EditarRotaComponent,
+        ColorPickerComponent,
     ],
     imports: [
         CommonModule,
