@@ -5,7 +5,6 @@
 export const environment = {
     production: false,
     baseUrl: 'http://localhost:5002/api/',
-    // baseUrl: 'https://active-pme-api-e669a9769a4e.herokuapp.com/api/',
 };
 
 /*
