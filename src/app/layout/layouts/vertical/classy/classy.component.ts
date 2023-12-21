@@ -53,10 +53,15 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         private _fuseNavigationService: FuseNavigationService,
         private menuItemService: MenuItemService
     ) {
-        this.color = JSON.parse(localStorage.getItem('tenant_color')) || '#0f172a'
+        this.color = '#0f172a'
+        if ( localStorage.getItem('tenant_color') && localStorage.getItem('tenant_color') !== 'undefined') {
+            this.color = JSON.parse(localStorage.getItem('tenant_color'))
+        }
         const corContrastante = getContrastColor(this.color);
         this.text_color = 'print:hidden text-[' + corContrastante + ']'
-        this.image = JSON.parse(localStorage.getItem('tenant_image'))
+         if (localStorage.getItem('tenant_image') && localStorage.getItem('tenant_image')  !== 'undefined') {
+             this.image = JSON.parse(localStorage.getItem('tenant_image'))
+         }
     }
     createNavigation(route) {
         this._navigationService.navigation$
