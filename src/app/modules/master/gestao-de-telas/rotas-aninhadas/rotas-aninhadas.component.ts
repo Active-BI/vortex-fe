@@ -31,7 +31,7 @@ export class RotasAninhadasComponent implements OnInit {
     myControl = new FormControl('');
     pipe = new DatePipe('en-US');
     panelOpenState = false;
-    displayedColumns: string[] = ['nome', 'acesso', 'opcoes'];
+    displayedColumns: string[] = ['nome', 'tipo','acesso', 'opcoes'];
     @ViewChild('paginator') paginator: MatPaginator;
     usuarios: MatTableDataSource<any>;
     usuariosL: number = 0;
@@ -67,6 +67,7 @@ export class RotasAninhadasComponent implements OnInit {
             name: acessos.page_group,
             icon: acessos.icon,
         });
+        console.log(acessos.children)
         this.usuarios = new MatTableDataSource(acessos.children);
         this.usuariosFiltrados = new MatTableDataSource(acessos.children);
         this.usuariosFiltrados.paginator = this.paginator;

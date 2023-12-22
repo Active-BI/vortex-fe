@@ -72,7 +72,7 @@ export class CriarRotaComponent implements OnInit {
     }
     form = this.fb.group({
         id: [''],
-        report_type: ['report', [Validators.required]],
+        page_type: ['report', [Validators.required]],
         title: ['', [Validators.required]],
         link: [''],
         type: ['basic'],
@@ -117,17 +117,17 @@ export class CriarRotaComponent implements OnInit {
             formated_title: title,
         });
         let pathByType = '';
-        const isReportTypeNull = this.form.value.report_type === null;
+        const isReportTypeNull = this.form.value.page_type === null;
         if (isReportTypeNull) {
             this.form.patchValue({
-                report_type: 'report',
+                page_type: 'report',
             });
         }
         if (
-            this.form.value.report_type.includes('report') ||
-            this.form.value.report_type.includes('dashboard')
+            this.form.value.page_type.includes('report') ||
+            this.form.value.page_type.includes('dashboard')
         ) {
-            pathByType = this.form.value.report_type.includes('report')
+            pathByType = this.form.value.page_type.includes('report')
                 ? pathByType + 'view-report/'
                 : pathByType + 'view-dashboard/';
         }

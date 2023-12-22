@@ -9,6 +9,7 @@ export function trataRotas(rotas) {
             page_group: page.Page_Group.title,
             page_group_icon: page.Page_Group.icon,
             page_group_id: page.Page_Group.id,
+            page_type: page.page_type,
             link: page.link,
             report_id: page.report_id,
             group_id: page.group_id,

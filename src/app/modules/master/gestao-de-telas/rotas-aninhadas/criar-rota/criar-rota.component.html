@@ -13,17 +13,17 @@
             <mat-form-field class="md:col-span-1 fuse-mat-dense col-span-full ">
                 <mat-label>Tipo da página</mat-label>
                 <mat-select (selectionChange)="change()" formControlName="report_type">
-                    <mat-option *ngFor="let item of screenType" [value]="item" [disabled]="item !== 'report' && item !== 'report-upload'">{{item}}</mat-option>
+                    <mat-option *ngFor="let item of screenType" [value]="item" [disabled]="item !== 'report' && item !== 'dashboard'">{{item}}</mat-option>
                 </mat-select>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="fuse-mat-dense md:col-span-1 col-span-full ">
-                <mat-label>Nome da Página</mat-label>
+                <mat-label>Nome da Página</mat-label> 
                 <input (input)="change()" formControlName="title" matInput #first />
             </mat-form-field>
 
 
-            <div *ngIf="form.value.report_type !== 'page'"
+            <div *ngIf="form.value.page_type !== 'page'"
                 class="bg-slate-200 p-4 rounded-md fuse-mat-dense col-span-full grid grid-cols-2 gap-x-2 gap-y-4">
 
                 <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full ">

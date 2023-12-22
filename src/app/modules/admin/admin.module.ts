@@ -69,6 +69,10 @@ const adminroutes: Route[] = [
         component: BiReportDefaultByTypeComponent,
     },
     {
+        path: 'view-dashboard/:group/:type',
+        component: BiDashboardDefaultComponent,
+    },
+    {
         path: 'administrador',
         children: [
             {
@@ -158,7 +162,7 @@ export class AdminModule {
         this.callRoutes()
     }
     async callRoutes() {
-        if (localStorage.getItem('token') || localStorage.getItem('token').length > 0) {
+        if (localStorage.getItem('token') && localStorage.getItem('token').length > 0) {
             return await Promise.all([this.pageService.getUserRoutes().toPromise()]).then(async bruto => {
                     await this.MenuItemService.tratarRotas(bruto[0].userRoutes)
             })

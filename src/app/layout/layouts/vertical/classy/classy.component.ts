@@ -70,7 +70,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                 try {
                     const rotas = route;
 
-                    // console.log(filterChildrens);
                     navigation.default = JSON.parse(localStorage.getItem('userRoutes')) as FuseNavigationItem[]
                     navigation.default = navigation.default.sort((a,b) => {
                         if (a.title === 'Administrador') {
@@ -86,28 +85,14 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                     this.navigation = navigation
 
                 } catch (e) {
-                    // this._router.navigate(['/auth/login']);
                 }
             });
     }
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Getter for current year
-     */
     get currentYear(): number {
         return new Date().getFullYear();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void {
         this._userService.user$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -130,24 +115,12 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         });
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Toggle navigation
-     *
-     * @param name
-     */
     toggleNavigation(name: string): void {
         // Get the navigation
         const navigation =

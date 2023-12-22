@@ -45,7 +45,7 @@ class CreateRoutes {
         };
     }
 
-    static ReportUploadRoute(
+    static ReportRoute(
         roles: string[] = [],
         id: string,
         title: string,
@@ -56,10 +56,23 @@ class CreateRoutes {
             id,
             title,
             type: 'basic',
-            link: 'view-report-type/' + link,
+            link:  link,
         };
     }
-
+    static DashboardRoute(
+        roles: string[] = [],
+        id: string,
+        title: string,
+        link: string
+    ): FuseNavigationItem {
+        return {
+            data: { roles },
+            id,
+            title,
+            type: 'basic',
+            link: link,
+        };
+    }
     static CollapsableRoute(
         id: string,
         title: string,
@@ -100,76 +113,92 @@ export class MenuItemService {
         let rotas;
         try {
             if (localStorage.getItem('token')) {
-                return await Promise.all([this.pageService.getUserRoutes().toPromise()]).then(res => {
-                    rotas = params.length > 0 ? params : res[0].userRoutes
-                    return this.tratarRotas(rotas)
-                })
+                return await Promise.all([
+                    this.pageService.getUserRoutes().toPromise(),
+                ]).then((res) => {
+                    rotas = params.length > 0 ? params : res[0].userRoutes;
+                    return this.tratarRotas(rotas);
+                });
             }
-        } catch (e) {
-        }
+        } catch (e) {}
     }
     async tratarRotas(_rotas) {
         try {
-                const rotas = _rotas
-                const routes: FuseNavigationItem[] = [];
-                routes.push(...defaultRoute);
+            const rotas = _rotas;
+            const routes: FuseNavigationItem[] = [];
+            routes.push(...defaultRoute);
 
-                const collapsableRoutes = rotas.reduce((acc, cur) => {
-                    if (!acc[cur.Page_Group.title]) {
-                        acc[cur.Page_Group.title] =
-                            CreateRoutes.CollapsableRoute(
-                                cur.Page_Group.id,
-                                cur.Page_Group.title,
-                                cur.Page_Group.icon,
-                                cur.Page_Role
-                            );
-                        return acc;
-                    }
-                    cur.Page_Role.forEach((role) => {
-                        if (
-                            !(
-                                acc[cur.Page_Group.title].data.roles as string[]
-                            ).includes(role)
-                        ) {
-                            acc[cur.Page_Group.title].data.roles.push(role);
-                            return acc;
-                        }
-                    });
-
-                    return acc;
-                }, {});
-                const navigationGroups: any[] =
-                    Object.values(collapsableRoutes);
-
-                rotas.forEach((rota) => {
-                    const findFather = navigationGroups.findIndex(
-                        (e) => e.title === rota.Page_Group.title
+            const collapsableRoutes = rotas.reduce((acc, cur) => {
+                if (!acc[cur.Page_Group.title]) {
+                    acc[cur.Page_Group.title] = CreateRoutes.CollapsableRoute(
+                        cur.Page_Group.id,
+                        cur.Page_Group.title,
+                        cur.Page_Group.icon,
+                        cur.Page_Role
                     );
-                    if (findFather >= 0) {
-                        navigationGroups[findFather].children.push(
-                            rota.type !== 'report-upload'
-                                ? CreateRoutes.BasicRoute(
-                                      rota.Page_Role,
-                                      rota.id,
-                                      rota.title,
-                                      rota.link
-                                  )
-                                : CreateRoutes.ReportUploadRoute(
-                                      rota.Page_Role,
-                                      rota.id,
-                                      rota.title,
-                                      rota.link
-                                  )
-                        );
-                        return navigationGroups;
+                    return acc;
+                }
+                cur.Page_Role.forEach((role) => {
+                    if (
+                        !(
+                            acc[cur.Page_Group.title].data.roles as string[]
+                        ).includes(role)
+                    ) {
+                        acc[cur.Page_Group.title].data.roles.push(role);
+                        return acc;
                     }
                 });
 
-                routes.push(...navigationGroups);
-                
-                localStorage.setItem('userRoutes', JSON.stringify(routes))
+                return acc;
+            }, {});
+            const navigationGroups: any[] = Object.values(collapsableRoutes);
 
-                return routes;
+            rotas.forEach((rota) => {
+                const findFather = navigationGroups.findIndex(
+                    (e) => e.title === rota.Page_Group.title
+                );
+                if (findFather >= 0) {
+                    let currPage;
+                    console.log(rota)
+                    switch (rota.page_type) {
+                        case 'page':
+                            currPage = CreateRoutes.BasicRoute(
+                                rota.Page_Role,
+                                rota.id,
+                                rota.title,
+                                rota.link
+                            )
+                            break;
+                        case 'report':
+                            currPage = CreateRoutes.ReportRoute(
+                                rota.Page_Role,
+                                rota.id,
+                                rota.title,
+                                rota.link
+                            )
+                            break;
+                        case 'dashboard':
+                            currPage = CreateRoutes.DashboardRoute(
+                                rota.Page_Role,
+                                rota.id,
+                                rota.title,
+                                rota.link
+                            )
+                            break;
+                    }
+                    console.log(currPage)
+                    navigationGroups[findFather].children.push(
+                        currPage
+                    );
+                    return navigationGroups;
+                }
+            });
+
+            routes.push(...navigationGroups);
+
+            localStorage.setItem('userRoutes', JSON.stringify(routes));
+
+            return routes;
         } catch (e) {
             localStorage.clear();
         }

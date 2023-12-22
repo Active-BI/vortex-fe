@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
     styleUrls: ['./bi-default.component.scss'],
 })
 export class BiDashboardDefaultComponent implements OnInit {
-    reportID = '';
-    groupID = '';
+    type = '';
+    group = '';
     enable = false;
     layout = 'desktop';
     parametro$ = Observable<Data>;
@@ -18,8 +18,8 @@ export class BiDashboardDefaultComponent implements OnInit {
     ngOnInit(): void {
         this.router.params.subscribe((e) => {
             this.enable = false;
-            this.reportID = e.reportId;
-            this.groupID = e.groupId;
+            this.type = e.type;
+            this.group = e.group; 
             setTimeout(() => {
                 this.enable = true;
             }, 300);
