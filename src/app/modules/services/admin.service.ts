@@ -81,7 +81,7 @@ export class AdminService {
     // master
     resendTenant(body: { email: string; user_id: string }) {
         return this.http
-            .post<getAllRequest[]>(`${this.baseUrl}user/resend-tenant`, body)
+            .post<getAllRequest[]>(`${this.baseUrl}user/resend`, body)
             .pipe(
                 catchError((err) => {
                     ('');

@@ -106,6 +106,7 @@ export class TenantUserListComponent implements OnInit {
     }
 
     reenviarEmail(user) {
+        console.log(user)
         this.adminService.resendTenant({user_id: user.id, email: user.contact_email}).subscribe((res) => {
             this.toastr.success('Enviado com sucesso');
         })
