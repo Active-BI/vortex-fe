@@ -39,12 +39,8 @@
                     <input formControlName="descricao_painel" matInput #first />
                 </mat-form-field>
                 <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full ">
-                    <mat-label>Responsável</mat-label>
-                    <input formControlName="responsavel" matInput #first />
-                </mat-form-field>
-            </div>
-            <div class="col-span-full md:col-span-1 flex gap-x-4 items-center">
-                <mat-form-field class="w-full">
+                    <!-- <mat-label>Responsável</mat-label>
+                    <input formControlName="responsavel" matInput #first /> -->
                     <mat-label>Roles</mat-label>
                     <mat-select formControlName="roles" multiple>
                         <mat-select-trigger>
@@ -58,14 +54,24 @@
                     </mat-select>
                 </mat-form-field>
             </div>
+            <div class="col-span-full md:col-span-1 flex gap-x-4 items-center">
+                <mat-form-field class="w-full  fuse-mat-dense" >
+                    <mat-label>Nome do Responsável</mat-label>
+                    <input formControlName="nome_responsavel" matInput #first /> 
+                </mat-form-field>
+            </div>
+                   <div class="col-span-full md:col-span-1 flex gap-x-4 items-center">
+                <mat-form-field class="w-full  fuse-mat-dense" >
+                    <mat-label>Email do Responsável</mat-label>
+                    <input formControlName="email_responsavel" matInput #first /> 
+                </mat-form-field>
+            </div>
             <div class="col-span-full flex gap-x-4 items-center">
-                <!-- <section class="example-section" class=" col-span-w ">
-                    <mat-checkbox (change)="change()" formControlName="restrict" class="example-margin">Página
-                        restrita?</mat-checkbox>
-                </section> -->
                 <section class="example-section">
-                    <mat-checkbox formControlName="possui_dados_sensiveis" class="example-margin">Possui dados
-                        sensíveis?</mat-checkbox>
+                    <mat-checkbox matTooltip="CPF, CNPJ, Nome, Salário etc..." formControlName="possui_dados_sensiveis" class="example-margin">Possui dados
+                        sensíveis?
+                    </mat-checkbox>
+                        
                 </section>
             </div>
             <div class="col-span-1 col-start-2 flex justify-end gap-x-4 mt-6">

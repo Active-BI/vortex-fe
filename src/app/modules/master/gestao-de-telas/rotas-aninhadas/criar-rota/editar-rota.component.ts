@@ -48,7 +48,8 @@ export class EditarRotaComponent extends CriarRotaComponent {
             possui_dados_sensiveis,
             descricao_painel,
             page_type,
-            responsavel,
+            nome_responsavel,
+            email_responsavel,
             Page_Role,
             Page_Group: { title: page_group_title },
         }: any = await this._pageMasterService.getPageById(this.screenId);
@@ -66,7 +67,8 @@ export class EditarRotaComponent extends CriarRotaComponent {
             page_group_id,
             possui_dados_sensiveis,
             descricao_painel,
-            responsavel,
+            nome_responsavel,
+            email_responsavel,
             roles: Page_Role.map((p) => p.Rls.id),
         });
 

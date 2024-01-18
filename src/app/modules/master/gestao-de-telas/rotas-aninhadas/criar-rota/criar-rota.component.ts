@@ -85,7 +85,8 @@ export class CriarRotaComponent implements OnInit {
         page_group_id: [this.groupId, [Validators.required]],
         possui_dados_sensiveis: [false, [Validators.required]],
         descricao_painel: ['', [Validators.required]],
-        responsavel: ['', [Validators.required]],
+        nome_responsavel: ['', [Validators.required]],
+        email_responsavel: ['', [Validators.required, Validators.email]],
         roles: [[], [Validators.required]],
     });
     ngOnInit(): void {
