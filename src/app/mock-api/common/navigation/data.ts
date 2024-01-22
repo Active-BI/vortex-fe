@@ -159,7 +159,7 @@ export class MenuItemService {
                 );
                 if (findFather >= 0) {
                     let currPage;
-                    console.log(rota)
+                    console.log(rota.page_type)
                     switch (rota.page_type) {
                         case 'page':
                             currPage = CreateRoutes.BasicRoute(
@@ -186,7 +186,6 @@ export class MenuItemService {
                             )
                             break;
                     }
-                    console.log(currPage)
                     navigationGroups[findFather].children.push(
                         currPage
                     );

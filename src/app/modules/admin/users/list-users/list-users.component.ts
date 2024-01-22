@@ -20,6 +20,7 @@ import { DatePipe } from '@angular/common';
 import { listRoles } from '../usersUtils';
 import moment from 'moment';
 import jwtDecode from 'jwt-decode';
+import { OfficeService } from 'app/modules/services/office.service';
 
 export interface PeriodicElement {
     id: string;
@@ -56,13 +57,21 @@ export class ListUsersComponent implements OnInit {
         private router: Router,
         private adminSrv: AdminService,
         public dialog: MatDialog,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private office: OfficeService,
     ) {
         this.requisicoes();
+        this.office.getOffices().subscribe((e) => {
+            this.cargo = e
+           });
     }
-
+    cargo = []
     ngOnInit(): void {
         this.requisicoes();
+    }
+    getOffice(id) {
+        const office = this.cargo.find(c => c.id = id)
+        return office ? office.name : 'Não Atribuído'
     }
     requisicoes() {
         this.adminSrv.getUsers().subscribe((e) => {
@@ -86,6 +95,7 @@ export class ListUsersComponent implements OnInit {
                   return 0;
             });
             // .filter((user) => user.contact_email !== decoded.contact_email);
+            console.log(users)
             this.usuarios = new MatTableDataSource(users);
             this.usuariosFiltrados = new MatTableDataSource(users);
             this.usuariosFiltrados.paginator = this.paginator;

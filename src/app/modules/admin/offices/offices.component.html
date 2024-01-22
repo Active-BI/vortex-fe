@@ -1,11 +1,26 @@
 <div class="flex flex-col flex-auto min-w-0">
     <div class="text-3x-L flex-auto p-6  justify-center">
-        <div class="flex items-center justify-start">
+        <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-row  w-full items-center gap-2">
+            <div class="w-1/3">
+
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>{{ criar === false ? 'Edite o Cargo' : 'Cargo' }} </mat-label>
+                    <input  class="w-full" formControlName="name" matInput #first />
+                </mat-form-field>
+        
+            </div>
             <button mat-raised-button (click)="criarUsuario()"
-                class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">Criar Usuário</button>
+                class="mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">{{ criar === false ? 'Editar' : 'Criar' }}</button>
+                <button *ngIf="criar === false" mat-raised-button (click)="cancelarEdicao()" matTooltip="Cancelar Edição"
+                class="mt-2 rounded-sm text-colorText bg-[#be0000] text-white">X</button>
+        </form>
+        <div *ngIf="form.controls.name.touched" class="text-red-600 mb-2">
+            <div *ngIf="form.controls.name.errors?.['required']">
+                Nome do cargo é Obrigatório
+            </div>
         </div>
         <div class="w-full bg-primary h-16 rounded-t-md  mt-4 flex items-center justify-between">
-            <div class="text-3xl text-white mx-4">Usuários</div>
+            <div class="text-3xl text-white mx-4">Cargos</div>
             <div class="flex items-center justify-start">
                 <mat-form-field appearance="fill" class="w-80 mt-4 mr-4 ml-1 h2">
                     <mat-icon class="mr-4">search</mat-icon>
@@ -15,39 +30,20 @@
             </div>
         </div>
         <div class="flex flex-col shadow-2xl" id="table">
-            <table mat-table class="" [dataSource]="usuariosFiltrados" class="pb-6">
+            <table mat-table class="" [dataSource]="cargosFiltrados" class="pb-6">
                 <ng-container matColumnDef="nome">
                     <th mat-header-cell *matHeaderCellDef> Nome </th>
                     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                 </ng-container>
-                <ng-container matColumnDef="perfil">
-                    <th mat-header-cell *matHeaderCellDef> Perfil </th>
-                    <td mat-cell *matCellDef="let element"> {{element.Rls.name}} </td>
-                </ng-container>
-                <ng-container matColumnDef="identificacao">
-                    <th mat-header-cell *matHeaderCellDef> Cargo </th>
-                    <td mat-cell *matCellDef="let element"> {{getOffice(element.office_id) }} </td>
-                </ng-container>
-                <ng-container matColumnDef="tenant">
-                    <th mat-header-cell *matHeaderCellDef> Cliente </th>
-                    <td mat-cell *matCellDef="let element"> {{element.Tenant.tenant_name}} </td>
-                </ng-container>
-                <ng-container matColumnDef="ultimoAcesso">
-                    <th mat-header-cell *matHeaderCellDef> Ultimo acesso </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.dataUltimoAcesso }} </td>
-                </ng-container>
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 <ng-container matColumnDef="opcoes" class="flex">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
                         <div class="w-full flex justify-end">
-                            <button *ngIf="element.dataUltimoAcesso === 'N/'" class="text-violet-900"
-                                matTooltip='Reenviar Email' (click)="reenviarEmail(element)">
-                                <mat-icon class="cursor-pointer mr-5 text-blue-700"
-                                    svgIcon="mat_outline:send"></mat-icon>
-                            </button>
-                            <button class="text-violet-900" matTooltip='Editar' (click)="editarUsuario(element.id)">
+
+                            <button class="text-violet-900" matTooltip='Editar' (click)="editarUsuario(element)">
                                 <mat-icon class="cursor-pointer mr-5 text-blue-700" svgIcon="edit_note"></mat-icon>
                             </button>
                             <button matTooltip='Deletar' (click)="deletarUsuario(element.id)">
@@ -59,7 +55,7 @@
                 </ng-container>
             </table>
             <div class="flex bg-white justify-end">
-                <mat-paginator #paginator [pageSize]="10" [length]="usuariosL" showFirstLastButtons>
+                <mat-paginator #paginator [pageSize]="10" [length]="cargosL" showFirstLastButtons>
                 </mat-paginator>
             </div>
         </div>

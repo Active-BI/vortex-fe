@@ -53,6 +53,7 @@ import { TfaComponent } from '../auth/tfa/tfa.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { PageService } from '../services/page.service';
 import { MenuItemService } from 'app/mock-api/common/navigation/data';
+import { OfficesComponent } from './offices/offices.component';
 
 const adminroutes: Route[] = [
     {
@@ -75,6 +76,12 @@ const adminroutes: Route[] = [
     {
         path: 'administrador',
         children: [
+            {
+                data: { expectedRoles: ['Admin'] },
+                path: 'cargos',
+                component: OfficesComponent,
+                canActivate: [AuthGuardScreen],
+            },
             {
                 data: { expectedRoles: ['Admin'] },
                 path: 'usuarios',
@@ -113,6 +120,7 @@ const adminroutes: Route[] = [
         LogModalComponent,
         SignUpModalComponent,
         TfaComponent,
+        OfficesComponent,
     ],
     imports: [
         CommonModule,

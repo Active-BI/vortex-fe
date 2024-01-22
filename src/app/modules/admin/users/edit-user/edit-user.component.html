@@ -46,27 +46,21 @@
                         Email inválido
                     </div>
                 </div>
-
-                <!-- <mat-form-field appearance="fill">
-                    <mat-label>Identificação</mat-label>
-                    <input type="text" formControlName="profession" matInput #first />
-                    <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
-
-                </mat-form-field> -->
-                <!-- <div *ngIf="form.controls.profession.touched" class="text-red-600 mb-2">
-                    <div *ngIf="form.controls.profession.errors?.['required']">
-                        Identificação é Obrigatória
-                    </div>
-                </div> -->
                 <mat-form-field appearance="fill">
-                    <mat-label>Descrição</mat-label>
-                    <input type="text" formControlName="description" matInput #first />
-                    <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
 
-                </mat-form-field>
-                <div *ngIf="form.controls.description.touched" class="text-red-600 mb-2">
-                    <div *ngIf="form.controls.description.errors?.['required']">
-                        Identificação é Obrigatória
+                    <mat-label>Cargo</mat-label>
+                    <input type="text"
+                           placeholder="Selecione o cargo"
+                           matInput
+                           formControlName="cargo"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" >
+                        <mat-option *ngFor="let option of cargos" (click)="selectOffice(option.name)" [value]="option.name">{{option.name}}</mat-option>
+                    </mat-autocomplete>
+                     </mat-form-field>
+                <div *ngIf="form.controls.cargo.touched" class="text-red-600 mb-2">
+                    <div *ngIf="form.controls.cargo.errors?.['required']">
+                        Cargo é Obrigatório
                     </div>
                 </div>
 
@@ -88,7 +82,7 @@
             </form>
 
             <mat-form-field>
-                <mat-label>Visões</mat-label>
+                <mat-label>Acessos Liberados</mat-label>
                 <mat-select [formControl]="visoes" multiple="">
 
                     <mat-optgroup  *ngFor="let group of dashboardListReduced" [label]="group.page_group"

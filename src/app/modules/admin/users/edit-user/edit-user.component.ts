@@ -6,6 +6,7 @@ import { listRoles } from 'app/modules/services/roles.service';
 import { ToastrService } from 'ngx-toastr';
 import { ordersData } from '../usersUtils';
 import { PageService } from 'app/modules/services/page.service';
+import { OfficeService } from 'app/modules/services/office.service';
 
 @Component({
     selector: 'app-edit-user',
@@ -41,7 +42,8 @@ export class EditUserComponent implements OnInit {
                 Validators.email,
             ],
         ],
-        description: ['', [Validators.required]],
+        cargo: ['', [Validators.required]],
+        office_id: ['', [Validators.required]],
         rls_id: ['', [Validators.required]],
     });
     panelOpenState = false;
@@ -59,11 +61,18 @@ export class EditUserComponent implements OnInit {
         private route: ActivatedRoute,
         private toastr: ToastrService,
         private adminSrv: AdminService,
-        private pageService: PageService
+        private pageService: PageService,
+        private office: OfficeService,
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
   
         this.changeReports()
+    }
+    selectOffice(name) {
+        const office = this.cargos.find(c => c.name === name).id
+       if (office) this.form.patchValue({
+        office_id: office
+       }) 
     }
      changeReports(value = null) {
         let editar = false;
@@ -114,20 +123,43 @@ export class EditUserComponent implements OnInit {
                             });
                         }
                     );
-                        console.log(value)
+                    this.office.getOffices().subscribe((e) => {
+                         const office = e.find(c => c.id === this.user.office_id).name
+                              this.form.patchValue({
+                                  cargo: office
+                              })
+                        });
                     this.form.patchValue({
                         id: this.user.id,
                         name: this.user.name,
                         email: this.user.contact_email,
                         rls_id: value ? value : this.user.rls_id,
-                        description: this.user.description,
+                        office_id: this.user.office_id,
                     });
                 });
             }
         });
     }
+    cargos = []
     ngOnInit(): void {
         this.form.controls.email.disable();
+        this.office.getOffices().subscribe((e) => {
+            this.cargos = e.sort((a,b) => {
+                if (a.name < b.name) {
+                    return 1;
+                  }
+                  if (a.name > b.name) {
+                    return -1;
+                  }
+                  return 0;
+            });
+            console.log(this.form.value.office_id, 'form')
+            const office = this.cargos.find(c => c.id === this.form.value.office_id).name
+            this.form.patchValue({
+                cargo: office
+            })
+
+        })
     }
 
     filteredVisions = [];
@@ -155,14 +187,19 @@ export class EditUserComponent implements OnInit {
                     this.id
                 )
                 .subscribe((e) => {});
+            const form = this.form.value
+            delete form.cargo
             this.adminSrv
                 .updateUser({
                     ...this.form.value,
                 })
                 .subscribe((e) => {
                     this.toastr.success('Editado com Sucesso');
-                    this.voltar();
+                    // this.voltar();
+                }, ({error}) => {
+                    this.toastr.error(error.message)
                 });
+                this.ngOnInit()
         } else {
             this.form.markAllAsTouched();
         }
