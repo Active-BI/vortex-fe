@@ -69,7 +69,7 @@ export class TfaComponent implements OnInit {
                                 'tenant_id',
                                 res.tenant_id
                             ),
-                            this.socketService.Logeddin(res.email, res.token)
+                            this.socketService.Logeddin(res.user_email, res.token)
                         ]).then(() => {
                  
                                 localStorage.removeItem('tempToken');

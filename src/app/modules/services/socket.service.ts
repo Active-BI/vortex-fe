@@ -18,7 +18,7 @@ export class SocketService {
         const message = {
             sessionId,
             userName: user.name,
-            userEmail: user.email,
+            userEmail: user.contact_email,
             tenant_id: user.tenant_id,
         };
         this.socket.connect();

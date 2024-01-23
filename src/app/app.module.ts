@@ -57,10 +57,12 @@ export class AppModule {
     constructor(private router: Router, private socketService: SocketService) {
         this.socket = this.socketService.socket;
         this.socket.on('logou', (res) => {});
-        const sessionId = localStorage.getItem('sessionId');
-        if (sessionId) this.socket.emit('user-check', { sessionId });
+        Promise.all([localStorage.getItem('session_id')]).then((res) => {
+            console.log({sessionId: res[0]})
+            if (res[0]) this.socket.emit('user-check', res[0]);
+        })
         this.socket.on('logout', () => {
-            localStorage.clear( );
+            localStorage.clear();
             this.socket.disconnect();
             this.router.navigate(['auth/sign-out']);
         });
