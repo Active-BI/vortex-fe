@@ -52,8 +52,8 @@
                                matInput
                                formControlName="cargo"
                                [matAutocomplete]="auto">
-                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                            <mat-option *ngFor="let option of cargos" [value]="option.name">{{option.name}}</mat-option>
+                        <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of cargos" (click)="selectOffice(option.name)" [value]="option.name">{{option.name}}</mat-option>
                         </mat-autocomplete>
                 </mat-form-field>
                 <div *ngIf="form.controls.cargo.touched" class="text-red-600 mb-2">

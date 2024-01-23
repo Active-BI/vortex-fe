@@ -191,7 +191,7 @@ export class EditUserComponent implements OnInit {
             delete form.cargo
             this.adminSrv
                 .updateUser({
-                    ...this.form.value,
+                    ...form,
                 })
                 .subscribe((e) => {
                     this.toastr.success('Editado com Sucesso');
