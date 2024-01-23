@@ -49,20 +49,27 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
     criar(): void {
         if (!this.find(this.form.value.cargo)) {
             this.form.controls.cargo.reset()
+            this.toast.error('Formulário inválido')
         }
         if (this.form.valid) {
             delete this.form.value.id;
+            delete this.form.value.cargo;
             const formPayload = this.form.value as any;
             this.adminSrv1
                 .createUser({
                     ...formPayload,
-                    office: this.find(this.form.value.cargo)
                 })
                 .subscribe((e) => {
                     this.toast.success('Usuário Criado com Sucesso');
                     this.redirectToEdit(e.user_id);
+                }, ({ error }) => {
+            this.toast.error(error.message)
+
                 });
         } else {
+            console.log(this.form.controls)
+            this.toast.error('Formulário inválido')
+
             this.form.markAllAsTouched();
         }
     }
