@@ -53,5 +53,16 @@ const routerConfig: ExtraOptions = {
     bootstrap: [AppComponent],
 })
 export class AppModule {
-
+    socket: any;
+    constructor(private router: Router, private socketService: SocketService) {
+        this.socket = this.socketService.socket;
+        this.socket.on('logou', (res) => {});
+        const sessionId = localStorage.getItem('sessionId');
+        if (sessionId) this.socket.emit('user-check', { sessionId });
+        this.socket.on('logout', () => {
+            localStorage.clear( );
+            this.socket.disconnect();
+            this.router.navigate(['auth/sign-out']);
+        });
+    }
 }

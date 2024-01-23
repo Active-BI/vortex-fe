@@ -6,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { AdminService } from 'app/modules/services/admin.service';
-import { SocketService } from 'app/modules/socket.service';
+import { SocketService } from 'app/modules/services/socket.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -18,7 +18,7 @@ export class ConnectionsComponent implements OnInit {
     @ViewChild('paginator') paginator: MatPaginator;
     myControl = new FormControl('');
     pipe = new DatePipe('en-US');
-
+    tenantId = ''
     displayedColumns: string[] = ['nome', 'email', 'status', 'opcoes'];
     usuarios: MatTableDataSource<any>;
     usuariosL: number = 0;
@@ -29,6 +29,7 @@ export class ConnectionsComponent implements OnInit {
         public dialog: MatDialog,
         private toastr: ToastrService
     ) {
+        this.tenantId = localStorage.getItem('tenant_id')
         this.requisicoes();
         this.socketService.socket.on('refresh-conn', () => {
             this.requisicoes();
@@ -39,7 +40,8 @@ export class ConnectionsComponent implements OnInit {
         this.requisicoes();
     }
     requisicoes() {
-        this.adminSrv.getSessions().subscribe((e) => {
+
+        this.adminSrv.getSessions(this.tenantId).subscribe((e) => {
             this.usuarios = new MatTableDataSource(e);
             this.usuariosFiltrados = new MatTableDataSource(e);
             this.usuariosFiltrados.paginator = this.paginator;

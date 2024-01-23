@@ -55,6 +55,7 @@ import { PageService } from '../services/page.service';
 import { MenuItemService } from 'app/mock-api/common/navigation/data';
 import { OfficesComponent } from './offices/offices.component';
 import { SocketService } from '../services/socket.service';
+import { ConnectionsComponent } from './connections/connections.component';
 
 const adminroutes: Route[] = [
     {
@@ -91,6 +92,12 @@ const adminroutes: Route[] = [
             },
             {
                 data: { expectedRoles: ['Admin'] },
+                path: 'conexoes',
+                component: ConnectionsComponent,
+                canActivate: [AuthGuardScreen],
+            },
+            {
+                data: { expectedRoles: ['Admin'] },
                 canActivate: [AuthGuardScreen],
                 path: 'usuarios-criar',
                 component: CreateUserComponent,
@@ -122,6 +129,7 @@ const adminroutes: Route[] = [
         SignUpModalComponent,
         TfaComponent,
         OfficesComponent,
+        ConnectionsComponent,
     ],
     imports: [
         CommonModule,
@@ -171,18 +179,6 @@ export class AdminModule {
     constructor(private router: Router, private socketService: SocketService,
         private MenuItemService: MenuItemService, private pageService: PageService) {
         this.callRoutes()
-
-        this.socket = this.socketService.socket;
-        this.socket.on('logou', (res) => {});
-        const sessionId = localStorage.getItem('sessionId');
-        if (sessionId) this.socket.emit('user-check', { sessionId });
-        this.socket.on('logout', () => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('sessionId');
-            localStorage.removeItem('tempToken');
-            this.socket.disconnect();
-            this.router.navigate(['auth/sign-out']);
-        });
     }
   
     async callRoutes() {

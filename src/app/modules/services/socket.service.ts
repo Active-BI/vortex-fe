@@ -19,6 +19,7 @@ export class SocketService {
             sessionId,
             userName: user.name,
             userEmail: user.email,
+            tenant_id: user.tenant_id,
         };
         this.socket.connect();
         this.socket.emit('login', JSON.stringify(message));
@@ -30,7 +31,7 @@ export class SocketService {
     }
 
     userCheck() {
-        const sessionId: any = localStorage.getItem('sessionId');
+        const sessionId: any = localStorage.getItem('session_id');
         const token: any = localStorage.getItem('token');
         if (!token || !sessionId) {
             this.authService.logout();
@@ -45,7 +46,7 @@ export class SocketService {
         this.socket.emit('user-check', message);
     }
     getSocket() {
-        const sessionId = JSON.parse(localStorage.getItem('sessionId'));
+        const sessionId = JSON.parse(localStorage.getItem('session_id'));
         this.socket.emit('get-socket', sessionId);
-    }
+    }   
 }

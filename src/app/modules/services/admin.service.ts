@@ -49,7 +49,10 @@ export class AdminService {
     constructor(private http: HttpClient, private toast: ToastrService) {}
 
     private baseUrl = environment.baseUrl;
-
+    private socketUrl = environment.socketUrl;
+    getSessions(tenant_id): Observable<any> {
+        return this.http.get<PreRegisterUpdate>(`${this.baseUrl}socket/` + tenant_id);
+    }
     getUsers(): Observable<getAllRequest[]> {
         return this.http.get<getAllRequest[]>(`${this.baseUrl}user`).pipe(
             catchError((err) => {
