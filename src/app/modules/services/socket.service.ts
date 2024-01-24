@@ -18,9 +18,10 @@ export class SocketService {
         const message = {
             sessionId,
             userName: user.name,
-            userEmail: user.contact_email,
+            userEmail: sessionId,
             tenant_id: user.tenant_id,
         };
+        console.log(sessionId)
         this.socket.connect();
         this.socket.emit('login', JSON.stringify(message));
     }
