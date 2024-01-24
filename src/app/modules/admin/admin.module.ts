@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, OnInit } from '@angular/core';
 import { CommonModule, NgForOf } from '@angular/common';
-import { Route, RouterModule } from '@angular/router';
+import { Route, Router, RouterModule } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
 import { AdminComponent } from './admin.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -54,6 +54,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { PageService } from '../services/page.service';
 import { MenuItemService } from 'app/mock-api/common/navigation/data';
 import { OfficesComponent } from './offices/offices.component';
+import { SocketService } from '../services/socket.service';
+import { ConnectionsComponent } from './connections/connections.component';
 
 const adminroutes: Route[] = [
     {
@@ -90,6 +92,12 @@ const adminroutes: Route[] = [
             },
             {
                 data: { expectedRoles: ['Admin'] },
+                path: 'conexoes',
+                component: ConnectionsComponent,
+                canActivate: [AuthGuardScreen],
+            },
+            {
+                data: { expectedRoles: ['Admin'] },
                 canActivate: [AuthGuardScreen],
                 path: 'usuarios-criar',
                 component: CreateUserComponent,
@@ -121,6 +129,7 @@ const adminroutes: Route[] = [
         SignUpModalComponent,
         TfaComponent,
         OfficesComponent,
+        ConnectionsComponent,
     ],
     imports: [
         CommonModule,
@@ -166,9 +175,12 @@ const adminroutes: Route[] = [
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AdminModule {
-    constructor(private MenuItemService: MenuItemService, private pageService: PageService) {
+    socket: any;
+    constructor(private router: Router, private socketService: SocketService,
+        private MenuItemService: MenuItemService, private pageService: PageService) {
         this.callRoutes()
     }
+  
     async callRoutes() {
         if (localStorage.getItem('token') && localStorage.getItem('token').length > 0) {
             return await Promise.all([this.pageService.getUserRoutes().toPromise()]).then(async bruto => {

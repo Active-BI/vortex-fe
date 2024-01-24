@@ -23,8 +23,8 @@ export class FuseVerticalNavigationCollapsableItemComponent implements OnInit, O
     @Input() item: FuseNavigationItem;
     @Input() name: string;
 
-    isCollapsed: boolean = true;
-    isExpanded: boolean = false;
+    isCollapsed: boolean = false;
+    isExpanded: boolean = true;
     private _fuseVerticalNavigationComponent: FuseVerticalNavigationComponent;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 

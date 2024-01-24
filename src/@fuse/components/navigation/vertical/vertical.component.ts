@@ -67,7 +67,7 @@ export class FuseVerticalNavigationComponent
     /* eslint-enable @typescript-eslint/naming-convention */
 
     @Input() appearance: FuseVerticalNavigationAppearance = 'default';
-    @Input() autoCollapse: boolean = true;
+    @Input() autoCollapse: boolean = false;
     @Input() inner: boolean = false;
     @Input() mode: FuseVerticalNavigationMode = 'side';
     @Input() name: string = this._fuseUtilsService.randomId();

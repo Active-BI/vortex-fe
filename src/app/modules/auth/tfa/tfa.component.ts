@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/modules/services/auth.service';
 import { PageService } from 'app/modules/services/page.service';
+import { SocketService } from 'app/modules/services/socket.service';
 import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 
@@ -21,7 +22,8 @@ export class TfaComponent implements OnInit {
         private fb: FormBuilder,
         private toastr: ToastrService,
         private router: Router,
-        private authService: AuthService
+        private authService: AuthService,
+        private socketService: SocketService
     ) {}
     validate() {
         try {
@@ -59,6 +61,15 @@ export class TfaComponent implements OnInit {
                                 'tenant_image',
                                 JSON.stringify(res.tenant_image)
                             ),
+                            localStorage.setItem(
+                                'session_id',
+                                res.user_email
+                            ),
+                            localStorage.setItem(
+                                'tenant_id',
+                                res.tenant_id
+                            ),
+                            this.socketService.Logeddin(res.user_email, res.token)
                         ]).then(() => {
                  
                                 localStorage.removeItem('tempToken');

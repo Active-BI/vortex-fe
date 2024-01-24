@@ -47,7 +47,7 @@ export class AuthGuardScreen implements CanActivate, CanActivateChild {
             }
             return false;
         } else {
-            localStorage.removeItem('token');
+            localStorage.clear()
             this.router.navigate(['/auth/sign-in']);
             return false;
         }

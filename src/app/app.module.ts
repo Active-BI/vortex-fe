@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ExtraOptions, PreloadAllModules, RouterModule } from '@angular/router';
+import { ExtraOptions, PreloadAllModules, Router, RouterModule } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { FuseModule } from '@fuse';
 import { FuseConfigModule } from '@fuse/services/config';
@@ -16,6 +16,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { HomeModule } from './modules/home/home.module';
+import { SocketService } from './modules/services/socket.service';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -51,4 +52,19 @@ const routerConfig: ExtraOptions = {
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+    socket: any;
+    constructor(private router: Router, private socketService: SocketService) {
+        this.socket = this.socketService.socket;
+        this.socket.on('logou', (res) => {});
+        Promise.all([localStorage.getItem('session_id')]).then((res) => {
+            console.log({sessionId: res[0]})
+            if (res[0]) this.socket.emit('user-check', res[0]);
+        })
+        this.socket.on('logout', () => {
+            localStorage.clear();
+            this.socket.disconnect();
+            this.router.navigate(['auth/sign-out']);
+        });
+    }
+}
