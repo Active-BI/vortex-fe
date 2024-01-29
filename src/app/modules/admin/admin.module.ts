@@ -23,7 +23,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { SharedModule } from 'app/shared/shared.module';
 import { CreateUserComponent } from './users/create-user/create-user.component';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { getPortuguesePaginatorIntl } from '../services/portuguese-paginator-intl';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -172,6 +172,8 @@ const adminroutes: Route[] = [
         MatFormFieldModule,
         NgForOf,MatTableModule,
          MatInputModule,
+         MatDatepickerModule,
+         MatNativeDateModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [
@@ -202,3 +204,4 @@ export class AdminModule {
         }
     }
 }
+
