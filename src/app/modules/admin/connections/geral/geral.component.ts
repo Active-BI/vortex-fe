@@ -50,7 +50,7 @@ export class GeralComponent implements OnInit, OnDestroy {
         this.conn.off()
     }
   requisicoes() {
-      this.adminSrv.getSessions(this.tenantId).subscribe((e) => {
+      this.adminSrv.getAllSessions(this.tenantId).subscribe((e) => {
           this.usuarios = new MatTableDataSource(e);
           this.usuariosFiltrados = new MatTableDataSource(e);
           this.usuariosFiltrados.paginator = this.paginator;

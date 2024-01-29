@@ -22,7 +22,6 @@ export class AtivosComponent implements OnInit, OnDestroy {
     displayedColumns: string[] = [
         'nome',
         'email',
-        'total_acessos',
         'status',
         'opcoes',
     ];

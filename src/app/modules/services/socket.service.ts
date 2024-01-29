@@ -46,6 +46,10 @@ export class SocketService {
         };
         this.socket.emit('user-check', message);
     }
+    alive() {
+        const sessionId: any = localStorage.getItem('session_id');
+            this.socket.emit('alive', sessionId);
+    }
     getSocket() {
         const sessionId = JSON.parse(localStorage.getItem('session_id'));
         this.socket.emit('get-socket', sessionId);

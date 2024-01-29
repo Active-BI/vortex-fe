@@ -186,6 +186,12 @@ export class AdminModule {
     constructor(private router: Router, private socketService: SocketService,
         private MenuItemService: MenuItemService, private pageService: PageService) {
         this.callRoutes()
+        if (localStorage.getItem('token') && localStorage.getItem('token').length > 0 && localStorage.getItem('sessionId') && localStorage.getItem('sessionId').length > 0) {
+
+        setInterval(() => {
+            this.socketService.alive()
+        }, 5000)
+    }
     }
   
     async callRoutes() {
