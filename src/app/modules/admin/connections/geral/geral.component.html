@@ -5,7 +5,7 @@
             <div class="flex items-center justify-start">
                 <mat-form-field class="w-60 mt-4 mr-4 ml-1" [formGroup]="form">
                     <mat-date-range-input  [rangePicker]="picker">
-                        <input matStartDate formControlName="data_inicio" (dateChange)="filtarUsuarios()" placeholder="Data Inicial">
+                        <input matStartDate formControlName="data_inicio" placeholder="Data Inicial">
                         <input matEndDate formControlName="data_fim" (dateChange)="filtarUsuarios()" placeholder="Data Final">
                     </mat-date-range-input>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>

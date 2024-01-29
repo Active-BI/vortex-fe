@@ -64,7 +64,6 @@ form = this.fb.group({
     u.name.toUpperCase().includes(this.myControl.value.toUpperCase())
   );
 
-  if (this.form.value.data_inicio && this.form.value.data_fim) {
     data = data.map((usrs) => {
       usrs = { ...usrs, log: [...usrs.log] }; // Cria uma cópia profunda do objeto 'usrs'
 
@@ -90,7 +89,6 @@ form = this.fb.group({
 
       return usrs;
     });
-  }
 
   this.usuariosFiltrados = new MatTableDataSource(data);
   this.usuariosFiltrados.paginator = this.paginator;
