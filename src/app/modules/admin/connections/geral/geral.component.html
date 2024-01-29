@@ -1,0 +1,49 @@
+<div class="flex flex-col flex-auto min-w-0 m-[-40px]">
+    <div class="text-3x-L flex-auto p-6  justify-center">
+        <div class="w-full bg-primary h-16 rounded-t-md  mt-4 flex items-center justify-between">
+            <div class="text-3xl text-white mx-4">Ranking de Acessos</div>
+            <div class="flex items-center justify-start">
+                <!-- <mat-form-field>
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate placeholder="Start date">
+                      <input matEndDate placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  </mat-form-field> -->
+                <mat-form-field appearance="fill" class="w-80 mt-4 mr-4 ml-1">
+                    <mat-icon class="mr-4">search</mat-icon>
+                    <input type="text" [formControl]="myControl" placeholder="Buscar"
+                        (ngModelChange)="filtarUsuarios($event)" matInput />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="flex flex-col shadow-2xl" id="table">
+            <table mat-table class="" [dataSource]="usuariosFiltrados" class="pb-6">
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef> Nome </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.sessionId}} </td>
+                </ng-container>
+                <ng-container matColumnDef="total_acessos">
+                    <th mat-header-cell *matHeaderCellDef class="text-center "> Total de Acessos </th>
+                    <td mat-cell *matCellDef="let element" class="text-center "> {{element?.log}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <div class="flex bg-white justify-end">
+
+                <mat-paginator #paginator [pageSize]="10" [length]="usuariosL" showFirstLastButtons>
+                </mat-paginator>
+            </div>
+        </div>
+        <div class="flex flex-row p-4" id="table">
+        </div>
+    </div>
+</div>

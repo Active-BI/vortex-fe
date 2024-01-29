@@ -35,6 +35,7 @@ import { BiDashboardDefaultComponent } from './bi-dashboard-default/bi-default.c
 import { MessagesModule } from 'app/layout/common/messages/messages.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 
@@ -56,6 +57,9 @@ import { MenuItemService } from 'app/mock-api/common/navigation/data';
 import { OfficesComponent } from './offices/offices.component';
 import { SocketService } from '../services/socket.service';
 import { ConnectionsComponent } from './connections/connections.component';
+import { AtivosComponent } from './connections/ativos/ativos.component';
+import { GeralComponent } from './connections/geral/geral.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 const adminroutes: Route[] = [
     {
@@ -123,16 +127,19 @@ const adminroutes: Route[] = [
         BiDashboardDefaultComponent,
         BiReportDefaultComponent,
         HomeComponent,
-        // AccessRequestComponent,
         RequestModalComponent,
         LogModalComponent,
         SignUpModalComponent,
         TfaComponent,
         OfficesComponent,
         ConnectionsComponent,
+        AtivosComponent,
+        GeralComponent,
     ],
     imports: [
+        MatTabsModule,
         CommonModule,
+        MatFormFieldModule,
         LayoutModule,
         RouterModule.forChild(adminroutes),
         HttpClientModule,
@@ -140,7 +147,7 @@ const adminroutes: Route[] = [
         MatPaginatorModule,
         NgxMatFileInputModule,
         MatFormFieldModule,
-        MatDialogModule,
+        MatDialogModule,MatDatepickerModule,
         FormsModule,
         MatInputModule,
         ReactiveFormsModule,
@@ -163,8 +170,8 @@ const adminroutes: Route[] = [
         MatMenuModule,
         FormsModule,
         MatFormFieldModule,
-        NgForOf,
-        MatInputModule,
+        NgForOf,MatTableModule,
+         MatInputModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [

@@ -53,6 +53,9 @@ export class AdminService {
     getSessions(tenant_id): Observable<any> {
         return this.http.get<PreRegisterUpdate>(`${this.baseUrl}socket/` + tenant_id);
     }
+    getGeneralSessions(tenant_id): Observable<any> {
+        return this.http.get<PreRegisterUpdate>(`${this.baseUrl}socket-general/` + tenant_id);
+    }
     getUsers(): Observable<getAllRequest[]> {
         return this.http.get<getAllRequest[]>(`${this.baseUrl}user`).pipe(
             catchError((err) => {
