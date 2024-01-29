@@ -10,6 +10,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { AuthService } from 'app/modules/services/auth/auth.service';
 import { UserService } from 'app/modules/services/login/login';
 import { PageService } from 'app/modules/services/page.service';
+import { SocketService } from 'app/modules/services/socket.service';
 import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 
@@ -40,8 +41,11 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
         private authService: AuthService,
         private toastr: ToastrService,
         private route: ActivatedRoute,
-        private pageService: PageService
-    ) {}
+        private socketService: SocketService
+    ) {
+        this.socketService.socket.disconnect();
+
+    }
     ngAfterViewInit(): void {
         if (this.authService.isLoggedIn()) {
             this.router.navigateByUrl('app/inicio');

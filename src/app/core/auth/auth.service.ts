@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
+import { SocketService } from 'app/modules/services/socket.service';
 
 @Injectable()
 export class AuthService {
@@ -11,10 +12,14 @@ export class AuthService {
     /**
      * Constructor
      */
+    socket
     constructor(
         private _httpClient: HttpClient,
-        private _userService: UserService
-    ) {}
+        private _userService: UserService,
+        private socketService: SocketService
+    ) {
+        this.socket = this.socketService.socket
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -125,8 +130,7 @@ export class AuthService {
     signOut(): Observable<any> {
         // Remove the access token from the local storage
         localStorage.clear()
-        localStorage.clear();
-
+        this.socket.disconnect();
         // Set the authenticated flag to false
         this._authenticated = false;
 

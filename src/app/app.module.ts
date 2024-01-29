@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ExtraOptions, PreloadAllModules, Router, RouterModule } from '@angular/router';
+import {
+    ExtraOptions,
+    PreloadAllModules,
+    Router,
+    RouterModule,
+} from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { FuseModule } from '@fuse';
 import { FuseConfigModule } from '@fuse/services/config';
@@ -54,13 +59,23 @@ const routerConfig: ExtraOptions = {
 })
 export class AppModule {
     socket: any;
+    session;
     constructor(private router: Router, private socketService: SocketService) {
         this.socket = this.socketService.socket;
         this.socket.on('logou', (res) => {});
         Promise.all([localStorage.getItem('session_id')]).then((res) => {
-            console.log({sessionId: res[0]})
+            this.session = res[0];
             if (res[0]) this.socket.emit('user-check', res[0]);
-        })
+        });
+        setInterval(() => {
+            Promise.all([localStorage.getItem('session_id')]).then((res) => {
+                this.session = res[0];
+                if (res[0]) {
+                    this.socket.emit('alive', res[0]);
+                    console.log('enviou');
+                }
+            });
+        }, 5000);
         this.socket.on('logout', () => {
             localStorage.clear();
             this.socket.disconnect();
