@@ -48,7 +48,16 @@ export class SocketService {
     }
     alive() {
         const sessionId: any = localStorage.getItem('session_id');
-            this.socket.emit('alive', sessionId);
+        console.log({
+            sessionId,
+            userAgent: navigator.userAgent,
+            platform: navigator.platform
+        })
+            this.socket.emit('alive', JSON.stringify({
+                sessionId,
+                userAgent: navigator.userAgent,
+                platform: navigator.platform
+            }));
     }
     getSocket() {
         const sessionId = JSON.parse(localStorage.getItem('session_id'));

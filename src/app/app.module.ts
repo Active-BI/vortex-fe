@@ -67,15 +67,7 @@ export class AppModule {
             this.session = res[0];
             if (res[0]) this.socket.emit('user-check', res[0]);
         });
-        setInterval(() => {
-            Promise.all([localStorage.getItem('session_id')]).then((res) => {
-                this.session = res[0];
-                if (res[0]) {
-                    this.socket.emit('alive', res[0]);
-                    console.log('enviou');
-                }
-            });
-        }, 5000);
+
         this.socket.on('logout', () => {
             localStorage.clear();
             this.socket.disconnect();
