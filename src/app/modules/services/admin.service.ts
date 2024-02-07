@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { FuseNavigationItem } from '@fuse/components/navigation';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, debounceTime, map } from 'rxjs/operators';
 
 export interface PreRegister {
