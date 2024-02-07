@@ -21,7 +21,6 @@ export class SocketService {
             userEmail: sessionId,
             tenant_id: user.tenant_id,
         };
-        console.log(sessionId)
         this.socket.connect();
         this.socket.emit('login', JSON.stringify(message));
     }
@@ -48,11 +47,7 @@ export class SocketService {
     }
     alive() {
         const sessionId: any = localStorage.getItem('session_id');
-        console.log({
-            sessionId,
-            userAgent: navigator.userAgent,
-            platform: navigator.platform
-        })
+    
             this.socket.emit('alive', JSON.stringify({
                 sessionId,
                 userAgent: navigator.userAgent,

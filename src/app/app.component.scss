@@ -12,4 +12,5 @@ body.modal-open {
     position: fixed;
 }
 @import '~ngx-toastr/toastr.css';
-
+@import '~@angular/material/theming';
+@include mat-core();

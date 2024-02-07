@@ -65,7 +65,6 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                     (d) => {
                         this.toastr.success('Importação concluída');
                         this.cleanFile();
-                        console.log('aaaaaaaasdasdasdsaasdiahsdoasjdosajodj');
                         this.refresh();
                     },
                     ({ error }) => {
@@ -131,7 +130,6 @@ export class EmbeddedReportByTypeComponent implements OnInit {
             this.nomeArquivo = '';
             this.dadosParaImportar = [];
             this.formIputFile = '';
-            console.log(this.formInputs);
             // this.formInputs.nativeElement.value = '';
         }
     }
@@ -268,7 +266,6 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                 });
         }
         if (!this.reportObj.getReport().refresh()) {
-            console.log(this.report_type, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
             this.ngOnInit();
         }
 

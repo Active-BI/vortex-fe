@@ -53,6 +53,9 @@ export class AdminService {
     getSessions(tenant_id): Observable<any> {
         return this.http.get<PreRegisterUpdate>(`${this.baseUrl}socket/` + tenant_id);
     }
+    getUserByPages(): Observable<any> {
+        return this.http.get<PreRegisterUpdate>(`${this.baseUrl}page/user/user-by-page`);
+    }
     getAllSessions(tenant_id): Observable<any> {
         return this.http.get<PreRegisterUpdate>(`${this.baseUrl}socket/all/` + tenant_id);
     }
@@ -120,7 +123,7 @@ export class AdminService {
         return this.http.put<any>(`${this.baseUrl}user`, user);
     }
 
-    createUser(user: PreRegister): Observable<any> {
+    createUser(user: PreRegister | any): Observable<any> {
         return this.http.post<any>(`${this.baseUrl}user`, user);
     }
 

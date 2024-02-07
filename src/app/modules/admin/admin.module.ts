@@ -60,6 +60,7 @@ import { ConnectionsComponent } from './connections/connections.component';
 import { AtivosComponent } from './connections/ativos/ativos.component';
 import { GeralComponent } from './connections/geral/geral.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { TelasComponent } from './telas/telas.component';
 
 const adminroutes: Route[] = [
     {
@@ -92,6 +93,12 @@ const adminroutes: Route[] = [
                 data: { expectedRoles: ['Admin'] },
                 path: 'usuarios',
                 component: ListUsersComponent,
+                canActivate: [AuthGuardScreen],
+            },
+            {
+                data: { expectedRoles: ['Admin'] },
+                path: 'telas',
+                component: TelasComponent,
                 canActivate: [AuthGuardScreen],
             },
             {
@@ -135,6 +142,7 @@ const adminroutes: Route[] = [
         ConnectionsComponent,
         AtivosComponent,
         GeralComponent,
+        TelasComponent,
     ],
     imports: [
         MatTabsModule,
@@ -187,13 +195,13 @@ export class AdminModule {
     socket: any;
     constructor(private router: Router, private socketService: SocketService,
         private MenuItemService: MenuItemService, private pageService: PageService) {
+            this.socket = this.socketService.socket
         this.callRoutes()
         setInterval(() => {
             Promise.all([localStorage.getItem('session_id')]).then((res) => {
                 if (res[0]) {
                     this.socketService.alive()
                     // this.socket.emit('alive', );
-                    console.log('enviou');
                 }
             });
             this.socket.on('logout', () => {

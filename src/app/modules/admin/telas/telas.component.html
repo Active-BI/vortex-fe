@@ -1,0 +1,65 @@
+<div class="flex flex-col flex-auto">
+    <div class="text-3x-L flex-auto p-6  justify-center">
+        <div class="flex flex-row">
+            <div class="flex flex-col  w-80" id="table">
+                <div class="flex items-center justify-start">
+                    <mat-form-field appearance="fill" class="w-80 mt-4 mr-4 ml-1">
+                        <mat-icon class="mr-4">search</mat-icon>
+                        <input type="text" [formControl]="myPageControl" placeholder="Buscar Relatórios"
+                            (ngModelChange)="this.pages.filter = $event;" matInput />
+                    </mat-form-field>
+                </div>
+                <table mat-table class="" [dataSource]="pages" class="pb-6 ">
+                    <ng-container matColumnDef="nome">
+                        <th mat-header-cell *matHeaderCellDef> Relatório </th>
+                        <td mat-cell *matCellDef="let element" (click)="filtrarSegundaTabela(element?.Page.id)"
+                            class="cursor-pointer hover:bg-slate-100" (click)="selectedPage = element?.Page.id"
+                            [ngClass]="selectedPage === element?.Page.id ? 'bg-slate-100' : ''"> {{element?.Page.title}}
+                        </td>
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <div class="flex bg-white justify-end">
+
+                    <mat-paginator #paginator [pageSize]="5" [length]="pages?.data.length" showFirstLastButtons>
+                    </mat-paginator>
+                </div>
+            </div>
+            <div class="flex flex-col  w-140" id="table">
+                <div class="flex items-center justify-start">
+                    <mat-form-field appearance="fill" class="w-80 mt-4 mr-4 ml-1">
+                        <mat-icon class="mr-4">search</mat-icon>
+                        <input type="text" [formControl]="myPageControl" placeholder="Buscar Usuários"
+                            (ngModelChange)="this.secondPage.filter = $event;" matInput />
+                    </mat-form-field>
+                </div>
+                <table mat-table class="" [dataSource]="secondPage" class="pb-6 ">
+                    <ng-container matColumnDef="nome">
+                        <th mat-header-cell *matHeaderCellDef> Usuário </th>
+                        <td mat-cell *matCellDef="let element" class="">
+                            {{element.User.name}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="opt">
+                        <th mat-header-cell *matHeaderCellDef> Nome </th>
+                        <td mat-cell *matCellDef="let element" class="">
+                            <div class="w-full flex justify-end">
+                                    <mat-icon color="warn" class="text-red-600 cursor-pointer"
+                                        svgIcon="heroicons_solid:trash"></mat-icon>
+                            </div>
+                         </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="secondDisplayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: secondDisplayedColumns;"></tr>
+                </table>
+                <div class="flex bg-white justify-end">
+                    <mat-paginator #paginator [pageSize]="10" [length]="secondPage?.data.length" showFirstLastButtons>
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
