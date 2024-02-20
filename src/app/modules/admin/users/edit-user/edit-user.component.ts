@@ -153,7 +153,6 @@ export class EditUserComponent implements OnInit {
                   }
                   return 0;
             });
-            console.log(this.form.value.office_id, 'form')
             const office = this.cargos.find(c => c.id === this.form.value.office_id).name
             this.form.patchValue({
                 cargo: office
