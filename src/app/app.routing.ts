@@ -6,7 +6,6 @@ import { AuthGuard } from './modules/services/guards/AuthGuard.guard';
 import { SendPassRecoverComponent } from './modules/auth/reset-send/send-pass-recover.component';
 import { ResetPassComponent } from './modules/auth/reset-pass/reset-pass.component';
 import { HomeComponent } from './modules/home/home.component';
-import { AccessRequestComponent } from './modules/home/access-request/access-request.component';
 import { TfaComponent } from './modules/auth/tfa/tfa.component';
 
 // @formatter:off
@@ -30,13 +29,6 @@ export const appRoutes: Route[] = [
                     expectedRoles: [],
                 },
             },
-            // {
-            //     path: 'access-request',
-            //     component: AccessRequestComponent,
-            //     data: {
-            //         expectedRoles: [],
-            //     },
-            // },
         ],
     },
     {
@@ -63,13 +55,6 @@ export const appRoutes: Route[] = [
                         (m) => m.AuthSignUpModule
                     ),
             },
-            // {
-            //     path: 'request-access/:token',
-            //     loadChildren: () =>
-            //         import(
-            //             'app/modules/auth/request-access/request-access.module'
-            //         ).then((m) => m.AuthRequestAccessModule),
-            // },
             {
                 path: 'reset-send',
                 component: SendPassRecoverComponent,
@@ -79,7 +64,7 @@ export const appRoutes: Route[] = [
                 component: TfaComponent,
             },
             {
-                path: 'reset-pass/:token',
+                path: 'reset-password/:token',
                 component: ResetPassComponent,
             },
         ],

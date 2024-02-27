@@ -90,9 +90,11 @@ export class ResetPassComponent implements OnInit {
 
         this.authService.setNewPass(form).subscribe(
             (response) => {
-                this._router.navigateByUrl('/auth/sign-in');
                 this.signUpForm.enable();
                 this.signUpNgForm.resetForm();
+                this.toastr.success('Mudança de senha concluída');
+
+                this._router.navigateByUrl('/auth/sign-in');
             },
             (response) => {
                 // Re-enable the form

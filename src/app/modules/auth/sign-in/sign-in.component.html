@@ -56,6 +56,10 @@
                     <mat-progress-spinner *ngIf="showSpinner" [diameter]="24"
                         [mode]="'indeterminate'"></mat-progress-spinner>
                 </button>
+                
+                <div class="mt-6">
+                    Esqueceu a senha? <a class="underline cursor-pointer text-blue-500" [routerLink]="'/auth/reset-send'">Redefina aqui</a>
+                </div>
                 <!-- <button [routerLink]="['/auth/sign-up']" class="mt-2 text-md text-primary font-extrabold tracking-tight leading-tight  w-full border-2 rounded-sm p-3 border-spacing-3 border-gray-800"
                     color="primary">
                     <span>

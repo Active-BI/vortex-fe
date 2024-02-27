@@ -49,6 +49,8 @@ export class SendPassRecoverComponent implements OnInit {
         }
 
         this.authService.resetPass(this.email.value).subscribe((e) => {
+            this.toastr.success('Mudança de senha solicitada');
+
             this.router.navigate(['/auth/sign-in']);
         });
     }

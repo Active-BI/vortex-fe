@@ -67,8 +67,8 @@ export class TokenInterceptorService implements HttpInterceptor {
                     error.status === 401
                 ) {
                     if (
-                        location.hash === '#/auth/tfa' ||
-                        location.hash.includes('reset-pass')
+                        location.hash === '#/auth/tfa'
+                        // location.hash.includes('reset-pass')
                     ) {
                         // console.log(error);
                         this.toast.error(error.error.message);
