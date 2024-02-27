@@ -144,6 +144,18 @@ export class ListUsersComponent implements OnInit {
     criarUsuario(): void {
         this.router.navigate(['app/administrador/usuarios-criar']);
     }
+    exportarAcessos() {
+        this.adminSrv.getUserByPagesExport().subscribe((data) => {
+            const blob = new Blob([data], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            });
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = 'usuarios.xlsx';
+            link.click();
+        })
+    }
     editarUsuario(id): void {
         this.router.navigate([`app/administrador/usuarios-editar/${id}`]);
     }
