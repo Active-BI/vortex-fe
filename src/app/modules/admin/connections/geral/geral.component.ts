@@ -38,7 +38,10 @@ form = this.fb.group({
       this.tenantId = localStorage.getItem('tenant_id');
       this.requisicoes();
   }
-
+async clearDate() {
+  await this.form.patchValue({ data_inicio: '', data_fim: '' })
+  this.filtarUsuarios()
+}
     conn
   ngOnInit(): void {
         // this.conn = this.socketService.socket.on('refresh-conn', () => {
@@ -63,6 +66,7 @@ form = this.fb.group({
     let data = this.usuariosData.filter((u) =>
     u.name.toUpperCase().includes(this.myControl.value.toUpperCase())
   );
+    if (this.form.value.data_inicio !== '') {
 
     data = data.map((usrs) => {
       usrs = { ...usrs, log: [...usrs.log] }; // Cria uma cópia profunda do objeto 'usrs'
@@ -89,6 +93,7 @@ form = this.fb.group({
 
       return usrs;
     });
+  }
 
   this.usuariosFiltrados = new MatTableDataSource(data);
   this.usuariosFiltrados.paginator = this.paginator;

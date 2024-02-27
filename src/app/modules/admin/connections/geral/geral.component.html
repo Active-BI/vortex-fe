@@ -1,9 +1,10 @@
 <div class="flex flex-col flex-auto min-w-0 m-[-40px]">
     <div class="text-3x-L flex-auto p-6  justify-center">
-        <div class="w-full bg-primary h-16 rounded-t-md  mt-4 flex items-center justify-between">
-            <div class="text-3xl text-white mx-4">Histórico de Acessos</div>
+        <div class="w-full  h-16 rounded-t-md  mt-4 flex items-center justify-between">
+            <div class="text-3xl text-black mx-4">Histórico de Acessos</div>
             <div class="flex items-center justify-start">
-                <mat-form-field class="w-60 mt-4 mr-4 ml-1" [formGroup]="form">
+                <mat-form-field class="w-72 mt-4 mr-4 ml-1" [formGroup]="form">
+                    <mat-icon class="cursor-pointer mr-1 text-red-700" (click)="clearDate()" svgIcon="clear"></mat-icon>
                     <mat-date-range-input  [rangePicker]="picker">
                         <input matStartDate formControlName="data_inicio" placeholder="Data Inicial">
                         <input matEndDate formControlName="data_fim" (dateChange)="filtarUsuarios()" placeholder="Data Final">
