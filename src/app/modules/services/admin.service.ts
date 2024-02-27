@@ -53,8 +53,14 @@ export class AdminService {
     getSessions(tenant_id): Observable<any> {
         return this.http.get<PreRegisterUpdate>(`${this.baseUrl}socket/` + tenant_id);
     }
+    getUserByPagesExport(): Observable<any> {
+        return this.http.get(`${this.baseUrl}page/user/user-by-page-export`,
+        {
+            responseType: 'blob',
+        });
+    }
     getUserByPages(): Observable<any> {
-        return this.http.get<PreRegisterUpdate>(`${this.baseUrl}page/user/user-by-page`);
+        return this.http.get(`${this.baseUrl}page/user/user-by-page`)
     }
     getAllSessions(tenant_id): Observable<any> {
         return this.http.get<PreRegisterUpdate>(`${this.baseUrl}socket/all/` + tenant_id);

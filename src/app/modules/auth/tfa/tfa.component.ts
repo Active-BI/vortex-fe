@@ -32,7 +32,7 @@ export class TfaComponent implements OnInit {
             });
         } catch (e) {
             localStorage.clear();
-            this.router.navigate(['/auth/sign-in']);
+            this.router.navigate(['/sign-in']);
         }
     }
     ngOnInit() {
@@ -44,9 +44,7 @@ export class TfaComponent implements OnInit {
         this.tfaForm.get('tfa').valueChanges.subscribe((value) => {
             if (value.length === 6) {
                 this.authService
-                    .tfa({
-                        pin: value,
-                    })
+                    .tfa({pin: value})
                     .subscribe(async (res) => {
                         Promise.all([
                             localStorage.setItem(
