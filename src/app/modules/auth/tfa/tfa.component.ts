@@ -24,7 +24,12 @@ export class TfaComponent implements OnInit {
         private router: Router,
         private authService: AuthService,
         private socketService: SocketService
-    ) {}
+    ) {
+        this.app_image = localStorage.getItem('app_image')
+        this.logo = localStorage.getItem('logo')
+    }
+    app_image =''
+    logo = ''
     validate() {
         try {
             jwtDecode(localStorage.getItem('tempToken'), {

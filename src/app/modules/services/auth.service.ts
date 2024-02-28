@@ -59,6 +59,9 @@ export class AuthService {
     login(user: { email: string; password: string }): Observable<any> {
         return this.http.post(`${this.baseUrl}login`, user);
     }
+    get_app_image(): Observable<any> {
+        return this.http.get(`${this.baseUrl}login/app/image`);
+    }
 
     resetPass(email: string): Observable<any> {
         return this.http.get(`${this.baseUrl}login/reset-pass/${email}`);

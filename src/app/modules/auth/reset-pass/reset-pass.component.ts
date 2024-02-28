@@ -51,7 +51,11 @@ export class ResetPassComponent implements OnInit {
                 ],
             ],
         });
+        this.app_image = localStorage.getItem('app_image')
+        this.logo = localStorage.getItem('logo')
     }
+    app_image =''
+    logo = ''
     ngOnInit(): void {}
 
     valilateSpecialCharacterPassword(control: FormControl) {

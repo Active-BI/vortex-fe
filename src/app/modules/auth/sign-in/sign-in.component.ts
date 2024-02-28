@@ -44,8 +44,11 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
         private socketService: SocketService
     ) {
         this.socketService.socket.disconnect();
-
+        this.app_image = localStorage.getItem('app_image')
+        this.logo = localStorage.getItem('logo')
     }
+    app_image =''
+    logo = ''
     ngAfterViewInit(): void {
         if (this.authService.isLoggedIn()) {
             this.router.navigateByUrl('app/inicio');

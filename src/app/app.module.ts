@@ -22,6 +22,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { HomeModule } from './modules/home/home.module';
 import { SocketService } from './modules/services/socket.service';
+import { AuthService } from './modules/services/auth.service';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -60,7 +61,7 @@ const routerConfig: ExtraOptions = {
 export class AppModule {
     socket: any;
     session;
-    constructor(private router: Router, private socketService: SocketService) {
+    constructor(private router: Router, private socketService: SocketService, private authService: AuthService) {
         this.socket = this.socketService.socket;
         this.socket.on('logou', (res) => {});
         Promise.all([localStorage.getItem('session_id')]).then((res) => {
@@ -73,5 +74,12 @@ export class AppModule {
             this.socket.disconnect();
             this.router.navigate(['auth/sign-out']);
         });
+
+        this.authService.get_app_image().subscribe(res => {
+            localStorage.setItem('app_image', res.app_image)
+            localStorage.setItem('logo', res.tenant_image)
+        }, ({error}) => {   
+
+        })
     }
 }

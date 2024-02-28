@@ -44,7 +44,13 @@ export class AuthSignUpComponent implements OnInit {
         private _ActRouter: ActivatedRoute,
         private authService: AuthService,
         private dialog: MatDialog
-    ) {}
+    ) {
+
+        this.app_image = localStorage.getItem('app_image')
+        this.logo = localStorage.getItem('logo')
+    }
+    app_image =''
+    logo = ''
     id = '';
     email = '';
     token = '';

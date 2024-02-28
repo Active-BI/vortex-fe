@@ -10,9 +10,9 @@
         </h1>
     </div>
 
-        <form (submit)="$event.preventDefault()" [formGroup]="form" class="grid gap-x-4 grid-cols-2 w-[95%]">
-            <div class="flex flex-col col-span-1">
-                
+    <form (submit)="$event.preventDefault()" [formGroup]="form" class="grid gap-x-4 grid-cols-2 w-[95%]">
+        <div class="flex flex-col col-span-1">
+
             <mat-form-field appearance="fill">
                 <mat-label>Nome do Cliente</mat-label>
                 <input formControlName="tenant_name" matInput #first />
@@ -52,14 +52,14 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-                <mat-form-field class="fuse-mat-no-subscript w-full">
-                    <mat-label>Descrição Empresa</mat-label>
-                    <textarea matInput [formControlName]="'company_description'" cdkTextareaAutosize
-                        [cdkAutosizeMinRows]="5"></textarea>
-                </mat-form-field>
-            </div>
+            <mat-form-field class="fuse-mat-no-subscript w-full">
+                <mat-label>Descrição Empresa</mat-label>
+                <textarea matInput [formControlName]="'company_description'" cdkTextareaAutosize
+                    [cdkAutosizeMinRows]="5"></textarea>
+            </mat-form-field>
+        </div>
 
-            <div class="flex flex-col col-span-1">
+        <div class="flex flex-col col-span-1">
 
             <mat-label class="mb-2">Logo</mat-label>
             <div class="flex justify-between items-center mb-3">
@@ -67,10 +67,26 @@
                     <span>Selecionar imagem</span>
                     <input type="file" (click)="clearFileSelection()" (change)="onFileSelected($event)" class="" />
                 </div>
-                <img *ngIf="this.form.value.tenant_image.length > 0" [src]="this.form.value.tenant_image" class="h-8  w-auto"/>
+                <img *ngIf="this.form.value.tenant_image.length > 0" [src]="this.form.value.tenant_image"
+                    class="h-8  w-auto" />
             </div>
             <div *ngIf="form.controls.tenant_image.touched" class="text-red-600 mb-2">
                 <div *ngIf="form.controls.tenant_image.errors?.['required']">
+                    Logo é Obrigatório
+                </div>
+            </div>
+
+            <mat-label class="mb-2">Imagem de Login</mat-label>
+            <div class="flex justify-between items-center mb-3">
+                <div class="custom-file-upload text-center w-44 h-10">
+                    <span>Selecionar imagem</span>
+                    <input type="file" (click)="clearAppFileSelection()" (change)="onAppFileSelected($event)" class="" />
+                </div>
+                <img *ngIf="this.form.value.app_image.length > 0" [src]="this.form.value.app_image"
+                    class="h-8  w-auto" />
+            </div>
+            <div *ngIf="form.controls.app_image.touched" class="text-red-600 mb-2">
+                <div *ngIf="form.controls.app_image.errors?.['required']">
                     Logo é Obrigatório
                 </div>
             </div>
@@ -87,8 +103,7 @@
                 <mat-label>Visões</mat-label>
                 <mat-select formControlName="dashboard" multiple="">
 
-                    <mat-optgroup  *ngFor="let group of dashboardListReduced" [label]="group.page_group"
-                        >
+                    <mat-optgroup *ngFor="let group of dashboardListReduced" [label]="group.page_group">
                         <mat-option class="ml-4" *ngFor="let page of group.children" [value]="page.id">
                             {{page.name}}
                         </mat-option>
@@ -97,11 +112,11 @@
             </mat-form-field>
 
 
-            <button  (click)="criar()"
-            class="text-white text-center mt-6 self-end justify-self-end bg-blue-600 w-20 hover:bg-blue-700 h-8 mr-2 font-medium rounded-md text-md dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-500">CRIAR</button>
-    
-            </div>
-        </form>
+            <button (click)="criar()"
+                class="text-white text-center mt-6 self-end justify-self-end bg-blue-600 w-20 hover:bg-blue-700 h-8 mr-2 font-medium rounded-md text-md dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-500">CRIAR</button>
+
+        </div>
+    </form>
 
 
-          </div>
+</div>

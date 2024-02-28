@@ -43,6 +43,11 @@ export class GestaoTenantEditComponent implements OnInit {
             tenant_image: ''
         })
     }
+    clearAppFileSelection() {
+        this.form.patchValue({
+            app_image: ''
+        })
+    }
     onFileSelected(event: any) {
         const file = event.target.files[0];
         
@@ -57,13 +62,28 @@ export class GestaoTenantEditComponent implements OnInit {
           reader.readAsDataURL(file);
         }
       }
+      onAppFileSelected(event: any) {
+        const file = event.target.files[0];
+        
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.form.patchValue({
+                app_image:  reader.result as string
+            })
+          };
+    
+          reader.readAsDataURL(file);
+        }
+      }
     visionsSelecteds = [];
     form = this.fb.group({
         id: [''],
         tenant_name: ['', [Validators.required, Validators.minLength(3)]],
         tenant_cnpj: ['', [Validators.required, Validators.minLength(3)]],
-        tenant_color: ['www', [Validators.required, Validators.minLength(6)]],
+        tenant_color: ['', [Validators.required, Validators.minLength(6)]],
         tenant_image: ['', [Validators.required]],
+        app_image: ['', [Validators.required]],
         company_uf: ['', [Validators.required]],
         company_size: ['', [Validators.required]],
         company_segment: ['', [Validators.required]],
@@ -144,6 +164,7 @@ export class GestaoTenantEditComponent implements OnInit {
                     tenant_cnpj: this.tenant.tenant_cnpj,
                     tenant_color: this.tenant.tenant_color || '#fffffff',
                     tenant_image: this.tenant.tenant_image,
+                    app_image: this.tenant.app_image,
                     company_description: this.tenant.company_description,
                     company_segment: this.tenant.company_segment,
                     company_size: this.tenant.company_size,

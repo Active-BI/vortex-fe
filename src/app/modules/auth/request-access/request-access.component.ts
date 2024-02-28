@@ -32,7 +32,12 @@ export class AuthRequestAccessComponent implements OnInit {
         private _ActRouter: ActivatedRoute,
         private adminRequestService: AdminRequestService,
         private dialog: MatDialog
-    ) {}
+    ) {
+        this.app_image = localStorage.getItem('app_image')
+        this.logo = localStorage.getItem('logo')
+    }
+    app_image =''
+    logo = ''
     id = '';
     email = '';
     token = '';

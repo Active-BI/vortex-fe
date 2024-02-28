@@ -24,7 +24,11 @@ export class SendPassRecoverComponent implements OnInit {
         private toastr: ToastrService,
         private router: Router,
         private authService: AuthService
-    ) {}
+    ) {        this.app_image = localStorage.getItem('app_image')
+    this.logo = localStorage.getItem('logo')
+}
+app_image =''
+logo = ''
     ngOnInit(): void {}
     valilateSpecialCharacterPassword(control: FormControl) {
         // verifica se existe algum caractere especial
