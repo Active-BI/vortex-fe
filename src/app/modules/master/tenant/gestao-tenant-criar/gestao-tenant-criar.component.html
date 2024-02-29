@@ -76,7 +76,7 @@
                 </div>
             </div>
 
-            <mat-label class="mb-2">Imagem de Login</mat-label>
+            <mat-label class="mb-2">Imagem de Fundo</mat-label>
             <div class="flex justify-between items-center mb-3">
                 <div class="custom-file-upload text-center w-44 h-10">
                     <span>Selecionar imagem</span>
@@ -91,10 +91,17 @@
                 </div>
             </div>
             <mat-form-field appearance="fill">
-                <mat-label>Cor</mat-label>
-                <app-color-picker (colorSelected)="onColorSelected($event)"
+                <mat-label>Cor de Fundo</mat-label>
+                <app-color-picker (colorSelected)="onColorSelected($event, 'tenant_color')"
                     [selectedColor]="this.form.value.tenant_color"></app-color-picker>
                 <input formControlName="tenant_color" matInput #first />
+                <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Cor</mat-label>
+                <app-color-picker (colorSelected)="onColorSelected($event, 'tenant_bg_color')"
+                    [selectedColor]="this.form.value.tenant_color"></app-color-picker>
+                <input formControlName="tenant_bg_color" matInput #first />
                 <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
             </mat-form-field>
 

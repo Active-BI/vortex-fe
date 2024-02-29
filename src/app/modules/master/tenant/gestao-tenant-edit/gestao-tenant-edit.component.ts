@@ -33,9 +33,9 @@ export class GestaoTenantEditComponent implements OnInit {
         );
     }
 
-    onColorSelected(color: string) {
+    onColorSelected(color: string,label) {
       this.form.patchValue({
-        tenant_color: color
+        [label]: color
       })
     }
     clearFileSelection() {
@@ -82,6 +82,7 @@ export class GestaoTenantEditComponent implements OnInit {
         tenant_name: ['', [Validators.required, Validators.minLength(3)]],
         tenant_cnpj: ['', [Validators.required, Validators.minLength(3)]],
         tenant_color: ['', [Validators.required, Validators.minLength(6)]],
+        tenant_bg_color: ['#ffffff', [Validators.required, Validators.minLength(6)]],
         tenant_image: ['', [Validators.required]],
         app_image: ['', [Validators.required]],
         company_uf: ['', [Validators.required]],
@@ -164,6 +165,7 @@ export class GestaoTenantEditComponent implements OnInit {
                     tenant_cnpj: this.tenant.tenant_cnpj,
                     tenant_color: this.tenant.tenant_color || '#fffffff',
                     tenant_image: this.tenant.tenant_image,
+                    tenant_bg_color: this.tenant.tenant_bg_color  || '#fffffff',
                     app_image: this.tenant.app_image,
                     company_description: this.tenant.company_description,
                     company_segment: this.tenant.company_segment,

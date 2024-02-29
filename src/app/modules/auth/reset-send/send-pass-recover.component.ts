@@ -24,8 +24,18 @@ export class SendPassRecoverComponent implements OnInit {
         private toastr: ToastrService,
         private router: Router,
         private authService: AuthService
-    ) {        this.app_image = localStorage.getItem('app_image')
-    this.logo = localStorage.getItem('logo')
+    ) {  
+        this.app_image = localStorage.getItem('app_image')
+        this.logo = localStorage.getItem('logo')
+        this.authService.get_app_image().subscribe(res => {
+            localStorage.setItem('app_image', res.app_image)
+            localStorage.setItem('logo', res.tenant_image)
+            this.app_image = res.app_image
+            this.logo = res.tenant_image
+        }, ({error}) => {   
+
+        })
+ 
 }
 app_image =''
 logo = ''

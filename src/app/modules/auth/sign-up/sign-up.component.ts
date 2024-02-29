@@ -45,9 +45,16 @@ export class AuthSignUpComponent implements OnInit {
         private authService: AuthService,
         private dialog: MatDialog
     ) {
-
         this.app_image = localStorage.getItem('app_image')
         this.logo = localStorage.getItem('logo')
+        this.authService.get_app_image().subscribe(res => {
+            localStorage.setItem('app_image', res.app_image)
+            localStorage.setItem('logo', res.tenant_image)
+            this.app_image =  localStorage.getItem('app_image')
+            this.logo = localStorage.getItem('logo')
+        }, ({error}) => {   
+
+        })
     }
     app_image =''
     logo = ''

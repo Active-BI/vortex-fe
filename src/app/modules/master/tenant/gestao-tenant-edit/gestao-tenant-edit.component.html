@@ -84,7 +84,7 @@
                 <span>Selecionar imagem</span>
                 <input type="file" (click)="clearAppFileSelection()" (change)="onAppFileSelected($event)" class="" />
             </div>
-            <img *ngIf="this.form.value.app_image.length > 0" [src]="this.form.value.app_image"
+            <img *ngIf="this.form.value.app_image && this.form.value.app_image.length > 0" [src]="this.form.value.app_image"
                 class="h-8  w-auto" />
         </div>
         <div *ngIf="form.controls.app_image.touched" class="text-red-600 mb-2">
@@ -97,14 +97,23 @@
             <p>* altura máxima de 1080px</p>
             <p>* tamanho até 920px</p>
         </div>
+
+        
         <mat-form-field appearance="fill">
             <mat-label>Cor do menu lateral</mat-label>
-            <app-color-picker (colorSelected)="onColorSelected($event)"
+            <app-color-picker (colorSelected)="onColorSelected($event, 'tenant_color')"
                 [selectedColor]="this.form.value.tenant_color"></app-color-picker>
             <input formControlName="tenant_color" matInput #first />
             <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
         </mat-form-field>
 
+        <mat-form-field appearance="fill">
+            <mat-label>Cor de Fundo</mat-label>
+            <app-color-picker (colorSelected)="onColorSelected($event,'tenant_bg_color')"
+                [selectedColor]="this.form.value.tenant_color"></app-color-picker>
+            <input formControlName="tenant_bg_color" matInput #first />
+            <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
+        </mat-form-field>
 
         <mat-form-field>
             <mat-label>Visões</mat-label>
