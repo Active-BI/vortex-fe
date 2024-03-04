@@ -50,11 +50,11 @@ export class AdminService {
 
     private baseUrl = environment.baseUrl;
     private socketUrl = environment.socketUrl;
-    getSessions(tenant_id): Observable<any> {
-        return this.http.get<PreRegisterUpdate>(
-            `${this.baseUrl}socket/` + tenant_id
-        );
-    }
+    // getSessions(tenant_id): Observable<any> {
+    //     return this.http.get<PreRegisterUpdate>(
+    //         `${this.baseUrl}socket/` + tenant_id
+    //     );
+    // }
     /*   getUserByPagesExport(): Observable<any> {
         return this.http.get(`${this.baseUrl}page/user/user-by-page-export`,
         {
@@ -64,16 +64,12 @@ export class AdminService {
     /* getUserByPages(): Observable<any> {
         return this.http.get(`${this.baseUrl}page/user/user-by-page`)
     } */
-    getAllSessions(tenant_id): Observable<any> {
-        return this.http.get<PreRegisterUpdate>(
-            `${this.baseUrl}socket/all/` + tenant_id
-        );
-    }
-    getGeneralSessions(tenant_id): Observable<any> {
-        return this.http.get<PreRegisterUpdate>(
-            `${this.baseUrl}socket-general/` + tenant_id
-        );
-    }
+    // getAllSessions(tenant_id): Observable<any> {
+    //     return this.http.get<PreRegisterUpdate>(
+    //         `${this.baseUrl}socket/all/` + tenant_id
+    //     );
+    // }
+
     // getUsers(): Observable<getAllRequest[]> {
     //     return this.http.get<getAllRequest[]>(`${this.baseUrl}user`).pipe(
     //         catchError((err) => {

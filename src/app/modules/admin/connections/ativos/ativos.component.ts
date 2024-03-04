@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { AdminService } from 'app/modules/services/admin.service';
+import { SessionService } from 'app/modules/services/session.service';
 import { SocketService } from 'app/modules/services/socket.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -19,24 +20,19 @@ export class AtivosComponent implements OnInit, OnDestroy {
     myControl = new FormControl('');
     pipe = new DatePipe('en-US');
     tenantId = '';
-    displayedColumns: string[] = [
-        'nome',
-        'email',
-        'status',
-        'opcoes',
-    ];
+    displayedColumns: string[] = ['nome', 'email', 'status', 'opcoes'];
     usuarios: MatTableDataSource<any>;
     usuariosL: number = 0;
     constructor(
+        private sessionSrv: SessionService,
         private socketService: SocketService,
         private adminSrv: AdminService,
         public dialog: MatDialog
     ) {
         this.tenantId = localStorage.getItem('tenant_id');
         this.requisicoes();
-
     }
-    conn
+    conn;
     ngOnInit(): void {
         this.requisicoes();
         this.conn = this.socketService.socket.on('refresh-conn', () => {
@@ -44,10 +40,10 @@ export class AtivosComponent implements OnInit, OnDestroy {
         });
     }
     ngOnDestroy() {
-        this.conn.off()
+        this.conn.off();
     }
     requisicoes() {
-        this.adminSrv.getSessions(this.tenantId).subscribe((e) => {
+        this.sessionSrv.getSessions(this.tenantId).subscribe((e) => {
             this.usuarios = new MatTableDataSource(e);
             this.usuariosFiltrados = new MatTableDataSource(e);
             this.usuariosFiltrados.paginator = this.paginator;
