@@ -51,50 +51,56 @@ export class AdminService {
     private baseUrl = environment.baseUrl;
     private socketUrl = environment.socketUrl;
     getSessions(tenant_id): Observable<any> {
-        return this.http.get<PreRegisterUpdate>(`${this.baseUrl}socket/` + tenant_id);
+        return this.http.get<PreRegisterUpdate>(
+            `${this.baseUrl}socket/` + tenant_id
+        );
     }
-    getUserByPagesExport(): Observable<any> {
+    /*   getUserByPagesExport(): Observable<any> {
         return this.http.get(`${this.baseUrl}page/user/user-by-page-export`,
         {
             responseType: 'blob',
         });
-    }
-    getUserByPages(): Observable<any> {
+    } */
+    /* getUserByPages(): Observable<any> {
         return this.http.get(`${this.baseUrl}page/user/user-by-page`)
-    }
+    } */
     getAllSessions(tenant_id): Observable<any> {
-        return this.http.get<PreRegisterUpdate>(`${this.baseUrl}socket/all/` + tenant_id);
-    }
-    getGeneralSessions(tenant_id): Observable<any> {
-        return this.http.get<PreRegisterUpdate>(`${this.baseUrl}socket-general/` + tenant_id);
-    }
-    getUsers(): Observable<getAllRequest[]> {
-        return this.http.get<getAllRequest[]>(`${this.baseUrl}user`).pipe(
-            catchError((err) => {
-                ('');
-                this.toast.error(`Erro ao consultar usuários`, null, {
-                    progressBar: true,
-                    timeOut: 2000,
-                });
-                return throwError(err);
-            })
+        return this.http.get<PreRegisterUpdate>(
+            `${this.baseUrl}socket/all/` + tenant_id
         );
     }
-    
-    resendEmail(body: { email: string; id: string }) {
-        return this.http
-            .post<getAllRequest[]>(`${this.baseUrl}user/resend`, body)
-            .pipe(
-                catchError((err) => {
-                    ('');
-                    this.toast.error(`Erro ao reenviar email`, null, {
-                        progressBar: true,
-                        timeOut: 2000,
-                    });
-                    return throwError(err);
-                })
-            );
+    getGeneralSessions(tenant_id): Observable<any> {
+        return this.http.get<PreRegisterUpdate>(
+            `${this.baseUrl}socket-general/` + tenant_id
+        );
     }
+    // getUsers(): Observable<getAllRequest[]> {
+    //     return this.http.get<getAllRequest[]>(`${this.baseUrl}user`).pipe(
+    //         catchError((err) => {
+    //             ('');
+    //             this.toast.error(`Erro ao consultar usuários`, null, {
+    //                 progressBar: true,
+    //                 timeOut: 2000,
+    //             });
+    //             return throwError(err);
+    //         })
+    //     );
+    // }
+
+    // resendEmail(body: { email: string; id: string }) {
+    //     return this.http
+    //         .post<getAllRequest[]>(`${this.baseUrl}user/resend`, body)
+    //         .pipe(
+    //             catchError((err) => {
+    //                 ('');
+    //                 this.toast.error(`Erro ao reenviar email`, null, {
+    //                     progressBar: true,
+    //                     timeOut: 2000,
+    //                 });
+    //                 return throwError(err);
+    //             })
+    //         );
+    // }
 
     // master
     resendTenant(body: { email: string; user_id: string }) {
@@ -133,17 +139,17 @@ export class AdminService {
         return this.http.post<any>(`${this.baseUrl}user`, user);
     }
 
-    deleteUser(userId: string): Observable<getAllRequest> {
-        return this.http
-            .delete<getAllRequest>(`${this.baseUrl}user/${userId}`)
-            .pipe(
-                catchError((err) => {
-                    this.toast.error(`Erro ao remover usuário`, null, {
-                        progressBar: true,
-                        timeOut: 2000,
-                    });
-                    return throwError(err);
-                })
-            );
-    }
+    // deleteUser(userId: string): Observable<getAllRequest> {
+    //     return this.http
+    //         .delete<getAllRequest>(`${this.baseUrl}user/${userId}`)
+    //         .pipe(
+    //             catchError((err) => {
+    //                 this.toast.error(`Erro ao remover usuário`, null, {
+    //                     progressBar: true,
+    //                     timeOut: 2000,
+    //                 });
+    //                 return throwError(err);
+    //             })
+    //         );
+    // }
 }
