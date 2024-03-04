@@ -4,17 +4,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-    AdminService,
-    getAllRequest,
-} from 'app/modules/services/admin.service';
+import { AdminService } from 'app/modules/services/admin.service';
 import moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { EditAdminAccessComponent } from './edit_access_admin/edit_access_admin.component';
 import { PageMasterService } from 'app/modules/services/page-master.service';
 import { AddAccessAdminComponent } from './add-access-admin/add-access-admin.component';
 import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
-import { UserService } from 'app/modules/services/user.service';
+import { UserService, getAllRequest } from 'app/modules/services/user.service';
 
 @Component({
     selector: 'app-tenant-user-list',

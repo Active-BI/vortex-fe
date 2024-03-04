@@ -2,7 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { PreRegisterUpdate } from './admin.service';
+
+export interface PreRegisterUpdate {
+    id: string;
+    name: string;
+    email: string;
+    tenant_id: string;
+    identification: string;
+    role_id: string;
+}
 
 @Injectable()
 export class SessionService {

@@ -2,8 +2,36 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable, catchError, throwError } from 'rxjs';
-import { PreRegister, getAllRequest } from './admin.service';
 import { ToastrService } from 'ngx-toastr';
+
+export interface PreRegister {
+    name: string;
+    email: string;
+    identification: string;
+    tenant_id: string;
+    role_id: string;
+}
+
+export interface getAllRequest {
+    id: string;
+    email: string;
+    identification: string;
+    name: string;
+    tenant_id: string;
+    role_id: string;
+    role: { id: string; name: string } | null;
+    User: {
+        name: string;
+        email: string;
+        normalized_name: string;
+        normalized_email: string;
+        password_hash: string;
+        last_access: Date;
+        status: boolean;
+        pre_register_id: string;
+        id: string;
+    };
+}
 
 @Injectable({
     providedIn: 'root',

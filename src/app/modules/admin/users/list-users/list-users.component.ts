@@ -13,7 +13,7 @@ import { DeleteModalComponent } from '../../delete-modal/delete-modal.component'
 import { ToastrService } from 'ngx-toastr';
 import {
     AdminService,
-    getAllRequest,
+    
 } from 'app/modules/services/admin.service';
 import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -22,7 +22,8 @@ import moment from 'moment';
 import jwtDecode from 'jwt-decode';
 import { OfficeService } from 'app/modules/services/office.service';
 import { TelasService } from 'app/modules/services/telas.service';
-import { UserService } from 'app/modules/services/user.service';
+import { UserService, getAllRequest } from 'app/modules/services/user.service';
+
 
 export interface PeriodicElement {
     id: string;

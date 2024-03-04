@@ -6,41 +6,41 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, debounceTime, map } from 'rxjs/operators';
 
-export interface PreRegister {
-    name: string;
-    email: string;
-    identification: string;
-    tenant_id: string;
-    role_id: string;
-}
-export interface PreRegisterUpdate {
-    id: string;
-    name: string;
-    email: string;
-    tenant_id: string;
-    identification: string;
-    role_id: string;
-}
-export interface getAllRequest {
-    id: string;
-    email: string;
-    identification: string;
-    name: string;
-    tenant_id: string;
-    role_id: string;
-    role: { id: string; name: string } | null;
-    User: {
-        name: string;
-        email: string;
-        normalized_name: string;
-        normalized_email: string;
-        password_hash: string;
-        last_access: Date;
-        status: boolean;
-        pre_register_id: string;
-        id: string;
-    };
-}
+// export interface PreRegister {
+//     name: string;
+//     email: string;
+//     identification: string;
+//     tenant_id: string;
+//     role_id: string;
+// }
+// export interface PreRegisterUpdate {
+//     id: string;
+//     name: string;
+//     email: string;
+//     tenant_id: string;
+//     identification: string;
+//     role_id: string;
+// }
+// export interface getAllRequest {
+//     id: string;
+//     email: string;
+//     identification: string;
+//     name: string;
+//     tenant_id: string;
+//     role_id: string;
+//     role: { id: string; name: string } | null;
+//     User: {
+//         name: string;
+//         email: string;
+//         normalized_name: string;
+//         normalized_email: string;
+//         password_hash: string;
+//         last_access: Date;
+//         status: boolean;
+//         pre_register_id: string;
+//         id: string;
+//     };
+// }
 
 @Injectable({
     providedIn: 'root',
