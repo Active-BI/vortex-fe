@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { AdminService } from 'app/modules/services/admin.service';
 import { TelasService } from 'app/modules/services/telas.service';
 
 @Component({

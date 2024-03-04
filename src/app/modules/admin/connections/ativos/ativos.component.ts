@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { AdminService } from 'app/modules/services/admin.service';
 import { SessionService } from 'app/modules/services/session.service';
 import { SocketService } from 'app/modules/services/socket.service';
 import { ToastrService } from 'ngx-toastr';
@@ -26,7 +25,6 @@ export class AtivosComponent implements OnInit, OnDestroy {
     constructor(
         private sessionSrv: SessionService,
         private socketService: SocketService,
-        private adminSrv: AdminService,
         public dialog: MatDialog
     ) {
         this.tenantId = localStorage.getItem('tenant_id');

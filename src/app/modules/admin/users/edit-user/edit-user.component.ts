@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdminService } from 'app/modules/services/admin.service';
 import { listRoles } from 'app/modules/services/roles.service';
 import { ToastrService } from 'ngx-toastr';
 import { ordersData } from '../usersUtils';

@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdminService } from 'app/modules/services/admin.service';
 import moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { EditAdminAccessComponent } from './edit_access_admin/edit_access_admin.component';

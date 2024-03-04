@@ -3,7 +3,6 @@ import { EditUserComponent } from '../edit-user/edit-user.component';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AdminService } from 'app/modules/services/admin.service';
 import { PageService } from 'app/modules/services/page.service';
 import { OfficeService } from 'app/modules/services/office.service';
 import { UserService } from 'app/modules/services/user.service';
