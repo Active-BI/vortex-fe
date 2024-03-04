@@ -17,6 +17,8 @@ import { ToastrService } from 'ngx-toastr';
 import { SignUpModalComponent } from './sign-up-modal/sign-up-modal.component';
 import jwtDecode from 'jwt-decode';
 import { ThisReceiver } from '@angular/compiler';
+import { AccessModelComponent } from '../access-model/access-model.component';
+import { SocketService } from 'app/modules/services/socket.service';
 
 @Component({
     selector: 'auth-sign-up',
@@ -24,7 +26,10 @@ import { ThisReceiver } from '@angular/compiler';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })
-export class AuthSignUpComponent implements OnInit {
+export class AuthSignUpComponent
+    extends AccessModelComponent
+    implements OnInit
+{
     @ViewChild('signUpNgForm') signUpNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {
@@ -42,23 +47,27 @@ export class AuthSignUpComponent implements OnInit {
         private toastr: ToastrService,
         private _router: Router,
         private _ActRouter: ActivatedRoute,
-        private authService: LocalAuthService,
+        private _authService: LocalAuthService,
+        authService: LocalAuthService,
+        socketService: SocketService,
+
         private dialog: MatDialog
     ) {
-        this.app_image = localStorage.getItem('app_image');
-        this.bg_color = localStorage.getItem('bg_color');
-        this.logo = localStorage.getItem('logo');
-        this.authService.get_app_image().subscribe(
-            (res) => {
-                localStorage.setItem('bg_color', res.bg_color);
-                localStorage.setItem('app_image', res.app_image);
-                localStorage.setItem('logo', res.tenant_image);
-                this.app_image = localStorage.getItem('app_image');
-                this.bg_color = res.bg_color;
-                this.logo = localStorage.getItem('logo');
-            },
-            ({ error }) => {}
-        );
+        super(socketService, authService);
+        // this.app_image = localStorage.getItem('app_image');
+        // this.bg_color = localStorage.getItem('bg_color');
+        // this.logo = localStorage.getItem('logo');
+        // this.authService.get_app_image().subscribe(
+        //     (res) => {
+        //         localStorage.setItem('bg_color', res.bg_color);
+        //         localStorage.setItem('app_image', res.app_image);
+        //         localStorage.setItem('logo', res.tenant_image);
+        //         this.app_image = localStorage.getItem('app_image');
+        //         this.bg_color = res.bg_color;
+        //         this.logo = localStorage.getItem('logo');
+        //     },
+        //     ({ error }) => {}
+        // );
     }
     bg_color = '';
     app_image = '';
@@ -128,7 +137,7 @@ export class AuthSignUpComponent implements OnInit {
 
         const form = this.signUpForm.value;
         delete form.passwordConfirm;
-        this.authService
+        this._authService
             .register({
                 ...this.signUpForm.value,
                 email: this.email,
