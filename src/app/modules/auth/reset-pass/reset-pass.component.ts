@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseAlertType } from '@fuse/components/alert';
-import { AuthService } from 'app/modules/services/auth.service';
+import { LocalAuthService } from 'app/modules/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -36,7 +36,7 @@ export class ResetPassComponent implements OnInit {
         private toastr: ToastrService,
         private route: ActivatedRoute,
         private _router: Router,
-        private authService: AuthService
+        private authService: LocalAuthService
     ) {
         this.token = this.route.snapshot.paramMap.get('token');
         this.signUpForm = this._formBuilder.group({

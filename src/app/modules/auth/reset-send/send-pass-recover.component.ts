@@ -6,7 +6,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'app/modules/services/auth.service';
+import { LocalAuthService } from 'app/modules/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -23,26 +23,26 @@ export class SendPassRecoverComponent implements OnInit {
         private fb: FormBuilder,
         private toastr: ToastrService,
         private router: Router,
-        private authService: AuthService
-    ) {  
-        this.app_image = localStorage.getItem('app_image')
-        this.bg_color = localStorage.getItem('bg_color')
-        this.logo = localStorage.getItem('logo')
-        this.authService.get_app_image().subscribe(res => {
-            localStorage.setItem('app_image', res.app_image)
-            localStorage.setItem('bg_color', res.bg_color)
-            localStorage.setItem('logo', res.tenant_image)
-            this.app_image = res.app_image
-            this.logo = res.tenant_image
-            this.bg_color = res.bg_color
-        }, ({error}) => {   
-
-        })
- 
-}
-    bg_color =''
-    app_image =''
-logo = ''
+        private authService: LocalAuthService
+    ) {
+        this.app_image = localStorage.getItem('app_image');
+        this.bg_color = localStorage.getItem('bg_color');
+        this.logo = localStorage.getItem('logo');
+        this.authService.get_app_image().subscribe(
+            (res) => {
+                localStorage.setItem('app_image', res.app_image);
+                localStorage.setItem('bg_color', res.bg_color);
+                localStorage.setItem('logo', res.tenant_image);
+                this.app_image = res.app_image;
+                this.logo = res.tenant_image;
+                this.bg_color = res.bg_color;
+            },
+            ({ error }) => {}
+        );
+    }
+    bg_color = '';
+    app_image = '';
+    logo = '';
     ngOnInit(): void {}
     valilateSpecialCharacterPassword(control: FormControl) {
         // verifica se existe algum caractere especial
