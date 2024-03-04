@@ -99,41 +99,41 @@ export class AdminService {
     // }
 
     // master
-    resendTenant(body: { email: string; user_id: string }) {
-        return this.http
-            .post<getAllRequest[]>(`${this.baseUrl}user/resend`, body)
-            .pipe(
-                catchError((err) => {
-                    ('');
-                    this.toast.error(`Erro ao reenviar email`, null, {
-                        progressBar: true,
-                        timeOut: 2000,
-                    });
-                    return throwError(err);
-                })
-            );
-    }
-    getUserById(userId: string): Observable<getAllRequest> {
-        return this.http
-            .get<getAllRequest>(`${this.baseUrl}user/${userId}`)
-            .pipe(
-                catchError((err) => {
-                    this.toast.error(`Erro ao consultar usuário`, null, {
-                        progressBar: true,
-                        timeOut: 2000,
-                    });
-                    return throwError(err);
-                })
-            );
-    }
+    // resendTenant(body: { email: string; user_id: string }) {
+    //     return this.http
+    //         .post<getAllRequest[]>(`${this.baseUrl}user/resend`, body)
+    //         .pipe(
+    //             catchError((err) => {
+    //                 ('');
+    //                 this.toast.error(`Erro ao reenviar email`, null, {
+    //                     progressBar: true,
+    //                     timeOut: 2000,
+    //                 });
+    //                 return throwError(err);
+    //             })
+    //         );
+    // }
+    // getUserById(userId: string): Observable<getAllRequest> {
+    //     return this.http
+    //         .get<getAllRequest>(`${this.baseUrl}user/${userId}`)
+    //         .pipe(
+    //             catchError((err) => {
+    //                 this.toast.error(`Erro ao consultar usuário`, null, {
+    //                     progressBar: true,
+    //                     timeOut: 2000,
+    //                 });
+    //                 return throwError(err);
+    //             })
+    //         );
+    // }
 
-    updateUser(user: any): Observable<any> {
-        return this.http.put<any>(`${this.baseUrl}user`, user);
-    }
+    // updateUser(user: any): Observable<any> {
+    //     return this.http.put<any>(`${this.baseUrl}user`, user);
+    // }
 
-    createUser(user: PreRegister | any): Observable<any> {
-        return this.http.post<any>(`${this.baseUrl}user`, user);
-    }
+    // createUser(user: PreRegister | any): Observable<any> {
+    //     return this.http.post<any>(`${this.baseUrl}user`, user);
+    // }
 
     // deleteUser(userId: string): Observable<getAllRequest> {
     //     return this.http

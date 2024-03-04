@@ -37,11 +37,10 @@ export class TenantUserListComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private userSvr: UserService,
         private pageMasterService: PageMasterService,
         private toastr: ToastrService,
         private dialog: MatDialog,
-        private adminService: AdminService
+        private userSrv: UserService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
     }
@@ -111,7 +110,7 @@ export class TenantUserListComponent implements OnInit {
 
     reenviarEmail(user) {
         console.log(user);
-        this.adminService
+        this.userSrv
             .resendTenant({ user_id: user.id, email: user.contact_email })
             .subscribe((res) => {
                 this.toastr.success('Enviado com sucesso');
@@ -124,7 +123,7 @@ export class TenantUserListComponent implements OnInit {
                 nome: 'Usuários',
                 data: () => {
                     this.dialog.closeAll();
-                    this.userSvr.deleteUser(id).subscribe(() => {
+                    this.userSrv.deleteUser(id).subscribe(() => {
                         this.toastr.success('Deletado com Sucesso');
                         this.requisicoes();
                     });

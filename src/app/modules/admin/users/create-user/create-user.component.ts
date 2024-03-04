@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'app/modules/services/admin.service';
 import { PageService } from 'app/modules/services/page.service';
 import { OfficeService } from 'app/modules/services/office.service';
+import { UserService } from 'app/modules/services/user.service';
 
 @Component({
     selector: 'app-create-user',
@@ -20,55 +21,56 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
         route: ActivatedRoute,
         toastr: ToastrService,
         private toast: ToastrService,
-        adminSrv: AdminService,
-        private adminSrv1: AdminService,
+        private _userSrv: UserService,
         private officeService: OfficeService,
-        pageService: PageService,
+        pageService: PageService
     ) {
-        super(fb, router, route, toastr, adminSrv, pageService,officeService);
+        super(fb, router, route, toastr, _userSrv, pageService, officeService);
     }
 
     override ngOnInit(): void {
         this.officeService.getOffices().subscribe((e) => {
-            this.cargos = e.sort((a,b) => {
+            this.cargos = e.sort((a, b) => {
                 if (a.name < b.name) {
                     return 1;
-                  }
-                  if (a.name > b.name) {
+                }
+                if (a.name > b.name) {
                     return -1;
-                  }
-                  return 0;
+                }
+                return 0;
             });
-        })
+        });
     }
     find(name) {
-        const find = this.cargos.find(c => c.name === name)
-        console.log(find)
-        return find
+        const find = this.cargos.find((c) => c.name === name);
+        console.log(find);
+        return find;
     }
     criar(): void {
         if (!this.find(this.form.value.cargo)) {
-            this.form.controls.cargo.reset()
-            this.toast.error('Formulário inválido')
+            this.form.controls.cargo.reset();
+            this.toast.error('Formulário inválido');
         }
         if (this.form.valid) {
             delete this.form.value.id;
             delete this.form.value.cargo;
             const formPayload = this.form.value as any;
-            this.adminSrv1
+            this._userSrv
                 .createUser({
                     ...formPayload,
                 })
-                .subscribe((e) => {
-                    this.toast.success('Usuário Criado com Sucesso');
-                    this.redirectToEdit(e.user_id);
-                }, ({ error }) => {
-            this.toast.error(error.message)
-
-                });
+                .subscribe(
+                    (e) => {
+                        this.toast.success('Usuário Criado com Sucesso');
+                        this.redirectToEdit(e.user_id);
+                    },
+                    ({ error }) => {
+                        this.toast.error(error.message);
+                    }
+                );
         } else {
-            console.log(this.form.controls)
-            this.toast.error('Formulário inválido')
+            console.log(this.form.controls);
+            this.toast.error('Formulário inválido');
 
             this.form.markAllAsTouched();
         }

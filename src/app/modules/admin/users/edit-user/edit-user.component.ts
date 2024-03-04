@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ordersData } from '../usersUtils';
 import { PageService } from 'app/modules/services/page.service';
 import { OfficeService } from 'app/modules/services/office.service';
+import { UserService } from 'app/modules/services/user.service';
 
 @Component({
     selector: 'app-edit-user',
@@ -60,21 +61,23 @@ export class EditUserComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private toastr: ToastrService,
-        private adminSrv: AdminService,
+        private userSrv: UserService,
+        // private adminSrv: AdminService,
         private pageService: PageService,
-        private office: OfficeService,
+        private office: OfficeService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
-  
-        this.changeReports()
+
+        this.changeReports();
     }
     selectOffice(name) {
-        const office = this.cargos.find(c => c.name === name).id
-       if (office) this.form.patchValue({
-        office_id: office
-       }) 
+        const office = this.cargos.find((c) => c.name === name).id;
+        if (office)
+            this.form.patchValue({
+                office_id: office,
+            });
     }
-     changeReports(value = null) {
+    changeReports(value = null) {
         let editar = false;
         this.route.url.subscribe(
             (a) => (editar = a[0].path.includes('editar'))
@@ -86,7 +89,9 @@ export class EditUserComponent implements OnInit {
                     name: tenant_dashboard.Page.title,
                     id: tenant_dashboard.id,
                     selected: false,
-                    roles: tenant_dashboard.Page.Page_Role.map(r => r.Rls.name)
+                    roles: tenant_dashboard.Page.Page_Role.map(
+                        (r) => r.Rls.name
+                    ),
                 };
             });
             this.dashboardListReduced = this.dashboardList.reduce(
@@ -109,7 +114,7 @@ export class EditUserComponent implements OnInit {
             );
 
             if (editar) {
-                this.adminSrv.getUserById(this.id).subscribe((e: any) => {
+                this.userSrv.getUserById(this.id).subscribe((e: any) => {
                     this.user = e;
                     this.selectedDashboardList = this.dashboardList.map(
                         (dash) => {
@@ -124,11 +129,13 @@ export class EditUserComponent implements OnInit {
                         }
                     );
                     this.office.getOffices().subscribe((e) => {
-                         const office = e.find(c => c.id === this.user.office_id).name
-                              this.form.patchValue({
-                                  cargo: office
-                              })
+                        const office = e.find(
+                            (c) => c.id === this.user.office_id
+                        ).name;
+                        this.form.patchValue({
+                            cargo: office,
                         });
+                    });
                     this.form.patchValue({
                         id: this.user.id,
                         name: this.user.name,
@@ -140,25 +147,26 @@ export class EditUserComponent implements OnInit {
             }
         });
     }
-    cargos = []
+    cargos = [];
     ngOnInit(): void {
         this.form.controls.email.disable();
         this.office.getOffices().subscribe((e) => {
-            this.cargos = e.sort((a,b) => {
+            this.cargos = e.sort((a, b) => {
                 if (a.name < b.name) {
                     return 1;
-                  }
-                  if (a.name > b.name) {
+                }
+                if (a.name > b.name) {
                     return -1;
-                  }
-                  return 0;
+                }
+                return 0;
             });
-            const office = this.cargos.find(c => c.id === this.form.value.office_id).name
+            const office = this.cargos.find(
+                (c) => c.id === this.form.value.office_id
+            ).name;
             this.form.patchValue({
-                cargo: office
-            })
-
-        })
+                cargo: office,
+            });
+        });
     }
 
     filteredVisions = [];
@@ -186,19 +194,22 @@ export class EditUserComponent implements OnInit {
                     this.id
                 )
                 .subscribe((e) => {});
-            const form = this.form.value
-            delete form.cargo
-            this.adminSrv
+            const form = this.form.value;
+            delete form.cargo;
+            this.userSrv
                 .updateUser({
                     ...form,
                 })
-                .subscribe((e) => {
-                    this.toastr.success('Editado com Sucesso');
-                    // this.voltar();
-                }, ({error}) => {
-                    this.toastr.error(error.message)
-                });
-                this.ngOnInit()
+                .subscribe(
+                    (e) => {
+                        this.toastr.success('Editado com Sucesso');
+                        // this.voltar();
+                    },
+                    ({ error }) => {
+                        this.toastr.error(error.message);
+                    }
+                );
+            this.ngOnInit();
         } else {
             this.form.markAllAsTouched();
         }
