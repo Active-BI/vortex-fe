@@ -81,80 +81,11 @@ export class AuthService {
         this.router.navigate(['login']);
     }
 
-    isLoginToken(token: string) {
-        const decodedToken: any = decode(token);
-        if (decodedToken.perfil == null || decodedToken.perfil == [])
-            return false;
-        else return true;
-    }
-
-    persistApiToken(apiToken: string) {
-        localStorage.setItem('ApiToken', apiToken);
-        this.saveUserLoggedIn(apiToken);
-    }
-
-    isLogeddIn() {
-        const user = localStorage.getItem('ApiToken');
-        if (user == undefined) return false;
-
-        if (user != undefined && !this.jwtHelper.isTokenExpired(user)) {
-            const decoded = decode<any>(user);
-            const email: string = decoded.email;
-            this.updateUserLogin({ name: email, email: email });
-            return true;
-        }
-        return false;
-    }
-
-    isLoginRecaptha() {
-        const isRecaptcha = localStorage.getItem('loginCaptcha');
-        return Boolean(isRecaptcha);
-    }
-
-    getRoles(token: string): String[] {
-        const decodedToken = decode<any>(token);
-        return decodedToken?.perfil;
-    }
-
     getUser() {
         const userEmail = localStorage.getItem('userLogged');
         const user = { email: userEmail, name: userEmail };
         this.updateUserLogin(user);
         return user;
-    }
-
-    saveUserLoggedIn(token: string) {
-        const decodedToken = decode<any>(token);
-        localStorage.setItem('userLogged', decodedToken.email);
-        localStorage.setItem('username', decodedToken.email);
-        this.updateUserLogin({
-            email: decodedToken.email,
-            name: decodedToken.email,
-        });
-    }
-
-    setAuthADFSToken(fragment) {
-        const parsedHash = new URLSearchParams(fragment);
-        const token = parsedHash.get('access_token');
-        const idToken = parsedHash.get('id_token');
-
-        const decodedToken = decode<any>(parsedHash.get('access_token'));
-        localStorage.setItem('username', decodedToken.upn);
-        localStorage.setItem(tokenIdKey, idToken);
-        localStorage.setItem(tokenAccessKey, token);
-        const username = localStorage.getItem('username');
-        this.updateUserLogin({ name: username, email: username });
-
-        // Delegado para o componente login-adfs
-        // this.router.navigate(['../dashboard'], {relativeTo: this.route})
-    }
-
-    isTokenValid(token: string) {
-        return this.jwtHelper.isTokenExpired(token);
-    }
-
-    clearTokens(): void {
-        localStorage.clear();
     }
 
     // getUserFirstName() {
@@ -170,8 +101,4 @@ export class AuthService {
     // getAccessToken(): string {
     //     return localStorage.getItem('ApiToken');
     // }
-
-    reset2FA(email: string): Observable<any> {
-        return this.http.get<any>(`${this.baseUrl}/auth/resetTFA/${email}`);
-    }
 }
