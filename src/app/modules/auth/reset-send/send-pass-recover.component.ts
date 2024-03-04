@@ -8,13 +8,18 @@ import {
 import { Router } from '@angular/router';
 import { LocalAuthService } from 'app/modules/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { AccessModelComponent } from '../access-model/access-model.component';
+import { SocketService } from 'app/modules/services/socket.service';
 
 @Component({
     selector: 'app-send-pass-recover',
     templateUrl: './send-pass-recover.component.html',
     styleUrls: ['./send-pass-recover.component.scss'],
 })
-export class SendPassRecoverComponent implements OnInit {
+export class SendPassRecoverComponent
+    extends AccessModelComponent
+    implements OnInit
+{
     showAlert: boolean = false;
     email = new FormControl('', [
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
@@ -23,22 +28,25 @@ export class SendPassRecoverComponent implements OnInit {
         private fb: FormBuilder,
         private toastr: ToastrService,
         private router: Router,
-        private authService: LocalAuthService
+        socketService: SocketService,
+        authService: LocalAuthService,
+        private _authService: LocalAuthService
     ) {
-        this.app_image = localStorage.getItem('app_image');
-        this.bg_color = localStorage.getItem('bg_color');
-        this.logo = localStorage.getItem('logo');
-        this.authService.get_app_image().subscribe(
-            (res) => {
-                localStorage.setItem('app_image', res.app_image);
-                localStorage.setItem('bg_color', res.bg_color);
-                localStorage.setItem('logo', res.tenant_image);
-                this.app_image = res.app_image;
-                this.logo = res.tenant_image;
-                this.bg_color = res.bg_color;
-            },
-            ({ error }) => {}
-        );
+        super(socketService, authService);
+        // this.app_image = localStorage.getItem('app_image');
+        // this.bg_color = localStorage.getItem('bg_color');
+        // this.logo = localStorage.getItem('logo');
+        // this.authService.get_app_image().subscribe(
+        //     (res) => {
+        //         localStorage.setItem('app_image', res.app_image);
+        //         localStorage.setItem('bg_color', res.bg_color);
+        //         localStorage.setItem('logo', res.tenant_image);
+        //         this.app_image = res.app_image;
+        //         this.logo = res.tenant_image;
+        //         this.bg_color = res.bg_color;
+        //     },
+        //     ({ error }) => {}
+        // );
     }
     bg_color = '';
     app_image = '';
@@ -66,7 +74,7 @@ export class SendPassRecoverComponent implements OnInit {
             return;
         }
 
-        this.authService.resetPass(this.email.value).subscribe((e) => {
+        this._authService.resetPass(this.email.value).subscribe((e) => {
             this.toastr.success('Mudança de senha solicitada');
 
             this.router.navigate(['/auth/sign-in']);
