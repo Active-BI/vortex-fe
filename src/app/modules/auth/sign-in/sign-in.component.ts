@@ -7,13 +7,15 @@ import {
 import { Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
-import { AuthService } from 'app/modules/services/auth.service';
-import { AuthService as _AuthService } from 'app/modules/services/auth/auth.service';
+
 import { UserService } from 'app/modules/services/login/login';
 import { PageService } from 'app/modules/services/page.service';
 import { SocketService } from 'app/modules/services/socket.service';
 import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
+import { AccessModelComponent } from '../access-model/access-model.component';
+import { LocalAuthService } from 'app/modules/services/auth.service';
+import { AuthService } from 'app/modules/services/auth/auth.service';
 
 interface User {
     email: string;
@@ -26,7 +28,10 @@ interface User {
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })
-export class AuthSignInComponent implements OnInit, AfterViewInit {
+export class AuthSignInComponent
+    extends AccessModelComponent
+    implements OnInit, AfterViewInit
+{
     error: string = '';
     showAlert = false;
     showSpinner = false;
@@ -39,31 +44,17 @@ export class AuthSignInComponent implements OnInit, AfterViewInit {
     constructor(
         private router: Router,
         private userService: UserService,
-        private _authService: _AuthService,
-        private authService: AuthService,
-        private toastr: ToastrService,
-        private route: ActivatedRoute,
-        private socketService: SocketService
-    ) {
-        this.socketService.socket.disconnect();
-        this.app_image = localStorage.getItem('app_image')
-        this.bg_color = localStorage.getItem('bg_color')
-        this.logo = localStorage.getItem('logo')
-        this.authService.get_app_image().subscribe(res => {
-            localStorage.setItem('bg_color', res.bg_color)
-            localStorage.setItem('app_image', res.app_image)
-            localStorage.setItem('logo', res.tenant_image)
-            this.bg_color = res.bg_color
-            this.app_image = res.app_image
-            this.logo = res.tenant_image
-        }, ({error}) => {   
+        private _authService: AuthService,
 
-        })
+        authService: LocalAuthService,
+        _socketService: SocketService,
+        private toastr: ToastrService,
+        private route: ActivatedRoute
+    ) {
+        super(_socketService, authService);
     }
-    bg_color =''
-    app_image =''
-    logo = ''
-    
+
+
     ngAfterViewInit(): void {
         if (this._authService.isLoggedIn()) {
             this.router.navigateByUrl('app/inicio');

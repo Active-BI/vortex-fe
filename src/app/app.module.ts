@@ -22,7 +22,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { HomeModule } from './modules/home/home.module';
 import { SocketService } from './modules/services/socket.service';
-import { AuthService } from './modules/services/auth.service';
+import { AccessModelComponent } from './modules/auth/access-model/access-model.component';
+import { LocalAuthService } from './modules/services/auth.service';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -30,7 +31,7 @@ const routerConfig: ExtraOptions = {
 };
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, AccessModelComponent],
     providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
     imports: [
         BrowserModule,
@@ -61,7 +62,11 @@ const routerConfig: ExtraOptions = {
 export class AppModule {
     socket: any;
     session;
-    constructor(private router: Router, private socketService: SocketService, private authService: AuthService) {
+    constructor(
+        private router: Router,
+        private socketService: SocketService,
+        private authService: LocalAuthService
+    ) {
         this.socket = this.socketService.socket;
         this.socket.on('logou', (res) => {});
         Promise.all([localStorage.getItem('session_id')]).then((res) => {
@@ -75,13 +80,13 @@ export class AppModule {
             this.router.navigate(['auth/sign-out']);
         });
 
-        this.authService.get_app_image().subscribe(res => {
-            localStorage.setItem('app_image', res.app_image)
-            localStorage.setItem('logo', res.tenant_image)
-            localStorage.setItem('bg_color', res.bg_color)
-            
-        }, ({error}) => {   
-
-        })
+        this.authService.get_app_image().subscribe(
+            (res) => {
+                localStorage.setItem('app_image', res.app_image);
+                localStorage.setItem('logo', res.tenant_image);
+                localStorage.setItem('bg_color', res.bg_color);
+            },
+            ({ error }) => {}
+        );
     }
 }

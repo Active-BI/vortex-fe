@@ -9,15 +9,17 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseAlertType } from '@fuse/components/alert';
-import { AuthService } from 'app/modules/services/auth.service';
+import { LocalAuthService } from 'app/modules/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { AccessModelComponent } from '../access-model/access-model.component';
+import { SocketService } from 'app/modules/services/socket.service';
 
 @Component({
     selector: 'app-reset-pass',
     templateUrl: './reset-pass.component.html',
     styleUrls: ['./reset-pass.component.scss'],
 })
-export class ResetPassComponent implements OnInit {
+export class ResetPassComponent extends AccessModelComponent implements OnInit {
     @ViewChild('signUpNgForm') signUpNgForm: NgForm;
     signUpForm: FormGroup;
     token = '';
@@ -31,13 +33,17 @@ export class ResetPassComponent implements OnInit {
     /**
      * Constructor
      */
+
     constructor(
         private _formBuilder: UntypedFormBuilder,
         private toastr: ToastrService,
         private route: ActivatedRoute,
         private _router: Router,
-        private authService: AuthService
+        private _authService: LocalAuthService,
+        authService: LocalAuthService,
+        socketService: SocketService
     ) {
+        super(socketService, authService);
         this.token = this.route.snapshot.paramMap.get('token');
         this.signUpForm = this._formBuilder.group({
             passwordConfirm: ['', [Validators.required]],
@@ -51,23 +57,8 @@ export class ResetPassComponent implements OnInit {
                 ],
             ],
         });
-        this.app_image = localStorage.getItem('app_image')
-        this.bg_color = localStorage.getItem('bg_color')
-        this.logo = localStorage.getItem('logo')
-        this.authService.get_app_image().subscribe(res => {
-            localStorage.setItem('app_image', res.app_image)
-            localStorage.setItem('bg_color', res.bg_color)
-            localStorage.setItem('logo', res.tenant_image)
-            this.app_image = res.app_image
-            this.bg_color = res.bg_color
-            this.logo = res.tenant_image
-        }, ({error}) => {   
-
-        })
     }
-    bg_color =''
-    app_image =''
-    logo = ''
+
     ngOnInit(): void {}
 
     valilateSpecialCharacterPassword(control: FormControl) {
@@ -104,7 +95,7 @@ export class ResetPassComponent implements OnInit {
         const form = { ...this.signUpForm.value, token: this.token };
         delete form.passwordConfirm;
 
-        this.authService.setNewPass(form).subscribe(
+        this._authService.setNewPass(form).subscribe(
             (response) => {
                 this.signUpForm.enable();
                 this.signUpNgForm.resetForm();

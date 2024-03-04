@@ -1,15 +1,15 @@
-import {  Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Socket, io } from 'socket.io-client';
 import jwtDecode from 'jwt-decode';
 import { environment } from 'environments/environment';
-import { AuthService } from './auth.service';
+import { LocalAuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SocketService {
     socket: Socket;
-    constructor(private authService: AuthService) {
+    constructor(private authService: LocalAuthService) {
         this.socket = io(environment.socketUrl);
     }
 
@@ -47,15 +47,18 @@ export class SocketService {
     }
     alive() {
         const sessionId: any = localStorage.getItem('session_id');
-    
-            this.socket.emit('alive', JSON.stringify({
+
+        this.socket.emit(
+            'alive',
+            JSON.stringify({
                 sessionId,
                 userAgent: navigator.userAgent,
-                platform: navigator.platform
-            }));
+                platform: navigator.platform,
+            })
+        );
     }
     getSocket() {
         const sessionId = JSON.parse(localStorage.getItem('session_id'));
         this.socket.emit('get-socket', sessionId);
-    }   
+    }
 }
