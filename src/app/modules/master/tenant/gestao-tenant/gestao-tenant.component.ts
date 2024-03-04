@@ -71,7 +71,9 @@ export class GestaoTenantComponent implements OnInit {
             },
         });
     }
-
+    configs(): void {
+        this.router.navigate(['/master/gestao/config']);
+    }
     criarUsuario(): void {
         this.router.navigate(['/master/gestao/tenants/criar']);
     }

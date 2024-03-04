@@ -97,7 +97,7 @@ const adminroutes: Route[] = [
             },
             {
                 data: { expectedRoles: ['Admin'] },
-                path: 'acessos',
+                path: 'telas',
                 component: TelasComponent,
                 canActivate: [AuthGuardScreen],
             },

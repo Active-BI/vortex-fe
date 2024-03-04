@@ -75,8 +75,7 @@ export class GestaoTenantCriarComponent
     }
 
     criar(): void {
-        console.log(this.form.controls.tenant_image)
-
+        console.log(this.form.controls)
         if (this.form.valid) {
             delete this.form.value.id;
             const formPayload = this.form.value as any;

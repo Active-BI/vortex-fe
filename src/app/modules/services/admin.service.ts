@@ -62,6 +62,13 @@ export class AdminService {
     getUserByPages(): Observable<any> {
         return this.http.get(`${this.baseUrl}page/user/user-by-page`)
     }
+    salvarConfiguracoesDePagina(data): Observable<any> {
+        return this.http.patch(`${this.baseUrl}master/app-config`, data)
+    }
+
+    obterConfiguracoesDePagina(): Observable<any> {
+        return this.http.get(`${this.baseUrl}master/app-config`)
+    }
     getAllSessions(tenant_id): Observable<any> {
         return this.http.get<PreRegisterUpdate>(`${this.baseUrl}socket/all/` + tenant_id);
     }
