@@ -6,7 +6,10 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, debounceTime, map } from 'rxjs/operators';
 
-interface ICargos {name: string, id: string}
+interface ICargos {
+    name: string;
+    id: string;
+}
 
 @Injectable({
     providedIn: 'root',
@@ -28,31 +31,17 @@ export class OfficeService {
             })
         );
     }
-    
-    getUserById(userId: string): Observable<ICargos> {
-        return this.http
-            .get<ICargos>(`${this.baseUrl}user/${userId}`)
-            .pipe(
-                catchError((err) => {
-                    this.toast.error(`Erro ao consultar usuário`, null, {
-                        progressBar: true,
-                        timeOut: 2000,
-                    });
-                    return throwError(err);
-                })
-            );
-    }
 
     upsertCargo(cargo: any): Observable<any> {
         return this.http.post<any>(`${this.baseUrl}office`, cargo).pipe(
-            catchError(({error}) => {
+            catchError(({ error }) => {
                 this.toast.error(error.message, null, {
                     progressBar: true,
                     timeOut: 2000,
                 });
                 return throwError(error.message);
             })
-        );;
+        );
     }
 
     deleteUser(userId: string): Observable<ICargos> {
