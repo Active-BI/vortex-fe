@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable, catchError, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { PreRegisterUpdate } from './session.service';
 
 export interface PreRegister {
     name: string;
@@ -53,6 +54,43 @@ export class UserService {
                 })
             );
     }
+    getUserByPagesExport(): Observable<any> {
+        return this.http.get(`${this.baseUrl}page/user/user-by-page-export`, {
+            responseType: 'blob',
+        });
+    }
+    getUserByPages(): Observable<any> {
+        return this.http.get(`${this.baseUrl}page/user/user-by-page`);
+    }
+    salvarConfiguracoesDePagina(data): Observable<any> {
+        return this.http.patch(`${this.baseUrl}master/app-config`, data);
+    }
+
+    obterConfiguracoesDePagina(): Observable<any> {
+        return this.http.get(`${this.baseUrl}master/app-config`);
+    }
+    getAllSessions(tenant_id): Observable<any> {
+        return this.http.get<PreRegisterUpdate>(
+            `${this.baseUrl}socket/all/` + tenant_id
+        );
+    }
+    getGeneralSessions(tenant_id): Observable<any> {
+        return this.http.get<PreRegisterUpdate>(
+            `${this.baseUrl}socket-general/` + tenant_id
+        );
+    }
+    getUsers(): Observable<getAllRequest[]> {
+        return this.http.get<getAllRequest[]>(`${this.baseUrl}user`).pipe(
+            catchError((err) => {
+                ('');
+                this.toast.error(`Erro ao consultar usuários`, null, {
+                    progressBar: true,
+                    timeOut: 2000,
+                });
+                return throwError(err);
+            })
+        );
+    }
 
     resendEmail(body: { email: string; id: string }) {
         return this.http
@@ -67,19 +105,6 @@ export class UserService {
                     return throwError(err);
                 })
             );
-    }
-
-    getUsers(): Observable<getAllRequest[]> {
-        return this.http.get<getAllRequest[]>(`${this.baseUrl}user`).pipe(
-            catchError((err) => {
-                ('');
-                this.toast.error(`Erro ao consultar usuários`, null, {
-                    progressBar: true,
-                    timeOut: 2000,
-                });
-                return throwError(err);
-            })
-        );
     }
 
     resendTenant(body: { email: string; user_id: string }) {

@@ -26,18 +26,23 @@ export class TfaComponent implements OnInit {
         private socketService: SocketService
     ) {
         this.app_image = localStorage.getItem('app_image')
+        this.bg_color = localStorage.getItem('bg_color')
         this.logo = localStorage.getItem('logo')
         this.authService.get_app_image().subscribe(res => {
             localStorage.setItem('app_image', res.app_image)
+            localStorage.setItem('bg_color', res.bg_color)
             localStorage.setItem('logo', res.tenant_image)
             this.app_image = res.app_image
             this.logo = res.tenant_image
+            this.bg_color = res.bg_color
         }, ({error}) => {   
 
         })
     }
+    bg_color =''
     app_image =''
     logo = ''
+
     validate() {
         try {
             jwtDecode(localStorage.getItem('tempToken'), {

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import decode from 'jwt-decode';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, throwError } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'environments/environment';
@@ -71,7 +71,14 @@ export class AuthService {
         return this.http.post(`${this.baseUrl}login/set-new-pass`, payload);
     }
     register(user): Observable<any> {
-        return this.http.post<any>(`${this.baseUrl}login/register`, user);
+        console.log(user.token)
+        const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + 'user.token'
+            })
+          };
+        return this.http.post<any>(`${this.baseUrl}login/register`, user, httpOptions);
     }
 
     logout() {

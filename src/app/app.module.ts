@@ -78,6 +78,7 @@ export class AppModule {
         this.authService.get_app_image().subscribe(res => {
             localStorage.setItem('app_image', res.app_image)
             localStorage.setItem('logo', res.tenant_image)
+            localStorage.setItem('bg_color', res.bg_color)
             
         }, ({error}) => {   
 

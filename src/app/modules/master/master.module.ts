@@ -47,6 +47,7 @@ import { CriarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota
 import { EditarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rota/editar-rota.component';
 import { ColorPickerComponent } from './tenant/gestao-tenant-edit/color_picker';
 import { AddAccessAdminComponent } from './tenant-user-list/add-access-admin/add-access-admin.component';
+import { ConfigsComponent } from './tenant/configs/configs.component';
 
     const masterRoutes: Route[] = [
         {
@@ -69,6 +70,11 @@ import { AddAccessAdminComponent } from './tenant-user-list/add-access-admin/add
         {
             path: 'gestao/tenants',
             component: GestaoTenantComponent,
+        },
+        
+        {
+            path: 'gestao/config',
+            component: ConfigsComponent,
         },
         {
             path: 'gestao/tenants/criar',
@@ -108,6 +114,7 @@ import { AddAccessAdminComponent } from './tenant-user-list/add-access-admin/add
         CriarRotaComponent,
         EditarRotaComponent,
         ColorPickerComponent,
+        ConfigsComponent
     ],
     imports: [
         CommonModule,

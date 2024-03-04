@@ -1,0 +1,81 @@
+<div class="w-full flex items-start justify-center mt-8">
+    <form (submit)="$event.preventDefault()" [formGroup]="form"
+    class="flex gap-x-4 w-[95%] rounded-md flex-col  bg-white justify-start">
+    <h1 class="text-3xl m-5">
+        CONFIGURAÇÔES DA APLICAÇÃO
+    </h1>
+
+        <div class="flex flex-col gap-x-30 col-span-1 m-5">
+            
+            <mat-form-field appearance="fill" class="w-56 mb-8">
+                <mat-label>Cor de fundo (tela de login)</mat-label>
+                <app-color-picker (colorSelected)="onColorSelected($event, 'bg_color')"
+                    [selectedColor]="this.form.value.bg_color"></app-color-picker>
+                <input formControlName="bg_color" matInput #first />
+                <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
+            </mat-form-field>
+            <div class="w-full">
+
+                <div class="flex flex-row">
+                    <div>
+                        <mat-label class="mb-3">Logo (tela de login)</mat-label>
+                        <div class="flex justify-between items-center mb-3">
+                            <div class="custom-file-upload text-center w-56 h-10">
+                                <span>Selecionar imagem</span>
+                                <input type="file" 
+                                    (change)="onFileLogoSelected($event)" class="" />
+                            </div>
+
+                        </div>
+                        <div *ngIf="form.controls.logo.touched" class="text-red-600 mb-2">
+                            <div *ngIf="form.controls.logo.errors?.['required']">
+                                Logo é Obrigatório
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <p>* A logo deve ser png/jpeg</p>
+                            <p>* altura máxima de 28px</p>
+                            <p>* tamanho até 110px</p>
+                        </div>
+                    </div>
+                    <img *ngIf="form.value.logo && form.value.logo.length > 0" [src]="this.form.value.logo"
+                        class="h-20  w-auto ml-8" />
+                </div>
+                <div class="flex flex-row">
+                    <div>
+
+                        <mat-label class="mb-3">Imagem de fundo (tela de login)</mat-label>
+                        <div class="flex justify-between items-center mb-3">
+                            <div class="custom-file-upload text-center w-56 h-10">
+                                <span>Selecionar imagem</span>
+                                <input type="file" 
+                                    (change)="onBgImageFileSelected($event)" class="" />
+                            </div>
+
+                        </div>
+                        <div *ngIf="form.controls.bg_image.touched" class="text-red-600 mb-2">
+                            <div *ngIf="form.controls.bg_image.errors?.['required']">
+                                Imagem de fundo é Obrigatório
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <p>* A logo deve ser png/jpeg</p>
+                            <p>* altura máxima de 28px</p>
+                            <p>* tamanho até 110px</p>
+                        </div>
+                    </div>
+
+                    <img *ngIf="form.value.bg_image && form.value.bg_image.length > 0" [src]="this.form.value.bg_image"
+                        class="h-20 w-auto ml-8" />
+
+                </div>
+            </div>
+        </div>
+
+
+        <button mat-raised-button (click)="salvar()"
+        class="self-start mt-2 rounded-sm text-colorText m-8 bg-[#006cbe] text-white"> 
+            Salvar
+        </button>
+    </form>
+</div>
