@@ -63,6 +63,7 @@ import { AtivosComponent } from './connections/ativos/ativos.component';
 import { GeralComponent } from './connections/geral/geral.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TelasComponent } from './telas/telas.component';
+import { SessionService } from '../services/session.service';
 
 const adminroutes: Route[] = [
     {
