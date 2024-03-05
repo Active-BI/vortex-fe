@@ -12,6 +12,7 @@ export interface PreRegisterUpdate {
     role_id: string;
 }
 
+
 @Injectable({ providedIn: 'root' })
 export class SessionService {
     constructor(private http: HttpClient) {}
