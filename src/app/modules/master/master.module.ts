@@ -31,14 +31,14 @@ import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
 import { GestaoTenantComponent } from './tenant/gestao-tenant/gestao-tenant.component';
 import { GestaoTenantEditComponent } from './tenant/gestao-tenant-edit/gestao-tenant-edit.component';
 import { GestaoTenantCriarComponent } from './tenant/gestao-tenant-criar/gestao-tenant-criar.component';
-import { AdminRequestBlockModalComponent } from './admin-request/admin-request-block-modal/admin-request-block-modal.component';
 import { MatSelectModule } from '@angular/material/select';
-import { AdminRequestConfirmationModalComponent } from './admin-request/admin-request-confirmation-modal/admin-request-confirmation-modal.component';
-import { AdminRequestsComponent } from './admin-request/admin-requests/admin-requests.component';
 import { TenantUserListComponent } from './tenant-user-list/tenant-user-list.component';
 import { EditAdminAccessComponent } from './tenant-user-list/edit_access_admin/edit_access_admin.component';
 import { GestaoDeTelasComponent } from './gestao-de-telas/gestao-de-telas.component';
-import { EdicaoCriacaoGrupoComponent, EdicaoGrupoComponent } from './gestao-de-telas/modais/criacao-grupo/edicao-criacao-grupo.component';
+import {
+    EdicaoCriacaoGrupoComponent,
+    EdicaoGrupoComponent,
+} from './gestao-de-telas/modais/criacao-grupo/edicao-criacao-grupo.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { RotasAninhadasComponent } from './gestao-de-telas/rotas-aninhadas/rotas-aninhadas.component';
 import { DeletarGrupoComponent } from './gestao-de-telas/modais/deletar-grupo/deletar-grupo.component';
@@ -49,59 +49,52 @@ import { ColorPickerComponent } from './tenant/gestao-tenant-edit/color_picker';
 import { AddAccessAdminComponent } from './tenant-user-list/add-access-admin/add-access-admin.component';
 import { ConfigsComponent } from './tenant/configs/configs.component';
 
-    const masterRoutes: Route[] = [
-        {
-            path: 'gestao/telas',
-            component: GestaoDeTelasComponent,
-        },
-        {
-            path: 'gestao/telas/grupo/:id',
-            component: RotasAninhadasComponent,
-        },
-        {
-            path: 'gestao/telas/criar-tela-aninhada/groupId/:groupId',
-            component: CriarRotaComponent,
-        },
-        {
-            path: 'gestao/telas/editar-tela-aninhada/groupId/:groupId/screenId/:screenId',
-            component: EditarRotaComponent,
-        },
+const masterRoutes: Route[] = [
+    {
+        path: 'gestao/telas',
+        component: GestaoDeTelasComponent,
+    },
+    {
+        path: 'gestao/telas/grupo/:id',
+        component: RotasAninhadasComponent,
+    },
+    {
+        path: 'gestao/telas/criar-tela-aninhada/groupId/:groupId',
+        component: CriarRotaComponent,
+    },
+    {
+        path: 'gestao/telas/editar-tela-aninhada/groupId/:groupId/screenId/:screenId',
+        component: EditarRotaComponent,
+    },
 
-        {
-            path: 'gestao/tenants',
-            component: GestaoTenantComponent,
-        },
-        
-        {
-            path: 'gestao/config',
-            component: ConfigsComponent,
-        },
-        {
-            path: 'gestao/tenants/criar',
-            component: GestaoTenantCriarComponent,
-        },
-        {
-            path: 'gestao/tenants/editar/:id',
-            component: GestaoTenantEditComponent,
-        },
-        {
-            path: 'gestao/tenants/:id/user/list',
-            component: TenantUserListComponent,
-        },
-        {
-            path: 'gestao/solicitacoes-de-cadastro',
-            component: AdminRequestsComponent,
-        },
-    ];
+    {
+        path: 'gestao/tenants',
+        component: GestaoTenantComponent,
+    },
+
+    {
+        path: 'gestao/config',
+        component: ConfigsComponent,
+    },
+    {
+        path: 'gestao/tenants/criar',
+        component: GestaoTenantCriarComponent,
+    },
+    {
+        path: 'gestao/tenants/editar/:id',
+        component: GestaoTenantEditComponent,
+    },
+    {
+        path: 'gestao/tenants/:id/user/list',
+        component: TenantUserListComponent,
+    },
+];
 
 @NgModule({
     declarations: [
         AddAccessAdminComponent,
         GestaoTenantComponent,
         GestaoTenantCriarComponent,
-        AdminRequestsComponent,
-        AdminRequestConfirmationModalComponent,
-        AdminRequestBlockModalComponent,
         TenantUserListComponent,
         EditAdminAccessComponent,
         GestaoTenantEditComponent,
@@ -114,7 +107,7 @@ import { ConfigsComponent } from './tenant/configs/configs.component';
         CriarRotaComponent,
         EditarRotaComponent,
         ColorPickerComponent,
-        ConfigsComponent
+        ConfigsComponent,
     ],
     imports: [
         CommonModule,
