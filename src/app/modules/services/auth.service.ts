@@ -71,17 +71,9 @@ export class LocalAuthService {
         return this.http.post(`${this.baseUrl}login/set-new-pass`, payload);
     }
     register(user): Observable<any> {
-        console.log(user.token);
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + 'user.token',
-            }),
-        };
         return this.http.post<any>(
             `${this.baseUrl}login/register`,
             user,
-            httpOptions
         );
     }
 

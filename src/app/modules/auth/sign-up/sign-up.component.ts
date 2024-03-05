@@ -124,7 +124,6 @@ export class AuthSignUpComponent
             .register({
                 ...this.signUpForm.value,
                 email: this.email,
-                token: this.token,
             })
             .subscribe((response) => {
                 this.dialog.open(SignUpModalComponent, {
