@@ -31,12 +31,11 @@ import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 
-import { AccessRequestComponent } from '../home/access-request/access-request.component';
 
 const homeRoutes: Route[] = [];
 
 @NgModule({
-    declarations: [AccessRequestComponent],
+    declarations: [],
     imports: [
         CommonModule,
         LayoutModule,

@@ -2,7 +2,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule, OnInit } from '@angular/core';
 import { CommonModule, NgForOf } from '@angular/common';
 import { Route, Router, RouterModule } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
-import { AdminComponent } from './admin.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import {
@@ -23,7 +22,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { SharedModule } from 'app/shared/shared.module';
 import { CreateUserComponent } from './users/create-user/create-user.component';
-import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import {
+    DateAdapter,
+    MAT_DATE_LOCALE,
+    MatNativeDateModule,
+} from '@angular/material/core';
 import { getPortuguesePaginatorIntl } from '../services/portuguese-paginator-intl';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -35,7 +38,7 @@ import { BiDashboardDefaultComponent } from './bi-dashboard-default/bi-default.c
 import { MessagesModule } from 'app/layout/common/messages/messages.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 
@@ -59,7 +62,7 @@ import { SocketService } from '../services/socket.service';
 import { ConnectionsComponent } from './connections/connections.component';
 import { AtivosComponent } from './connections/ativos/ativos.component';
 import { GeralComponent } from './connections/geral/geral.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TelasComponent } from './telas/telas.component';
 
 const adminroutes: Route[] = [
@@ -126,7 +129,6 @@ const adminroutes: Route[] = [
 @NgModule({
     declarations: [
         InicioComponent,
-        AdminComponent,
         DeleteModalComponent,
         CreateUserComponent,
         ListUsersComponent,
@@ -155,7 +157,8 @@ const adminroutes: Route[] = [
         MatPaginatorModule,
         NgxMatFileInputModule,
         MatFormFieldModule,
-        MatDialogModule,MatDatepickerModule,
+        MatDialogModule,
+        MatDatepickerModule,
         FormsModule,
         MatInputModule,
         ReactiveFormsModule,
@@ -178,10 +181,11 @@ const adminroutes: Route[] = [
         MatMenuModule,
         FormsModule,
         MatFormFieldModule,
-        NgForOf,MatTableModule,
-         MatInputModule,
-         MatDatepickerModule,
-         MatNativeDateModule,
+        NgForOf,
+        MatTableModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [
@@ -193,14 +197,18 @@ const adminroutes: Route[] = [
 })
 export class AdminModule {
     socket: any;
-    constructor(private router: Router, private socketService: SocketService,
-        private MenuItemService: MenuItemService, private pageService: PageService) {
-            this.socket = this.socketService.socket
-        this.callRoutes()
+    constructor(
+        private router: Router,
+        private socketService: SocketService,
+        private MenuItemService: MenuItemService,
+        private pageService: PageService
+    ) {
+        this.socket = this.socketService.socket;
+        this.callRoutes();
         setInterval(() => {
             Promise.all([localStorage.getItem('session_id')]).then((res) => {
                 if (res[0]) {
-                    this.socketService.alive()
+                    this.socketService.alive();
                     // this.socket.emit('alive', );
                 }
             });
@@ -211,13 +219,17 @@ export class AdminModule {
             });
         }, 5000);
     }
-  
+
     async callRoutes() {
-        if (localStorage.getItem('token') && localStorage.getItem('token').length > 0) {
-            return await Promise.all([this.pageService.getUserRoutes().toPromise()]).then(async bruto => {
-                    await this.MenuItemService.tratarRotas(bruto[0].userRoutes)
-            })
+        if (
+            localStorage.getItem('token') &&
+            localStorage.getItem('token').length > 0
+        ) {
+            return await Promise.all([
+                this.pageService.getUserRoutes().toPromise(),
+            ]).then(async (bruto) => {
+                await this.MenuItemService.tratarRotas(bruto[0].userRoutes);
+            });
         }
     }
 }
-
