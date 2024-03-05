@@ -49,7 +49,6 @@ import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
 import { AuthGuardScreen } from '../services/guards/AuthGuardScreen.guard';
 import { HomeComponent } from '../home/home.component';
 import { MatRadioModule } from '@angular/material/radio';
-import { RequestModalComponent } from '../home/access-request/request-modal/request-modal.component';
 import { LogModalComponent } from '../embedded-report-type/log-modal/log-modal.component';
 import { SignUpModalComponent } from '../auth/sign-up/sign-up-modal/sign-up-modal.component';
 import { PageMasterService } from '../services/page-master.service';
@@ -136,7 +135,6 @@ const adminroutes: Route[] = [
         BiDashboardDefaultComponent,
         BiReportDefaultComponent,
         HomeComponent,
-        RequestModalComponent,
         LogModalComponent,
         SignUpModalComponent,
         TfaComponent,
