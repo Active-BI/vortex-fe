@@ -98,6 +98,14 @@ export const defaultRoute: FuseNavigationItem[] = [
         icon: 'heroicons_outline:home',
         link: 'inicio',
     },
+    {
+        data: { roles: ['User', 'Admin', 'Master'] },
+        id: 'treinamentos',
+        title: 'Treinamentos',
+        type: 'basic',
+        icon: 'heroicons_outline:home',
+        link: 'treinamentos',
+    },
 ];
 export const defaultNavigation: FuseNavigationItem[] = [];
 @Injectable({

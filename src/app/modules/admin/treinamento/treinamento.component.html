@@ -1,0 +1,35 @@
+<div fxLayout="row wrap" fxLayoutAlign="start center" style="padding: 2%" class="grid grid-cols-3 w-full">
+    <!-- <div fxFlex="100" style="margin-left: 0.5%; font-weight: bold;">REALIZADAS</div> -->
+    <ng-container *ngFor="let video of videos" style="margin: 0.5%;" class="">
+
+        <mat-card class="¨flex justify-center col-span-1 mb-5" fxFlex="0 1 calc(33.3% - 11px)" fxFlex.lt-md="0 1 calc(50% - 11px)"
+            fxFlex.lt-sm="100%">
+
+
+            <mat-card-content fxLayoutAlign="center center">
+                <div>
+                    <iframe class="w-[80%] rounded-3xl" [src]="video.safeUrl" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </mat-card-content>
+
+            <mat-card-title class=" w-[80%]">
+                <div class="row">
+                    <p class="w-[80%]">
+                        <span style="font-size:0.9rem;" fxFlex="70"
+                            fxLayoutAlign="start center">{{video.snippet.title}}</span>
+                        <span fxFlex></span>
+                    </p>
+                    <mat-chip fxFlex="25" class="mat-chip-date flex justify-between w-[80%]" selected="true" fxLayoutAlign="center center">
+                        <p style="font-size:0.7rem;">Canal: <span>{{video.snippet.channelTitle}}</span></p>
+                        <span style="font-size:0.7rem;">{{video.date }}</span>
+                    </mat-chip>
+                </div>
+            </mat-card-title>
+            <!-- <mat-card-actions style="margin:1px;padding-bottom:5px; padding-top: 5px;">
+            </mat-card-actions> -->
+        </mat-card>
+
+    </ng-container>
+</div>

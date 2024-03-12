@@ -64,6 +64,7 @@ import { GeralComponent } from './connections/geral/geral.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TelasComponent } from './telas/telas.component';
 import { SessionService } from '../services/session.service';
+import { TreinamentoComponent } from './treinamento/treinamento.component';
 
 const adminroutes: Route[] = [
     {
@@ -74,6 +75,10 @@ const adminroutes: Route[] = [
     {
         path: 'inicio',
         component: InicioComponent,
+    },
+    {
+        path: 'treinamentos',
+        component: TreinamentoComponent,
     },
     {
         path: 'view-report/:group/:type',
@@ -144,6 +149,7 @@ const adminroutes: Route[] = [
         AtivosComponent,
         GeralComponent,
         TelasComponent,
+        TreinamentoComponent,
     ],
     imports: [
         MatTabsModule,
