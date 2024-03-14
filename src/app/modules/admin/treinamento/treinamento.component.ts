@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as moment from 'moment';
+import { TreinamentoService } from '../../services/treinamentos.service';
 
 @Component({
   selector: 'app-treinamento',
@@ -9,47 +10,64 @@ import * as moment from 'moment';
   styleUrls: ['./treinamento.component.scss']
 })
 export class TreinamentoComponent implements OnInit {
-  private apiKey = 'AIzaSyDQ7M9VBoOw6R3XZiYQqiDNg_phHVuvQiw';
   private playlistId = 'RDMM';
-  private apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?key=${this.apiKey}&playlistId=${this.playlistId}&part=snippet&maxResults=50`;
+  videosPerPage = 15;
+  currentPage = 17;
   videos = []
-  constructor(private http: HttpClient,
+
+  constructor(private treinamentoService: TreinamentoService,
     public sanitizer: DomSanitizer
     ) { }
 
   ngOnInit(): void {
-    var header = new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + 'AIzaSyDQ7M9VBoOw6R3XZiYQqiDNg_phHVuvQiw'
-   });
-  this.http.get(this.apiUrl).subscribe((res: any) => {
-    this.videos = res.items.map(item => {
-      const date = moment('2015-02-20T16:16:38Z');
-      const now = moment();
+  const localTreinamentos = localStorage.getItem("videos-treinamento")
 
-      const yearsAgo = now.diff(date, 'years');
-      const monthsAgo = now.diff(date, 'months');
-      const daysAgo = now.diff(date, 'days');
-
-      let summary: string;
-
-      if (yearsAgo >= 1) {
-        summary = `há ${yearsAgo} ano${yearsAgo > 1 ? 's' : ''} atrás`;
-      } else if (monthsAgo >= 1) {
-        summary = `há ${monthsAgo} mês${monthsAgo > 1 ? 'es' : ''} atrás`;
-      } else {
-        summary = `há ${daysAgo} dia${daysAgo > 1 ? 's' : ''} atrás`;
-      }
-
-      return ({
-      ...item,
-      date: summary,
-      safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + item.snippet.resourceId.videoId)
+  if (!localTreinamentos) {
+    this.treinamentoService.getTreinamentos(this.playlistId).subscribe((res: any) => {
+      this.videos = res.map(item => {
+        return ({
+          ...item,
+          safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + item.snippet.resourceId.videoId)
+        })
+      })
+      localStorage.setItem("videos-treinamento",JSON.stringify(res))
     })
-    
-  })
-    
-  })
+    }else {
+      this.videos = JSON.parse(localStorage.getItem("videos-treinamento")).map(item => {
+        return ({
+          ...item,
+          safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + item.snippet.resourceId.videoId)
+        })
+      })
+    }
+  } 
+  get paginatedVideos() {
+    const startIndex = (this.currentPage - 1) * this.videosPerPage;
+    const endIndex = startIndex + this.videosPerPage;
+    return this.videos.slice(startIndex, endIndex);
   }
 
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  goToPage(pageNumber: number) {
+    if (pageNumber >= 1 && pageNumber <= this.totalPages) {
+      this.currentPage = pageNumber;
+    }
+  }
+  get totalPagesArray() {
+    return Array.from({ length: this.totalPages }, (_, index) => index + 1);
+}
+  get totalPages() {
+    return Math.ceil(this.videos.length / this.videosPerPage);
+  }
 }

@@ -100,11 +100,18 @@ export const defaultRoute: FuseNavigationItem[] = [
     },
     {
         data: { roles: ['User', 'Admin', 'Master'] },
-        id: 'treinamentos',
+        id: 'treinamentos-menu',
         title: 'Treinamentos',
-        type: 'basic',
-        icon: 'heroicons_outline:home',
-        link: 'treinamentos',
+        type: 'collapsable',
+        icon: 'subscriptions',
+        children: [
+            {
+                id: 'tutoriais',
+                title: 'Tutoriais',
+                type: 'basic',
+                link: 'tutoriais',
+            }
+        ]
     },
 ];
 export const defaultNavigation: FuseNavigationItem[] = [];

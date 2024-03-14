@@ -69,16 +69,16 @@ export class AppModule {
     ) {
         this.socket = this.socketService.socket;
         this.socket.on('logou', (res) => {});
-        Promise.all([localStorage.getItem('session_id')]).then((res) => {
-            this.session = res[0];
-            if (res[0]) this.socket.emit('user-check', res[0]);
-        });
+        // Promise.all([localStorage.getItem('session_id')]).then((res) => {
+        //     this.session = res[0];
+        //     if (res[0]) this.socket.emit('user-check', res[0]);
+        // });
 
-        this.socket.on('logout', () => {
-            localStorage.clear();
-            this.socket.disconnect();
-            this.router.navigate(['auth/sign-out']);
-        });
+        // this.socket.on('logout', () => {
+        //     localStorage.clear();
+        //     this.socket.disconnect();
+        //     this.router.navigate(['auth/sign-out']);
+        // });
 
         this.authService.get_app_image().subscribe(
             (res) => {
