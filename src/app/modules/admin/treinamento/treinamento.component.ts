@@ -12,7 +12,7 @@ import { TreinamentoService } from '../../services/treinamentos.service';
 export class TreinamentoComponent implements OnInit {
   private playlistId = 'RDMM';
   videosPerPage = 15;
-  currentPage = 17;
+  currentPage = 0;
   videos = []
 
   constructor(private treinamentoService: TreinamentoService,
