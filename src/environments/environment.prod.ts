@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    baseUrl: 'https://active-pme-api-e669a9769a4e.herokuapp.com/api/',
-    socketUrl: 'https://active-pme-api-e669a9769a4e.herokuapp.com/',
+    baseUrl: 'https://active-cliente-portal-be-508406ece2fb.herokuapp.com/api/',
+    socketUrl: 'https://active-cliente-portal-be-508406ece2fb.herokuapp.com/',
 };

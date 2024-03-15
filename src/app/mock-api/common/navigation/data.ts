@@ -100,10 +100,18 @@ export const defaultRoute: FuseNavigationItem[] = [
     },
     {
         data: { roles: ['User', 'Admin', 'Master'] },
+        id: 'blog',
+        title: 'Blog',
+        type: 'basic',
+        icon: 'heroicons_outline:newspaper',
+        link: 'blog',
+    },
+    {
+        data: { roles: ['User', 'Admin', 'Master'] },
         id: 'treinamentos-menu',
         title: 'Treinamentos',
         type: 'collapsable',
-        icon: 'subscriptions',
+        icon: 'mat_outline:subscriptions',
         children: [
             {
                 id: 'tutoriais',
