@@ -1,18 +1,33 @@
-<div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0" id="main-bg">
-    <div class="flex items-center justify-center md:justify-end w-full h-full     md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 md:rounded-none sm:shadow md:shadow-none bg-cover bg-white"  [style.backgroundImage]="'url(' + app_image + ')'" [style.backgroundRepeat]="'no-repeat'" [style.backgroundPosition]="'center'"> 
-        <div class="w-full max-w-100 sm:w-100  mx-auto sm:mx-0 bg-white rounded-md p-12">
+<div
+    class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0"
+    id="main-bg"
+>
+    <div
+        class="flex items-center justify-center md:justify-end w-full h-full md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 md:rounded-none sm:shadow md:shadow-none bg-cover bg-white"
+        [style.backgroundImage]="'url(' + app_image + ')'"
+        [style.backgroundRepeat]="'no-repeat'"
+        [style.backgroundPosition]="'center'"
+    >
+        <div
+            class="w-full max-w-100 sm:w-100 mx-auto sm:mx-0 bg-white rounded-md p-12"
+        >
             <!-- Logo -->
             <div class="">
                 <!-- <img src="assets/images/Active_Logo2.png"> -->
             </div>
 
             <!-- Title -->
-            <div class="mt-2 text-4xl font-extrabold text-primary tracking-tight leading-tight">Cadastre-se</div>
+            <div
+                class="mt-2 text-4xl font-extrabold text-primary tracking-tight leading-tight"
+            >
+                Cadastre-se
+            </div>
             <div class="flex items-baseline mt-0.5 font-medium">
                 <div>Já tem uma conta</div>
                 <a
                     class="ml-1 text-primary underline"
-                    [routerLink]="['/auth/sign-in']">Entrar
+                    [routerLink]="['/auth/sign-in']"
+                    >Entrar
                 </a>
             </div>
 
@@ -23,26 +38,24 @@
                 [appearance]="'outline'"
                 [showIcon]="false"
                 [type]="alert.type"
-                [@shake]="alert.type === 'error'">
-                {{alert.message}}
+                [@shake]="alert.type === 'error'"
+            >
+                {{ alert.message }}
             </fuse-alert>
 
             <!-- Sign Up form -->
-            <form
-                class="mt-8"
-                [formGroup]="signUpForm"
-                #signUpNgForm="ngForm">
-
-                <mat-form-field class="w-full "  >
+            <form class="mt-8" [formGroup]="signUpForm" #signUpNgForm="ngForm">
+                <mat-form-field class="w-full">
                     <mat-label>E-mail</mat-label>
-                    <input
-                    id="email"
-                    matInput
-                    [formControlName]="'email'">
-                    <mat-error *ngIf="signUpForm.get('email').hasError('required')">
+                    <input id="email" matInput [formControlName]="'email'" />
+                    <mat-error
+                        *ngIf="signUpForm.get('email').hasError('required')"
+                    >
                         * Obrigatório
                     </mat-error>
-                    <mat-error *ngIf="signUpForm.get('email').hasError('email')">
+                    <mat-error
+                        *ngIf="signUpForm.get('email').hasError('email')"
+                    >
                         * Informe um e-mail válido
                     </mat-error>
                 </mat-form-field>
@@ -54,34 +67,74 @@
                         matInput
                         type="password"
                         [formControlName]="'password'"
-                        #passwordField>
+                        #passwordField
+                    />
                     <button
                         mat-icon-button
                         type="button"
-                        (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
-                        matSuffix>
+                        (click)="
+                            passwordField.type === 'password'
+                                ? (passwordField.type = 'text')
+                                : (passwordField.type = 'password')
+                        "
+                        matSuffix
+                    >
                         <mat-icon
                             class="icon-size-5"
                             *ngIf="passwordField.type === 'password'"
-                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                            [svgIcon]="'heroicons_solid:eye'"
+                        ></mat-icon>
                         <mat-icon
                             class="icon-size-5"
                             *ngIf="passwordField.type === 'text'"
-                            [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
+                            [svgIcon]="'heroicons_solid:eye-off'"
+                        ></mat-icon>
                     </button>
 
-                    <mat-error *ngIf="signUpForm.get('password').hasError('required')">
+                    <mat-error
+                        *ngIf="signUpForm.get('password').hasError('required')"
+                    >
                         * Obrigatório
                     </mat-error>
 
-                    <mat-error *ngIf="signUpForm.get('password').hasError('specialChar')">
+                    <mat-error
+                        *ngIf="
+                            signUpForm.get('password').hasError('specialChar')
+                        "
+                    >
                         * Deve possuir 1 caractere especial
                     </mat-error>
-                    <mat-error *ngIf="signUpForm.get('password').hasError('minlength')">
+                    <mat-error
+                        *ngIf="signUpForm.get('password').hasError('minlength')"
+                    >
                         * Mínimo de 6 dígitos
                     </mat-error>
-                    <mat-error *ngIf="signUpForm.get('password').hasError('UpperCaseLetter')">
+                    <mat-error
+                        *ngIf="
+                            signUpForm
+                                .get('password')
+                                .hasError('UpperCaseLetter')
+                        "
+                    >
                         * Deve Possuir 1 letra maiúscula
+                    </mat-error>
+                    <mat-error
+                        *ngIf="
+                            signUpForm
+                                .get('password')
+                                .hasError('LowerCaseLetter')
+                        "
+                    >
+                        * Deve Possuir 1 letra minúscula
+                    </mat-error>
+                    <mat-error
+                        *ngIf="
+                            signUpForm
+                                .get('password')
+                                .hasError('numberRequired')
+                        "
+                    >
+                        * Deve Possuir 1 número
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="w-full">
@@ -90,26 +143,48 @@
                         matInput
                         type="password"
                         [formControlName]="'passwordConfirm'"
-                        #passwordField2>
+                        #passwordField2
+                    />
                     <button
                         type="button"
-                        (click)="passwordField2.type === 'password' ? passwordField2.type = 'text' : passwordField2.type = 'password'"
+                        (click)="
+                            passwordField2.type === 'password'
+                                ? (passwordField2.type = 'text')
+                                : (passwordField2.type = 'password')
+                        "
                         mat-icon-button
-                        matSuffix>
+                        matSuffix
+                    >
                         <mat-icon
                             class="icon-size-5"
                             *ngIf="passwordField2.type === 'password'"
-                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                            [svgIcon]="'heroicons_solid:eye'"
+                        ></mat-icon>
                         <mat-icon
                             class="icon-size-5"
                             *ngIf="passwordField2.type === 'text'"
-                            [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
+                            [svgIcon]="'heroicons_solid:eye-off'"
+                        ></mat-icon>
                     </button>
-                    <mat-error *ngIf="signUpForm.get('passwordConfirm').hasError('required')">
+                    <mat-error
+                        *ngIf="
+                            signUpForm
+                                .get('passwordConfirm')
+                                .hasError('required')
+                        "
+                    >
                         * Obrigatório
                     </mat-error>
                 </mat-form-field>
-                <mat-error class="-mt-4" *ngIf="!signUpForm.get('passwordConfirm').hasError('required') && signUpForm.hasError('mismatch')">
+                <mat-error
+                    class="-mt-4"
+                    *ngIf="
+                        !signUpForm
+                            .get('passwordConfirm')
+                            .hasError('required') &&
+                        signUpForm.hasError('mismatch')
+                    "
+                >
                     * As senhas devem ser iguais
                 </mat-error>
                 <!-- Submit button -->
@@ -118,27 +193,32 @@
                     mat-flat-button
                     [color]="'primary'"
                     [disabled]="!signUpForm.valid"
-                    (click)="signUp()">
+                    (click)="signUp()"
+                >
                     <span *ngIf="!signUpForm.disabled">
                         Concluir cadastro
                     </span>
                     <mat-progress-spinner
                         *ngIf="signUpForm.disabled"
                         [diameter]="24"
-                        [mode]="'indeterminate'">
+                        [mode]="'indeterminate'"
+                    >
                     </mat-progress-spinner>
                 </button>
-
             </form>
         </div>
     </div>
 
-    <div class="relative hidden md:flex flex-auto items-center justify-center w-1/3 h-full p-16 lg:px-28 overflow-hidden  "[style.backgroundColor]="bg_color"    [style.backgroundImage]="'url(' + logo + ')'" [style.backgroundRepeat]="'no-repeat'" [style.backgroundPosition]="'center'"
-        style="background-size: center center; background-size: 50%; ">
+    <div
+        class="relative hidden md:flex flex-auto items-center justify-center w-1/3 h-full p-16 lg:px-28 overflow-hidden"
+        [style.backgroundColor]="bg_color"
+        [style.backgroundImage]="'url(' + logo + ')'"
+        [style.backgroundRepeat]="'no-repeat'"
+        [style.backgroundPosition]="'center'"
+        style="background-size: center center; background-size: 50%"
+    >
         <div class="z-10 relative w-full max-w-2xl">
-            <div class="text-7xl font-bold leading-none text-white">
-            </div>
-
+            <div class="text-7xl font-bold leading-none text-white"></div>
         </div>
     </div>
 </div>

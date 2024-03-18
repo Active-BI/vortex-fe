@@ -54,6 +54,8 @@ export class ResetPassComponent extends AccessModelComponent implements OnInit {
                     Validators.minLength(6),
                     this.valilateSpecialCharacterPassword,
                     this.valilateUpperCaseLetter,
+                    this.validadeLowerCaseLetter,
+                    this.validateNumber,
                 ],
             ],
         });
@@ -73,6 +75,16 @@ export class ResetPassComponent extends AccessModelComponent implements OnInit {
         return /[A-Z]/.test(control.value as string)
             ? true
             : { UpperCaseLetter: true };
+    }
+    validateNumber(control: FormControl) {
+        return (control.value as string).match(/\d/)
+            ? true
+            : { numberRequired: true };
+    }
+    validadeLowerCaseLetter(control: FormControl) {
+        return (control.value as string).match(/[a-z]/)
+            ? true
+            : { LowerCaseLetter: true };
     }
     resetIsValid() {
         if (this.signUpForm.invalid) {

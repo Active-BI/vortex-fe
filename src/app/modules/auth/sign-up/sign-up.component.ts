@@ -88,6 +88,8 @@ export class AuthSignUpComponent
                     Validators.minLength(6),
                     this.valilateSpecialCharacterPassword,
                     this.valilateUpperCaseLetter,
+                    this.validadeLowerCaseLetter,
+                    this.validateNumber,
                 ],
             ],
         },
@@ -110,6 +112,16 @@ export class AuthSignUpComponent
         const password = group.get('password').value;
         const confirmPassword = group.get('passwordConfirm').value;
         return password === confirmPassword ? null : { mismatch: true };
+    }
+    validateNumber(control: FormControl) {
+        return (control.value as string).match(/\d/)
+            ? true
+            : { numberRequired: true };
+    }
+    validadeLowerCaseLetter(control: FormControl) {
+        return (control.value as string).match(/[a-z]/)
+            ? true
+            : { LowerCaseLetter: true };
     }
 
     signUp(): void {
