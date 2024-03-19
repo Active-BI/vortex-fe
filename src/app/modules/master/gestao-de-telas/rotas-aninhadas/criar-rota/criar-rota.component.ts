@@ -39,7 +39,8 @@ export class CriarRotaComponent implements OnInit {
     page_context = 'criar';
     screenType = Object.values(screenTypes);
     roles = roles;
-    url = new FormControl('', Validators.required);
+    url = new FormControl('', [Validators.required]);
+
     constructor(
         public dialog: MatDialog,
         public fb: FormBuilder,
@@ -148,7 +149,7 @@ export class CriarRotaComponent implements OnInit {
         }
     }
     criarRota() {
-        if (!this.form.valid) {
+        if (!this.form.valid && !this.url.valid) {
             this.toastr.error('Formulário inválido');
             return;
         }
