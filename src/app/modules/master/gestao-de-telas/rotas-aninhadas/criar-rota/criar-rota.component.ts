@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupMasterService } from 'app/modules/services/group-master.service';
@@ -39,6 +39,7 @@ export class CriarRotaComponent implements OnInit {
     page_context = 'criar';
     screenType = Object.values(screenTypes);
     roles = roles;
+    url = new FormControl('', Validators.required);
     constructor(
         public dialog: MatDialog,
         public fb: FormBuilder,
@@ -88,7 +89,6 @@ export class CriarRotaComponent implements OnInit {
         nome_responsavel: ['', [Validators.required]],
         email_responsavel: ['', [Validators.required, Validators.email]],
         roles: [[], [Validators.required]],
-        url: ['', [Validators.required]],
     });
     ngOnInit(): void {
         this.form.patchValue({
@@ -165,7 +165,7 @@ export class CriarRotaComponent implements OnInit {
         );
     }
     urlSeparator() {
-        var url_separada = this.form.value.url.split('/');
+        var url_separada = this.url.value.split('/');
 
         if (
             url_separada.indexOf('groups') !== -1 &&
@@ -175,6 +175,10 @@ export class CriarRotaComponent implements OnInit {
                 group_id: url_separada[url_separada.indexOf('groups') + 1],
                 report_id: url_separada[url_separada.indexOf('reports') + 1],
             });
+            console.log(
+                this.form.controls.group_id.value,
+                this.form.controls.report_id.value
+            );
         } else {
             this.form.patchValue({
                 group_id: '',

@@ -48,33 +48,12 @@
                 >
                     <mat-label>URL</mat-label>
                     <input
-                        formControlName="url"
+                        [formControl]="url"
                         (input)="urlSeparator()"
                         matInput
                         #first
                     />
                 </mat-form-field>
-                <!-- <mat-form-field
-                    appearance="fill"
-                    class="md:col-span-1 fuse-mat-dense col-span-full"
-                >
-                    <mat-label>ID do grupo</mat-label>
-                    <input formControlName="group_id" matInput #first />
-                </mat-form-field>
-                <mat-form-field
-                    appearance="fill"
-                    class="md:col-span-1 fuse-mat-dense col-span-full"
-                >
-                    <mat-label
-                        >ID do
-                        {{
-                            form.value.page_type.includes("dashboard")
-                                ? "Dashboard"
-                                : "Relatório"
-                        }}</mat-label
-                    >
-                    <input formControlName="report_id" matInput #first />
-                </mat-form-field> -->
                 <mat-form-field
                     appearance="fill"
                     class="md:col-span-1 fuse-mat-dense col-span-full"
@@ -93,8 +72,6 @@
                     appearance="fill"
                     class="md:col-span-1 fuse-mat-dense col-span-full"
                 >
-                    <!-- <mat-label>Responsável</mat-label>
-                    <input formControlName="responsavel" matInput #first /> -->
                     <mat-label>Roles</mat-label>
                     <mat-select formControlName="roles" multiple>
                         <mat-select-trigger>
