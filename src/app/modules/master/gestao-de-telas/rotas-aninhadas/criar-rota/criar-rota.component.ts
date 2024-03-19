@@ -88,6 +88,7 @@ export class CriarRotaComponent implements OnInit {
         nome_responsavel: ['', [Validators.required]],
         email_responsavel: ['', [Validators.required, Validators.email]],
         roles: [[], [Validators.required]],
+        url: ['', [Validators.required]],
     });
     ngOnInit(): void {
         this.form.patchValue({
@@ -162,5 +163,23 @@ export class CriarRotaComponent implements OnInit {
             },
             ({ error }) => this.toastr.error('Falha ao criar rota')
         );
+    }
+    urlSeparator() {
+        var url_separada = this.form.value.url.split('/');
+
+        if (
+            url_separada.indexOf('groups') !== -1 &&
+            url_separada.indexOf('reports') !== -1
+        ) {
+            this.form.patchValue({
+                group_id: url_separada[url_separada.indexOf('groups') + 1],
+                report_id: url_separada[url_separada.indexOf('reports') + 1],
+            });
+        } else {
+            this.form.patchValue({
+                group_id: '',
+                report_id: '    ',
+            });
+        }
     }
 }
