@@ -176,10 +176,6 @@ export class CriarRotaComponent implements OnInit {
                 group_id: url_separada[url_separada.indexOf('groups') + 1],
                 report_id: url_separada[url_separada.indexOf('reports') + 1],
             });
-            console.log(
-                this.form.controls.group_id.value,
-                this.form.controls.report_id.value
-            );
         } else {
             this.form.patchValue({
                 group_id: '',
