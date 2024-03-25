@@ -48,6 +48,7 @@ import { EditarRotaComponent } from './gestao-de-telas/rotas-aninhadas/criar-rot
 import { ColorPickerComponent } from './tenant/gestao-tenant-edit/color_picker';
 import { AddAccessAdminComponent } from './tenant-user-list/add-access-admin/add-access-admin.component';
 import { ConfigsComponent } from './tenant/configs/configs.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 const masterRoutes: Route[] = [
     {
@@ -139,6 +140,7 @@ const masterRoutes: Route[] = [
         MatIconModule,
         MatAutocompleteModule,
         ReactiveFormsModule,
+        NgxMaskModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [
