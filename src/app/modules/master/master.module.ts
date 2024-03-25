@@ -140,7 +140,7 @@ const masterRoutes: Route[] = [
         MatIconModule,
         MatAutocompleteModule,
         ReactiveFormsModule,
-        NgxMaskModule,
+        NgxMaskModule.forRoot(),
     ],
     entryComponents: [MatDialogModule],
     providers: [
