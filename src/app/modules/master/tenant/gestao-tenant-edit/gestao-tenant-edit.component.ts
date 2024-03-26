@@ -33,31 +33,31 @@ export class GestaoTenantEditComponent implements OnInit {
         );
     }
 
-    onColorSelected(color: string,label) {
-      this.form.patchValue({
-        [label]: color
-      })
+    onColorSelected(color: string, label) {
+        this.form.patchValue({
+            [label]: color,
+        });
     }
     clearFileSelection() {
         this.form.patchValue({
-            tenant_image: ''
-        })
+            tenant_image: '',
+        });
     }
 
     onFileSelected(event: any) {
         const file = event.target.files[0];
-        
+
         if (file) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            this.form.patchValue({
-                tenant_image:  reader.result as string
-            })
-          };
-    
-          reader.readAsDataURL(file);
+            const reader = new FileReader();
+            reader.onload = () => {
+                this.form.patchValue({
+                    tenant_image: reader.result as string,
+                });
+            };
+
+            reader.readAsDataURL(file);
         }
-      }
+    }
 
     visionsSelecteds = [];
     form = this.fb.group({
@@ -69,7 +69,7 @@ export class GestaoTenantEditComponent implements OnInit {
         company_uf: ['', [Validators.required]],
         company_size: ['', [Validators.required]],
         company_segment: ['', [Validators.required]],
-        company_description: ['', ],
+        company_description: [''],
         dashboard: [[], [Validators.required]],
     });
 
@@ -183,7 +183,7 @@ export class GestaoTenantEditComponent implements OnInit {
     }
 
     editar(): void {
-        console.log(this.form.controls)
+        console.log(this.form.controls);
         if (this.form.valid) {
             this.tenantsService
                 .updateTenant(this.id, {

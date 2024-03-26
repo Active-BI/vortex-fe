@@ -53,7 +53,7 @@
         <ng-container *ngIf="currentPage > 1">
             <button class="p-1 px-2 cursor-pointer bg-white hover:bg-cyan-100 shadow-sm rounded-sm mx-1" (click)="goToPage(currentPage - 1)">{{ currentPage - 1 }}</button>
         </ng-container>
-        <button class="p-1 px-2 cursor-pointer bg-white hover:bg-cyan-100 shadow-sm rounded-sm mx-1" [ngClass]="currentPage == currentPage ? 'bg-yellow-400' : 'bg-white'" (click)="goToPage(currentPage)">{{ currentPage }}</button>
+        <button class="p-1 px-2 cursor-pointer bg-yellow-400 hover:bg-yellow-300 shadow-sm rounded-sm mx-1"  (click)="goToPage(currentPage)">{{ currentPage }}?/</button>
         <ng-container *ngIf="currentPage < totalPages">
             <button class="p-1 px-2 cursor-pointer bg-white hover:bg-cyan-100 shadow-sm rounded-sm mx-1" (click)="goToPage(currentPage + 1)">{{ currentPage + 1 }}</button>
         </ng-container>

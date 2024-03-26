@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupMasterService } from 'app/modules/services/group-master.service';
@@ -39,6 +39,8 @@ export class CriarRotaComponent implements OnInit {
     page_context = 'criar';
     screenType = Object.values(screenTypes);
     roles = roles;
+    url = new FormControl('', [Validators.required]);
+
     constructor(
         public dialog: MatDialog,
         public fb: FormBuilder,
@@ -147,7 +149,7 @@ export class CriarRotaComponent implements OnInit {
         }
     }
     criarRota() {
-        if (!this.form.valid) {
+        if (!this.form.valid && !this.url.valid) {
             this.toastr.error('Formulário inválido');
             return;
         }
@@ -162,5 +164,23 @@ export class CriarRotaComponent implements OnInit {
             },
             ({ error }) => this.toastr.error('Falha ao criar rota')
         );
+    }
+    urlSeparator() {
+        var url_separada = this.url.value.split('/');
+
+        if (
+            url_separada.indexOf('groups') !== -1 &&
+            url_separada.indexOf('reports') !== -1
+        ) {
+            this.form.patchValue({
+                group_id: url_separada[url_separada.indexOf('groups') + 1],
+                report_id: url_separada[url_separada.indexOf('reports') + 1],
+            });
+        } else {
+            this.form.patchValue({
+                group_id: '',
+                report_id: '    ',
+            });
+        }
     }
 }
