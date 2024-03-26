@@ -1,117 +1,166 @@
-<div class="w-full flex flex-col  pl-4 bg-white">
+<div class="w-full flex flex-col pl-4 bg-white">
     <div class="w-full flex mt-4">
-
-        <button (click)="voltar()" class="self-start mr-4  hover:rounded-full">
-            <mat-icon class="flex self-center text-slate-600 hover:text-slate-400" svgIcon="arrow_back"></mat-icon>
+        <button (click)="voltar()" class="self-start mr-4 hover:rounded-full">
+            <mat-icon
+                class="flex self-center text-slate-600 hover:text-slate-400"
+                svgIcon="arrow_back"
+            ></mat-icon>
         </button>
 
-        <h1 class=" text-slate-700 text-2xl mb-6">
-            EDITAR CLIENTE
-        </h1>
+        <h1 class="text-slate-700 text-2xl mb-6">EDITAR CLIENTE</h1>
     </div>
-    <form (submit)="$event.preventDefault()" [formGroup]="form" class="grid gap-x-4 grid-cols-2 w-[95%]">
+    <form
+        (submit)="$event.preventDefault()"
+        [formGroup]="form"
+        class="grid gap-x-4 grid-cols-2 w-[95%]"
+    >
         <div class="flex flex-col col-span-1">
-            
-        <mat-form-field appearance="fill">
-            <mat-label>Nome do Cliente</mat-label>
-            <input formControlName="tenant_name" matInput #first />
-            <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>CNPJ</mat-label>
-            <input formControlName="tenant_cnpj" matInput #first />
-            <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Nome do Cliente</mat-label>
+                <input formControlName="tenant_name" matInput #first />
+                <mat-icon
+                    svgIcon="heroicons_outline:user-circle"
+                    class=""
+                ></mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>CNPJ</mat-label>
+                <input
+                    formControlName="tenant_cnpj"
+                    matInput
+                    #first
+                    mask="CPF_CNPJ"
+                />
+                <mat-icon
+                    svgIcon="heroicons_outline:user-circle"
+                    class=""
+                ></mat-icon>
+            </mat-form-field>
 
-        <div class="flex w-full gap-x-4 mb-3">
-            <mat-form-field class="fuse-mat-no-subscript w-1/2">
-                <mat-label>UF</mat-label>
-                <mat-select formControlName="company_uf" class="">
-                    <mat-option class="" *ngFor="let uf of ufs" [value]="uf">
-                        {{uf}}
+            <div class="flex w-full gap-x-4 mb-3">
+                <mat-form-field class="fuse-mat-no-subscript w-1/2">
+                    <mat-label>UF</mat-label>
+                    <mat-select formControlName="company_uf" class="">
+                        <mat-option
+                            class=""
+                            *ngFor="let uf of ufs"
+                            [value]="uf"
+                        >
+                            {{ uf }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Porte</mat-label>
+                    <mat-select formControlName="company_size" class="">
+                        <mat-option class="" *ngFor="let s of size" [value]="s">
+                            {{ s }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field class="fuse-mat-no-subscript w-full mb-3">
+                <mat-label>Segmentos</mat-label>
+                <mat-select formControlName="company_segment" class="">
+                    <mat-option class="" *ngFor="let s of segments" [value]="s">
+                        {{ s }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-
-            <mat-form-field class="fuse-mat-no-subscript w-full ">
-                <mat-label>Porte</mat-label>
-                <mat-select formControlName="company_size" class="">
-                    <mat-option class="" *ngFor="let s of size" [value]="s">
-                        {{s}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-        <mat-form-field class="fuse-mat-no-subscript w-full mb-3">
-            <mat-label>Segmentos</mat-label>
-            <mat-select formControlName="company_segment" class="">
-                <mat-option class="" *ngFor="let s of segments" [value]="s">
-                    {{s}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
             <mat-form-field class="fuse-mat-no-subscript w-full">
                 <mat-label>Descrição Empresa</mat-label>
-                <textarea matInput [formControlName]="'company_description'" cdkTextareaAutosize
-                    [cdkAutosizeMinRows]="5"></textarea>
+                <textarea
+                    matInput
+                    [formControlName]="'company_description'"
+                    cdkTextareaAutosize
+                    [cdkAutosizeMinRows]="5"
+                ></textarea>
             </mat-form-field>
         </div>
 
         <div class="flex flex-col col-span-1">
-
-        <mat-label class="mb-3">Logo</mat-label>
-        <div class="flex justify-between items-center mb-3">
-            <div class="custom-file-upload text-center w-44 h-10">
-                <span>Selecionar imagem</span>
-                <input type="file"  (change)="onFileSelected($event)" class="" />
+            <mat-label class="mb-3">Logo</mat-label>
+            <div class="flex justify-between items-center mb-3">
+                <div class="custom-file-upload text-center w-44 h-10">
+                    <span>Selecionar imagem</span>
+                    <input
+                        type="file"
+                        (change)="onFileSelected($event)"
+                        class=""
+                    />
+                </div>
+                <img
+                    *ngIf="
+                        form.value.tenant_image &&
+                        form.value.tenant_image.length > 0
+                    "
+                    [src]="this.form.value.tenant_image"
+                    class="h-8 w-auto"
+                />
             </div>
-            <img *ngIf="form.value.tenant_image && form.value.tenant_image.length > 0" [src]="this.form.value.tenant_image" class="h-8  w-auto"/>
-        </div>
-        <div *ngIf="form.controls.tenant_image.touched" class="text-red-600 mb-2">
-            <div *ngIf="form.controls.tenant_image.errors?.['required']">
-                Logo é Obrigatório
+            <div
+                *ngIf="form.controls.tenant_image.touched"
+                class="text-red-600 mb-2"
+            >
+                <div *ngIf="form.controls.tenant_image.errors?.['required']">
+                    Logo é Obrigatório
+                </div>
             </div>
-        </div>
-        <div class="mb-6">
-            <p>* A logo deve ser png/jpeg</p>
-            <p>* altura máxima de 28px</p>
-            <p>* tamanho até 110px</p>
-        </div>
-     
-        <mat-form-field appearance="fill">
-            <mat-label>Cor do menu lateral</mat-label>
-            <app-color-picker (colorSelected)="onColorSelected($event, 'tenant_color')"
-                [selectedColor]="this.form.value.tenant_color"></app-color-picker>
-            <input formControlName="tenant_color" matInput #first />
-            <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
-        </mat-form-field>
+            <div class="mb-6">
+                <p>* A logo deve ser png/jpeg</p>
+                <p>* altura máxima de 28px</p>
+                <p>* tamanho até 110px</p>
+            </div>
 
-        <mat-form-field>
-            <mat-label>Visões</mat-label>
-            <mat-select formControlName="dashboard" multiple="">
+            <mat-form-field appearance="fill">
+                <mat-label>Cor do menu lateral</mat-label>
+                <app-color-picker
+                    (colorSelected)="onColorSelected($event, 'tenant_color')"
+                    [selectedColor]="this.form.value.tenant_color"
+                ></app-color-picker>
+                <input formControlName="tenant_color" matInput #first />
+                <mat-icon
+                    svgIcon="heroicons_outline:user-circle"
+                    class=""
+                ></mat-icon>
+            </mat-form-field>
 
-                <mat-optgroup  *ngFor="let group of dashboardListReduced" [label]="group.page_group"
+            <mat-form-field>
+                <mat-label>Visões</mat-label>
+                <mat-select formControlName="dashboard" multiple="">
+                    <mat-optgroup
+                        *ngFor="let group of dashboardListReduced"
+                        [label]="group.page_group"
                     >
-                    <mat-option class="ml-4" *ngFor="let page of group.children" [value]="page.id">
-                        {{page.name}}
-                    </mat-option>
-                </mat-optgroup>
-            </mat-select>
-        </mat-form-field>
+                        <mat-option
+                            class="ml-4"
+                            *ngFor="let page of group.children"
+                            [value]="page.id"
+                        >
+                            {{ page.name }}
+                        </mat-option>
+                    </mat-optgroup>
+                </mat-select>
+            </mat-form-field>
 
-        <div class="flex mt-6   self-end justify-self-end">
-
-            <button color="warn" (click)="deletarUsuario(id)"
-                class="text-white text-center algin-middle bg-red-500 w-20 hover:bg-red-600 h-7 mr-2 font-medium rounded-md text-sm dark:bg-red-400 focus:outline-none dark:focus:ring-red-800">REMOVER</button>
-            <button color="primary" (click)="editar()"
-                class="text-white text-center algin-middle bg-blue-600 w-20 hover:bg-blue-700 h-7 mr-2 font-medium rounded-md text-sm dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-500">SALVAR</button>
-    
-    
+            <div class="flex mt-6 self-end justify-self-end">
+                <button
+                    color="warn"
+                    (click)="deletarUsuario(id)"
+                    class="text-white text-center algin-middle bg-red-500 w-20 hover:bg-red-600 h-7 mr-2 font-medium rounded-md text-sm dark:bg-red-400 focus:outline-none dark:focus:ring-red-800"
+                >
+                    REMOVER
+                </button>
+                <button
+                    color="primary"
+                    (click)="editar()"
+                    class="text-white text-center algin-middle bg-blue-600 w-20 hover:bg-blue-700 h-7 mr-2 font-medium rounded-md text-sm dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-500"
+                >
+                    SALVAR
+                </button>
+            </div>
         </div>
-    </div>
-
     </form>
-
-
 </div>
