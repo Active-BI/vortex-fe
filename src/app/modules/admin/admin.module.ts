@@ -78,7 +78,7 @@ const adminroutes: Route[] = [
         component: InicioComponent,
     },
     {
-        path: 'tutoriais',
+        path: 'playlist/:playlistId',
         component: TreinamentoComponent,
     },
     {

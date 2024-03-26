@@ -56,7 +56,7 @@ class CreateRoutes {
             id,
             title,
             type: 'basic',
-            link:  link,
+            link: link,
         };
     }
     static DashboardRoute(
@@ -114,12 +114,92 @@ export const defaultRoute: FuseNavigationItem[] = [
         icon: 'mat_outline:subscriptions',
         children: [
             {
-                id: 'tutoriais',
-                title: 'Tutoriais',
+                id: 'powerBi',
+                title: 'Power BI',
+                type: 'collapsable',
+                children: [
+                    {
+                        id: 'pbiBasico',
+                        title: 'PBI Básico',
+                        type: 'basic',
+                        link: 'playlist/RDMM',
+                    },
+                    {
+                        id: 'pbiIntermedirio',
+                        title: 'PBI Intermediário',
+                        type: 'basic',
+                        link: 'playlist/RDMM',
+                    },
+                    {
+                        id: 'pbiAvancado',
+                        title: 'PBI Avançado',
+                        type: 'basic',
+                        link: 'playlist/RDMM',
+                    },
+                    {
+                        id: 'daxAvancado',
+                        title: 'Dax Avançado',
+                        type: 'basic',
+                        link: 'playlist/RDMM',
+                    },
+                    {
+                        id: 'governanca',
+                        title: 'Governança',
+                        type: 'basic',
+                        link: 'playlist/RDMM',
+                    },
+                    {
+                        id: 'boasPraticas',
+                        title: 'Boas Práticas',
+                        type: 'basic',
+                        link: 'playlist/RDMM',
+                    },
+                    {
+                        id: 'outros',
+                        title: 'Outros',
+                        type: 'basic',
+                        link: 'playlist/RDMM',
+                    },
+                ],
+            },
+            {
+                id: 'excel',
+                title: 'Excel',
+                type: 'collapsable',
+                children: [
+                    {
+                        id: 'basico',
+                        title: 'Básico',
+                        type: 'basic',
+                        link: 'playlist/RDMM',
+                    },
+                    {
+                        id: 'intermediario',
+                        title: 'Intermediário',
+                        type: 'basic',
+                        link: 'playlist/RDMM',
+                    },
+                    {
+                        id: 'avancado',
+                        title: 'Avançado',
+                        type: 'basic',
+                        link: 'playlist/RDMM',
+                    },
+                ],
+            },
+            {
+                id: 'sql',
+                title: 'SQL',
                 type: 'basic',
-                link: 'tutoriais',
-            }
-        ]
+                link: 'playlist/RDMM',
+            },
+            {
+                id: 'webinar',
+                title: 'Webinar',
+                type: 'basic',
+                link: 'playlist/RDMM',
+            },
+        ],
     },
 ];
 export const defaultNavigation: FuseNavigationItem[] = [];
@@ -189,7 +269,7 @@ export class MenuItemService {
                                 rota.id,
                                 rota.title,
                                 rota.link
-                            )
+                            );
                             break;
                         case 'report':
                             currPage = CreateRoutes.ReportRoute(
@@ -197,7 +277,7 @@ export class MenuItemService {
                                 rota.id,
                                 rota.title,
                                 rota.link
-                            )
+                            );
                             break;
                         case 'dashboard':
                             currPage = CreateRoutes.DashboardRoute(
@@ -205,12 +285,10 @@ export class MenuItemService {
                                 rota.id,
                                 rota.title,
                                 rota.link
-                            )
+                            );
                             break;
                     }
-                    navigationGroups[findFather].children.push(
-                        currPage
-                    );
+                    navigationGroups[findFather].children.push(currPage);
                     return navigationGroups;
                 }
             });
