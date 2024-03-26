@@ -53,7 +53,7 @@ export class TelasComponent {
             const downloadUrl = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = downloadUrl;
-            link.download = 'usuarios.xlsx';
+            link.download = 'acessos.xlsx';
             link.click();
         });
     }
