@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import {
+    MAT_DIALOG_DATA,
+    MatDialog,
+    MatDialogRef,
+} from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeleteModalComponent } from 'app/modules/admin/delete-modal/delete-modal.component';
 import { ordersData } from 'app/modules/admin/users/usersUtils';
@@ -155,6 +159,27 @@ export class GestaoTenantEditComponent implements OnInit {
         }
     }
 
+    obterProjetos() {
+        if (this.form.value.tenant_name.length === 0) {
+            this.toastr.error('Cliente não preenchido');
+            return;
+        }
+        this.tenantsService.getProjects(this.form.value.tenant_name).subscribe({
+            next: (value: any[]) => {
+                if (value.length) {
+                    let dialogRef = this.dialog.open(DialogProjects, {
+                        data: value,
+                    });
+                } else {
+                    this.toastr.error('Cliente não possui projetos');
+                }
+            },
+            error: (error: any) => {
+                this.toastr.error('Cliente não possui projetos');
+            },
+        });
+    }
+
     voltar(): void {
         this.router.navigate(['master/gestao/tenants']);
     }
@@ -196,6 +221,20 @@ export class GestaoTenantEditComponent implements OnInit {
         } else {
             this.form.markAllAsTouched();
         }
+    }
+}
+
+@Component({
+    selector: 'dialog-edit-projects',
+    templateUrl: 'dialog-edit-projects.html',
+})
+export class DialogProjects {
+    projectList = [];
+    constructor(
+        public dialogRef: MatDialogRef<DialogProjects>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        this.projectList = this.data;
     }
 }
 
