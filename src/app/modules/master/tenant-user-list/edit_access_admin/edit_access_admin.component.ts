@@ -19,6 +19,8 @@ export class EditAdminAccessComponent implements OnInit {
         private pageMasterService: PageMasterService
     ) {
         this.usuario = data.usuario;
+        // TODO - OBTER LISTAGEM DE PROJETOS COM NOME DO TENANT
+        console.log(data.usuario)
     }
     dashboardList;
     ngOnInit(): void {

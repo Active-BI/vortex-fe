@@ -13,6 +13,9 @@ export class TenantsService {
     updateProjects(projects) {
         return this.http.post(`${this.baseUrl}tenants/projects`, projects);
     }
+    getProjects(cliente) {
+        return this.http.get(`${this.baseUrl}tenants/projects/`+ cliente);
+    }
     tenants() {
         return this.http.get(`${this.baseUrl}tenants`);
     }

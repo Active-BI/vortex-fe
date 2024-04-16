@@ -19,10 +19,18 @@
             <mat-form-field appearance="fill">
                 <mat-label>Nome do Cliente</mat-label>
                 <input formControlName="tenant_name" matInput #first />
-                <mat-icon
+                <!-- <mat-icon
                     svgIcon="heroicons_outline:user-circle"
                     class=""
-                ></mat-icon>
+                ></mat-icon> -->
+
+                <button
+                (click)="obterProjetos()"
+                type="button"
+                class="text-white text-center  self-center justify-self-center bg-blue-600 w-40 hover:bg-blue-700 h-8  font-medium rounded-md text-md dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-500"
+            >
+                Obter Projetos
+            </button>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>CNPJ</mat-label>

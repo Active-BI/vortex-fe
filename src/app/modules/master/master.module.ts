@@ -30,7 +30,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
 import { GestaoTenantComponent } from './tenant/gestao-tenant/gestao-tenant.component';
 import { GestaoTenantEditComponent } from './tenant/gestao-tenant-edit/gestao-tenant-edit.component';
-import { GestaoTenantCriarComponent } from './tenant/gestao-tenant-criar/gestao-tenant-criar.component';
+import { DialogProjects, GestaoTenantCriarComponent } from './tenant/gestao-tenant-criar/gestao-tenant-criar.component';
 import { MatSelectModule } from '@angular/material/select';
 import { TenantUserListComponent } from './tenant-user-list/tenant-user-list.component';
 import { EditAdminAccessComponent } from './tenant-user-list/edit_access_admin/edit_access_admin.component';
@@ -109,6 +109,7 @@ const masterRoutes: Route[] = [
         EditarRotaComponent,
         ColorPickerComponent,
         ConfigsComponent,
+        DialogProjects
     ],
     imports: [
         CommonModule,
