@@ -167,7 +167,7 @@ export class GestaoTenantEditComponent implements OnInit {
         this.tenantsService.getProjects(this.form.value.tenant_name).subscribe({
             next: (value: any[]) => {
                 if (value.length) {
-                    let dialogRef = this.dialog.open(DialogProjects, {
+                    this.dialog.open(EditDialogProjects, {
                         data: value,
                     });
                 } else {
@@ -225,13 +225,13 @@ export class GestaoTenantEditComponent implements OnInit {
 }
 
 @Component({
-    selector: 'dialog-edit-projects',
-    templateUrl: 'dialog-edit-projects.html',
+    selector: 'editDialog-projects',
+    templateUrl: 'editDialog-projects.html',
 })
-export class DialogProjects {
+export class EditDialogProjects {
     projectList = [];
     constructor(
-        public dialogRef: MatDialogRef<DialogProjects>,
+        public dialogRef: MatDialogRef<EditDialogProjects>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         this.projectList = this.data;
