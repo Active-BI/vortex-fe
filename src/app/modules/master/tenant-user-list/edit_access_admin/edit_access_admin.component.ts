@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { PageMasterService } from 'app/modules/services/page-master.service';
 import { PageService } from 'app/modules/services/page.service';
+import { TenantsService } from 'app/modules/services/tenants.service';
 
 @Component({
     selector: 'edit_access_admin',
@@ -13,14 +14,19 @@ import { PageService } from 'app/modules/services/page.service';
 export class EditAdminAccessComponent implements OnInit {
     usuario;
     dashboardListReduced;
+    projetos;
+    cliente;
+    projetosControl = new FormControl([]);
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialog: MatDialog,
-        private pageMasterService: PageMasterService
+        private pageMasterService: PageMasterService,
+        private tenantService: TenantsService
     ) {
         this.usuario = data.usuario;
         // TODO - OBTER LISTAGEM DE PROJETOS COM NOME DO TENANT
-        console.log(data.usuario)
+
+        console.log(data.usuario);
     }
     dashboardList;
     ngOnInit(): void {
@@ -47,12 +53,23 @@ export class EditAdminAccessComponent implements OnInit {
 
             return acc;
         }, []);
+        this.cliente = this.usuario.tenant_name;
+        this.tenantService.getProjects(this.cliente).subscribe({
+            next: (value: any[]) => {
+                this.projetos = value;
+            },
+            error: (error: any) => {
+                console.log(error);
+            },
+        });
+
         this.form.setValue(
             this.usuario.dashboards
                 .filter((d) => d.included === true)
                 .map((d) => d.page_id)
         );
     }
+
     form = new FormControl('');
 
     onSubmit(): void {
@@ -61,12 +78,14 @@ export class EditAdminAccessComponent implements OnInit {
                 {
                     DashboardUserList: this.form.value,
                     tenant_id: this.usuario.tenant_id,
+                    projetos: this.projetosControl.value,
                 },
                 this.usuario.id
             )
             .subscribe((e) => {
                 this.data.data();
             });
+        console.log(this.projetosControl);
     }
     findValue() {
         const findPages = this.usuario.dashboards.find(
