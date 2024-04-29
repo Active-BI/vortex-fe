@@ -64,9 +64,14 @@ export class EditAdminAccessComponent implements OnInit {
                 .filter((d) => d.included === true)
                 .map((d) => d.page_id)
         );
+        this.email.setValue(
+            this.usuario.contact_email
+        )
+        this.email.disable()
     }
 
     form = new FormControl('');
+    email = new FormControl('');
 
     onSubmit(): void {
         this.pageMasterService
