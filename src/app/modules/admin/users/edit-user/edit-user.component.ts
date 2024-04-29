@@ -7,6 +7,7 @@ import { ordersData } from '../usersUtils';
 import { PageService } from 'app/modules/services/page.service';
 import { OfficeService } from 'app/modules/services/office.service';
 import { UserService } from 'app/modules/services/user.service';
+import { TenantsService } from 'app/modules/services/tenants.service';
 
 @Component({
     selector: 'app-edit-user',
@@ -18,7 +19,8 @@ export class EditUserComponent implements OnInit {
     tenants: string[] = [];
     selectedTenant = this.tenants;
     visoes = new FormControl([]);
-
+    projetos
+    projetosControl = new FormControl([]);
     onKey(value) {
         this.selectedTenant = this.search(value);
     }
@@ -29,7 +31,7 @@ export class EditUserComponent implements OnInit {
             option.nome_cliente.toLowerCase().startsWith(filter)
         );
     }
-
+    
     visionsSelecteds = [];
     form = this.fb.group({
         id: [''],
@@ -45,6 +47,7 @@ export class EditUserComponent implements OnInit {
         cargo: ['', [Validators.required]],
         office_id: ['', [Validators.required]],
         rls_id: ['', [Validators.required]],
+        projects: [[]]
     });
     panelOpenState = false;
     id: string;
@@ -63,7 +66,8 @@ export class EditUserComponent implements OnInit {
         private userSrv: UserService,
         // private adminSrv: AdminService,
         private pageService: PageService,
-        private office: OfficeService
+        private office: OfficeService,
+        private tenantsService: TenantsService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
 
@@ -115,6 +119,16 @@ export class EditUserComponent implements OnInit {
             if (editar) {
                 this.userSrv.getUserById(this.id).subscribe((e: any) => {
                     this.user = e;
+
+                    this.tenantsService.getProjects(this.user.Tenant.tenant_name).subscribe({
+                        next: (value: any[]) => {
+                            this.projetos = value;
+                        },
+                        error: (error: any) => {
+                            console.log(error);
+                        },
+                    });
+
                     this.selectedDashboardList = this.dashboardList.map(
                         (dash) => {
                             this.user.User_Page.find((utd) => {
@@ -135,9 +149,11 @@ export class EditUserComponent implements OnInit {
                             cargo: office,
                         });
                     });
+
                     this.form.patchValue({
                         id: this.user.id,
                         name: this.user.name,
+                        projects: this.user.projects,
                         email: this.user.contact_email,
                         rls_id: value ? value : this.user.rls_id,
                         office_id: this.user.office_id,
@@ -166,6 +182,7 @@ export class EditUserComponent implements OnInit {
                 cargo: office,
             });
         });
+
     }
 
     filteredVisions = [];

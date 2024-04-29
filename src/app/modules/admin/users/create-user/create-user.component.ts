@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { PageService } from 'app/modules/services/page.service';
 import { OfficeService } from 'app/modules/services/office.service';
 import { UserService } from 'app/modules/services/user.service';
+import { TenantsService } from 'app/modules/services/tenants.service';
+import jwtDecode from 'jwt-decode';
 
 @Component({
     selector: 'app-create-user',
@@ -22,12 +24,24 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
         private toast: ToastrService,
         private _userSrv: UserService,
         private officeService: OfficeService,
-        pageService: PageService
+        pageService: PageService,
+        private _tenantsService: TenantsService
+
     ) {
-        super(fb, router, route, toastr, _userSrv, pageService, officeService);
+        super(fb, router, route, toastr, _userSrv, pageService, officeService,_tenantsService);
     }
 
     override ngOnInit(): void {
+        const token = JSON.parse(localStorage.getItem('token'))
+        const decodedToken: any = jwtDecode(token)
+        this._tenantsService.getProjects(decodedToken.tenant_name).subscribe({
+            next: (value: any[]) => {
+                this.projetos = value;
+            },
+            error: (error: any) => {
+                console.log(error);
+            },
+        });
         this.officeService.getOffices().subscribe((e) => {
             this.cargos = e.sort((a, b) => {
                 if (a.name < b.name) {
