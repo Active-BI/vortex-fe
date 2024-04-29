@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { PageMasterService } from 'app/modules/services/page-master.service';
-import { PageService } from 'app/modules/services/page.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 
 @Component({
@@ -22,11 +21,8 @@ export class EditAdminAccessComponent implements OnInit {
         public dialog: MatDialog,
         private pageMasterService: PageMasterService,
         private tenantService: TenantsService
-    ) {
+        ) {
         this.usuario = data.usuario;
-        // TODO - OBTER LISTAGEM DE PROJETOS COM NOME DO TENANT
-
-        console.log(data.usuario);
     }
     dashboardList;
     ngOnInit(): void {
@@ -74,7 +70,7 @@ export class EditAdminAccessComponent implements OnInit {
 
     onSubmit(): void {
         this.pageMasterService
-            .postReportsToTennant(
+            .patchReportsToTennant(
                 {
                     DashboardUserList: this.form.value,
                     tenant_id: this.usuario.tenant_id,
@@ -85,7 +81,6 @@ export class EditAdminAccessComponent implements OnInit {
             .subscribe((e) => {
                 this.data.data();
             });
-        console.log(this.projetosControl);
     }
     findValue() {
         const findPages = this.usuario.dashboards.find(
