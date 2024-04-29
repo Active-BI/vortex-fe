@@ -97,6 +97,11 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+                <div *ngIf="form.controls.projects.touched">
+                    <div *ngIf="form.controls.projects.errors?.['required']" class="text-red-600 mb-2">
+                        Projetos são Obrigatórios
+                    </div>
+                </div>
             </form>
 
             <mat-form-field>

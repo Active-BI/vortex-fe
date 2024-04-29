@@ -25,10 +25,9 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
         private _userSrv: UserService,
         private officeService: OfficeService,
         pageService: PageService,
-        private _tenantsService: TenantsService
 
     ) {
-        super(fb, router, route, toastr, _userSrv, pageService, officeService,_tenantsService);
+        super(fb, router, route, toastr, _userSrv, pageService, officeService);
     }
 
     override ngOnInit(): void {

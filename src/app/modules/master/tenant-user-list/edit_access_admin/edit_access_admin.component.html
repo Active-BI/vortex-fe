@@ -64,7 +64,11 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-
+    <div *ngIf="projetosControl.touched">
+        <div *ngIf="projetosControl.errors?.['required']" class="text-red-600 mb-2">
+            Projetos são Obrigatórios
+        </div>
+    </div>
     <button
     color="primary"
     (click)="onSubmit()"

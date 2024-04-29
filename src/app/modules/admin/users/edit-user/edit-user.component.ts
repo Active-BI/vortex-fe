@@ -48,7 +48,7 @@ export class EditUserComponent implements OnInit {
         cargo: ['', [Validators.required]],
         office_id: ['', [Validators.required]],
         rls_id: ['', [Validators.required]],
-        projects: [[]]
+        projects: [[], [Validators.required]]
     });
     panelOpenState = false;
     id: string;
@@ -68,7 +68,6 @@ export class EditUserComponent implements OnInit {
         // private adminSrv: AdminService,
         private pageService: PageService,
         private office: OfficeService,
-        private tenantsService: TenantsService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
 
