@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageService } from 'app/modules/services/page.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import { ToastrService } from 'ngx-toastr';
 import { GestaoTenantEditComponent } from '../gestao-tenant-edit/gestao-tenant-edit.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageMasterService } from 'app/modules/services/page-master.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class GestaoTenantCriarComponent
         toastr: ToastrService,
         private toast: ToastrService,
         private tenantsServices: TenantsService,
-        dialog: MatDialog,
+        private _dialog: MatDialog,
         private pageMasterServices: PageMasterService
     ) {
         super(
@@ -34,7 +34,7 @@ export class GestaoTenantCriarComponent
             route,
             toastr,
             tenantsServices,
-            dialog,
+            _dialog,
             pageMasterServices
         );
     }
@@ -73,7 +73,23 @@ export class GestaoTenantCriarComponent
             });
         });
     }
-
+    obterProjetos() {
+        if (this.form.value.tenant_name.length === 0) {
+            this.toast.error('Cliente não preenchido')
+            return
+        }
+        this.tenantsServices.getProjects(this.form.value.tenant_name).subscribe({next: (value: any[]) => {
+            if (value.length) {
+                let dialogRef = this._dialog.open(DialogProjects, {
+                    data: value
+                });
+            } else {
+                this.toast.error('Cliente não possui projetos')
+            }
+        }, error: (error: any) => {
+            this.toast.error('Cliente não possui projetos')
+        }})
+    }
     criar(): void {
         console.log(this.form.controls)
         if (this.form.valid) {
@@ -92,3 +108,16 @@ export class GestaoTenantCriarComponent
         }
     }
 }
+
+
+@Component({
+    selector: 'dialog-projects',
+    templateUrl: 'dialog-projects.html',
+  })
+  export class DialogProjects {
+    projectList = []
+    constructor(public dialogRef: MatDialogRef<DialogProjects>,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        this.projectList = this.data
+    }
+  }

@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { PageMasterService } from 'app/modules/services/page-master.service';
-import { PageService } from 'app/modules/services/page.service';
+import { TenantsService } from 'app/modules/services/tenants.service';
 
 @Component({
     selector: 'edit_access_admin',
@@ -13,11 +13,15 @@ import { PageService } from 'app/modules/services/page.service';
 export class EditAdminAccessComponent implements OnInit {
     usuario;
     dashboardListReduced;
+    projetos;
+    cliente;
+    projetosControl = new FormControl([]);
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialog: MatDialog,
-        private pageMasterService: PageMasterService
-    ) {
+        private pageMasterService: PageMasterService,
+        private tenantService: TenantsService
+        ) {
         this.usuario = data.usuario;
     }
     dashboardList;
@@ -45,20 +49,40 @@ export class EditAdminAccessComponent implements OnInit {
 
             return acc;
         }, []);
+        this.cliente = this.usuario.tenant_name;
+        this.tenantService.getProjects(this.cliente).subscribe({
+            next: (value: any[]) => {
+                this.projetos = value;
+            },
+            error: (error: any) => {
+                console.log(error);
+            },
+        });
+
         this.form.setValue(
             this.usuario.dashboards
                 .filter((d) => d.included === true)
                 .map((d) => d.page_id)
         );
+        this.email.setValue(
+            this.usuario.contact_email
+        )
+        this.projetosControl.setValue(
+            this.usuario.projects
+        )
+        this.email.disable()
     }
+
     form = new FormControl('');
+    email = new FormControl('');
 
     onSubmit(): void {
         this.pageMasterService
-            .postReportsToTennant(
+            .patchReportsToTennant(
                 {
                     DashboardUserList: this.form.value,
                     tenant_id: this.usuario.tenant_id,
+                    projetos: this.projetosControl.value,
                 },
                 this.usuario.id
             )

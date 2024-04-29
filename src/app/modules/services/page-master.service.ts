@@ -34,6 +34,12 @@ export class PageMasterService {
             dashboadList
         );
     }
+    patchReportsToTennant(dashboadList, userId) {
+        return this.http.patch(
+            `${this.baseUrl}master/pages/${userId}`,
+            dashboadList
+        );
+    }
     getPageByTenantId(tenantId) {
         return this.http.get(
             `${this.baseUrl}master/pages/by-tenant/${tenantId}`

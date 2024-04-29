@@ -8,6 +8,14 @@
             >
                 Criar Clientes
             </button>
+            
+            <form class="file">
+                <span class="file-custom"></span>
+                <label class="custom-file-upload hover:bg-[#056ebe]">
+                    <input class="" type="file" (change)="Importar($event)" />
+                    Importar Projetos
+                </label>
+            </form>
             <button
                 mat-raised-button
                 (click)="configs()"
