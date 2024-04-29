@@ -91,9 +91,9 @@
                             </span>
                         </mat-select-trigger>
     
-                        <mat-option *ngFor="let projeto of projetos" [label]="projetos.projetos" class="ml-4"
-                            [selected]="projeto.selected" [value]="projeto.projeto">
-                            {{ projeto.projeto }}
+                        <mat-option *ngFor="let projeto of projetos" [label]="projetos" class="ml-4"
+                            [value]="projeto">
+                            {{ projeto }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

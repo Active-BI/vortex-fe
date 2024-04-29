@@ -8,6 +8,7 @@ import { PageService } from 'app/modules/services/page.service';
 import { OfficeService } from 'app/modules/services/office.service';
 import { UserService } from 'app/modules/services/user.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
+import jwtDecode from 'jwt-decode';
 
 @Component({
     selector: 'app-edit-user',
@@ -119,15 +120,10 @@ export class EditUserComponent implements OnInit {
             if (editar) {
                 this.userSrv.getUserById(this.id).subscribe((e: any) => {
                     this.user = e;
-
-                    this.tenantsService.getProjects(this.user.Tenant.tenant_name).subscribe({
-                        next: (value: any[]) => {
-                            this.projetos = value;
-                        },
-                        error: (error: any) => {
-                            console.log(error);
-                        },
-                    });
+                    const token = JSON.parse(localStorage.getItem('token'))
+                    const decodedToken: any = jwtDecode(token)
+                    this.projetos = decodedToken.projects
+         
 
                     this.selectedDashboardList = this.dashboardList.map(
                         (dash) => {

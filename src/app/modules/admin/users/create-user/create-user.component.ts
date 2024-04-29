@@ -34,14 +34,7 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
     override ngOnInit(): void {
         const token = JSON.parse(localStorage.getItem('token'))
         const decodedToken: any = jwtDecode(token)
-        this._tenantsService.getProjects(decodedToken.tenant_name).subscribe({
-            next: (value: any[]) => {
-                this.projetos = value;
-            },
-            error: (error: any) => {
-                console.log(error);
-            },
-        });
+        this.projetos = decodedToken.projects
         this.officeService.getOffices().subscribe((e) => {
             this.cargos = e.sort((a, b) => {
                 if (a.name < b.name) {
