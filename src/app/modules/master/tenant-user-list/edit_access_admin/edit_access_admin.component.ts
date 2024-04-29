@@ -67,6 +67,9 @@ export class EditAdminAccessComponent implements OnInit {
         this.email.setValue(
             this.usuario.contact_email
         )
+        this.projetosControl.setValue(
+            this.usuario.projects
+        )
         this.email.disable()
     }
 
