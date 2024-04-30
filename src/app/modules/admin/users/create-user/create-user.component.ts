@@ -25,15 +25,16 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
         private _userSrv: UserService,
         private officeService: OfficeService,
         pageService: PageService,
+        private _tenantsService: TenantsService,
 
     ) {
-        super(fb, router, route, toastr, _userSrv, pageService, officeService);
+        super(fb, router, route, toastr, _userSrv, pageService, officeService, _tenantsService);
     }
 
     override ngOnInit(): void {
-        const token = JSON.parse(localStorage.getItem('token'))
-        const decodedToken: any = jwtDecode(token)
-        this.projetos = decodedToken.projects
+        // const token = JSON.parse(localStorage.getItem('token'))
+        // const decodedToken: any = jwtDecode(token)
+        // this.projetos = decodedToken.projects
         this.officeService.getOffices().subscribe((e) => {
             this.cargos = e.sort((a, b) => {
                 if (a.name < b.name) {
@@ -44,6 +45,18 @@ export class CreateUserComponent extends EditUserComponent implements OnInit {
                 }
                 return 0;
             });
+        });
+
+        const token = JSON.parse(localStorage.getItem('token'))
+        const decoded = jwtDecode(token) as any
+        this._tenantsService.getProjects(decoded.tenant_name).subscribe({
+            next: (value: any[]) => {
+                console.log(value)
+                this.projetos =(value as string[]).filter((v: any) => decoded.projects.includes(v.id))
+            },
+            error: (error: any) => {
+                console.log(error);
+            },
         });
     }
     find(name) {

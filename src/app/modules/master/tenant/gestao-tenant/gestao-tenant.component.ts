@@ -127,6 +127,7 @@ export class GestaoTenantComponent implements OnInit {
             });
             try {
                 json = json.map(item => ({
+                    id: (item['NOME DO PROJETO'] as String).slice(0,3),
                     projeto: item['NOME DO PROJETO'],
                     cliente: item['CLIENTE PRINCIPAL']
                 }))

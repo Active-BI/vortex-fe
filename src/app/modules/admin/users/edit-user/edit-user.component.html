@@ -79,28 +79,38 @@
                 <mat-form-field>
                     <mat-label>Projetos</mat-label>
                     <mat-select formControlName="projects" multiple>
+
                         <mat-select-trigger>
-                            {{ form.value.projects[0] || "" }}
-                            <span *ngIf="(form.value.projects?.length || 0) > 1" class="example-additional-selection">
-                                (+{{ (form.value.projects?.length || 0) - 1 }}
+                            {{ form.value.projects?.slice(0,3) || "" }}
+                            <span
+                            *ngIf="(form.value.projects?.length || 0) > 3"
+                                class="example-additional-selection"
+                                >
+                                (+{{ (form.value.projects?.length || 0) - 3 }}
                                 {{
-                                form.value.projects?.length === 2
+                                form.value.projects?.length === 3
                                 ? "outro"
                                 : "outros"
                                 }})
                             </span>
                         </mat-select-trigger>
-    
-                        <mat-option *ngFor="let projeto of projetos" [label]="projetos" class="ml-4"
-                            [value]="projeto">
-                            {{ projeto }}
-                        </mat-option>
+                        <mat-option
+                        class="ml-4"
+                        *ngFor="let projeto of projetos"
+                        [value]="projeto.id"
+                    >
+                        {{ projeto.projeto }}
+                    </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <div *ngIf="form.controls.projects.touched">
                     <div *ngIf="form.controls.projects.errors?.['required']" class="text-red-600 mb-2">
                         Projetos são Obrigatórios
                     </div>
+                </div>
+                <div class="-mt-2 mb-4">
+                    Todos os Projetos:
+                    <span *ngFor="let p of outrosProjetos" class="ml-2">{{p}}</span>
                 </div>
             </form>
 
