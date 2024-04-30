@@ -18,15 +18,18 @@
     <mat-form-field>
         <mat-label>Projetos</mat-label>
         <mat-select formControlName="projetos" multiple>
+
             <mat-select-trigger>
-                {{ form.value.projetos }}
+                {{ form.value.projetos?.slice(0,3) || "" }}
                 <span
-                    *ngIf="(form.value.projetos?.length || 0) > 1"
+                *ngIf="(form.value.projetos?.length || 0) > 3"
                     class="example-additional-selection"
-                >
-                    (+{{ (form.value.projetos?.length || 0) - 1 }}
+                    >
+                    (+{{ (form.value.projetos?.length || 0) - 3 }}
                     {{
-                        form.value.projetos?.length === 2 ? "outro" : "outros"
+                    form.value.projetos?.length === 3
+                    ? "outro"
+                    : "outros"
                     }})
                 </span>
             </mat-select-trigger>
@@ -34,14 +37,17 @@
             <mat-option
                 class="ml-4"
                 *ngFor="let projeto of projetos"
-                [selected]="projeto.selected"
-                [value]="projeto.projeto"
+                [value]="projeto.id"
             >
                 {{ projeto.projeto }}
             </mat-option>
         </mat-select>
     </mat-form-field>
-
+    <div *ngIf="form.controls.projetos.touched">
+        <div *ngIf="form.controls.projetos.errors?.['required']" class="text-red-600 mb-2">
+            Projetos são Obrigatórios
+        </div>
+    </div>
     <button
         color="primary"
         (click)="onSubmit()"

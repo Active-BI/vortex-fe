@@ -48,7 +48,7 @@ export class EditUserComponent implements OnInit {
         cargo: ['', [Validators.required]],
         office_id: ['', [Validators.required]],
         rls_id: ['', [Validators.required]],
-        projects: [[]]
+        projects: [[], [Validators.required]]
     });
     panelOpenState = false;
     id: string;
@@ -56,7 +56,7 @@ export class EditUserComponent implements OnInit {
     user: any;
     dashboardList = [];
     selectedDashboardList = [];
-
+    outrosProjetos =[]
     dashboardListReduced = [];
     listRoles = listRoles;
     constructor(
@@ -65,10 +65,9 @@ export class EditUserComponent implements OnInit {
         private route: ActivatedRoute,
         private toastr: ToastrService,
         private userSrv: UserService,
-        // private adminSrv: AdminService,
         private pageService: PageService,
         private office: OfficeService,
-        private tenantsService: TenantsService
+        private tenantsService: TenantsService,
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
 
@@ -122,7 +121,6 @@ export class EditUserComponent implements OnInit {
                     this.user = e;
                     const token = JSON.parse(localStorage.getItem('token'))
                     const decodedToken: any = jwtDecode(token)
-                    this.projetos = decodedToken.projects
          
 
                     this.selectedDashboardList = this.dashboardList.map(
@@ -145,7 +143,7 @@ export class EditUserComponent implements OnInit {
                             cargo: office,
                         });
                     });
-
+                        this.outrosProjetos = this.user.projects
                     this.form.patchValue({
                         id: this.user.id,
                         name: this.user.name,
@@ -154,6 +152,7 @@ export class EditUserComponent implements OnInit {
                         rls_id: value ? value : this.user.rls_id,
                         office_id: this.user.office_id,
                     });
+
                 });
             }
         });
@@ -179,6 +178,17 @@ export class EditUserComponent implements OnInit {
             });
         });
 
+        const token = JSON.parse(localStorage.getItem('token'))
+        const decoded = jwtDecode(token) as any
+        this.tenantsService.getProjects(decoded.tenant_name).subscribe({
+            next: (value: any[]) => {
+                console.log(value)
+                this.projetos =(value as string[]).filter((v: any) => decoded.projects.includes(v.id))
+            },
+            error: (error: any) => {
+                console.log(error);
+            },
+        });
     }
 
     filteredVisions = [];

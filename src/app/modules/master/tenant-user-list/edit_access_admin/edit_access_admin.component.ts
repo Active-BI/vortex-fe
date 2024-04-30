@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { PageMasterService } from 'app/modules/services/page-master.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'edit_access_admin',
@@ -15,12 +16,13 @@ export class EditAdminAccessComponent implements OnInit {
     dashboardListReduced;
     projetos;
     cliente;
-    projetosControl = new FormControl([]);
+    projetosControl = new FormControl([], [Validators.required]);
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialog: MatDialog,
         private pageMasterService: PageMasterService,
-        private tenantService: TenantsService
+        private tenantService: TenantsService,
+        private toast: ToastrService
         ) {
         this.usuario = data.usuario;
     }
@@ -77,6 +79,13 @@ export class EditAdminAccessComponent implements OnInit {
     email = new FormControl('');
 
     onSubmit(): void {
+        if (this.form.invalid || this.email.invalid || this.projetosControl.invalid) {
+            this.form.markAsTouched()
+            this.email.markAsTouched()
+            this.projetosControl.markAsTouched()
+            this.toast.error('Formulário inválido')
+            return
+        }
         this.pageMasterService
             .patchReportsToTennant(
                 {

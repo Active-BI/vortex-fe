@@ -32,7 +32,6 @@ export class AddAccessAdminComponent implements OnInit {
         this.tenantService.tenant(this.data.tenant_id).subscribe({
             next: (value: any) => {
                 this.tenant_name = value.tenant_name;
-                console.log(value.tenant_name);
 
                 this.tenantService.getProjects(this.tenant_name).subscribe({
                     next: (value: any[]) => {
