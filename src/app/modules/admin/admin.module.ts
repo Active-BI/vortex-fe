@@ -66,6 +66,8 @@ import { TelasComponent } from './telas/telas.component';
 import { SessionService } from '../services/session.service';
 import { TreinamentoComponent } from './treinamento/treinamento.component';
 import { BlogComponent } from './blog/blog.component';
+import { DocumentosComponent } from './documentos/documentos.component';
+import { DavitaTrashBtnComponent } from './davita-trash-btn/davita-trash-btn.component';
 
 const adminroutes: Route[] = [
     {
@@ -106,6 +108,12 @@ const adminroutes: Route[] = [
                 data: { expectedRoles: ['Admin'] },
                 path: 'usuarios',
                 component: ListUsersComponent,
+                canActivate: [AuthGuardScreen],
+            },
+            {
+                data: { expectedRoles: ['Admin'] },
+                path: 'documentos',
+                component: DocumentosComponent,
                 canActivate: [AuthGuardScreen],
             },
             {
@@ -156,6 +164,8 @@ const adminroutes: Route[] = [
         TelasComponent,
         TreinamentoComponent,
         BlogComponent,
+        DocumentosComponent,
+        DavitaTrashBtnComponent
     ],
     imports: [
         MatTabsModule,

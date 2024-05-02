@@ -1,6 +1,8 @@
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
+import jwtDecode from 'jwt-decode';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root',
@@ -8,7 +10,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 export class AuthService {
     private jwtItils = new JwtHelperService();
 
-    constructor() {}
+    constructor(private toastr: ToastrService) {}
 
     // userLoggedIn: string
 
@@ -22,7 +24,16 @@ export class AuthService {
     get user$(): Observable<any> {
         return this._user.asObservable();
     }
-
+    GetUser(): any {
+        try {
+            const token = JSON.parse(localStorage.getItem('token'));
+            const decoded = jwtDecode(token);
+            return decoded
+        } catch (Error) {
+            this.toastr.error('Falha ao obter dados do usuário')
+            return false;
+        }
+    }
     isLoggedIn(): boolean {
         const token = localStorage.getItem('token');
         if (!token) {
