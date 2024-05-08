@@ -8,6 +8,7 @@ import { AuthService } from 'app/modules/services/auth/auth.service';
 import { DocumentsService } from 'app/modules/services/documents.service';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
+import saveAs from 'file-saver';
 
 @Component({
   selector: 'app-documentos',
@@ -67,6 +68,14 @@ export class DocumentosComponent implements OnInit {
       this.projetosControl.markAllAsTouched()
       this.myControl.markAllAsTouched()
     }
+  }
+  downloadFile(file) {
+    this.documentsService.DownloadFile(file.id).subscribe(res => {
+      const blob = new Blob([res], { type: 'application/octet-stream' });
+
+      saveAs(blob, file.name + '.' + file.file_format);
+    })
+
   }
   deleteFromFormData(name: string) {
     const novoFormData = new FormData();
