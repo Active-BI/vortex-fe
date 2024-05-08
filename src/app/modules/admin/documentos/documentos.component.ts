@@ -57,8 +57,10 @@ export class DocumentosComponent implements OnInit {
     if (cliente.id && this.projetosControl.value.length) {
 
       this.documentsService.UploadFiles(this.formData, cliente.id,this.projetosControl.value).subscribe(res => {
-        console.log(res)
         this.formData = new FormData()
+        const cliente = this.clienteSubject.getValue()
+        console.log(cliente)
+        this.getFiles(cliente.id)
       })
     } else {
       this.toastr.error('Formulário inválido')
