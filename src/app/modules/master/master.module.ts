@@ -56,11 +56,18 @@ import { AddAccessAdminComponent } from './tenant-user-list/add-access-admin/add
 import { ConfigsComponent } from './tenant/configs/configs.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { DocumentosComponent } from '../admin/documentos/documentos.component';
+import { AuthGuardScreen } from '../services/guards/AuthGuardScreen.guard';
 
 const masterRoutes: Route[] = [
     {
         path: 'gestao/telas',
         component: GestaoDeTelasComponent,
+    },
+    {
+        data: { expectedRoles: ['Admin'] },
+        path: 'gestao/tenants/documentos-master',
+        component: DocumentosComponent,
+        canActivate: [AuthGuardScreen],
     },
     {
         path: 'gestao/telas/grupo/:id',

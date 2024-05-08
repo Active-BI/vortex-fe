@@ -9,6 +9,9 @@ import { DocumentsService } from 'app/modules/services/documents.service';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import saveAs from 'file-saver';
+import { Router } from '@angular/router';
+import jwtDecode from 'jwt-decode';
+import { TenantsService } from 'app/modules/services/tenants.service';
 
 @Component({
   selector: 'app-documentos',
@@ -21,16 +24,44 @@ export class DocumentosComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   files = []
   canUploadOrDeleteFiles
-  displayedColumns: string[] = ['name', 'created_at', 'opt'];
+  displayedColumns: string[] = ['name', 'projects','created_at', 'opt'];
   constructor(
     private documentsService: DocumentsService,
     private authService: AuthService,
-    private toastr: ToastrService
+    private tenantsService: TenantsService,
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.dataSource = new MatTableDataSource([]);
     this.canUploadOrDeleteFiles = this.authService.GetUser().role_name === 'Master' ? true : false
   }
   formData = new FormData()
+  ngOnInit(): void {
+    this.projetosControl.disable()
+
+    this.documentsService.getClientProjectFilters().subscribe(res => {
+      this.clientes = res
+    })
+
+    this.cliente$.subscribe(res => {
+      this.getFiles(res.id)
+      this.projetos = res.projects
+      this.projetosControl = new FormControl([]);
+    })
+
+    if (this.router.url.includes('administrador/documentos')) {
+      const token = JSON.parse(localStorage.getItem('token'))
+      const decoded = jwtDecode(token) as any
+      this.tenantsService.getProjects(decoded.tenant_name).subscribe({
+          next: (value: any[]) => {
+              this.projetos =(value as string[]).filter((v: any) => decoded.projects.includes(v.id))
+          },
+          error: (error: any) => {
+              console.log(error);
+          },
+      });
+    }
+  }
 
   onFileSelected(event) {
     const files = event.target.files;
@@ -108,19 +139,6 @@ export class DocumentosComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-    this.projetosControl.disable()
-
-    this.documentsService.getClientProjectFilters().subscribe(res => {
-      this.clientes = res
-    })
-
-    this.cliente$.subscribe(res => {
-      this.getFiles(res.id)
-      this.projetos = res.projects
-      this.projetosControl = new FormControl([]);
-    })
-  }
 
 
   clienteSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
