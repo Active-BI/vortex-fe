@@ -55,6 +55,7 @@ import { ColorPickerComponent } from './tenant/gestao-tenant-edit/color_picker';
 import { AddAccessAdminComponent } from './tenant-user-list/add-access-admin/add-access-admin.component';
 import { ConfigsComponent } from './tenant/configs/configs.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { DocumentosComponent } from '../admin/documentos/documentos.component';
 
 const masterRoutes: Route[] = [
     {
@@ -78,7 +79,10 @@ const masterRoutes: Route[] = [
         path: 'gestao/tenants',
         component: GestaoTenantComponent,
     },
-
+    {
+        path: 'gestao/documentos',
+        component: DocumentosComponent,
+    },
     {
         path: 'gestao/config',
         component: ConfigsComponent,

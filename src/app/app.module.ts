@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -18,13 +18,16 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { ToastrModule } from 'ngx-toastr';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { HomeModule } from './modules/home/home.module';
 import { SocketService } from './modules/services/socket.service';
 import { AccessModelComponent } from './modules/auth/access-model/access-model.component';
 import { LocalAuthService } from './modules/services/auth.service';
+import localePt from '@angular/common/locales/pt';
 
+registerLocaleData(localePt);
+ 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled',
@@ -32,7 +35,8 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
     declarations: [AppComponent, AccessModelComponent],
-    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy },     { provide: LOCALE_ID, useValue: 'pt-BR' },
+],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,

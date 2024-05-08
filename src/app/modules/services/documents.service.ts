@@ -11,9 +11,17 @@ export class DocumentsService {
     constructor(private http: HttpClient,private toastr: ToastrService) {}
 
     private baseUrl = environment.baseUrl;
-
-    getFiles(): Observable<any> {
-        return this.http.get<any>(`${this.baseUrl}documents/`).pipe(
+    getClientProjectFilters(): Observable<any> {
+        return this.http.get<any>(`${this.baseUrl}documents/client-project-filter`).pipe(
+            catchError((err) => {
+                if (err.status !== 200) {
+                this.toastr.error(err.error.message);}
+                return throwError(() => new Error());
+            })
+        );
+    }
+    getFiles(tenant_id: string): Observable<any> {
+        return this.http.get<any>(`${this.baseUrl}documents/files/` + tenant_id).pipe(
             catchError((err) => {
                 if (err.status !== 200) {
                 this.toastr.error(err.error.message);}
@@ -49,11 +57,12 @@ export class DocumentsService {
                 })
             );
     }
-    UploadFiles(file, id) {
-        return this.http.post<any>(`${this.baseUrl}documents/upload/${id}` , file ).pipe(
+    UploadFiles(file: FormData, tenant_id: string, projects: string[]) {
+        file.append('body', JSON.stringify(projects));
+        return this.http.post<any>(`${this.baseUrl}documents/${tenant_id}`, file ).pipe(
             catchError((err) => {
                 if (err.status !== 200) {
-                    this.toastr.error('Falha ao obter arquivo');
+                    this.toastr.error(err.error.message);
                 }
                 return throwError(() => new Error());
             })

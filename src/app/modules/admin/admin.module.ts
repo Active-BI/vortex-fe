@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, OnInit } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule, OnInit } from '@angular/core';
 import { CommonModule, NgForOf } from '@angular/common';
 import { Route, Router, RouterModule } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
@@ -210,6 +210,8 @@ const adminroutes: Route[] = [
     ],
     entryComponents: [MatDialogModule],
     providers: [
+        {provide: LOCALE_ID, useValue: 'pt' },
+
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
         { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },
         NavigationMockApi,
