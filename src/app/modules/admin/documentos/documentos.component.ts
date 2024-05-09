@@ -133,9 +133,17 @@ export class DocumentosComponent implements OnInit {
   projetosControl = new FormControl([], [Validators.required, Validators.minLength(1)]);
 
   getFiles(id = 'all') {
+    const token = JSON.parse(localStorage.getItem('token'))
+    const decoded = jwtDecode(token) as any
     this.documentsService.getFiles(id).subscribe(res => {
+      if (this.router.url.includes('administrador/documentos')) {
+      this.files = res.filter(f => {
+        return f.projects.find(p => decoded.projects.includes(p))
+      })
+    } else {
       this.files = res
-      return this.updateDataSource([...res, ...this.formData.getAll('files')])
+    }
+      return this.updateDataSource([...this.files, ...this.formData.getAll('files')])
     })
   }
 
