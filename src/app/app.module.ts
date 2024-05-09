@@ -25,6 +25,7 @@ import { SocketService } from './modules/services/socket.service';
 import { AccessModelComponent } from './modules/auth/access-model/access-model.component';
 import { LocalAuthService } from './modules/services/auth.service';
 import localePt from '@angular/common/locales/pt';
+import { environment } from 'environments/environment';
 
 registerLocaleData(localePt);
  
@@ -71,18 +72,23 @@ export class AppModule {
         private socketService: SocketService,
         private authService: LocalAuthService
     ) {
+
+        if (environment.production) {
+
         this.socket = this.socketService.socket;
         this.socket.on('logou', (res) => {});
-        // Promise.all([localStorage.getItem('session_id')]).then((res) => {
-        //     this.session = res[0];
-        //     if (res[0]) this.socket.emit('user-check', res[0]);
-        // });
 
-        // this.socket.on('logout', () => {
-        //     localStorage.clear();
-        //     this.socket.disconnect();
-        //     this.router.navigate(['auth/sign-out']);
-        // });
+        Promise.all([localStorage.getItem('session_id')]).then((res) => {
+            this.session = res[0];
+            if (res[0]) this.socket.emit('user-check', res[0]);
+        });
+
+        this.socket.on('logout', () => {
+            localStorage.clear();
+            this.socket.disconnect();
+            this.router.navigate(['auth/sign-out']);
+        });
+    }
 
         this.authService.get_app_image().subscribe(
             (res) => {
