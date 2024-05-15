@@ -74,24 +74,17 @@
                 </div>
                 <mat-form-field appearance="fill">
                     <mat-label>Cargo</mat-label>
-                    <input
-                        type="text"
-                        placeholder="Selecione o cargo"
-                        matInput
+                    <mat-select
                         formControlName="cargo"
-                        [matAutocomplete]="auto"
-                    />
-                    <mat-autocomplete
-                        autoActiveFirstOption
-                        #auto="matAutocomplete"
+                        (selectionChange)="selectOffice($event)"
                     >
                         <mat-option
                             *ngFor="let option of cargos"
-                            (click)="selectOffice(option.name)"
                             [value]="option.name"
-                            >{{ option.name }}</mat-option
                         >
-                    </mat-autocomplete>
+                            {{ option.name }}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
                 <div
                     *ngIf="form.controls.cargo.touched"

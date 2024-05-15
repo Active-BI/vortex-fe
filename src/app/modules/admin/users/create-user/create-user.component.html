@@ -1,11 +1,19 @@
 <div class="w-full flex flex-row justify-start items-start">
-    <div class="flex flex-col m-10 mt-8 w-full bg-white rounded-b-xl p-5 shadow-2xl">
+    <div
+        class="flex flex-col m-10 mt-8 w-full bg-white rounded-b-xl p-5 shadow-2xl"
+    >
         <div class="sm:w-100 w-full flex flex-col">
-            <div class="mx-10 my-0 rounded-t-xl w-[75%] flex items-center bg-white py-[3px] mb-6">
-
-                <button (click)="voltar()" class="self-start my-2 mr-8 ml-[-40px] hover:rounded-full">
-                    <mat-icon class="flex self-center text-slate-600 hover:text-slate-400"
-                        svgIcon="arrow_back"></mat-icon>
+            <div
+                class="mx-10 my-0 rounded-t-xl w-[75%] flex items-center bg-white py-[3px] mb-6"
+            >
+                <button
+                    (click)="voltar()"
+                    class="self-start my-2 mr-8 ml-[-40px] hover:rounded-full"
+                >
+                    <mat-icon
+                        class="flex self-center text-slate-600 hover:text-slate-400"
+                        svgIcon="arrow_back"
+                    ></mat-icon>
                 </button>
 
                 <div class="w-full m-2">
@@ -14,15 +22,23 @@
                     </h1>
                 </div>
             </div>
-            <form (submit)="$event.preventDefault()" [formGroup]="form" class="flex flex-col w-full sm:w-100">
-
+            <form
+                (submit)="$event.preventDefault()"
+                [formGroup]="form"
+                class="flex flex-col w-full sm:w-100"
+            >
                 <mat-form-field appearance="fill">
                     <mat-label>Nome</mat-label>
                     <input formControlName="name" matInput #first />
-                    <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
-
+                    <mat-icon
+                        svgIcon="heroicons_outline:user-circle"
+                        class=""
+                    ></mat-icon>
                 </mat-form-field>
-                <div *ngIf="form.controls.name.touched" class="text-red-600 mb-2">
+                <div
+                    *ngIf="form.controls.name.touched"
+                    class="text-red-600 mb-2"
+                >
                     <div *ngIf="form.controls.name.errors?.['required']">
                         Nome é Obrigatório
                     </div>
@@ -32,31 +48,50 @@
                 </div>
                 <mat-form-field appearance="fill">
                     <mat-label>Email</mat-label>
-                    <input type="text" formControlName="email" matInput #first />
-                    <mat-icon svgIcon="heroicons_outline:user-circle" class=""></mat-icon>
-
+                    <input
+                        type="text"
+                        formControlName="email"
+                        matInput
+                        #first
+                    />
+                    <mat-icon
+                        svgIcon="heroicons_outline:user-circle"
+                        class=""
+                    ></mat-icon>
                 </mat-form-field>
-                <div *ngIf="form.controls.email.touched" class="text-red-600 mb-2">
+                <div
+                    *ngIf="form.controls.email.touched"
+                    class="text-red-600 mb-2"
+                >
                     <div *ngIf="form.controls.email.errors?.['required']">
                         Email é Obrigatório
                     </div>
-                    <div *ngIf="form.controls.email.invalid && !form.controls.email.errors?.['required']">
+                    <div
+                        *ngIf="form.controls.email.invalid && !form.controls.email.errors?.['required']"
+                    >
                         Email inválido
                     </div>
                 </div>
 
                 <mat-form-field appearance="fill">
-                        <mat-label>Cargo</mat-label>
-                        <input type="text"
-                               placeholder="Selecione o cargo"
-                               matInput
-                               formControlName="cargo"
-                               [matAutocomplete]="auto">
-                        <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
-                            <mat-option *ngFor="let option of cargos" (click)="selectOffice(option.name)" [value]="option.name">{{option.name}}</mat-option>
-                        </mat-autocomplete>
+                    <mat-label>Cargo</mat-label>
+                    <mat-select
+                        formControlName="cargo"
+                        (selectionChange)="selectOffice($event)"
+                    >
+                        <mat-option
+                            *ngFor="let option of cargos"
+                            [value]="option.name"
+                        >
+                            {{ option.name }}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
-                <div *ngIf="form.controls.cargo.touched" class="text-red-600 mb-2">
+
+                <div
+                    *ngIf="form.controls.cargo.touched"
+                    class="text-red-600 mb-2"
+                >
                     <div *ngIf="form.controls.cargo.errors?.['required']">
                         Cargo é Obrigatório
                     </div>
@@ -64,13 +99,20 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Perfil</mat-label>
                     <mat-select formControlName="rls_id">
-                        <mat-option value="ca21241b-a37d-4e6f-bbb6-26643d3cdd99">User</mat-option>
-                        <mat-option value="6a203390-8389-49ca-aa0e-6a14ba7815bc">Admin</mat-option>
+                        <mat-option value="ca21241b-a37d-4e6f-bbb6-26643d3cdd99"
+                            >User</mat-option
+                        >
+                        <mat-option value="6a203390-8389-49ca-aa0e-6a14ba7815bc"
+                            >Admin</mat-option
+                        >
                     </mat-select>
                     <mat-icon svgIcon="heroicons_outline:archive"></mat-icon>
                 </mat-form-field>
                 <div *ngIf="form.controls.rls_id.touched">
-                    <div *ngIf="form.controls.rls_id.errors?.['required']" class="text-red-600 mb-2">
+                    <div
+                        *ngIf="form.controls.rls_id.errors?.['required']"
+                        class="text-red-600 mb-2"
+                    >
                         Perfil é Obrigatório
                     </div>
                 </div>
@@ -78,37 +120,46 @@
                     <mat-label>Projetos</mat-label>
                     <mat-select formControlName="projects" multiple>
                         <mat-select-trigger>
-                            {{ form.value.projects?.slice(0,3) || "" }}
+                            {{ form.value.projects?.slice(0, 3) || "" }}
                             <span
-                            *ngIf="(form.value.projects?.length || 0) > 3"
+                                *ngIf="(form.value.projects?.length || 0) > 3"
                                 class="example-additional-selection"
-                                >
+                            >
                                 (+{{ (form.value.projects?.length || 0) - 3 }}
                                 {{
-                                form.value.projects?.length === 3
-                                ? "outro"
-                                : "outros"
+                                    form.value.projects?.length === 3
+                                        ? "outro"
+                                        : "outros"
                                 }})
                             </span>
                         </mat-select-trigger>
-    
+
                         <mat-option
-                        class="ml-4"
-                        *ngFor="let projeto of projetos"
-                        [value]="projeto.id"
-                    >
-                        {{ projeto.projeto }}
-                    </mat-option>
+                            class="ml-4"
+                            *ngFor="let projeto of projetos"
+                            [value]="projeto.id"
+                        >
+                            {{ projeto.projeto }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <div *ngIf="form.controls.projects.touched">
-                    <div *ngIf="form.controls.projects.errors?.['required']" class="text-red-600 mb-2">
+                    <div
+                        *ngIf="form.controls.projects.errors?.['required']"
+                        class="text-red-600 mb-2"
+                    >
                         Projetos são Obrigatórios
                     </div>
                 </div>
             </form>
-            <button mat-raised-button color="primary" (click)="criar()"
-                class="self-end mt-2 rounded-sm text-colorText">CRIAR</button>
+            <button
+                mat-raised-button
+                color="primary"
+                (click)="criar()"
+                class="self-end mt-2 rounded-sm text-colorText"
+            >
+                CRIAR
+            </button>
         </div>
     </div>
 </div>
