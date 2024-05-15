@@ -227,6 +227,7 @@ export class EditUserComponent implements OnInit {
                     (e) => {
                         this.toastr.success('Editado com Sucesso');
                         this.outrosProjetos = e.projects;
+                        this.voltar();
                     },
                     ({ error }) => {
                         this.toastr.error(error.message);
