@@ -71,7 +71,7 @@ export class ListUsersComponent implements OnInit {
         this.requisicoes();
     }
     getOffice(id) {
-        const office = this.cargo.find((c) => (c.id = id));
+        const office = this.cargo.find((c) => c.id === id);
         return office ? office.name : 'Não Atribuído';
     }
     requisicoes() {
