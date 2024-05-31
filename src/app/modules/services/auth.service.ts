@@ -60,7 +60,7 @@ export class LocalAuthService {
         return this.http.post(`${this.baseUrl}login`, user);
     }
     get_app_image(): Observable<any> {
-        return this.http.get(`${this.baseUrl}login/app/image`);
+        return this.http.get(`${this.baseUrl}/app/image`);
     }
 
     resetPass(email: string): Observable<any> {
@@ -71,10 +71,7 @@ export class LocalAuthService {
         return this.http.post(`${this.baseUrl}login/set-new-pass`, payload);
     }
     register(user): Observable<any> {
-        return this.http.post<any>(
-            `${this.baseUrl}login/register`,
-            user,
-        );
+        return this.http.post<any>(`${this.baseUrl}login/register`, user);
     }
 
     logout() {
