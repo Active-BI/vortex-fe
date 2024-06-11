@@ -64,25 +64,22 @@ export class ResetPassComponent extends AccessModelComponent implements OnInit {
     ngOnInit(): void {}
 
     valilateSpecialCharacterPassword(control: FormControl) {
-        // verifica se existe algum caractere especial
-        return !(control.value as string).match(/^[a-zA-Z0-9\s]*$/)
+        return /[^a-zA-Z0-9 ]/.test(control.value as string)
             ? true
             : { specialChar: true };
     }
     valilateUpperCaseLetter(control: FormControl) {
-        // verifica se existe letra maiuscula
-
         return /[A-Z]/.test(control.value as string)
             ? true
             : { UpperCaseLetter: true };
     }
     validateNumber(control: FormControl) {
-        return (control.value as string).match(/\d/)
+        return /\d/.test(control.value as string)
             ? true
             : { numberRequired: true };
     }
     validadeLowerCaseLetter(control: FormControl) {
-        return (control.value as string).match(/[a-z]/)
+        return /[a-z]/.test(control.value as string)
             ? true
             : { LowerCaseLetter: true };
     }
@@ -107,22 +104,11 @@ export class ResetPassComponent extends AccessModelComponent implements OnInit {
         const form = { ...this.signUpForm.value, token: this.token };
         delete form.passwordConfirm;
 
-        this._authService.setNewPass(form).subscribe(
-            (response) => {
-                this.signUpForm.enable();
-                this.signUpNgForm.resetForm();
-                this.toastr.success('Mudança de senha concluída');
-
-                this._router.navigateByUrl('/auth/sign-in');
-            },
-            (response) => {
-                // Re-enable the form
-                // this.signUpForm.enable();
-                // // Reset the form
-                // this.signUpNgForm.resetForm();
-                // // Show the alert
-                // this.showAlert = true;
-            }
-        );
+        this._authService.setNewPass(form).subscribe(() => {
+            this.signUpForm.enable();
+            this.signUpNgForm.resetForm();
+            this.toastr.success('Mudança de senha concluída');
+            this._router.navigate(['/auth/sign-in']);
+        });
     }
 }
