@@ -71,10 +71,7 @@ export class LocalAuthService {
         return this.http.post(`${this.baseUrl}login/set-new-pass`, payload);
     }
     register(user): Observable<any> {
-        return this.http.post<any>(
-            `${this.baseUrl}login/register`,
-            user,
-        );
+        return this.http.post<any>(`${this.baseUrl}login/register`, user);
     }
 
     logout() {
