@@ -50,13 +50,19 @@ export class PageMasterService {
     }
 
     PostAdminUsersByTenantId(tenantId, body) {
-        return this.http.post(`${this.baseUrl}master/pages/user/${tenantId}`, body);
+        return this.http.post(
+            `${this.baseUrl}master/pages/user/${tenantId}`,
+            body
+        );
     }
     getPages() {
         return this.http.get(`${this.baseUrl}master/pages`);
     }
     patchPages(id: string, page) {
-        return this.http.patch(`${this.baseUrl}master/pages/${id}`, page);
+        return this.http.patch(
+            `${this.baseUrl}master/pages/edit-page/${id}`,
+            page
+        );
     }
     postPage(page) {
         return this.http.post(`${this.baseUrl}master/pages`, page);
