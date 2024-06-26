@@ -1,0 +1,76 @@
+<form
+    (submit)="$event.preventDefault()"
+    [formGroup]="form"
+    class="flex flex-col w-full sm:w-100"
+>
+    <mat-form-field class="w-60" appearance="fill">
+        <mat-label>Clientes</mat-label>
+        <input
+            type="text"
+            placeholder="Cliente"
+            aria-label="Cliente"
+            matInput
+            formControlName="cliente"
+            [matAutocomplete]="auto"
+        />
+        <mat-autocomplete
+            autoActiveFirstOption
+            #auto="matAutocomplete"
+            (optionSelected)="setProjects($event.option.value)"
+        >
+            <mat-option
+                *ngFor="let cliente of clientes"
+                [value]="cliente.tenant_name"
+            >
+                {{ cliente.tenant_name }}
+            </mat-option>
+        </mat-autocomplete>
+
+        <mat-icon
+            (click)="clearSelection()"
+            class="cursor-pointer text-[#b10000]"
+            svgIcon="heroicons_solid:trash"
+        ></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Projetos</mat-label>
+        <mat-select formControlName="projetos" multiple>
+            <mat-select-trigger>
+                {{ form.value.projetos?.slice(0, 3) || "" }}
+                <span
+                    *ngIf="(form.value.projetos?.length || 0) > 3"
+                    class="example-additional-selection"
+                >
+                    (+{{ (form.value.projetos?.length || 0) - 3 }}
+                    {{
+                        form.value.projetos?.length === 3 ? "outro" : "outros"
+                    }})
+                </span>
+            </mat-select-trigger>
+
+            <mat-option
+                class="ml-4"
+                *ngFor="let projeto of projetos"
+                [value]="projeto.id"
+            >
+                {{ projeto.projeto }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div *ngIf="form.controls.projetos.touched">
+        <div
+            *ngIf="form.controls.projetos.errors?.['required']"
+            class="text-red-600 mb-2"
+        >
+            Projetos são Obrigatórios
+        </div>
+    </div>
+    <button
+        color="primary"
+        (click)="onSubmit()"
+        class="text-white text-center self-end bg-blue-600 w-20 hover:bg-blue-700 h-7 mr-2 font-medium rounded-md text-sm dark:bg-blue-400 focus:outline-none dark:focus:ring-blue-500"
+    >
+        SALVAR
+    </button>
+</form>

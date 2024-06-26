@@ -68,6 +68,7 @@ import { TreinamentoComponent } from './treinamento/treinamento.component';
 import { BlogComponent } from './blog/blog.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { DavitaTrashBtnComponent } from './davita-trash-btn/davita-trash-btn.component';
+import { AddDocumentosComponent } from './documentos/add-documentos/add-documentos.component';
 
 const adminroutes: Route[] = [
     {
@@ -165,7 +166,8 @@ const adminroutes: Route[] = [
         TreinamentoComponent,
         BlogComponent,
         DocumentosComponent,
-        DavitaTrashBtnComponent
+        DavitaTrashBtnComponent,
+        AddDocumentosComponent
     ],
     imports: [
         MatTabsModule,
