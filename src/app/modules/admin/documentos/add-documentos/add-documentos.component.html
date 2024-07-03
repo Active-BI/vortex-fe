@@ -1,0 +1,53 @@
+<div class="w-[350px] flex flex-col items-center justify-end gap-x-4">
+    <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Clientes</mat-label>
+        <mat-select
+            panelClass="mt-12"
+            [formControl]="myControl"
+            (selectionChange)="setProjects($event.value)"
+        >
+            <mat-option
+                *ngFor="let cliente of clientes"
+                [value]="cliente.tenant_name"
+            >
+                {{ cliente.tenant_name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>Projetos</mat-label>
+        <mat-select [formControl]="projetosControl" multiple panelClass="mt-12">
+            <mat-select-trigger>
+                {{ projetosControl.value?.slice(0, 3) || "" }}
+                <span
+                    *ngIf="(projetosControl.value?.length || 0) > 3"
+                    class="example-additional-selection"
+                >
+                    (+{{ (projetosControl.value?.length || 0) - 3 }}
+                    {{
+                        projetosControl.value?.length === 3
+                            ? "outro"
+                            : "outros"
+                    }})
+                </span>
+            </mat-select-trigger>
+
+            <mat-option
+                class="ml-4"
+                *ngFor="let projeto of projetos"
+                [value]="projeto.id"
+            >
+                {{ projeto.projeto }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button
+        type="button"
+        *ngIf="canUploadOrDeleteFiles"
+        class="w-full h-auto p-2 mt-10 self-end bg-[#0069b1] hover:bg-[#00a8e4] rounded-md text-white"
+        (click)="UploadFiles()"
+    >
+        Salvar arquivos
+    </button>
+</div>
