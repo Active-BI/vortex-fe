@@ -1,66 +1,131 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { DocumentsService } from 'app/modules/services/documents.service';
+import { Router } from '@angular/router';
+import jwtDecode from 'jwt-decode';
+import { AuthService } from 'app/modules/services/auth/auth.service';
 
 @Component({
     selector: 'app-add-documentos',
     templateUrl: './add-documentos.component.html',
     styleUrls: ['./add-documentos.component.scss'],
 })
+//extends DocumentosComponent
 export class AddDocumentosComponent implements OnInit {
     tenant_name;
-    projetos;
+    formData = this.modalParams.files;
+
+    dataSource: MatTableDataSource<any>;
+    files = [];
+    clientes = [];
+    projetos = [];
+    myControl = new FormControl('', [Validators.required]);
+    projetosControl = new FormControl(
+        [],
+        [Validators.required, Validators.minLength(1)]
+    );
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
     clienteSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
+    public cliente$: Observable<any> = this.clienteSubject.asObservable();
+    canUploadOrDeleteFiles;
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: any,
-        private fb: FormBuilder,
+        @Inject(MAT_DIALOG_DATA) public modalParams: any,
+        private tenantsService: TenantsService,
         private toastr: ToastrService,
-        private tenantService: TenantsService
-    ) {}
-
-    form = this.fb.group({
-        clientes: ['', [Validators.required]],
-        projetos: [[], [Validators.required, Validators.minLength(1)]],
-    });
+        private documentsService: DocumentsService,
+        private router: Router,
+        private authService: AuthService
+    ) {
+        this.canUploadOrDeleteFiles =
+            this.authService.GetUser().role_name === 'Master' ? true : false;
+    }
 
     ngOnInit(): void {
-        this.tenantService.tenant(this.data.tenant_id).subscribe({
-            next: (value: any) => {
-                this.tenant_name = value.tenant_name;
+        this.projetosControl.disable();
 
-                this.tenantService.getProjects(this.tenant_name).subscribe({
-                    next: (value: any[]) => {
-                        this.projetos = value;
-                    },
-                    error: (error: any) => {
-                        console.log(error);
-                    },
-                });
-            },
-            error: (error: any) => {
-                console.log(error);
-            },
+        this.documentsService.getClientProjectFilters().subscribe((res) => {
+            this.clientes = res;
+        });
+
+        this.cliente$.subscribe((res) => {
+            this.getFiles(res.id);
+
+            this.projetos = res.projects;
+            this.projetosControl = new FormControl([]);
         });
     }
 
-    onSubmit(): void {}
+    getFiles(id = 'all') {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const decoded = jwtDecode(token) as any;
+        this.documentsService.getFiles(id).subscribe((res) => {
+            if (this.router.url.includes('administrador/documentos')) {
+                this.files = res.filter((f) => {
+                    return f.projects.find((p) => decoded.projects.includes(p));
+                });
+            } else {
+                this.files = res;
+            }
+            return this.updateDataSource([
+                ...this.files,
+                ...this.formData.getAll('files'),
+            ]);
+        });
+    }
 
+    updateDataSource(data) {
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        return this.dataSource;
+    }
     setProjects(e) {
         const cliente = this.clienteSubject.getValue();
+        console.log(e, cliente);
 
         if (cliente?.tenant_name === e) return;
 
-        this.setContextoCliente(
-            this.data.cliente.find((c) => c.tenant_name === e)
-        );
+        this.setContextoCliente(this.clientes.find((c) => c.tenant_name === e));
     }
 
     public setContextoCliente(novoContexto: any): void {
-        this.form.enable();
+        this.projetosControl.enable();
         this.clienteSubject.next(novoContexto);
+    }
+
+    UploadFiles() {
+        const cliente = this.clienteSubject.getValue();
+        if (
+            this.formData.get('files') === null ||
+            this.formData.get('files')?.length
+        ) {
+            this.toastr.error('Nenhum arquivo selecionado');
+            return;
+        }
+        if (cliente.id && this.projetosControl.value.length) {
+            this.documentsService
+                .UploadFiles(
+                    this.formData,
+                    cliente.id,
+                    this.projetosControl.value
+                )
+                .subscribe(() => {
+                    this.modalParams.data();
+                });
+        } else {
+            this.toastr.error('Formulário inválido');
+            this.projetosControl.markAllAsTouched();
+            this.myControl.markAllAsTouched();
+        }
     }
 }

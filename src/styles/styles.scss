@@ -5,3 +5,7 @@
 .pbi-report{
     height: calc(0.60 * 74vw); /*16:9 aspect ratio */
 }
+
+*{
+    user-select: none;
+}

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'app/modules/services/auth/auth.service';
 import { DocumentsService } from 'app/modules/services/documents.service';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import saveAs from 'file-saver';
 import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
@@ -24,6 +24,7 @@ export class DocumentosComponent implements OnInit {
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
+    @ViewChild('fileInput') fileInput: ElementRef;
     files = [];
     canUploadOrDeleteFiles;
     displayedColumns: string[] = ['name', 'projects', 'created_at', 'opt'];
@@ -48,9 +49,9 @@ export class DocumentosComponent implements OnInit {
             this.clientes = res;
         });
 
-        this.cliente$.subscribe((res) => {
-            this.getFiles(res.id);
-            this.projetos = res.projects;
+        this.cliente$.subscribe((cliente) => {
+            this.getFiles(cliente.id);
+            this.projetos = cliente.projects;
             this.projetosControl = new FormControl([]);
         });
 
@@ -77,9 +78,12 @@ export class DocumentosComponent implements OnInit {
             for (let i = 0; i < files.length; i++) {
                 this.formData.append('files', files[i]);
             }
+
+            this.openModal(this.formData);
+            console.log('files: ', files);
             return this.updateDataSource([
                 ...this.files,
-                ...this.formData.getAll('files'),
+                // ...this.formData.getAll('files'),
             ]);
         }
     }
@@ -147,7 +151,6 @@ export class DocumentosComponent implements OnInit {
         return this.dataSource;
     }
     clientes = [];
-    cliente;
     projetos = [];
     myControl = new FormControl('', [Validators.required]);
     projetosControl = new FormControl(
@@ -189,21 +192,33 @@ export class DocumentosComponent implements OnInit {
     }
     setProjects(e) {
         const cliente = this.clienteSubject.getValue();
+        console.log(e, cliente);
 
         if (cliente?.tenant_name === e) return;
 
         this.setContextoCliente(this.clientes.find((c) => c.tenant_name === e));
+        console.log(cliente);
     }
 
-    guardarDocumento(tenant_id) {
-        this.dialog.open(AddDocumentosComponent, {
+    openModal(files: FormData) {
+        console.log(files.getAll('files'));
+        const modal = this.dialog.open(AddDocumentosComponent, {
             data: {
-                tenant_id,
-                clientes: this.clientes,
+                files,
                 data: () => {
-                    this.dialog.closeAll();
+                    this.getFiles();
+                    this.formData = new FormData();
                     this.toastr.success('Criado com sucesso');
+                    this.dialog.closeAll();
                 },
+            },
+        });
+        modal.afterClosed().subscribe({
+            next: () => {
+                this.getFiles();
+                this.formData = new FormData();
+                this.fileInput.nativeElement.value = '';
+                console.log(this.dataSource);
             },
         });
     }
