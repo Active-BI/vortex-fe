@@ -66,7 +66,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this.user = {
             id: 'cfaad35d-07a3-4447-a6c3-d8c3d54fd5df',
             name: decodedToken.name,
-            email: decodedToken.personal_email,
+            email: decodedToken.contact_email,
             avatar: 'assets/images/avatars/brian-hughes.jpg',
             status: 'online',
         };
