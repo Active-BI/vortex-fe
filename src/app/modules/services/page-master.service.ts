@@ -51,7 +51,7 @@ export class PageMasterService {
 
     PostAdminUsersByTenantId(tenantId, body) {
         return this.http.post(
-            `${this.baseUrl}master/pages/user/${tenantId}`,
+            `${this.baseUrl}user/user/${tenantId}`,
             body
         );
     }
