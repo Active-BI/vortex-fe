@@ -85,7 +85,7 @@
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
                         <div class="w-full flex justify-end">
-                            <button
+                            <!-- <button
                                 (click)="refreshDataSet(element)"
                                 matTooltip="refreshDataSet"
                             >
@@ -93,7 +93,7 @@
                                     class="cursor-pointer mr-5 text-blue-700"
                                     svgIcon="mat_outline:sync"
                                 ></mat-icon>
-                            </button>
+                            </button> -->
                             <button
                                 *ngIf="element.dataUltimoAcesso === 'N/'"
                                 class="text-violet-900"
