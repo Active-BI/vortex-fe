@@ -94,34 +94,34 @@ export class DocumentosComponent implements OnInit {
             this.getFiles(cliente.id ? cliente.id : 'all');
         });
     }
-    UploadFiles() {
-        const cliente = this.clienteSubject.getValue();
-        if (
-            this.formData.get('files') === null ||
-            this.formData.get('files')?.length
-        ) {
-            this.toastr.error('Nenhum arquivo selecionado');
-            return;
-        }
-        if (cliente.id && this.projetosControl.value.length) {
-            this.documentsService
-                .UploadFiles(
-                    this.formData,
-                    cliente.id,
-                    this.projetosControl.value
-                )
-                .subscribe((res) => {
-                    this.formData = new FormData();
-                    const cliente = this.clienteSubject.getValue();
-                    console.log(cliente);
-                    this.getFiles(cliente.id);
-                });
-        } else {
-            this.toastr.error('Formulário inválido');
-            this.projetosControl.markAllAsTouched();
-            this.myControl.markAllAsTouched();
-        }
-    }
+    // UploadFiles() {
+    //     const cliente = this.clienteSubject.getValue();
+    //     if (
+    //         this.formData.get('files') === null ||
+    //         this.formData.get('files')?.length
+    //     ) {
+    //         this.toastr.error('Nenhum arquivo selecionado');
+    //         return;
+    //     }
+    //     if (cliente.id && this.projetosControl.value.length) {
+    //         this.documentsService
+    //             .UploadFiles(
+    //                 this.formData,
+    //                 cliente.id,
+    //                 this.projetosControl.value
+    //             )
+    //             .subscribe((res) => {
+    //                 this.formData = new FormData();
+    //                 const cliente = this.clienteSubject.getValue();
+    //                 console.log(cliente);
+    //                 this.getFiles(cliente.id);
+    //             });
+    //     } else {
+    //         this.toastr.error('Formulário inválido');
+    //         this.projetosControl.markAllAsTouched();
+    //         this.myControl.markAllAsTouched();
+    //     }
+    // }
     downloadFile(file) {
         this.documentsService.DownloadFile(file.id).subscribe((res) => {
             const blob = new Blob([res], { type: 'application/octet-stream' });
@@ -190,15 +190,15 @@ export class DocumentosComponent implements OnInit {
         this.setContextoCliente({});
         return;
     }
-    setProjects(e) {
-        const cliente = this.clienteSubject.getValue();
-        console.log(e, cliente);
+    // setProjects(e) {
+    //     const cliente = this.clienteSubject.getValue();
+    //     console.log(e, cliente);
 
-        if (cliente?.tenant_name === e) return;
+    //     if (cliente?.tenant_name === e) return;
 
-        this.setContextoCliente(this.clientes.find((c) => c.tenant_name === e));
-        console.log(cliente);
-    }
+    //     this.setContextoCliente(this.clientes.find((c) => c.tenant_name === e));
+    //     console.log(cliente);
+    // }
 
     openModal(files: FormData) {
         console.log(files.getAll('files'));
@@ -206,8 +206,8 @@ export class DocumentosComponent implements OnInit {
             data: {
                 files,
                 data: () => {
-                    this.getFiles();
-                    this.formData = new FormData();
+                    // this.getFiles();
+                    // this.formData = new FormData();
                     this.toastr.success('Criado com sucesso');
                     this.dialog.closeAll();
                 },
