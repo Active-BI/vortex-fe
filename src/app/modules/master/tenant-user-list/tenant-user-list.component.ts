@@ -126,8 +126,4 @@ export class TenantUserListComponent implements OnInit {
             },
         });
     }
-
-    refreshDataSet(usuario) {
-        console.log(usuario);
-    }
 }
