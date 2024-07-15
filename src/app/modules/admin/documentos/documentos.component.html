@@ -39,6 +39,16 @@
                         {{ row.name }}
                     </td>
                 </ng-container>
+                <ng-container matColumnDef="format">
+                    <th mat-header-cell *matHeaderCellDef>Formato</th>
+                    <td
+                        mat-cell
+                        *matCellDef="let row"
+                        [ngClass]="row.id ? '' : 'text-blue-500'"
+                    >
+                        {{ row.file_format }}
+                    </td>
+                </ng-container>
                 <ng-container matColumnDef="projects">
                     <th mat-header-cell *matHeaderCellDef>Projetos</th>
                     <td mat-cell *matCellDef="let row">

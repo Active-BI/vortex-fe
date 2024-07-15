@@ -27,7 +27,7 @@ export class DocumentosComponent implements OnInit {
     @ViewChild('fileInput') fileInput: ElementRef;
     files = [];
     canUploadOrDeleteFiles;
-    displayedColumns: string[] = ['name', 'projects', 'created_at', 'opt'];
+    displayedColumns: string[] = ['name', 'format', 'projects', 'created_at', 'opt'];
     constructor(
         private documentsService: DocumentsService,
         private authService: AuthService,
