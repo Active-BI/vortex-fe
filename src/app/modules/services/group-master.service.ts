@@ -15,6 +15,7 @@ export function trataRotas(rotas) {
             group_id: page.group_id,
             name: page.title,
             id: page.id,
+            datasetInf: page.datasetInf,
             roles: page.Page_Role.map((p) => p.Rls.name),
         };
     });
@@ -77,6 +78,7 @@ export class GroupMasterService {
                 icon: group.icon,
             };
         }
+        
         return trataRotas(group.Page).find((g) => g.id === group.id);
     }
 }

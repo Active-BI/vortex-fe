@@ -31,7 +31,7 @@ export class RotasAninhadasComponent implements OnInit {
     myControl = new FormControl('');
     pipe = new DatePipe('en-US');
     panelOpenState = false;
-    displayedColumns: string[] = ['nome', 'tipo','acesso', 'opcoes'];
+    displayedColumns: string[] = ['nome', 'tipo','acesso', 'status','ultima_atualizacao','opcoes'];
     @ViewChild('paginator') paginator: MatPaginator;
     usuarios: MatTableDataSource<any>;
     usuariosL: number = 0;
@@ -44,7 +44,7 @@ export class RotasAninhadasComponent implements OnInit {
         public fb: FormBuilder,
         private toastr: ToastrService,
         private pageMasterService: PageMasterService,
-        private groupMasterService: GroupMasterService
+        private groupMasterService: GroupMasterService,
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
         this.requisicoes();
@@ -138,6 +138,9 @@ export class RotasAninhadasComponent implements OnInit {
         });
     }
 
+    atualizarReport(report) {
+        console.log(report)
+    }
     voltar(): void {
         this.router.navigate([`/master/gestao/telas`]);
     }
