@@ -20,7 +20,6 @@
                     (change)="onFileSelected($event)"
                     #fileInput
                     type="file"
-                    multiple
                 />
             </div>
 
@@ -73,6 +72,16 @@
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let row">
                         <div class="w-full flex justify-end">
+                            <button
+                            class="text-violet-900"
+                            [matTooltip]="row.description"
+                            *ngIf="row.description.length > 0"
+                        >
+                            <mat-icon
+                                class="cursor-pointer mr-5 text-[#999999]"
+                                svgIcon="help"
+                            ></mat-icon>
+                        </button>
                             <button
                                 class="text-violet-900"
                                 matTooltip="Baixar"
