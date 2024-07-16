@@ -1,39 +1,124 @@
 <div class="flex flex-col flex-auto">
-    <div class="text-3x-L flex-auto p-6  justify-center">
+    <div class="text-3x-L flex-auto p-6 justify-center">
         <div class="flex flex-row">
-            <div class="flex flex-col  w-full" id="table">
+            <div class="flex flex-col w-full" id="table">
                 <div class="flex items-center justify-between">
-                    <mat-form-field appearance="fill" class="w-80 mt-4 mr-4 ml-1">
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-80 mt-4 mr-4 ml-1"
+                    >
                         <mat-icon class="mr-4">search</mat-icon>
-                        <input type="text" [formControl]="myPageControl" placeholder="Buscar Usuários"
-                            (ngModelChange)="this.secondPage.filter = $event;" matInput />
+                        <input
+                            type="text"
+                            [formControl]="myPageControl"
+                            placeholder="Buscar Usuários"
+                            (ngModelChange)="this.secondPage.filter = $event"
+                            matInput
+                        />
                     </mat-form-field>
                     <div class="flex items-center justify-start">
-                        <button mat-raised-button (click)="exportarAcessos()"
-                        class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">Exportar Acessos</button>
+                        <button
+                            mat-raised-button
+                            (click)="exportarAcessos()"
+                            class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white"
+                        >
+                            Exportar Acessos
+                        </button>
                     </div>
                 </div>
-                <table mat-table class="" [dataSource]="secondPage" class="pb-6 ">
+                <table
+                    mat-table
+                    class=""
+                    [dataSource]="secondPage"
+                    class="pb-6"
+                >
                     <ng-container matColumnDef="nome">
-                        <th mat-header-cell *matHeaderCellDef> Usuário </th>
+                        <th mat-header-cell *matHeaderCellDef>Título</th>
                         <td mat-cell *matCellDef="let element" class="">
-                            {{element.name}}</td>
+                            {{ element.title }}
+                        </td>
                     </ng-container>
-                    <ng-container matColumnDef="email">
-                        <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <ng-container matColumnDef="grupo">
+                        <th mat-header-cell *matHeaderCellDef>Grupo</th>
                         <td mat-cell *matCellDef="let element" class="">
-                            {{element.contact_email}}</td>
+                            {{ element.Page_Group.title }}
+                        </td>
                     </ng-container>
-                    <ng-container matColumnDef="relatorio">
-                        <th mat-header-cell *matHeaderCellDef> Relatório </th>
+
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>Status</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element?.datasetInf?.status }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ultima_atualizacao">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Ultima atualização
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div *ngIf="element.datasetInf?.startTime">
+                                <p class="text-gray-700 font-light">
+                                    início:
+
+                                    {{
+                                        element.datasetInf.startTime
+                                            | date : "dd/MM/yyyy HH:MM"
+                                    }}
+                                </p>
+                                <p class="text-gray-500 font-light">
+                                    fim:
+
+                                    {{
+                                        element.datasetInf.startTime
+                                            | date : "dd/MM/yyyy HH:MM"
+                                    }}
+                                </p>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="opt">
+                        <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let element" class="">
-                            {{element.titulo}}</td>
+                            <mat-icon
+                                class="mr-5"
+                                *ngIf="element?.datasetInf?.status === 'Failed'"
+                                [matTooltip]="
+                                    element?.datasetInf?.serviceExceptionJson
+                                "
+                                color="warn"
+                                svgIcon="heroicons_outline:exclamation-circle"
+                            ></mat-icon>
+                            <button
+                                class="text-violet-900"
+                                (click)="atualizarReport(element)"
+                                *ngIf="element.page_type === 'report'"
+                            >
+                                <mat-icon
+                                    class="cursor-pointer mr-5 text-blue-700"
+                                    svgIcon="sync"
+                                ></mat-icon>
+                            </button>
+                        </td>
                     </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="secondDisplayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: secondDisplayedColumns;"></tr>
+
+                    <tr
+                        mat-header-row
+                        *matHeaderRowDef="secondDisplayedColumns"
+                    ></tr>
+                    <tr
+                        mat-row
+                        *matRowDef="let row; columns: secondDisplayedColumns"
+                    ></tr>
                 </table>
                 <div class="flex bg-white justify-end">
-                    <mat-paginator #paginator [pageSize]="10" [length]="secondPage?.data.length" showFirstLastButtons>
+                    <mat-paginator
+                        #paginator
+                        [pageSize]="10"
+                        [length]="secondPage?.data.length"
+                        showFirstLastButtons
+                    >
                     </mat-paginator>
                 </div>
             </div>
