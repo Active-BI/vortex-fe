@@ -27,7 +27,7 @@ export class DocumentosComponent implements OnInit {
     @ViewChild('fileInput') fileInput: ElementRef;
     files = [];
     canUploadOrDeleteFiles;
-    displayedColumns: string[] = ['name', 'projects', 'created_at', 'opt'];
+    displayedColumns: string[] = ['name', 'format', 'projects', 'created_at', 'opt'];
     constructor(
         private documentsService: DocumentsService,
         private authService: AuthService,
@@ -73,14 +73,11 @@ export class DocumentosComponent implements OnInit {
 
     onFileSelected(event) {
         const files = event.target.files;
-
         if (files && files.length > 0) {
             for (let i = 0; i < files.length; i++) {
                 this.formData.append('files', files[i]);
             }
-
             this.openModal(this.formData);
-            console.log('files: ', files);
             return this.updateDataSource([
                 ...this.files,
                 // ...this.formData.getAll('files'),
@@ -94,34 +91,7 @@ export class DocumentosComponent implements OnInit {
             this.getFiles(cliente.id ? cliente.id : 'all');
         });
     }
-    UploadFiles() {
-        const cliente = this.clienteSubject.getValue();
-        if (
-            this.formData.get('files') === null ||
-            this.formData.get('files')?.length
-        ) {
-            this.toastr.error('Nenhum arquivo selecionado');
-            return;
-        }
-        if (cliente.id && this.projetosControl.value.length) {
-            this.documentsService
-                .UploadFiles(
-                    this.formData,
-                    cliente.id,
-                    this.projetosControl.value
-                )
-                .subscribe((res) => {
-                    this.formData = new FormData();
-                    const cliente = this.clienteSubject.getValue();
-                    console.log(cliente);
-                    this.getFiles(cliente.id);
-                });
-        } else {
-            this.toastr.error('Formulário inválido');
-            this.projetosControl.markAllAsTouched();
-            this.myControl.markAllAsTouched();
-        }
-    }
+
     downloadFile(file) {
         this.documentsService.DownloadFile(file.id).subscribe((res) => {
             const blob = new Blob([res], { type: 'application/octet-stream' });
@@ -129,11 +99,12 @@ export class DocumentosComponent implements OnInit {
             saveAs(blob, file.name + '.' + file.file_format);
         });
     }
+
     deleteFromFormData(name: string) {
         const novoFormData = new FormData();
         for (const file of this.formData.getAll('files')) {
             if ((file as any).name !== name) {
-                novoFormData.append('files', file);
+                novoFormData.set('files', file);
             }
         }
         this.formData = novoFormData;
@@ -190,24 +161,12 @@ export class DocumentosComponent implements OnInit {
         this.setContextoCliente({});
         return;
     }
-    setProjects(e) {
-        const cliente = this.clienteSubject.getValue();
-        console.log(e, cliente);
-
-        if (cliente?.tenant_name === e) return;
-
-        this.setContextoCliente(this.clientes.find((c) => c.tenant_name === e));
-        console.log(cliente);
-    }
-
+   
     openModal(files: FormData) {
-        console.log(files.getAll('files'));
         const modal = this.dialog.open(AddDocumentosComponent, {
             data: {
                 files,
                 data: () => {
-                    this.getFiles();
-                    this.formData = new FormData();
                     this.toastr.success('Criado com sucesso');
                     this.dialog.closeAll();
                 },

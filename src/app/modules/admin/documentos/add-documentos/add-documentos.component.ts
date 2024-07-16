@@ -20,8 +20,7 @@ import { AuthService } from 'app/modules/services/auth/auth.service';
 //extends DocumentosComponent
 export class AddDocumentosComponent implements OnInit {
     tenant_name;
-    formData = this.modalParams.files;
-
+    formData: FormData;
     dataSource: MatTableDataSource<any>;
     files = [];
     clientes = [];
@@ -37,14 +36,27 @@ export class AddDocumentosComponent implements OnInit {
     public cliente$: Observable<any> = this.clienteSubject.asObservable();
     canUploadOrDeleteFiles;
 
+    form = this.fb.group({
+        name: ['', Validators.required],
+        extencion: ['', Validators.required],
+        description: [''],
+    });
+
     constructor(
         @Inject(MAT_DIALOG_DATA) public modalParams: any,
         private tenantsService: TenantsService,
         private toastr: ToastrService,
         private documentsService: DocumentsService,
         private router: Router,
-        private authService: AuthService
+        private authService: AuthService,
+        private fb: FormBuilder
     ) {
+        this.formData = this.modalParams.files;
+        this.form.patchValue({
+            name: this.modalParams.files.get('files').name.split('.')[0],
+            extencion: this.modalParams.files.get('files').name.split('.')[1],
+        });
+
         this.canUploadOrDeleteFiles =
             this.authService.GetUser().role_name === 'Master' ? true : false;
     }
@@ -105,19 +117,28 @@ export class AddDocumentosComponent implements OnInit {
 
     UploadFiles() {
         const cliente = this.clienteSubject.getValue();
-        if (
-            this.formData.get('files') === null ||
-            this.formData.get('files')?.length
-        ) {
+        const files = this.formData.get('files');
+
+        if (!files || (files instanceof FileList && files.length === 0)) {
             this.toastr.error('Nenhum arquivo selecionado');
             return;
         }
         if (cliente.id && this.projetosControl.value.length) {
+            const file: any = this.formData.get('files');
+            this.formData.set(
+                'files',
+                file,
+                this.form.get('name').value +
+                    '.' +
+                    this.form.get('extencion').value
+            );
+
             this.documentsService
                 .UploadFiles(
                     this.formData,
                     cliente.id,
-                    this.projetosControl.value
+                    this.projetosControl.value,
+                    this.form.value.description
                 )
                 .subscribe(() => {
                     this.modalParams.data();

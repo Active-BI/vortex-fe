@@ -57,9 +57,11 @@ export class DocumentsService {
                 })
             );
     }
-    UploadFiles(file: FormData, tenant_id: string, projects: string[]) {
-        file.append('body', JSON.stringify(projects));
-        return this.http.post<any>(`${this.baseUrl}documents/${tenant_id}`, file ).pipe(
+    UploadFiles(file: FormData, tenant_id: string, projects: string[], description: string): Observable<any> {
+        const payload = new FormData();
+        payload.append('body', JSON.stringify({projects, description}));
+        payload.append('files',file.get('files'));
+        return this.http.post<any>(`${this.baseUrl}documents/${tenant_id}`, payload ).pipe(
             catchError((err) => {
                 if (err.status !== 200) {
                     this.toastr.error(err.error.message);

@@ -105,7 +105,6 @@ export class TenantUserListComponent implements OnInit {
     }
 
     reenviarEmail(user) {
-        console.log(user);
         this.userSrv
             .resendTenant({ user_id: user.id, email: user.contact_email })
             .subscribe((res) => {

@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { PageMasterService } from 'app/modules/services/page-master.service';
+import { PMIService } from 'app/modules/services/PMI.service';
 import { TenantsService } from 'app/modules/services/tenants.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -21,9 +22,11 @@ export class EditAdminAccessComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialog: MatDialog,
         private pageMasterService: PageMasterService,
+        private pmiService: PMIService,
+
         private tenantService: TenantsService,
         private toast: ToastrService
-        ) {
+    ) {
         this.usuario = data.usuario;
     }
     dashboardList;
@@ -66,33 +69,35 @@ export class EditAdminAccessComponent implements OnInit {
                 .filter((d) => d.included === true)
                 .map((d) => d.page_id)
         );
-        this.email.setValue(
-            this.usuario.contact_email
-        )
-        this.projetosControl.setValue(
-            this.usuario.projects
-        )
-        this.email.disable()
+        this.email.setValue(this.usuario.contact_email);
+        this.projetosControl.setValue(this.usuario.projects);
+        this.email.disable();
     }
 
     form = new FormControl('');
     email = new FormControl('');
 
     onSubmit(): void {
-        if (this.form.invalid || this.email.invalid || this.projetosControl.invalid) {
-            this.form.markAsTouched()
-            this.email.markAsTouched()
-            this.projetosControl.markAsTouched()
-            this.toast.error('Formulário inválido')
-            return
+        if (
+            this.form.invalid ||
+            this.email.invalid ||
+            this.projetosControl.invalid
+        ) {
+            this.form.markAsTouched();
+            this.email.markAsTouched();
+            this.projetosControl.markAsTouched();
+            this.toast.error('Formulário inválido');
+            return;
         }
+        // console.log(this.usuario);
         this.pageMasterService
             .patchReportsToTennant(
                 {
                     DashboardUserList: this.form.value,
-                    tenant_id: this.usuario.tenant_id,
+                    tenant_id: this.usuario.Tenant.id,
                     projetos: this.projetosControl.value,
                 },
+
                 this.usuario.id
             )
             .subscribe((e) => {

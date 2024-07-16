@@ -12,12 +12,12 @@ export class PageService {
 
     private baseUrl = environment.baseUrl;
 
-    getDashboards() {
-        return this.http.get(`${this.baseUrl}page`);
+    getDashboards(): Observable<any[]> {
+        return this.http.get(`${this.baseUrl}page`) as any;
     }
     getUserRoutes(): Observable<any> {
         return this.http.get(`${this.baseUrl}login/routes`);
-      }
+    }
     async getDashboardsByUserId(userId) {
         const response = await this.http
             .get(`${this.baseUrl}page/${userId}`)

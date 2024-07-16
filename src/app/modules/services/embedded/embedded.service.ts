@@ -47,6 +47,17 @@ export class EmbeddedService {
             `${this.baseUrl}pbi-report/dashboard/${groupId}/${reportId}`
         );
     }
+
+
+    getDatasetInfo(
+        group_name: string,
+        report_name: string
+    ): Observable<any> {
+        return this.http.get(
+            `${this.baseUrl}pbi-report/get-datasets/${group_name}/${report_name}`
+        );
+    }
+
     exportReportToPDF(
         groupId: string,
         reportId: string,

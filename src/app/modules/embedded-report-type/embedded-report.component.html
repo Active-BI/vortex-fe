@@ -42,10 +42,21 @@
                 Nenhum dado foi carregado
             </div>
         </div> -->
-        <div *ngIf="showReport && hasData"  class="">
-            <powerbi-report #reportObj [embedConfig]="config" [cssClassName]="'pbi-report'" [phasedEmbedding]="false"
-                [eventHandlers]="handlers" >
-            </powerbi-report>
-        </div>
-    <!-- </div>
+<mat-icon
+    svgIcon="mat_outline:refresh"
+    (click)="refresh()"
+    class="w-6 h-6 cursor-pointer"
+></mat-icon>
+
+<div *ngIf="showReport && hasData" class="">
+    <powerbi-report
+        #reportObj
+        [embedConfig]="config"
+        [cssClassName]="'pbi-report'"
+        [phasedEmbedding]="false"
+        [eventHandlers]="handlers"
+    >
+    </powerbi-report>
+</div>
+<!-- </div>
 </div> -->
