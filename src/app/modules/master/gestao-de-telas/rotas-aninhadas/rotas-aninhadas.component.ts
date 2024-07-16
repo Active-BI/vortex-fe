@@ -9,6 +9,7 @@ import { PageMasterService } from 'app/modules/services/page-master.service';
 import { ToastrService } from 'ngx-toastr';
 import { DeletarRotaAninhadaComponent } from '../modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
 import { GroupMasterService } from 'app/modules/services/group-master.service';
+import { PMIService } from 'app/modules/services/PMI.service';
 
 export function agregarRoles(objeto) {
     if (objeto?.children) {
@@ -31,7 +32,14 @@ export class RotasAninhadasComponent implements OnInit {
     myControl = new FormControl('');
     pipe = new DatePipe('en-US');
     panelOpenState = false;
-    displayedColumns: string[] = ['nome', 'tipo','acesso', 'status','ultima_atualizacao','opcoes'];
+    displayedColumns: string[] = [
+        'nome',
+        'tipo',
+        'acesso',
+        'status',
+        'ultima_atualizacao',
+        'opcoes',
+    ];
     @ViewChild('paginator') paginator: MatPaginator;
     usuarios: MatTableDataSource<any>;
     usuariosL: number = 0;
@@ -45,6 +53,7 @@ export class RotasAninhadasComponent implements OnInit {
         private toastr: ToastrService,
         private pageMasterService: PageMasterService,
         private groupMasterService: GroupMasterService,
+        private pmiService: PMIService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
         this.requisicoes();
@@ -67,7 +76,7 @@ export class RotasAninhadasComponent implements OnInit {
             name: acessos.page_group,
             icon: acessos.icon,
         });
-        console.log(acessos.children)
+        console.log(acessos.children);
         this.usuarios = new MatTableDataSource(acessos.children);
         this.usuariosFiltrados = new MatTableDataSource(acessos.children);
         this.usuariosFiltrados.paginator = this.paginator;
@@ -139,7 +148,18 @@ export class RotasAninhadasComponent implements OnInit {
     }
 
     atualizarReport(report) {
-        console.log(report)
+        const group = report.link.split('/')[1];
+        const _report = report.link.split('/')[2];
+
+        this.pmiService.refreshDataset(group, _report).subscribe(
+            (res) => {
+                console.log(report);
+
+                this.toastr.success('Relatorio sendo atualizado');
+                this.requisicoes();
+            },
+            (error) => this.toastr.error('Atualização em andamento')
+        );
     }
     voltar(): void {
         this.router.navigate([`/master/gestao/telas`]);
