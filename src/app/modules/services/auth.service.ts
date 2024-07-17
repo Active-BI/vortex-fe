@@ -59,8 +59,13 @@ export class LocalAuthService {
     login(user: { email: string; password: string }): Observable<any> {
         return this.http.post(`${this.baseUrl}login`, user);
     }
-    get_app_image(): Observable<any> {
-        return this.http.get(`${this.baseUrl}login/app/image`);
+    getAppVisualConfigs(): Observable<any> {
+        return this.http.get(`${this.baseUrl}login/app/image`).pipe(
+            catchError(err => {
+                this.toast.error("Falha ao obter configurações visuais");
+                return throwError(() => err);
+            })
+        )
     }
 
     resetPass(email: string): Observable<any> {

@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     UntypedFormBuilder,
-    UntypedFormGroup,
     NgForm,
     Validators,
-    AbstractControl,
     FormControl,
     FormGroup,
 } from '@angular/forms';
@@ -16,9 +14,7 @@ import { LocalAuthService } from 'app/modules/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { SignUpModalComponent } from './sign-up-modal/sign-up-modal.component';
 import jwtDecode from 'jwt-decode';
-import { ThisReceiver } from '@angular/compiler';
-import { AccessModelComponent } from '../access-model/access-model.component';
-import { SocketService } from 'app/modules/services/socket.service';
+import { AppConfigs } from 'app/modules/services/appConfigs';
 
 @Component({
     selector: 'auth-sign-up',
@@ -26,10 +22,7 @@ import { SocketService } from 'app/modules/services/socket.service';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })
-export class AuthSignUpComponent
-    extends AccessModelComponent
-    implements OnInit
-{
+export class AuthSignUpComponent implements OnInit {
     @ViewChild('signUpNgForm') signUpNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {
@@ -47,17 +40,14 @@ export class AuthSignUpComponent
         private toastr: ToastrService,
         private _router: Router,
         private _ActRouter: ActivatedRoute,
-        private _authService: LocalAuthService,
-        authService: LocalAuthService,
-        socketService: SocketService,
-
+        private localAuthService: LocalAuthService,
+        public appConfigs: AppConfigs,
         private dialog: MatDialog
-    ) {
-        super(socketService, authService);
-    }
+    ) {}
     id = '';
     email = '';
     token = '';
+
     async ngOnInit() {
         try {
             this.token = this._ActRouter.snapshot.paramMap.get('token');
@@ -132,7 +122,7 @@ export class AuthSignUpComponent
 
         const form = this.signUpForm.value;
         delete form.passwordConfirm;
-        this._authService
+        this.localAuthService
             .register({
                 ...this.signUpForm.value,
                 email: this.email,

@@ -22,7 +22,6 @@ import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@ang
 import { MatChipsModule } from '@angular/material/chips';
 import { HomeModule } from './modules/home/home.module';
 import { SocketService } from './modules/services/socket.service';
-import { AccessModelComponent } from './modules/auth/access-model/access-model.component';
 import { LocalAuthService } from './modules/services/auth.service';
 import localePt from '@angular/common/locales/pt';
 import { environment } from 'environments/environment';
@@ -35,7 +34,7 @@ const routerConfig: ExtraOptions = {
 };
 
 @NgModule({
-    declarations: [AppComponent, AccessModelComponent],
+    declarations: [AppComponent],
     providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy },     { provide: LOCALE_ID, useValue: 'pt-BR' },
 ],
     imports: [
@@ -90,13 +89,13 @@ export class AppModule {
         });
     }
 
-        this.authService.get_app_image().subscribe(
-            (res) => {
-                localStorage.setItem('app_image', res.app_image);
-                localStorage.setItem('logo', res.tenant_image);
-                localStorage.setItem('bg_color', res.bg_color);
-            },
-            ({ error }) => {}
-        );
+        // this.authService.get_app_image().subscribe(
+        //     (res) => {
+        //         localStorage.setItem('app_image', res.app_image);
+        //         localStorage.setItem('logo', res.tenant_image);
+        //         localStorage.setItem('bg_color', res.bg_color);
+        //     },
+        //     ({ error }) => {}
+        // );
     }
 }

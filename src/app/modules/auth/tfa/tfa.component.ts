@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AppConfigs } from 'app/modules/services/appConfigs';
 import { LocalAuthService } from 'app/modules/services/auth.service';
 import { PageService } from 'app/modules/services/page.service';
 import { SocketService } from 'app/modules/services/socket.service';
 import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
-import { AccessModelComponent } from '../access-model/access-model.component';
 
 @Component({
     selector: 'app-tfa',
     templateUrl: './tfa.component.html',
     styleUrls: ['./tfa.component.scss'],
 })
-export class TfaComponent extends AccessModelComponent implements OnInit {
+export class TfaComponent implements OnInit {
     showAlert: boolean = false;
     tfaForm;
     /**
@@ -23,29 +23,11 @@ export class TfaComponent extends AccessModelComponent implements OnInit {
         private fb: FormBuilder,
         private toastr: ToastrService,
         private router: Router,
-        authService: LocalAuthService,
-        socketService: SocketService,
-        private _authService: LocalAuthService,
+        public appConfigs: AppConfigs,
+        private localAuthService: LocalAuthService,
         private _socketService: SocketService
     ) {
-        super(socketService, authService);
-        // this.app_image = localStorage.getItem('app_image')
-        // this.bg_color = localStorage.getItem('bg_color')
-        // this.logo = localStorage.getItem('logo')
-        // this.authService.get_app_image().subscribe(res => {
-        //     localStorage.setItem('app_image', res.app_image)
-        //     localStorage.setItem('bg_color', res.bg_color)
-        //     localStorage.setItem('logo', res.tenant_image)
-        //     this.app_image = res.app_image
-        //     this.logo = res.tenant_image
-        //     this.bg_color = res.bg_color
-        // }, ({error}) => {
-
-        // })
     }
-    bg_color = '';
-    app_image = '';
-    logo = '';
 
     validate() {
         try {
@@ -65,7 +47,7 @@ export class TfaComponent extends AccessModelComponent implements OnInit {
 
         this.tfaForm.get('tfa').valueChanges.subscribe((value) => {
             if (value.length === 6) {
-                this._authService.tfa({ pin: value }).subscribe(async (res) => {
+                this.localAuthService.tfa({ pin: value }).subscribe(async (res) => {
                     Promise.all([
                         localStorage.setItem(
                             'token',
