@@ -19,13 +19,13 @@ function getContrastColor(hexColor) {
     const r = parseInt(hexColor.slice(1, 3), 16);
     const g = parseInt(hexColor.slice(3, 5), 16);
     const b = parseInt(hexColor.slice(5, 7), 16);
-  
+
     // Calcula a luminância usando a fórmula de correção gama
     const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-  
+
     // Retorna 'branco' se a luminância for menor ou igual a 0,5, caso contrário, retorna 'preto'
     return luminance <= 0.5 ? '#ffffff' : '#000000';
-  }
+}
 @Component({
     selector: 'classy-layout',
     templateUrl: './classy.component.html',
@@ -41,9 +41,9 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
      * Constructor
      */
 
-    color= '#0f172a'
-    text_color= 'print:hidden text-[#ffffff]'
-    image= ''
+    color = '#EEECE9';
+    text_color = 'print:hidden text-[#ffffff]';
+    image = '';
     constructor(
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
@@ -53,15 +53,21 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         private _fuseNavigationService: FuseNavigationService,
         private menuItemService: MenuItemService
     ) {
-        this.color = '#0f172a'
-        if ( localStorage.getItem('tenant_color') && localStorage.getItem('tenant_color') !== 'undefined') {
-            this.color = JSON.parse(localStorage.getItem('tenant_color'))
+        this.color = '#EEECE9';
+        if (
+            localStorage.getItem('tenant_color') &&
+            localStorage.getItem('tenant_color') !== 'undefined'
+        ) {
+            this.color = JSON.parse(localStorage.getItem('tenant_color'));
         }
         const corContrastante = getContrastColor(this.color);
-        this.text_color = 'print:hidden text-[' + corContrastante + ']'
-         if (localStorage.getItem('tenant_image') && localStorage.getItem('tenant_image')  !== 'undefined') {
-             this.image = JSON.parse(localStorage.getItem('tenant_image'))
-         }
+        this.text_color = 'print:hidden text-[' + corContrastante + ']';
+        if (
+            localStorage.getItem('tenant_image') &&
+            localStorage.getItem('tenant_image') !== 'undefined'
+        ) {
+            this.image = JSON.parse(localStorage.getItem('tenant_image'));
+        }
     }
     createNavigation(route) {
         this._navigationService.navigation$
@@ -70,22 +76,24 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                 try {
                     const rotas = route;
 
-                    navigation.default = JSON.parse(localStorage.getItem('userRoutes')) as FuseNavigationItem[]
-                    navigation.default = navigation.default.sort((a,b) => {
-                        if (a.title === 'Administrador') {
-                            return 1
-                        }
-                        return -1
-                    }).sort((a,b) => {
-                        if (a.title === 'Inicio') {
-                            return -1
-                        }
-                        return  1
-                    })
-                    this.navigation = navigation
-
-                } catch (e) {
-                }
+                    navigation.default = JSON.parse(
+                        localStorage.getItem('userRoutes')
+                    ) as FuseNavigationItem[];
+                    navigation.default = navigation.default
+                        .sort((a, b) => {
+                            if (a.title === 'Administrador') {
+                                return 1;
+                            }
+                            return -1;
+                        })
+                        .sort((a, b) => {
+                            if (a.title === 'Inicio') {
+                                return -1;
+                            }
+                            return 1;
+                        });
+                    this.navigation = navigation;
+                } catch (e) {}
             });
     }
 
@@ -106,13 +114,15 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
         // Subscribe to navigation data
-        Promise.all([JSON.parse(localStorage.getItem('userRoutes'))]).then(async (e) => {
-            if (e[0]) {
-                this.createNavigation(e[0])
+        Promise.all([JSON.parse(localStorage.getItem('userRoutes'))]).then(
+            async (e) => {
+                if (e[0]) {
+                    this.createNavigation(e[0]);
+                }
+                const rotasTratadas = await this.menuItemService.getNewRoutes();
+                this.createNavigation(rotasTratadas);
             }
-                const rotasTratadas = await this.menuItemService.getNewRoutes()
-                this.createNavigation(rotasTratadas)
-        });
+        );
     }
 
     ngOnDestroy(): void {
