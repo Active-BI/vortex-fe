@@ -74,6 +74,8 @@ import { BlogComponent } from './blog/blog.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { DavitaTrashBtnComponent } from './davita-trash-btn/davita-trash-btn.component';
 import { AddDocumentosComponent } from './documentos/add-documentos/add-documentos.component';
+import { AppConfigs } from '../services/appConfigs';
+import { AuthService } from '../services/auth/auth.service';
 
 const adminroutes: Route[] = [
     {
@@ -231,24 +233,27 @@ export class AdminModule {
         private router: Router,
         private socketService: SocketService,
         private MenuItemService: MenuItemService,
-        private pageService: PageService
+        private pageService: PageService,
+        private appConfigs: AppConfigs,
+        private authService: AuthService
     ) {
         this.socket = this.socketService.socket;
         this.callRoutes();
+        
         setInterval(() => {
             Promise.all([localStorage.getItem('session_id')]).then((res) => {
                 if (res[0]) {
                     this.socketService.alive();
-                    // this.socket.emit('alive', );
                 }
             });
             this.socket.on('logout', () => {
-                localStorage.clear();
+                this.authService.logout();
+                this.appConfigs.removeTenantConfigs()
                 this.socket.disconnect();
-                this.router.navigate(['auth/sign-out']);
             });
         }, 5000);
     }
+
 
     async callRoutes() {
         if (

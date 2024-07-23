@@ -1,21 +1,10 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import decode from 'jwt-decode';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'environments/environment';
-import { User } from 'app/models/User';
-import { UserCreds } from 'app/models/UserCreds';
-
-export const tokenIdKey: string = 'cX1pzgAxlAheYIqNzlVzfLR2fBaKgzxv';
-export const tokenAccessKey: string = 'R8sKJUcxXrIPB86VemjQJ3DdbMb0LGBy';
-const urlLogout =
-    'https://wfs-ish.ish.com.br/adfs/oauth2/logout?client_id=3bc4f023-cdc0-48dc-8d10-9fdd6b1d523d';
-
-export const LIMIT_TFA = 5;
+import { AuthService } from './auth/auth.service';
 
 @Injectable({
     providedIn: 'root',
@@ -27,11 +16,40 @@ export class AppConfigs {
     bg_color = '';
     logo = '';
 
+    tenant_image = '';
+    tenant_color = '#fffffff';
+
     constructor(
         private http: HttpClient,
-        private toast: ToastrService
+        private toast: ToastrService,
+        private authService: AuthService
     ) {
-        this.http.get(`${this.baseUrl}login/app/image`).pipe(
+        this.getAppVisualConfigs();
+
+        if (this.authService.isLoggedIn()) {
+            this.getTenantVisualConfigs();
+        }
+    }
+
+    removeTenantConfigs() {
+        this.tenant_image = '';
+        this.tenant_color = '';
+    }
+
+    getTenantVisualConfigs(){
+        this.http.get(`${this.baseUrl}app-setup/tenant-layout`).pipe(
+            catchError(err => {
+                this.toast.error("Falha ao obter configurações visuais do ambiente");
+                return throwError(() => err);
+            })
+        ).subscribe((res: any) => {
+            this.tenant_image = res.tenant_image;
+            this.tenant_color = res.tenant_color;
+        })
+    }
+
+    getAppVisualConfigs(){
+        this.http.get(`${this.baseUrl}app-setup/layout`).pipe(
             catchError(err => {
                 this.toast.error("Falha ao obter configurações visuais");
                 return throwError(() => err);

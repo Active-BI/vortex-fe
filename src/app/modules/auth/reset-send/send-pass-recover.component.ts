@@ -24,12 +24,9 @@ export class SendPassRecoverComponent
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
     ]);
     constructor(
-        private fb: FormBuilder,
         private toastr: ToastrService,
         private router: Router,
-        socketService: SocketService,
         public appConfigs: AppConfigs,
-        authService: LocalAuthService,
         private _authService: LocalAuthService
     ) {
      }

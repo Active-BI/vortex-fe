@@ -26,8 +26,7 @@ export class TfaComponent implements OnInit {
         public appConfigs: AppConfigs,
         private localAuthService: LocalAuthService,
         private _socketService: SocketService
-    ) {
-    }
+    ) {}
 
     validate() {
         try {
@@ -47,30 +46,28 @@ export class TfaComponent implements OnInit {
 
         this.tfaForm.get('tfa').valueChanges.subscribe((value) => {
             if (value.length === 6) {
-                this.localAuthService.tfa({ pin: value }).subscribe(async (res) => {
-                    Promise.all([
-                        localStorage.setItem(
-                            'token',
-                            JSON.stringify(res.token)
-                        ),
-                        localStorage.setItem(
-                            'tenant_color',
-                            JSON.stringify(res.tenant_color)
-                        ),
-                        localStorage.setItem(
-                            'tenant_image',
-                            JSON.stringify(res.tenant_image)
-                        ),
-                        localStorage.setItem('session_id', res.user_email),
-                        localStorage.setItem('tenant_id', res.tenant_id),
-                        this._socketService.Logeddin(res.user_email, res.token),
-                    ]).then(() => {
-                        localStorage.removeItem('tempToken');
-                        setTimeout(() => {
-                            this.redirect();
-                        }, 500);
+                this.localAuthService
+                    .tfa({ pin: value })
+                    .subscribe(async (res) => {
+                        Promise.all([
+                            localStorage.setItem('token', JSON.stringify(res.token)),
+                            localStorage.setItem('session_id', res.user_email),
+                            localStorage.setItem('tenant_id', res.tenant_id),
+
+                            this.appConfigs.getTenantVisualConfigs(),
+
+                            this._socketService.Logeddin(
+                                res.user_email,
+                                res.token
+                            ),
+                            
+                        ]).then(() => {
+                            localStorage.removeItem('tempToken');
+                            setTimeout(() => {
+                                this.redirect();
+                            }, 500);
+                        });
                     });
-                });
             }
         });
     }

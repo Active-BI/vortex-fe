@@ -58,12 +58,6 @@ export class AuthSignInComponent
         }
     }
     ngOnInit(): void {
-        this.localAuthService.getAppVisualConfigs().subscribe((res: {bg_color: string, app_image: string,tenant_image: string }) => {
-            localStorage.setItem('bg_color', res.bg_color);
-            localStorage.setItem('app_image', res.app_image);
-            localStorage.setItem('logo', res.tenant_image);
-        })
-
         this.route.queryParams.subscribe((params) => {
             if (params.email) {
                 this.email.setValue(params.email);
@@ -97,9 +91,6 @@ export class AuthSignInComponent
                 }
                 this.sendUserToThe2FA(loginResponse.token);
             },
-            (err) => {
-                this.error = err.error.message;
-            }
         );
     }
 
@@ -118,6 +109,7 @@ export class AuthSignInComponent
     sendUserToTheApp(token): void {
         Promise.all([
             localStorage.setItem('token', JSON.stringify(token)),
+            this.appConfigs.getTenantVisualConfigs(),
         ]).then(() => {
             localStorage.removeItem('tempToken');
             setTimeout(() => {

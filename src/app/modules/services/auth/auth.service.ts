@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
 import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -10,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AuthService {
     private jwtItils = new JwtHelperService();
 
-    constructor(private toastr: ToastrService) {}
+    constructor(private toastr: ToastrService, private router: Router) {}
 
     // userLoggedIn: string
 
@@ -24,6 +25,12 @@ export class AuthService {
     get user$(): Observable<any> {
         return this._user.asObservable();
     }
+
+    logout() {
+        localStorage.clear();
+        this.router.navigate(['auth/sign-out']);
+    }
+
     GetUser(): any {
         try {
             const token = JSON.parse(localStorage.getItem('token'));
