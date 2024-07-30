@@ -10,9 +10,7 @@ import { agregarRoles } from '../rotas-aninhadas.component';
 export const screenTypes = {
     DASHBOARD: 'dashboard',
     REPORT: 'report',
-    REPORT_UPLOAD: 'report-upload',
-    DASHBOARD_UPLOAD: 'dashboard-upload',
-    PAGE: 'page',
+    WEB_PAGE: 'web-page',
 };
 const ROLES = {
     User: 'ca21241b-a37d-4e6f-bbb6-26643d3cdd99',
@@ -85,10 +83,10 @@ export class CriarRotaComponent implements OnInit {
         table_name: [''],
         page_group_title: ['', [Validators.required]],
         page_group_id: [this.groupId, [Validators.required]],
-        possui_dados_sensiveis: [false, [Validators.required]],
-        descricao_painel: ['', [Validators.required]],
-        nome_responsavel: ['', [Validators.required]],
-        email_responsavel: ['', [Validators.required, Validators.email]],
+        possui_dados_sensiveis: [false],
+        descricao_painel: ['', ],
+        nome_responsavel: ['', ],
+        email_responsavel: ['', [Validators.email]],
         roles: [[], [Validators.required]],
     });
     ngOnInit(): void {
@@ -155,7 +153,10 @@ export class CriarRotaComponent implements OnInit {
         }
         const { page_group_title, possui_dados_sensiveis, id, ...args } =
             this.form.value;
-        this.pageMasterService.postPage(args).subscribe(
+
+
+        console.log(this.url.value, this.form.value)
+        this.pageMasterService.postPage({...args, web_page_link: this.url.value }).subscribe(
             (res) => {
                 this.toastr.success('Rota criada com sucesso');
                 this.router.navigate([
