@@ -74,6 +74,8 @@ import { BlogComponent } from './blog/blog.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { DavitaTrashBtnComponent } from './davita-trash-btn/davita-trash-btn.component';
 import { AddDocumentosComponent } from './documentos/add-documentos/add-documentos.component';
+import { WebPageComponent } from './web-page/web-page.component';
+import { SafePipe } from '../services/sanitizerPipe';
 
 const adminroutes: Route[] = [
     {
@@ -96,6 +98,10 @@ const adminroutes: Route[] = [
     {
         path: 'view-report/:group/:type',
         component: BiReportDefaultByTypeComponent,
+    },
+    {
+        path: 'view-web-page/:web-page',
+        component: WebPageComponent,
     },
     {
         path: 'view-dashboard/:group/:type',
@@ -173,6 +179,8 @@ const adminroutes: Route[] = [
         DocumentosComponent,
         DavitaTrashBtnComponent,
         AddDocumentosComponent,
+        WebPageComponent,
+        SafePipe,
     ],
     imports: [
         MatTabsModule,
@@ -217,6 +225,7 @@ const adminroutes: Route[] = [
     ],
     entryComponents: [MatDialogModule],
     providers: [
+        SafePipe,
         { provide: LOCALE_ID, useValue: 'pt' },
 
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },

@@ -154,8 +154,6 @@ export class CriarRotaComponent implements OnInit {
         const { page_group_title, possui_dados_sensiveis, id, ...args } =
             this.form.value;
 
-
-        console.log(this.url.value, this.form.value)
         this.pageMasterService.postPage({...args, web_page_link: this.url.value }).subscribe(
             (res) => {
                 this.toastr.success('Rota criada com sucesso');

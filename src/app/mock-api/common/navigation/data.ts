@@ -49,15 +49,15 @@ class CreateRoutes {
         roles: string[] = [],
         id: string,
         title: string,
-        link: string,
         web_page_link
     ): FuseNavigationItem {
+        const link = (`view-web-page/${encodeURIComponent(web_page_link)}`);
         return {
             data: { roles },
             id,
             title,
             type: 'basic',
-            link: link + `?page_link=${web_page_link}`,
+            link: link,
         };
     }
 
@@ -308,7 +308,6 @@ export class MenuItemService {
                                 rota.Page_Role,
                                 rota.id,
                                 rota.title,
-                                rota.link,
                                 rota.web_page_link
                             );
                             break;

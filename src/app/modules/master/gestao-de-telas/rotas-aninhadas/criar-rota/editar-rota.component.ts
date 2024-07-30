@@ -83,7 +83,7 @@ export class EditarRotaComponent extends CriarRotaComponent {
             this._toastr.error('Dados inválidos');
             return;
         }
-        this._pageMasterService.patchPages(dados.id, dados).subscribe(
+        this._pageMasterService.patchPages(dados.id, {...dados,web_page_link: this.url.value }).subscribe(
             (res) => this._toastr.success('Rota edtada com sucesso'),
             ({ error }) => {
                 this._toastr.error('Falha ao atualizar rota');
