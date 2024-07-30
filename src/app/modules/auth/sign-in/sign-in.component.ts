@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AccessModelComponent } from '../access-model/access-model.component';
 import { LocalAuthService } from 'app/modules/services/auth.service';
 import { AuthService } from 'app/modules/services/auth/auth.service';
+import { GlobalService } from 'app/modules/services/globalService';
 
 interface User {
     email: string;
@@ -45,7 +46,7 @@ export class AuthSignInComponent
         private router: Router,
         private userService: UserService,
         private _authService: AuthService,
-
+        private globalService: GlobalService,
         authService: LocalAuthService,
         _socketService: SocketService,
         private toastr: ToastrService,
@@ -101,6 +102,8 @@ export class AuthSignInComponent
                     ]).then(async () => {
                         localStorage.removeItem('tempToken');
                         setTimeout(() => {
+                            this.globalService.userData = jwtDecode(res.token);
+
                             this.redirect();
                         }, 500);
                     });
