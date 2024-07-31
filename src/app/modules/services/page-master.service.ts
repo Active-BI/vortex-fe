@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { trataRotas } from './group-master.service';
+import { catchError } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PageMasterService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private toastr: ToastrService) {}
 
     private baseUrl = environment.baseUrl;
     postGroup(group) {
@@ -72,10 +74,13 @@ export class PageMasterService {
         return this.http.delete(`${this.baseUrl}master/pages/${id}`);
     }
 
-    async getPageById(id) {
-        return await this.http
-            .get<any[]>(`${this.baseUrl}master/pages/` + id)
-            .toPromise();
+    getPage(id) {
+        return this.http.get<any>(`${this.baseUrl}master/pages/` + id).pipe(
+            catchError((err) => {
+                this.toastr.error('Falha ao obter página');
+                return err;
+            })
+        )
     }
 
     async getPagesByGroup(id = '') {

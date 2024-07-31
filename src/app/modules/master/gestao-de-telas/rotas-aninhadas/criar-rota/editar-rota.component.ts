@@ -36,48 +36,27 @@ export class EditarRotaComponent extends CriarRotaComponent {
         this.requisicoes();
     }
     async requisicoes() {
-        const {
-            id,
-            title,
-            link,
-            group_id,
-            report_id,
-            restrict,
-            table_name,
-            page_group_id,
-            possui_dados_sensiveis,
-            descricao_painel,
-            page_type,
-            nome_responsavel,
-            email_responsavel,
-            Page_Role,
-            web_page_link,
-            Page_Group: { title: page_group_title },
-        }: any = await this._pageMasterService.getPageById(this.screenId);
 
-        this.form.patchValue({
-            id,
-            title,
-            page_group_title,
-            link,
-            page_type,
-            group_id,
-            report_id,
-            restrict,
-            table_name,
-            page_group_id,
-            possui_dados_sensiveis,
-            descricao_painel,
-            nome_responsavel,
-            email_responsavel,
-            roles: Page_Role.map((p) => p.Rls.id),
+        this._pageMasterService.getPage(this.screenId).subscribe(res => {
+            this.form.patchValue({
+                ...res,
+                page_group_id: res.Page_Group.id,
+                page_group_title: res.Page_Group.title,
+                roles: res.Page_Role.map((p) => p.Rls.id),
+            });
+
+
+            if (res.page_type === 'web-page') {
+                this.url.patchValue(res.web_page_link)
+            }
+            this.change();
         });
-        if (page_type === 'web-page') {
-            this.url.patchValue(web_page_link)
-        }
-        this.change();
+
+        
+   
     }
     editarRota() {
+        console.log(this.form)
         const { page_group_title, page_group_id, ...dados } = this.form.value;
         if (!this.form.valid) {
             this._toastr.error('Dados inválidos');

@@ -86,7 +86,7 @@ export class CriarRotaComponent implements OnInit {
         possui_dados_sensiveis: [false],
         descricao_painel: ['', ],
         nome_responsavel: ['', ],
-        email_responsavel: ['', [Validators.email]],
+        email_responsavel: ['' ],
         roles: [[], [Validators.required]],
     });
     ngOnInit(): void {
@@ -135,7 +135,7 @@ export class CriarRotaComponent implements OnInit {
         if (this.form.value.restrict) {
             pathByType = '/master/' + pathByType;
         }
-        console.log(pathByGroup);
+
         if (pathByGroup === '') {
             this.form.patchValue({
                 link: `${pathByType}${title}`,
