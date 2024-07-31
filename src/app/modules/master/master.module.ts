@@ -173,6 +173,6 @@ const masterRoutes: Route[] = [
 })
 export class MasterModule {
     constructor(private globalService: GlobalService) {
-        this.globalService.userData = jwtDecode(localStorage.getItem('token'));
+        this.globalService.userData$ = jwtDecode(localStorage.getItem('token'));
     }
 }

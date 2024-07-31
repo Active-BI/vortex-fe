@@ -276,7 +276,7 @@ export class AdminModule {
             return await Promise.all([
                 this.pageService.getUserRoutes().toPromise(),
             ]).then(async (res) => {
-                this.globalService.userData = jwtDecode( localStorage.getItem('token'));
+                this.globalService.userData$ = jwtDecode( localStorage.getItem('token'));
          
 
                 const rotasTratadas = await this.MenuItemService.tratarRotas(res[0].userRoutes);

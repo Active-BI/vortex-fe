@@ -89,7 +89,7 @@ export class AuthSignInComponent
             (loginResponse) => {
                 if (this.checkIfUserCanPassThrough(loginResponse)) {
                     this.sendUserToTheApp(loginResponse.token);
-                    this.globalService.userData = jwtDecode(loginResponse.token);
+                    this.globalService.userData$ = jwtDecode(loginResponse.token);
                     return;
                 }
                 this.sendUserToThe2FA(loginResponse.token);

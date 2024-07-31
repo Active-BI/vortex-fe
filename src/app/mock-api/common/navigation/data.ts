@@ -29,7 +29,7 @@ interface DashboardUser {
     Page_Role: string[];
 }
 
-class CreateRoutes {
+export class CreateRoutes {
     static BasicRoute(
         roles: string[] = [],
         id: string,
@@ -114,109 +114,6 @@ export const defaultRoute: FuseNavigationItem[] = [
         icon: 'heroicons_outline:home',
         link: 'inicio',
     },
-    // {
-    //     data: { roles: ['User', 'Admin', 'Master'] },
-    //     id: 'blog',
-    //     title: 'Blog',
-    //     type: 'basic',
-    //     icon: 'heroicons_outline:newspaper',
-    //     link: 'blog',
-    // },
-    // {
-    //     data: { roles: ['User', 'Admin', 'Master'] },
-    //     id: 'treinamentos-menu',
-    //     title: 'Treinamentos',
-    //     type: 'collapsable',
-    //     icon: 'mat_outline:subscriptions',
-    //     children: [
-    //         {
-    //             id: 'powerBi',
-    //             title: 'Power BI',
-    //             type: 'collapsable',
-    //             children: [
-    //                 {
-    //                     id: 'pbiBasico',
-    //                     title: 'PBI Básico',
-    //                     type: 'basic',
-    //                     link: 'playlist/RDMM',
-    //                 },
-    //                 {
-    //                     id: 'pbiIntermedirio',
-    //                     title: 'PBI Intermediário',
-    //                     type: 'basic',
-    //                     link: 'playlist/RDMM',
-    //                 },
-    //                 {
-    //                     id: 'pbiAvancado',
-    //                     title: 'PBI Avançado',
-    //                     type: 'basic',
-    //                     link: 'playlist/RDMM',
-    //                 },
-    //                 {
-    //                     id: 'daxAvancado',
-    //                     title: 'Dax Avançado',
-    //                     type: 'basic',
-    //                     link: 'playlist/RDMM',
-    //                 },
-    //                 {
-    //                     id: 'governanca',
-    //                     title: 'Governança',
-    //                     type: 'basic',
-    //                     link: 'playlist/RDMM',
-    //                 },
-    //                 {
-    //                     id: 'boasPraticas',
-    //                     title: 'Boas Práticas',
-    //                     type: 'basic',
-    //                     link: 'playlist/RDMM',
-    //                 },
-    //                 {
-    //                     id: 'outros',
-    //                     title: 'Outros',
-    //                     type: 'basic',
-    //                     link: 'playlist/RDMM',
-    //                 },
-    //             ],
-    //         },
-    //         {
-    //             id: 'excel',
-    //             title: 'Excel',
-    //             type: 'collapsable',
-    //             children: [
-    //                 {
-    //                     id: 'basico',
-    //                     title: 'Básico',
-    //                     type: 'basic',
-    //                     link: 'playlist/RDMM',
-    //                 },
-    //                 {
-    //                     id: 'intermediario',
-    //                     title: 'Intermediário',
-    //                     type: 'basic',
-    //                     link: 'playlist/RDMM',
-    //                 },
-    //                 {
-    //                     id: 'avancado',
-    //                     title: 'Avançado',
-    //                     type: 'basic',
-    //                     link: 'playlist/RDMM',
-    //                 },
-    //             ],
-    //         },
-    //         {
-    //             id: 'sql',
-    //             title: 'SQL',
-    //             type: 'basic',
-    //             link: 'playlist/RDMM',
-    //         },
-    //         {
-    //             id: 'webinar',
-    //             title: 'Webinar',
-    //             type: 'basic',
-    //             link: 'playlist/RDMM',
-    //         },
-    //     ],
-    // },
 ];
 export const defaultNavigation: FuseNavigationItem[] = [];
 @Injectable({

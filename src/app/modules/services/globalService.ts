@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { FuseNavigationItem } from '@fuse/components/navigation';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { RouterService } from './routeService';
 
 @Injectable({
     providedIn: 'root',
 })
 export class GlobalService {
+    private baseUrl = environment.baseUrl;
     private _userRoutes$ = new BehaviorSubject<FuseNavigationItem[]>([]);
     private _userData$ = new BehaviorSubject<any>({});
     
@@ -18,7 +20,7 @@ export class GlobalService {
         return this._userData$
     }
 
-    set userData(value: any) {
+    set userData$(value: any) {
         value.role_name === 'Master' ? this.isMaster = true : this.isMaster = false;
         this._userData$.next(value);
     }
@@ -31,5 +33,13 @@ export class GlobalService {
         this._userRoutes$.next(value);
     }
 
-    constructor() {}
+    private getNewRoutes() {
+        return this.http.get(`${this.baseUrl}app-setup/routes`).subscribe((grupos: any[]) => {
+            this.userRoutes = this.routerService.gerarRotasDaAplicacao(grupos)
+        });
+    }
+    
+    constructor(private http: HttpClient, private routerService: RouterService) {
+        this.getNewRoutes()
+    }
 }
