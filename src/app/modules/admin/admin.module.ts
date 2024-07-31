@@ -240,8 +240,6 @@ export class AdminModule {
     socket: any;
     constructor(
         private socketService: SocketService,
-        private MenuItemService: MenuItemService,
-        private pageService: PageService,
         private appConfigs: AppConfigs,
         private authService: AuthService,
     ) {

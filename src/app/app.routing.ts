@@ -7,6 +7,7 @@ import { SendPassRecoverComponent } from './modules/auth/reset-send/send-pass-re
 import { ResetPassComponent } from './modules/auth/reset-pass/reset-pass.component';
 import { HomeComponent } from './modules/home/home.component';
 import { TfaComponent } from './modules/auth/tfa/tfa.component';
+import { SignOutGuard } from './modules/services/guards/SignOutGuard.guard';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -54,12 +55,11 @@ export const appRoutes: Route[] = [
     // Auth routes for authenticated users
     {
         path: 'auth',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
+        canActivate: [SignOutGuard],
+        canActivateChild: [SignOutGuard],
         component: LayoutComponent,
         data: {
             layout: 'empty',
-            expectedRoles: [],
         },
         children: [
             {
@@ -83,7 +83,7 @@ export const appRoutes: Route[] = [
         canActivateChild: [AuthGuard],
         component: LayoutComponent,
         data: {
-            expectedRoles: ['Admin', 'User', 'Master'],
+            expectedRoles: ['Admin', 'User'],
         },
         resolve: {
             initialData: InitialDataResolver,

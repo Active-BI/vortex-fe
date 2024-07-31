@@ -27,6 +27,15 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                 });
 
                 const user: any = await jwtDecode(token);
+                
+                if (route.data['expectedRoles'].includes(user.role_name) === false) {
+                    user.role_name === 'Master' ?  this.router.navigate(['/master/inicio']) : this.router.navigate(['/app/inicio'])
+                    return false;
+                }
+
+                // TODO - serviço pra identificar o usuário
+                // TODO - as rotas do usuário
+                // TODO - redirecionar pra primeira rota
 
                 if (
                     route.data['expectedRoles'] === null ||
