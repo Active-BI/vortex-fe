@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Data, Route, Router } from '@angular/router';
+import { GlobalService } from 'app/modules/services/appServices/globalService';
 import { EmbeddedService } from 'app/modules/services/embedded/embedded.service';
 import jwtDecode from 'jwt-decode';
 import { Observable } from 'rxjs';
@@ -20,38 +21,36 @@ export class BiReportDefaultByTypeComponent implements OnInit {
     constructor(
         private router: ActivatedRoute,
         private route: Router,
-        private embeddedSrv: EmbeddedService
+        private globalService: GlobalService
     ) {
         this.router.params.subscribe((e) => {
             this.enable = false;
             this.type = e.type;
-            this.group = e.group;            const currentUrl = window.location.href;
+            this.group = e.group;
+            const currentUrl = window.location.href;
 
-            const dashUsers = JSON.parse(localStorage.getItem('userRoutes'));
-            if (
-                dashUsers.length < 1 ||
-                !dashUsers.find((dr) => {
-                    if (dr.children) {
-                        return dr.children.find(r => r.link === currentUrl.split('app/')[1])
-                    } else {
-                        return false
-                    }
-                })
-            ) {
-                this.route.navigateByUrl('/app/inicio');
-                return;
-            }
-            // const approute = dashUsers.find(
-            //     (r) => r.link.includes(this.type) && r.link.includes(this.group)
-            // );
+            this.globalService.userRoute$.subscribe((routes) => {
+                // se as rotas não houverem sido carregadas
+                if (routes.length === 0) return;
 
-            // this.report_type = approute.report_type;
-            // console.log(this.report_type, this.report_type.includes('upload'));
-            // if (this.report_type.includes('upload')) {
-            //     this.embeddedSrv
-            //         .checkIfReportHasData(this.group, this.type)
-            //         .subscribe((res: boolean) => (this.hasData = res));
-            // }
+                // se as rotas forem carregadas e o usuário não tiver permissão, ele será redirecionado para a página inicial
+                if (
+                    routes.length < 1 ||
+                    !routes.find((dr) => {
+                        if (dr.children) {
+                            return dr.children.find(
+                                (r) => r.link === currentUrl.split('app/')[1]
+                            );
+                        } else {
+                            return false;
+                        }
+                    })
+                ) {
+                    this.route.navigateByUrl('/app/inicio');
+                    return;
+                }
+            });
+
             setTimeout(() => {
                 this.enable = true;
             }, 300);

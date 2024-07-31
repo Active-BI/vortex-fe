@@ -3,13 +3,15 @@ import { Socket, io } from 'socket.io-client';
 import jwtDecode from 'jwt-decode';
 import { environment } from 'environments/environment';
 import { LocalAuthService } from './auth.service';
+import { AuthService } from './auth/auth.service';
+import { AppConfigs } from './appServices/appConfigs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SocketService {
     socket: Socket;
-    constructor(private authService: LocalAuthService) {
+    constructor(private authService: AuthService, private appConfigs: AppConfigs) {
         this.socket = io(environment.socketUrl);
     }
 
@@ -35,6 +37,7 @@ export class SocketService {
         const token: any = localStorage.getItem('token');
         if (!token || !sessionId) {
             this.authService.logout();
+            this.appConfigs.removeTenantConfigs()
             return;
         }
         const user: any = jwtDecode(localStorage.getItem('token'));

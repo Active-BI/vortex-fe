@@ -13,10 +13,9 @@ import { PageService } from 'app/modules/services/page.service';
 import { SocketService } from 'app/modules/services/socket.service';
 import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
-import { AccessModelComponent } from '../access-model/access-model.component';
 import { LocalAuthService } from 'app/modules/services/auth.service';
 import { AuthService } from 'app/modules/services/auth/auth.service';
-import { GlobalService } from 'app/modules/services/globalService';
+import { AppConfigs } from 'app/modules/services/appServices/appConfigs';
 
 interface User {
     email: string;
@@ -30,31 +29,28 @@ interface User {
     animations: fuseAnimations,
 })
 export class AuthSignInComponent
-    extends AccessModelComponent
     implements OnInit, AfterViewInit
 {
     error: string = '';
     showAlert = false;
     showSpinner = false;
 
-    email = new FormControl('', [
-        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-    ]);
+    email = new FormControl('', [Validators.required, Validators.email]);
     password = new FormControl('', [Validators.minLength(6)]);
 
     constructor(
         private router: Router,
         private userService: UserService,
         private _authService: AuthService,
-        private globalService: GlobalService,
+        private localAuthService: LocalAuthService,
+        public appConfigs: AppConfigs,
         authService: LocalAuthService,
         _socketService: SocketService,
         private toastr: ToastrService,
         private route: ActivatedRoute
     ) {
-        super(_socketService, authService);
-    }
 
+    }
 
     ngAfterViewInit(): void {
         if (this._authService.isLoggedIn()) {
@@ -88,37 +84,52 @@ export class AuthSignInComponent
         }
 
         this.userService.Login(data).subscribe(
-            (res) => {
-                if (res.pass === true) {
-                    Promise.all([
-                        localStorage.setItem(
-                            'token',
-                            JSON.stringify(res.token)
-                        ),
-                        // localStorage.setItem(
-                        //     'userRoutes',
-                        //     JSON.stringify(res.userRoutes)
-                        // ),
-                    ]).then(async () => {
-                        localStorage.removeItem('tempToken');
-                        setTimeout(() => {
-                            this.globalService.userData = jwtDecode(res.token);
-
-                            this.redirect();
-                        }, 500);
-                    });
+            (loginResponse) => {
+                if (this.checkIfUserCanPassThrough(loginResponse)) {
+                    this.sendUserToTheMasterApp(loginResponse.token);
+                    return;
                 }
-                Promise.all([
-                    localStorage.setItem('tempToken', res.token),
-                ]).then(async () => {
-                    this.redirectTfa();
-                });
+                this.sendUserToThe2FA(loginResponse.token);
             },
-            (err) => {
-                this.error = err.error.message;
+        );
+    }
+
+    checkIfUserCanPassThrough(loginResponse): boolean {
+        /*
+            If the user is Master, then  the "pass through" key will be true
+        */
+        if (loginResponse.passThrough === true) {
+            return true;
+        }
+
+        // TODO - implements the logic to check if the user has been verified by TFA for at least 8h ago
+        return false;
+    }
+
+    sendUserToTheMasterApp(token): void {
+        Promise.all([
+            localStorage.setItem('token', JSON.stringify(token)),
+            this.appConfigs.getTenantVisualConfigs(),
+        ]).then(() => {
+            localStorage.removeItem('tempToken');
+            setTimeout(() => {
+                this.redirectMaster();
+            }, 500);
+        });
+    }
+
+    sendUserToThe2FA(token): void {
+        Promise.all([localStorage.setItem('tempToken', token)]).then(
+            () => {
+                this.redirectTfa();
             }
         );
     }
+
+    redirectMaster() {
+        this.router.navigate(['/master/inicio']);
+    }
+
     redirectTfa(): void {
         this.router.navigate(['/auth/tfa']);
     }

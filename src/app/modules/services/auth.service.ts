@@ -59,8 +59,13 @@ export class LocalAuthService {
     login(user: { email: string; password: string }): Observable<any> {
         return this.http.post(`${this.baseUrl}login`, user);
     }
-    get_app_image(): Observable<any> {
-        return this.http.get(`${this.baseUrl}login/app/image`);
+    getAppVisualConfigs(): Observable<any> {
+        return this.http.get(`${this.baseUrl}login/app/image`).pipe(
+            catchError(err => {
+                this.toast.error("Falha ao obter configurações visuais");
+                return throwError(() => err);
+            })
+        )
     }
 
     resetPass(email: string): Observable<any> {
@@ -74,12 +79,7 @@ export class LocalAuthService {
         return this.http.post<any>(`${this.baseUrl}login/register`, user);
     }
 
-    logout() {
-        localStorage.removeItem(tokenIdKey);
-        localStorage.removeItem(tokenAccessKey);
-        localStorage.clear();
-        this.router.navigate(['login']);
-    }
+
 
     getUser() {
         const userEmail = localStorage.getItem('userLogged');
@@ -88,17 +88,4 @@ export class LocalAuthService {
         return user;
     }
 
-    // getUserFirstName() {
-    //     const token = localStorage.getItem('ApiToken');
-    //     const { firstName } = decode<any>(token);
-    //     return firstName;
-    // }
-
-    // getTfa(): Observable<any> {
-    //     return this.http.get<any>(`${this.baseUrl}/tfa`);
-    // }
-
-    // getAccessToken(): string {
-    //     return localStorage.getItem('ApiToken');
-    // }
 }

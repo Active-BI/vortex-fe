@@ -8,8 +8,8 @@ import {
 import { Router } from '@angular/router';
 import { LocalAuthService } from 'app/modules/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { AccessModelComponent } from '../access-model/access-model.component';
 import { SocketService } from 'app/modules/services/socket.service';
+import { AppConfigs } from 'app/modules/services/appServices/appConfigs';
 
 @Component({
     selector: 'app-send-pass-recover',
@@ -17,23 +17,19 @@ import { SocketService } from 'app/modules/services/socket.service';
     styleUrls: ['./send-pass-recover.component.scss'],
 })
 export class SendPassRecoverComponent
-    extends AccessModelComponent
-    implements OnInit
+     implements OnInit
 {
     showAlert: boolean = false;
     email = new FormControl('', [
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
     ]);
     constructor(
-        private fb: FormBuilder,
         private toastr: ToastrService,
         private router: Router,
-        socketService: SocketService,
-        authService: LocalAuthService,
+        public appConfigs: AppConfigs,
         private _authService: LocalAuthService
     ) {
-        super(socketService, authService);
-    }
+     }
 
     ngOnInit(): void {}
     valilateSpecialCharacterPassword(control: FormControl) {

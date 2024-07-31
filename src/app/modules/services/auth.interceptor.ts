@@ -25,11 +25,6 @@ export class AuthInterceptor implements HttpInterceptor {
                 tap(
                     (succ) =>{},
                     (err) =>{
-                        if(err.status === 401){
-                            // TODO remover para produção
-                            // this.router.navigate(['login']);
-                        }
-
                     }
                 )
             );

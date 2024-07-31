@@ -1,6 +1,6 @@
 <fuse-loading-bar></fuse-loading-bar>
 <fuse-vertical-navigation
-    [class]="text_color" [style]="'background-color:' + color "
+    [class]="'print:hidden text-[' +  getContrastColor(appConfigs.tenant_color) +']'" [style]="'background-color:' + appConfigs.tenant_color "
     [mode]="isScreenSmall ? 'over' : 'side'"
     [name]="'mainNavigation'"
     [navigation]="navigation.default"
@@ -11,7 +11,7 @@
                 <img src="assets/images/active_logo.png" alt="" class="h-8">
             </div>
             <div class="flex items-center">
-                <img *ngIf="image && image.length > 0" [src]="image" alt="" class="h-7">
+                <img *ngIf="appConfigs.tenant_image && appConfigs.tenant_image.length > 0" [src]="appConfigs.tenant_image" alt="" class="h-7">
             </div>
         </div>
     </ng-container>

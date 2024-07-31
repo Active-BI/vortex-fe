@@ -57,10 +57,18 @@ import { ConfigsComponent } from './tenant/configs/configs.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { DocumentosComponent } from '../admin/documentos/documentos.component';
 import { AuthGuardScreen } from '../services/guards/AuthGuardScreen.guard';
-import { GlobalService } from '../services/globalService';
-import jwtDecode from 'jwt-decode';
+import { InicioComponent } from '../admin/inicio/inicio.component';
 
 const masterRoutes: Route[] = [
+    {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: '/master/inicio',
+    },
+    {
+        path: 'inicio',
+        component: InicioComponent,
+    },
     {
         path: 'gestao/telas',
         component: GestaoDeTelasComponent,
@@ -172,7 +180,6 @@ const masterRoutes: Route[] = [
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MasterModule {
-    constructor(private globalService: GlobalService) {
-        this.globalService.userData = jwtDecode(localStorage.getItem('token'));
+    constructor() {
     }
 }

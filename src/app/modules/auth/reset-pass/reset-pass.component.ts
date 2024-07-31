@@ -11,15 +11,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FuseAlertType } from '@fuse/components/alert';
 import { LocalAuthService } from 'app/modules/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { AccessModelComponent } from '../access-model/access-model.component';
-import { SocketService } from 'app/modules/services/socket.service';
+ import { SocketService } from 'app/modules/services/socket.service';
+import { AppConfigs } from 'app/modules/services/appServices/appConfigs';
 
 @Component({
     selector: 'app-reset-pass',
     templateUrl: './reset-pass.component.html',
     styleUrls: ['./reset-pass.component.scss'],
 })
-export class ResetPassComponent extends AccessModelComponent implements OnInit {
+export class ResetPassComponent  implements OnInit {
     @ViewChild('signUpNgForm') signUpNgForm: NgForm;
     signUpForm: FormGroup;
     token = '';
@@ -40,10 +40,9 @@ export class ResetPassComponent extends AccessModelComponent implements OnInit {
         private route: ActivatedRoute,
         private _router: Router,
         private _authService: LocalAuthService,
-        authService: LocalAuthService,
-        socketService: SocketService
+        public appConfigs: AppConfigs,
+
     ) {
-        super(socketService, authService);
         this.token = this.route.snapshot.paramMap.get('token');
         this.signUpForm = this._formBuilder.group({
             passwordConfirm: ['', [Validators.required]],
