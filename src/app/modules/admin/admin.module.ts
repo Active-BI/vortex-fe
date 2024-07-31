@@ -5,7 +5,7 @@ import {
     OnInit,
 } from '@angular/core';
 import { CommonModule, NgForOf } from '@angular/common';
-import { Route, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Route, Router, RouterModule } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
@@ -76,12 +76,16 @@ import { DavitaTrashBtnComponent } from './davita-trash-btn/davita-trash-btn.com
 import { AddDocumentosComponent } from './documentos/add-documentos/add-documentos.component';
 import { AppConfigs } from '../services/appConfigs';
 import { AuthService } from '../services/auth/auth.service';
+import { WebPageComponent } from './web-page/web-page.component';
+import { SafePipe } from '../services/sanitizerPipe';
+import { GlobalService } from '../services/globalService';
+import jwtDecode from 'jwt-decode';
 
 const adminroutes: Route[] = [
     {
         path: '',
-        component: InicioComponent,
         pathMatch: 'full',
+        redirectTo: 'inicio',
     },
     {
         path: 'inicio',
@@ -98,6 +102,10 @@ const adminroutes: Route[] = [
     {
         path: 'view-report/:group/:type',
         component: BiReportDefaultByTypeComponent,
+    },
+    {
+        path: 'view-web-page/:web-page',
+        component: WebPageComponent,
     },
     {
         path: 'view-dashboard/:group/:type',
@@ -175,6 +183,8 @@ const adminroutes: Route[] = [
         DocumentosComponent,
         DavitaTrashBtnComponent,
         AddDocumentosComponent,
+        WebPageComponent,
+        SafePipe,
     ],
     imports: [
         MatTabsModule,
@@ -219,6 +229,7 @@ const adminroutes: Route[] = [
     ],
     entryComponents: [MatDialogModule],
     providers: [
+        SafePipe,
         { provide: LOCALE_ID, useValue: 'pt' },
 
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
@@ -231,11 +242,13 @@ export class AdminModule {
     socket: any;
     constructor(
         private router: Router,
+        private route: ActivatedRoute,
         private socketService: SocketService,
         private MenuItemService: MenuItemService,
         private pageService: PageService,
         private appConfigs: AppConfigs,
-        private authService: AuthService
+        private authService: AuthService,
+        private globalService: GlobalService
     ) {
         this.socket = this.socketService.socket;
         this.callRoutes();
@@ -262,8 +275,14 @@ export class AdminModule {
         ) {
             return await Promise.all([
                 this.pageService.getUserRoutes().toPromise(),
-            ]).then(async (bruto) => {
-                await this.MenuItemService.tratarRotas(bruto[0].userRoutes);
+            ]).then(async (res) => {
+                this.globalService.userData = jwtDecode( localStorage.getItem('token'));
+         
+
+                const rotasTratadas = await this.MenuItemService.tratarRotas(res[0].userRoutes);
+                this.globalService.userRoutes = rotasTratadas;
+                    
+           
             });
         }
     }

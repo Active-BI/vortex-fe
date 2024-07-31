@@ -15,8 +15,8 @@ import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 import { LocalAuthService } from 'app/modules/services/auth.service';
 import { AuthService } from 'app/modules/services/auth/auth.service';
-import { AppConfig } from 'app/core/config/app.config';
 import { AppConfigs } from 'app/modules/services/appConfigs';
+import { GlobalService } from 'app/modules/services/globalService';
 
 interface User {
     email: string;
@@ -45,6 +45,8 @@ export class AuthSignInComponent
         private _authService: AuthService,
         private localAuthService: LocalAuthService,
         public appConfigs: AppConfigs,
+        private globalService: GlobalService,
+        authService: LocalAuthService,
         _socketService: SocketService,
         private toastr: ToastrService,
         private route: ActivatedRoute
@@ -87,6 +89,7 @@ export class AuthSignInComponent
             (loginResponse) => {
                 if (this.checkIfUserCanPassThrough(loginResponse)) {
                     this.sendUserToTheApp(loginResponse.token);
+                    this.globalService.userData = jwtDecode(loginResponse.token);
                     return;
                 }
                 this.sendUserToThe2FA(loginResponse.token);

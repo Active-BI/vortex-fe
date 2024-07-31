@@ -107,6 +107,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
         // Subscribe to navigation data
+        
         Promise.all([JSON.parse(localStorage.getItem('userRoutes'))]).then(
             async (e) => {
                 if (e[0]) {

@@ -51,6 +51,7 @@ export class EditarRotaComponent extends CriarRotaComponent {
             nome_responsavel,
             email_responsavel,
             Page_Role,
+            web_page_link,
             Page_Group: { title: page_group_title },
         }: any = await this._pageMasterService.getPageById(this.screenId);
 
@@ -71,7 +72,9 @@ export class EditarRotaComponent extends CriarRotaComponent {
             email_responsavel,
             roles: Page_Role.map((p) => p.Rls.id),
         });
-
+        if (page_type === 'web-page') {
+            this.url.patchValue(web_page_link)
+        }
         this.change();
     }
     editarRota() {
@@ -80,7 +83,7 @@ export class EditarRotaComponent extends CriarRotaComponent {
             this._toastr.error('Dados inválidos');
             return;
         }
-        this._pageMasterService.patchPages(dados.id, dados).subscribe(
+        this._pageMasterService.patchPages(dados.id, {...dados,web_page_link: this.url.value }).subscribe(
             (res) => this._toastr.success('Rota edtada com sucesso'),
             ({ error }) => {
                 this._toastr.error('Falha ao atualizar rota');
