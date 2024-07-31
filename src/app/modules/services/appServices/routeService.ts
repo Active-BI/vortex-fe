@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FuseNavigationItem } from '@fuse/components/navigation';
-import { CreateRoutes } from 'app/mock-api/common/navigation/data';
 
 @Injectable({
     providedIn: 'root',
@@ -19,8 +18,7 @@ export class RouterService {
                 []
             );
             grupo.children = grupo.Page
-            const a = CreateRoutes.CollapsableRoute(grupo.id, grupo.title, grupo.icon,rolesDeTotasAsPaginas, grupo.Page);
-            return a
+            return CreateRoutes.CollapsableRoute(grupo.id, grupo.title, grupo.icon,rolesDeTotasAsPaginas, grupo.Page);
         });
     }
 
@@ -83,5 +81,84 @@ export class RouterService {
     gerarRotasDaAplicacao(grupos: any[]): FuseNavigationItem[] {
         const gruposDeRotas = this.adaptandoRetornoParaGeracaoDeGruposDeRotas(grupos);
         return this.geracaoDeRotasParaOFuse(gruposDeRotas);
+    }
+}
+
+
+class CreateRoutes {
+    static BasicRoute(
+        roles: string[] = [],
+        id: string,
+        title: string,
+        link: string
+    ): FuseNavigationItem {
+        return {
+            data: { roles },
+            id,
+            title,
+            type: 'basic',
+            link: link,
+        };
+    }
+
+    static WebPageRoute(
+        roles: string[] = [],
+        id: string,
+        title: string,
+        web_page_link
+    ): FuseNavigationItem {
+        const link = (`view-web-page/${encodeURIComponent(web_page_link)}`);
+        return {
+            data: { roles },
+            id,
+            title,
+            type: 'basic',
+            link: link,
+        };
+    }
+
+    static ReportRoute(
+        roles: string[] = [],
+        id: string,
+        title: string,
+        link: string
+    ): FuseNavigationItem {
+        return {
+            data: { roles },
+            id,
+            title,
+            type: 'basic',
+            link: link,
+        };
+    }
+    static DashboardRoute(
+        roles: string[] = [],
+        id: string,
+        title: string,
+        link: string
+    ): FuseNavigationItem {
+        return {
+            data: { roles },
+            id,
+            title,
+            type: 'basic',
+            link: link,
+        };
+    }
+    static CollapsableRoute(
+        id: string,
+        title: string,
+        icon: string,
+        roles,
+        children = []
+    ): FuseNavigationItem {
+        return {
+            data: { roles },
+            id,
+            title,
+            type: 'collapsable',
+            icon,
+            children: children,
+        };
     }
 }
