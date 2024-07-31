@@ -45,6 +45,22 @@ class CreateRoutes {
         };
     }
 
+    static WebPageRoute(
+        roles: string[] = [],
+        id: string,
+        title: string,
+        web_page_link
+    ): FuseNavigationItem {
+        const link = (`view-web-page/${encodeURIComponent(web_page_link)}`);
+        return {
+            data: { roles },
+            id,
+            title,
+            type: 'basic',
+            link: link,
+        };
+    }
+
     static ReportRoute(
         roles: string[] = [],
         id: string,
@@ -285,6 +301,14 @@ export class MenuItemService {
                                 rota.id,
                                 rota.title,
                                 rota.link
+                            );
+                            break;
+                        case 'web-page':
+                            currPage = CreateRoutes.WebPageRoute(
+                                rota.Page_Role,
+                                rota.id,
+                                rota.title,
+                                rota.web_page_link
                             );
                             break;
                     }
