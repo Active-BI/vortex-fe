@@ -74,7 +74,7 @@ import { BlogComponent } from './blog/blog.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { DavitaTrashBtnComponent } from './davita-trash-btn/davita-trash-btn.component';
 import { AddDocumentosComponent } from './documentos/add-documentos/add-documentos.component';
-import { AppConfigs } from '../services/appConfigs';
+import { AppConfigs } from '../services/appServices/appConfigs';
 import { AuthService } from '../services/auth/auth.service';
 import { WebPageComponent } from './web-page/web-page.component';
 import { SafePipe } from '../services/sanitizerPipe';

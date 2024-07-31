@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { environment } from 'environments/environment';
 import { LocalAuthService } from './auth.service';
 import { AuthService } from './auth/auth.service';
-import { AppConfigs } from './appConfigs';
+import { AppConfigs } from './appServices/appConfigs';
 
 @Injectable({
     providedIn: 'root',

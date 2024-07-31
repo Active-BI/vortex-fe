@@ -15,7 +15,7 @@ import jwtDecode from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 import { LocalAuthService } from 'app/modules/services/auth.service';
 import { AuthService } from 'app/modules/services/auth/auth.service';
-import { AppConfigs } from 'app/modules/services/appConfigs';
+import { AppConfigs } from 'app/modules/services/appServices/appConfigs';
 
 interface User {
     email: string;

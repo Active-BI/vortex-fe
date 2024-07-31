@@ -12,7 +12,7 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { LocalAuthService } from 'app/modules/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
  import { SocketService } from 'app/modules/services/socket.service';
-import { AppConfigs } from 'app/modules/services/appConfigs';
+import { AppConfigs } from 'app/modules/services/appServices/appConfigs';
 
 @Component({
     selector: 'app-reset-pass',

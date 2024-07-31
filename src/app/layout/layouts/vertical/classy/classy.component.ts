@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import {
-    FuseNavigationItem,
     FuseNavigationService,
     FuseVerticalNavigationComponent,
 } from '@fuse/components/navigation';
@@ -11,11 +10,9 @@ import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { User } from 'app/core/user/user.types';
 import { UserService } from 'app/core/user/user.service';
-import jwtDecode from 'jwt-decode';
 import { MenuItemService } from 'app/mock-api/common/navigation/data';
-import { text } from 'express';
-import { AppConfigs } from 'app/modules/services/appConfigs';
-import { GlobalService } from 'app/modules/services/globalService';
+import { AppConfigs } from 'app/modules/services/appServices/appConfigs';
+import { GlobalService } from 'app/modules/services/appServices/globalService';
 
 @Component({
     selector: 'classy-layout',

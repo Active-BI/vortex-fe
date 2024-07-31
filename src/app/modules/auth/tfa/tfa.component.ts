@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppConfigs } from 'app/modules/services/appConfigs';
+import { AppConfigs } from 'app/modules/services/appServices/appConfigs';
 import { LocalAuthService } from 'app/modules/services/auth.service';
 import { PageService } from 'app/modules/services/page.service';
 import { SocketService } from 'app/modules/services/socket.service';

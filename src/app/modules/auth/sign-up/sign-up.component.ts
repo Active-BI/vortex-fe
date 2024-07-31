@@ -14,7 +14,7 @@ import { LocalAuthService } from 'app/modules/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { SignUpModalComponent } from './sign-up-modal/sign-up-modal.component';
 import jwtDecode from 'jwt-decode';
-import { AppConfigs } from 'app/modules/services/appConfigs';
+import { AppConfigs } from 'app/modules/services/appServices/appConfigs';
 
 @Component({
     selector: 'auth-sign-up',
