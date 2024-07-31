@@ -80,11 +80,11 @@ import { GlobalService } from '../services/globalService';
 import jwtDecode from 'jwt-decode';
 
 const adminroutes: Route[] = [
-    // {
-    //     path: '',
-    //     component: InicioComponent,
-    //     pathMatch: 'full',
-    // },
+    {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'inicio',
+    },
     {
         path: 'inicio',
         component: InicioComponent,

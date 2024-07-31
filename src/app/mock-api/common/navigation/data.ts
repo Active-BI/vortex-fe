@@ -106,14 +106,14 @@ class CreateRoutes {
     }
 }
 export const defaultRoute: FuseNavigationItem[] = [
-    // {
-    //     data: { roles: ['User', 'Admin', 'Master'] },
-    //     id: 'inicio',
-    //     title: 'Inicio',
-    //     type: 'basic',
-    //     icon: 'heroicons_outline:home',
-    //     link: 'inicio',
-    // },
+    {
+        data: { roles: ['User', 'Admin', 'Master'] },
+        id: 'inicio',
+        title: 'Inicio',
+        type: 'basic',
+        icon: 'heroicons_outline:home',
+        link: 'inicio',
+    },
     // {
     //     data: { roles: ['User', 'Admin', 'Master'] },
     //     id: 'blog',
