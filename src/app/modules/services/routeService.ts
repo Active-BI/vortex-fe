@@ -18,17 +18,16 @@ export class RouterService {
                 },
                 []
             );
-            return {
-                ...grupo,
-                roles: rolesDeTotasAsPaginas,
-            };
+            grupo.children = grupo.Page
+            const a = CreateRoutes.CollapsableRoute(grupo.id, grupo.title, grupo.icon,rolesDeTotasAsPaginas, grupo.Page);
+            return a
         });
     }
 
     private geracaoDeRotasParaOFuse(gruposDeRotas: any[]): FuseNavigationItem[] { 
         return gruposDeRotas.map((grupo) => ({
             ...grupo,
-            children: grupo.Page.map((rota) => {
+            children: grupo.children.map((rota) => {
                 let currPage;
                 switch (rota.page_type) {
                     case 'page':
@@ -67,7 +66,18 @@ export class RouterService {
                 return currPage;
             })
         })
-        )
+        ).sort((a, b) => {
+            if (a.title === 'Administrador') {
+                return 1;
+            }
+            return -1;
+        })
+        .sort((a, b) => {
+            if (a.title === 'Inicio') {
+                return -1;
+            }
+            return 1;
+        });
     }
 
     gerarRotasDaAplicacao(grupos: any[]): FuseNavigationItem[] {

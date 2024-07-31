@@ -93,7 +93,8 @@ export class CreateRoutes {
         id: string,
         title: string,
         icon: string,
-        roles
+        roles,
+        children = []
     ): FuseNavigationItem {
         return {
             data: { roles },
@@ -101,7 +102,7 @@ export class CreateRoutes {
             title,
             type: 'collapsable',
             icon,
-            children: [],
+            children: children,
         };
     }
 }

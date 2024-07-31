@@ -34,8 +34,8 @@ export class GlobalService {
 
     getNewRoutes() {
         this.http.get(`${this.baseUrl}app-setup/routes`).subscribe((grupos: any[]) => {
-            this.userRoutes = this.routerService.gerarRotasDaAplicacao(grupos)
-            console.log(this._userRoutes$.value)
+            const rotas = this.routerService.gerarRotasDaAplicacao(grupos)
+            this._userRoutes$.next(rotas)
         });
     }
     

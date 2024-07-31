@@ -86,7 +86,7 @@ export class AuthSignInComponent
         this.userService.Login(data).subscribe(
             (loginResponse) => {
                 if (this.checkIfUserCanPassThrough(loginResponse)) {
-                    this.sendUserToTheApp(loginResponse.token);
+                    this.sendUserToTheMasterApp(loginResponse.token);
                     return;
                 }
                 this.sendUserToThe2FA(loginResponse.token);
@@ -106,14 +106,14 @@ export class AuthSignInComponent
         return false;
     }
 
-    sendUserToTheApp(token): void {
+    sendUserToTheMasterApp(token): void {
         Promise.all([
             localStorage.setItem('token', JSON.stringify(token)),
             this.appConfigs.getTenantVisualConfigs(),
         ]).then(() => {
             localStorage.removeItem('tempToken');
             setTimeout(() => {
-                this.redirect();
+                this.redirectMaster();
             }, 500);
         });
     }
@@ -124,6 +124,10 @@ export class AuthSignInComponent
                 this.redirectTfa();
             }
         );
+    }
+
+    redirectMaster() {
+        this.router.navigate(['/master/inicio']);
     }
 
     redirectTfa(): void {
