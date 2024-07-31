@@ -1,8 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FuseNavigationItem } from '@fuse/components/navigation';
 import { environment } from 'environments/environment';
-import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { RouterService } from './routeService';
 
@@ -33,13 +32,13 @@ export class GlobalService {
         this._userRoutes$.next(value);
     }
 
-    private getNewRoutes() {
-        return this.http.get(`${this.baseUrl}app-setup/routes`).subscribe((grupos: any[]) => {
+    getNewRoutes() {
+        this.http.get(`${this.baseUrl}app-setup/routes`).subscribe((grupos: any[]) => {
             this.userRoutes = this.routerService.gerarRotasDaAplicacao(grupos)
+            console.log(this._userRoutes$.value)
         });
     }
     
     constructor(private http: HttpClient, private routerService: RouterService) {
-        this.getNewRoutes()
     }
 }

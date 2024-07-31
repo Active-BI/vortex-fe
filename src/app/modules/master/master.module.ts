@@ -57,7 +57,6 @@ import { ConfigsComponent } from './tenant/configs/configs.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { DocumentosComponent } from '../admin/documentos/documentos.component';
 import { AuthGuardScreen } from '../services/guards/AuthGuardScreen.guard';
-import { GlobalService } from '../services/globalService';
 import jwtDecode from 'jwt-decode';
 
 const masterRoutes: Route[] = [
@@ -172,7 +171,6 @@ const masterRoutes: Route[] = [
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MasterModule {
-    constructor(private globalService: GlobalService) {
-        this.globalService.userData$ = jwtDecode(localStorage.getItem('token'));
+    constructor() {
     }
 }

@@ -78,8 +78,6 @@ import { AppConfigs } from '../services/appConfigs';
 import { AuthService } from '../services/auth/auth.service';
 import { WebPageComponent } from './web-page/web-page.component';
 import { SafePipe } from '../services/sanitizerPipe';
-import { GlobalService } from '../services/globalService';
-import jwtDecode from 'jwt-decode';
 
 const adminroutes: Route[] = [
     {
@@ -241,18 +239,14 @@ const adminroutes: Route[] = [
 export class AdminModule {
     socket: any;
     constructor(
-        private router: Router,
-        private route: ActivatedRoute,
         private socketService: SocketService,
         private MenuItemService: MenuItemService,
         private pageService: PageService,
         private appConfigs: AppConfigs,
         private authService: AuthService,
-        private globalService: GlobalService
     ) {
         this.socket = this.socketService.socket;
-        this.callRoutes();
-        
+            
         setInterval(() => {
             Promise.all([localStorage.getItem('session_id')]).then((res) => {
                 if (res[0]) {
@@ -265,25 +259,5 @@ export class AdminModule {
                 this.socket.disconnect();
             });
         }, 5000);
-    }
-
-
-    async callRoutes() {
-        if (
-            localStorage.getItem('token') &&
-            localStorage.getItem('token').length > 0
-        ) {
-            return await Promise.all([
-                this.pageService.getUserRoutes().toPromise(),
-            ]).then(async (res) => {
-                this.globalService.userData$ = jwtDecode( localStorage.getItem('token'));
-         
-
-                const rotasTratadas = await this.MenuItemService.tratarRotas(res[0].userRoutes);
-                this.globalService.userRoutes = rotasTratadas;
-                    
-           
-            });
-        }
     }
 }

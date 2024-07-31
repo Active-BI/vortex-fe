@@ -12,25 +12,6 @@ import { TfaComponent } from './modules/auth/tfa/tfa.component';
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const appRoutes: Route[] = [
-    // {
-    //     path: 'home',
-    //     canActivate: [NoAuthGuard],
-    //     canActivateChild: [NoAuthGuard],
-    //     component: LayoutComponent,
-    //     data: {
-    //         layout: 'empty',
-    //         expectedRoles: [],
-    //     },
-    //     children: [
-    //         {
-    //             path: '',
-    //             component: HomeComponent,
-    //             data: {
-    //                 expectedRoles: [],
-    //             },
-    //         },
-    //     ],
-    // },
     {
         path: 'auth',
         canActivate: [NoAuthGuard],
