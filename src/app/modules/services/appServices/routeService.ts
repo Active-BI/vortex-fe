@@ -80,7 +80,11 @@ export class RouterService {
 
     gerarRotasDaAplicacao(grupos: any[]): FuseNavigationItem[] {
         const gruposDeRotas = this.adaptandoRetornoParaGeracaoDeGruposDeRotas(grupos);
-        return this.geracaoDeRotasParaOFuse(gruposDeRotas);
+        const rotas = this.geracaoDeRotasParaOFuse(gruposDeRotas);
+
+        localStorage.setItem('rotas', JSON.stringify(rotas));
+
+        return rotas;
     }
 }
 

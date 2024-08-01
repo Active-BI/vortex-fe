@@ -29,13 +29,19 @@ export class GlobalService {
     }
 
     set userRoutes(value: FuseNavigationItem[]) {
-        this._userRoutes$.next(value);
+        if (JSON.stringify(value) !== JSON.stringify(this._userRoutes$.value)) {
+            this._userRoutes$.next(value);
+        }
     }
 
     getNewRoutes() {
+        if (localStorage.getItem('rotas')) {
+            this.userRoutes = JSON.parse(localStorage.getItem('rotas'))
+        } 
+
         this.http.get(`${this.baseUrl}app-setup/routes`).subscribe((grupos: any[]) => {
             const rotas = this.routerService.gerarRotasDaAplicacao(grupos)
-            this._userRoutes$.next(rotas)
+            this.userRoutes = rotas
         });
     }
     
