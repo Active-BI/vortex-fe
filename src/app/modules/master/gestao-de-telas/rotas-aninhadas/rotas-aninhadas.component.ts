@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DeletarRotaAninhadaComponent } from '../modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
 import { GroupMasterService } from 'app/modules/services/group-master.service';
 import { PMIService } from 'app/modules/services/PMI.service';
+import { ShowIconsComponent } from './show-icons/show-icons.component';
 
 export function agregarRoles(objeto) {
     if (objeto?.children) {
@@ -163,5 +164,16 @@ export class RotasAninhadasComponent implements OnInit {
     }
     voltar(): void {
         this.router.navigate([`/master/gestao/telas`]);
+    }
+
+    showIcons() {
+        this.dialog.open(ShowIconsComponent),
+            {
+                data: {
+                    data: () => {
+                        this.dialog.closeAll();
+                    },
+                },
+            };
     }
 }

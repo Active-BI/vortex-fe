@@ -81,14 +81,15 @@ export class CriarRotaComponent implements OnInit {
         report_id: [''],
         restrict: [false],
         table_name: [''],
-        page_group_title: ['', [Validators.required]],
-        page_group_id: [this.groupId, [Validators.required]],
+        page_group_title: [''],
+        page_group_id: [this.groupId],
         possui_dados_sensiveis: [false],
-        descricao_painel: ['', ],
-        nome_responsavel: ['', ],
-        email_responsavel: ['' ],
-        roles: [[], [Validators.required]],
+        descricao_painel: [''],
+        nome_responsavel: [''],
+        email_responsavel: [''],
+        roles: [[]],
     });
+
     ngOnInit(): void {
         this.form.patchValue({
             page_group_id: this.groupId,
@@ -146,40 +147,51 @@ export class CriarRotaComponent implements OnInit {
             });
         }
     }
-    criarRota() {
-        if (!this.form.valid && !this.url.valid) {
-            this.toastr.error('Formulário inválido');
-            return;
-        }
-        const { page_group_title, possui_dados_sensiveis, id, ...args } =
-            this.form.value;
+    // criarRota() {
+    //     if (!this.form.valid && !this.url.valid) {
+    //         this.toastr.error('Formulário inválido');
+    //         return;
+    //     }
+    //     const { page_group_title, possui_dados_sensiveis, id, ...args } =
+    //         this.form.value;
 
-        this.pageMasterService.postPage({...args, web_page_link: this.url.value }).subscribe(
-            (res) => {
-                this.toastr.success('Rota criada com sucesso');
-                this.router.navigate([
-                    '/master/gestao/telas/grupo/' + this.groupId,
-                ]);
-            },
-            ({ error }) => this.toastr.error('Falha ao criar rota')
-        );
-    }
-    urlSeparator() {
-        var url_separada = this.url.value.split('/');
+    //     this.pageMasterService
+    //         .postPage({ ...args, web_page_link: this.url.value })
+    //         .subscribe(
+    //             (res) => {
+    //                 this.toastr.success('Rota criada com sucesso');
+    //                 this.voltar();
+    //             },
+    //             ({ error }) => this.toastr.error('Falha ao criar rota')
+    //         );
+    // }
+    // urlSeparator() {
+    //     var url_separada = this.url.value.split('/');
 
-        if (
-            url_separada.indexOf('groups') !== -1 &&
-            url_separada.indexOf('reports') !== -1
-        ) {
-            this.form.patchValue({
-                group_id: url_separada[url_separada.indexOf('groups') + 1],
-                report_id: url_separada[url_separada.indexOf('reports') + 1],
-            });
-        } else {
-            this.form.patchValue({
-                group_id: '',
-                report_id: '    ',
-            });
-        }
+    //     if (
+    //         url_separada.indexOf('groups') !== -1 &&
+    //         url_separada.indexOf('reports') !== -1
+    //     ) {
+    //         this.form.patchValue({
+    //             group_id: url_separada[url_separada.indexOf('groups') + 1],
+    //             report_id: url_separada[url_separada.indexOf('reports') + 1],
+    //         });
+    //     } else {
+    //         this.form.patchValue({
+    //             group_id: '',
+    //             report_id: '    ',
+    //         });
+    //     }
+    // }
+    handleDashboardForm(data) {
+        console.log(data.value);
+
+        this.form.patchValue({
+            group_id: data.value.group_id,
+            report_id: data.value.report_id,
+            roles: data.value.roles,
+            descricao_painel: data.value.descricao_painel,
+        });
+        console.log(this.form);
     }
 }

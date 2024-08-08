@@ -1,102 +1,187 @@
 <div class="flex flex-col flex-auto w-auto">
-    <form (submit)="$event.preventDefault()" [formGroup]="form"
-        class="grid grid-cols-2 gap-x-2 gap-y-4 w-full sm:w-[60%] md:w-[80%] m-8">
+    <form
+        (submit)="$event.preventDefault()"
+        [formGroup]="form"
+        class="grid grid-cols-2 gap-x-2 gap-y-4 w-full sm:w-[60%] md:w-[80%] m-8"
+    >
         <div class="col-span-full flex justify-between w-full">
             <p class="text-2xl mb-6 font-bold col-span-full">
-                {{ form.value.page_group_title }}
+                {{ form.value.page_group_title + " - " + form.value.title }}
             </p>
         </div>
         <div class="grid grid-cols-2 gap-x-2 gap-y-4 col-span-full">
             <mat-form-field class="md:col-span-1 fuse-mat-dense col-span-full">
                 <mat-label>Tipo da página</mat-label>
-                <mat-select (selectionChange)="change()" formControlName="page_type">
-                    <mat-option *ngFor="let item of screenType" [value]="item"
-                        [disabled]="item !== 'report' && item !== 'dashboard' && item !== 'web-page'">{{ item
-                        }}</mat-option>
+                <mat-select
+                    (selectionChange)="change()"
+                    formControlName="page_type"
+                >
+                    <mat-option
+                        *ngFor="let item of screenType"
+                        [value]="item"
+                        [disabled]="
+                            item !== 'report' &&
+                            item !== 'dashboard' &&
+                            item !== 'web-page'
+                        "
+                        >{{ item }}</mat-option
+                    >
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="fuse-mat-dense md:col-span-1 col-span-full">
+            <mat-form-field
+                appearance="fill"
+                class="fuse-mat-dense md:col-span-1 col-span-full"
+            >
                 <mat-label>Nome da Página</mat-label>
-                <input (input)="change()" formControlName="title" matInput #first />
+                <input
+                    (input)="change()"
+                    formControlName="title"
+                    matInput
+                    #first
+                />
             </mat-form-field>
 
-            <div class="bg-slate-200 p-4 rounded-md fuse-mat-dense col-span-full grid grid-cols-2 gap-x-2 gap-y-4">
-                <mat-form-field appearance="fill" class="md:col-span-2 fuse-mat-dense col-span-full" *ngIf="form.value.page_type.includes('web-page')">
+            <div
+                class="bg-slate-200 p-4 rounded-md fuse-mat-dense col-span-full grid grid-cols-2 gap-x-2 gap-y-4"
+            >
+                <mat-form-field
+                    appearance="fill"
+                    class="md:col-span-2 fuse-mat-dense col-span-full"
+                    *ngIf="form.value.page_type.includes('web-page')"
+                >
                     <mat-label>URL</mat-label>
-                    <input [formControl]="url" (input)="urlSeparator()" matInput #first />
+                    <input
+                        [formControl]="url"
+                        (input)="urlSeparator()"
+                        matInput
+                        #first
+                    />
                 </mat-form-field>
-        
-                <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full " *ngIf="!form.value.page_type.includes('web-page')">
+
+                <mat-form-field
+                    appearance="fill"
+                    class="md:col-span-1 fuse-mat-dense col-span-full"
+                    *ngIf="!form.value.page_type.includes('web-page')"
+                >
                     <mat-label>ID do grupo</mat-label>
                     <input formControlName="group_id" matInput #first />
                 </mat-form-field>
-                <mat-form-field appearance="fill" class=" md:col-span-1 fuse-mat-dense col-span-full " *ngIf="!form.value.page_type.includes('web-page')">
-                    <mat-label>ID do {{form.value.page_type.includes('dashboard') ? 'Dashboard' :
-                        'Relatório'}}</mat-label>
+                <mat-form-field
+                    appearance="fill"
+                    class="md:col-span-1 fuse-mat-dense col-span-full"
+                    *ngIf="!form.value.page_type.includes('web-page')"
+                >
+                    <mat-label
+                        >ID do
+                        {{
+                            form.value.page_type.includes("dashboard")
+                                ? "Dashboard"
+                                : "Relatório"
+                        }}</mat-label
+                    >
                     <input formControlName="report_id" matInput #first />
                 </mat-form-field>
-                <mat-form-field appearance="fill" class="md:col-span-1 fuse-mat-dense col-span-full"
-                    *ngIf="form.value.page_type !== 'web-page'">
-                    <mat-label>Descrição do
+                <mat-form-field
+                    appearance="fill"
+                    class="md:col-span-1 fuse-mat-dense col-span-full"
+                    *ngIf="form.value.page_type !== 'web-page'"
+                >
+                    <mat-label
+                        >Descrição do
                         {{
-                        form.value.page_type.includes("dashboard")
-                        ? "Dashboard"
-                        : "Relatório"
-                        }}</mat-label>
+                            form.value.page_type.includes("dashboard")
+                                ? "Dashboard"
+                                : "Relatório"
+                        }}</mat-label
+                    >
                     <input formControlName="descricao_painel" matInput #first />
                 </mat-form-field>
-                <mat-form-field appearance="fill" class="md:col-span-1 fuse-mat-dense col-span-full" *ngIf="form.value.page_type !== 'web-page'">
+                <mat-form-field
+                    appearance="fill"
+                    class="md:col-span-1 fuse-mat-dense col-span-full"
+                    *ngIf="form.value.page_type !== 'web-page'"
+                >
                     <mat-label>Roles</mat-label>
                     <mat-select formControlName="roles" multiple>
                         <mat-select-trigger>
                             {{ findRole(form.value.roles[0]) }}
-                            <span *ngIf="(form.value.roles?.length || 0) > 1" class="example-additional-selection">
+                            <span
+                                *ngIf="(form.value.roles?.length || 0) > 1"
+                                class="example-additional-selection"
+                            >
                                 (+{{ (form.value.roles?.length || 0) - 1 }}
                                 {{
-                                form.value.roles?.length === 2
-                                ? "Outro"
-                                : "Outros"
+                                    form.value.roles?.length === 2
+                                        ? "Outro"
+                                        : "Outros"
                                 }})
                             </span>
                         </mat-select-trigger>
-                        <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
+                        <mat-option
+                            *ngFor="let role of roles"
+                            [value]="role.id"
+                            >{{ role.name }}</mat-option
+                        >
                     </mat-select>
                 </mat-form-field>
             </div>
-            <mat-form-field appearance="fill" class="md:col-span-1 fuse-mat-dense col-span-full" *ngIf="form.value.page_type === 'web-page'">
+            <mat-form-field
+                appearance="fill"
+                class="md:col-span-1 fuse-mat-dense col-span-full"
+                *ngIf="form.value.page_type === 'web-page'"
+            >
                 <mat-label>Roles</mat-label>
                 <mat-select formControlName="roles" multiple>
                     <mat-select-trigger>
                         {{ findRole(form.value.roles[0]) }}
-                        <span *ngIf="(form.value.roles?.length || 0) > 1" class="example-additional-selection">
+                        <span
+                            *ngIf="(form.value.roles?.length || 0) > 1"
+                            class="example-additional-selection"
+                        >
                             (+{{ (form.value.roles?.length || 0) - 1 }}
                             {{
-                            form.value.roles?.length === 2
-                            ? "Outro"
-                            : "Outros"
+                                form.value.roles?.length === 2
+                                    ? "Outro"
+                                    : "Outros"
                             }})
                         </span>
                     </mat-select-trigger>
-                    <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
+                    <mat-option *ngFor="let role of roles" [value]="role.id">{{
+                        role.name
+                    }}</mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <div class="col-span-1 flex gap-x-4 items-center" *ngIf="form.value.page_type !== 'web-page'">
+            <div
+                class="col-span-1 flex gap-x-4 items-center"
+                *ngIf="form.value.page_type !== 'web-page'"
+            >
                 <section class="example-section">
-                    <mat-checkbox matTooltip="CPF, CNPJ, Nome, Salário etc..." formControlName="possui_dados_sensiveis"
-                        class="example-margin">Possui dados sensíveis?
+                    <mat-checkbox
+                        matTooltip="CPF, CNPJ, Nome, Salário etc..."
+                        formControlName="possui_dados_sensiveis"
+                        class="example-margin"
+                        >Possui dados sensíveis?
                     </mat-checkbox>
                 </section>
             </div>
-            <div class="col-span-1 col-start-2 flex justify-end gap-x-4 items-center">
-                <button mat-raised-button (click)="voltar()"
-                    class="rounded-sm text-colorText bg-[#006cbe] text-white">
+            <div
+                class="col-span-1 col-start-2 flex justify-end gap-x-4 items-center"
+            >
+                <button
+                    mat-raised-button
+                    (click)="voltar()"
+                    class="rounded-sm text-colorText bg-[#006cbe] text-white"
+                >
                     voltar
                 </button>
 
-                <button mat-raised-button (click)="editarRota()"
-                    class="rounded-sm text-colorText bg-[#006cbe] text-white">
+                <button
+                    mat-raised-button
+                    (click)="editarRota()"
+                    class="rounded-sm text-colorText bg-[#006cbe] text-white"
+                >
                     {{ page_context }}
                 </button>
             </div>

@@ -58,6 +58,9 @@ import { NgxMaskModule } from 'ngx-mask';
 import { DocumentosComponent } from '../admin/documentos/documentos.component';
 import { AuthGuardScreen } from '../services/guards/AuthGuardScreen.guard';
 import { InicioComponent } from '../admin/inicio/inicio.component';
+import { ShowIconsComponent } from './gestao-de-telas/rotas-aninhadas/show-icons/show-icons.component';
+import { DashboardFormComponentComponent } from './gestao-de-telas/rotas-aninhadas/dashboard-form-component/dashboard-form-component.component';
+import { WebpageFormComponentComponent } from './gestao-de-telas/rotas-aninhadas/webpage-form-component/webpage-form-component.component';
 
 const masterRoutes: Route[] = [
     {
@@ -138,6 +141,9 @@ const masterRoutes: Route[] = [
         EditarRotaComponent,
         ColorPickerComponent,
         ConfigsComponent,
+        ShowIconsComponent,
+        DashboardFormComponentComponent,
+        WebpageFormComponentComponent,
     ],
     imports: [
         CommonModule,
@@ -180,6 +186,5 @@ const masterRoutes: Route[] = [
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MasterModule {
-    constructor() {
-    }
+    constructor() {}
 }

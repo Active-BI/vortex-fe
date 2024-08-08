@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RotasAninhadasComponent } from './rotas-aninhadas.component';
+import { ShowIconsComponent } from './show-icons.component';
 
-describe('RotasAninhadasComponent', () => {
-  let component: RotasAninhadasComponent;
-  let fixture: ComponentFixture<RotasAninhadasComponent>;
+describe('ShowIconsComponent', () => {
+  let component: ShowIconsComponent;
+  let fixture: ComponentFixture<ShowIconsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RotasAninhadasComponent ]
+      declarations: [ ShowIconsComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RotasAninhadasComponent);
+    fixture = TestBed.createComponent(ShowIconsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
