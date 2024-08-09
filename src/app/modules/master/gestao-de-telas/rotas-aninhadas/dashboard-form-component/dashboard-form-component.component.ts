@@ -19,7 +19,6 @@ import { invalid } from 'moment';
     styleUrls: ['./dashboard-form-component.component.scss'],
 })
 export class DashboardFormComponentComponent implements OnInit {
-    // @Output() dashboardForm = new EventEmitter();
     roles = roles;
     @Input() form: FormGroup = this.fb.group({});
 
@@ -56,7 +55,6 @@ export class DashboardFormComponentComponent implements OnInit {
     }
 
     urlSeparator() {
-        console.log(this.formDashboard);
         var url_separada = this.formDashboard.controls.url.value.split('/');
 
         if (
@@ -119,10 +117,6 @@ export class DashboardFormComponentComponent implements OnInit {
         ]);
     }
 
-    // sendData() {
-    //     this.dashboardForm.emit(this.form);
-    // }
-
     validateUrlBasedOnGroupAndReport(
         formGroup: FormGroup
     ): ValidationErrors | null {
@@ -131,11 +125,11 @@ export class DashboardFormComponentComponent implements OnInit {
         const url = formGroup.get('url');
 
         if (groupId?.valid && reportId?.valid) {
-            url?.setErrors(null); // Limpa qualquer erro no campo url se `group_id` e `report_id` forem válidos
+            url?.setErrors(null);
         } else {
-            url?.setErrors({ invalidBasedOnGroupAndReport: true }); // Define um erro no campo url se `group_id` ou `report_id` não forem válidos
+            url?.setErrors({ invalidBasedOnGroupAndReport: true });
         }
 
-        return null; // Retorna null para indicar que o `FormGroup` é válido
+        return null;
     }
 }
