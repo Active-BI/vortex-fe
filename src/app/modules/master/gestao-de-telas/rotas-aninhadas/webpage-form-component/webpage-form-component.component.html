@@ -7,18 +7,13 @@
         class="md:col-span-2 fuse-mat-dense col-span-full"
     >
         <mat-label>URL</mat-label>
-        <input [formControlName]="'url'" matInput #first />
-        <!-- <p class="text-gray-400">(www.exemplo.com.br)</p> -->
-        <!-- <mat-error
-            class="text-red-600 mb-2"
-            *ngIf="
-                formWebPage.controls.url.touched &&
-                (formWebPage.controls.group_id.invalid ||
-                    formWebPage.controls.url.invalid)
-            "
-        >
-            URL invalida
-        </mat-error> -->
+        <input
+            [formControlName]="'url'"
+            placeholder="www.exemplo.com.br"
+            required
+            matInput
+            #first
+        />
     </mat-form-field>
 
     <mat-form-field
@@ -47,19 +42,6 @@
         </mat-select>
     </mat-form-field>
 
-    <div
-        class="col-span-full flex gap-x-4 items-center"
-        *ngIf="form.value.page_type !== 'web-page'"
-    >
-        <section class="example-section">
-            <mat-checkbox
-                matTooltip="CPF, CNPJ, Nome, Salário etc..."
-                formControlName="possui_dados_sensiveis"
-                class="example-margin"
-                >Possui dados sensíveis?
-            </mat-checkbox>
-        </section>
-    </div>
     <div class="col-span-1 col-start-2 flex justify-end gap-x-4 items-center">
         <button
             mat-raised-button
@@ -71,6 +53,7 @@
 
         <button
             mat-raised-button
+            (click)="criarWebPage()"
             class="rounded-sm text-colorText bg-[#006cbe] text-white"
         >
             Criar

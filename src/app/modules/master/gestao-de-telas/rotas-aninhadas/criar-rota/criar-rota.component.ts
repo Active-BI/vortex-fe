@@ -55,7 +55,7 @@ export class CriarRotaComponent implements OnInit {
         descricao_painel: [''],
         nome_responsavel: [''],
         email_responsavel: [''],
-        roles: [[]],
+        roles: [[], [Validators.required]],
     });
 
     constructor(
@@ -116,6 +116,7 @@ export class CriarRotaComponent implements OnInit {
         this.form.patchValue({
             formated_title: title,
         });
+        console.log(this.form.value.title);
         let pathByType = '';
         const isReportTypeNull = this.form.value.page_type === null;
         if (isReportTypeNull) {
@@ -146,15 +147,15 @@ export class CriarRotaComponent implements OnInit {
         }
     }
 
-    handleDashboardForm(data) {
-        console.log(data.value);
+    // handleDashboardForm(data) {
+    //     console.log(data.value);
 
-        this.form.patchValue({
-            group_id: data.value.group_id,
-            report_id: data.value.report_id,
-            roles: data.value.roles,
-            descricao_painel: data.value.descricao_painel,
-        });
-        console.log(this.form);
-    }
+    //     this.form.patchValue({
+    //         group_id: data.value.group_id,
+    //         report_id: data.value.report_id,
+    //         roles: data.value.roles,
+    //         descricao_painel: data.value.descricao_painel,
+    //     });
+    //     console.log(this.form);
+    // }
 }
