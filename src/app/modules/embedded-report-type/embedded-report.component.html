@@ -1,55 +1,13 @@
-<!-- <div class="flex flex-col flex-auto min-w-0 h-full">
 
-    <div class="flex flex-col flex-auto min-w-0">
-        <div class="flex justify-between flex-row-reverse mt-[-20px] gap-2 items-center mb-4">
-
-            <div class="flex gap-x-2 items-center">
-                <div  class="flex gap-x-2 items-center" *ngIf="report_type.includes('upload')">
-
-                    <mat-icon svgIcon="mat_outline:settings" class="absolute w-6 h-6"></mat-icon>
-                    <mat-form-field class="opacity-0 w-6 h-6 bg-slate-400 mb-5 mt-[-10px]">
-                        <mat-select (selectionChange)="OpcaoPainel($event.value)" placeholder="Selecione" class=""
-                            style="height: 10px;" [formControl]="selected">
-                            <mat-option value="Imprimir">Imprimir</mat-option>
-                            <mat-option value="Exportar">Exportar</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-
-                <mat-icon svgIcon="mat_outline:refresh" (click)="refresh()" class=" w-6 h-6 cursor-pointer"></mat-icon>
-                <mat-icon svgIcon="fullscreen" (click)="fullscreen()" class=" w-7 h-7 cursor-pointer -m-1"></mat-icon>
-            </div>
-
-            <div class="flex items-center flex-row justify-center " *ngIf="this.rlsName !== 'User'">
-
-                <form class="file"  *ngIf="report_type.includes('upload') && !nomeArquivo.length > 0">
-                        <span class="file-custom"></span>
-                        <label class="custom-file-upload">
-                            <input type="file" (change)="Importar($event)"/>
-                            Selecionar planilha
-                        </label>
-                </form>
-                <button mat-raised-button color="primary" *ngIf="report_type.includes('upload') && nomeArquivo.length > 0"  class=" rounded-sm text-white h-8 w-28 bg-blue-700"
-                    (click)="Salvar()">Subir Arquivo</button>
-                    <p *ngIf="!nomeArquivo.length > 0">
-                        {{nomeArquivo}}
-                    </p>
-            </div>
-
-        </div>
-        <div class="text-center w-auto flex justify-center">
-            <div *ngIf="!hasData" class="text-2xl text-white p-2 w-auto bg-blue-700  mt-30 rounded-full max-w-100">
-                Nenhum dado foi carregado
-            </div>
-        </div> -->
 <mat-icon
     svgIcon="mat_outline:refresh"
     (click)="refresh()"
     class="w-6 h-6 cursor-pointer"
 ></mat-icon>
 
-<div *ngIf="showReport && hasData" class="">
+<div *ngIf="showReport && hasData" class="w-full md:h-full h-[4000px] ">
     <powerbi-report
+    class="w-full  md:h-full h-[4000px] "
         #reportObj
         [embedConfig]="config"
         [cssClassName]="'pbi-report'"
@@ -58,5 +16,3 @@
     >
     </powerbi-report>
 </div>
-<!-- </div>
-</div> -->
