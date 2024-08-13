@@ -1,17 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
-    AbstractControl,
     FormBuilder,
     FormGroup,
     ValidationErrors,
-    ValidatorFn,
     Validators,
 } from '@angular/forms';
 import { roles } from '../criar-rota/criar-rota.component';
 import { ToastrService } from 'ngx-toastr';
 import { PageMasterService } from 'app/modules/services/page-master.service';
-import { Router, TitleStrategy } from '@angular/router';
-import { invalid } from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-dashboard-form-component',

@@ -11,6 +11,7 @@ import { DeletarRotaAninhadaComponent } from '../modais/deletar-rota-aninhada/de
 import { GroupMasterService } from 'app/modules/services/group-master.service';
 import { PMIService } from 'app/modules/services/PMI.service';
 import { ShowIconsComponent } from './show-icons/show-icons.component';
+import { DialogRef } from '@angular/cdk/dialog';
 
 export function agregarRoles(objeto) {
     if (objeto?.children) {
@@ -167,13 +168,21 @@ export class RotasAninhadasComponent implements OnInit {
     }
 
     showIcons() {
-        this.dialog.open(ShowIconsComponent),
-            {
+        this.dialog
+            .open(ShowIconsComponent, {
                 data: {
+                    group_id: this.id,
+                    title: this.form.value.name,
                     data: () => {
+                        this.toastr.success('Editado com sucesso');
                         this.dialog.closeAll();
                     },
                 },
-            };
+            })
+            .afterClosed()
+            .subscribe((icon) => {
+                console.log(this.form);
+                this.form.patchValue({ icon: icon });
+            });
     }
 }

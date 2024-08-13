@@ -12,6 +12,7 @@
                 class="icon-size-5 hover:cursor-pointer"
                 matPrefix
                 svgIcon="feather:x"
+                (click)="cleanInput()"
             ></mat-icon>
 
             <input
@@ -94,6 +95,7 @@
         </div>
         <button
             class="mt-4 self-end p-1 mb-6 min-w-22 w-1/5 bg-[#006cbe] text-white"
+            (click)="editIcon(form.value.icon)"
         >
             Submit
         </button>
