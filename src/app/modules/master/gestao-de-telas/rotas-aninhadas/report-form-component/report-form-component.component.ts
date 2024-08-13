@@ -97,7 +97,6 @@ export class ReportFormComponentComponent implements OnInit {
         this.pageMasterService
             .postPage({
                 ...args,
-                web_page_link: this.formReport.controls.url.value,
             })
             .subscribe(
                 (res) => {
@@ -129,4 +128,21 @@ export class ReportFormComponentComponent implements OnInit {
 
         return null;
     }
+    // criarRota() {
+    //     if (!this.form.valid && !this.url.valid) {
+    //         this.toastr.error('Formulário inválido');
+    //         return;
+    //     }
+    //     const { page_group_title, possui_dados_sensiveis, id, ...args } =
+    //         this.form.value;
+    //     this.pageMasterService.postPage(args).subscribe(
+    //         (res) => {
+    //             this.toastr.success('Rota criada com sucesso');
+    //             this.router.navigate([
+    //                 '/master/gestao/telas/grupo/' + this.groupId,
+    //             ]);
+    //         },
+    //         ({ error }) => this.toastr.error('Falha ao criar rota')
+    //     );
+    // }
 }
