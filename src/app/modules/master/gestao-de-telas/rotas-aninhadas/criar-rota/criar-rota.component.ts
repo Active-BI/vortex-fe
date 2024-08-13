@@ -146,16 +146,4 @@ export class CriarRotaComponent implements OnInit {
             });
         }
     }
-
-    // handleDashboardForm(data) {
-    //     console.log(data.value);
-
-    //     this.form.patchValue({
-    //         group_id: data.value.group_id,
-    //         report_id: data.value.report_id,
-    //         roles: data.value.roles,
-    //         descricao_painel: data.value.descricao_painel,
-    //     });
-    //     console.log(this.form);
-    // }
 }

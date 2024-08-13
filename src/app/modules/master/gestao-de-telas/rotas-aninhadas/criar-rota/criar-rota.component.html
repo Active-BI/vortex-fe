@@ -101,7 +101,6 @@
             <app-dashboard-form-component
                 class="bg-slate-200 col-span-full"
                 *ngIf="form.value.page_type === 'dashboard'"
-                (dashboardForm)="handleDashboardForm($event)"
                 [form]="form"
             ></app-dashboard-form-component>
             <!-- </div> -->
@@ -110,6 +109,13 @@
                 class="bg-slate-200 col-span-full"
                 *ngIf="form.value.page_type === 'web-page'"
             ></app-webpage-form-component>
+
+            <app-report-form-component
+                class="bg-slate-200 col-span-full"
+                *ngIf="form.value.page_type === 'report'"
+                [form]="form"
+            >
+            </app-report-form-component>
 
             <!-- <mat-form-field
                 appearance="fill"

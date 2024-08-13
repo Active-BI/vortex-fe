@@ -34,7 +34,6 @@ export class ShowIconsComponent implements OnInit {
     ngOnInit(): void {
         this.filterByName('');
         this.form.get('search')?.valueChanges.subscribe((value) => {
-            console.log(value);
             this.filteredIcons = this.filterByName(value);
         });
         // this.requisicoes();

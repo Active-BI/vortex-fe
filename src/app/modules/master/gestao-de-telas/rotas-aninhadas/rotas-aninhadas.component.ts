@@ -78,7 +78,7 @@ export class RotasAninhadasComponent implements OnInit {
             name: acessos.page_group,
             icon: acessos.icon,
         });
-        console.log(acessos.children);
+        console.log(acessos);
         this.usuarios = new MatTableDataSource(acessos.children);
         this.usuariosFiltrados = new MatTableDataSource(acessos.children);
         this.usuariosFiltrados.paginator = this.paginator;
@@ -171,8 +171,6 @@ export class RotasAninhadasComponent implements OnInit {
         this.dialog
             .open(ShowIconsComponent, {
                 data: {
-                    group_id: this.id,
-                    title: this.form.value.name,
                     data: () => {
                         this.toastr.success('Editado com sucesso');
                         this.dialog.closeAll();
