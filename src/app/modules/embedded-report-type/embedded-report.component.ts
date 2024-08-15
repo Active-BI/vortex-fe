@@ -234,7 +234,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         this.breakpointObserver
             .observe([Breakpoints.Handset])
             .subscribe((state: BreakpointState) => {
-                    this.showReport = false;
+                this.showReport = false;
                 if (state.matches) {
                     this.settings = {
                         ...this.settings,
@@ -255,21 +255,19 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                 this.config = {
                     ...this.config,
                     settings: this.settings,
-                }
+                };
 
                 setInterval(() => {
                     this.showReport = true;
-                }, 300)
+                }, 300);
             });
 
-            this.embeddedSrv.handSetEmitter.subscribe((status) => {
-                console.log(status)
-                console.log(this.reportObj)
-            })
+        this.embeddedSrv.handSetEmitter.subscribe((status) => {
+            console.log(status);
+            console.log(this.reportObj);
+        });
 
         this.getEmbedded(this.settings);
-
-        
     }
 
     async refresh() {
@@ -318,9 +316,11 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         };
         get();
     }
-    change({ value }) {
-        this.pages.find((page) => page.name === value).setActive();
+    async change(value) {
+        console.log(value);
+        await this.pages.find((page) => page.name === value).setActive();
     }
+
     private getEmbedded(settings: any): void {
         this.embeddedSrv
             .getEmbeddedReportInfoByType(this.group, this.type)

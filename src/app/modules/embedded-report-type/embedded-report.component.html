@@ -1,13 +1,36 @@
-
-<mat-icon
+<!-- <mat-icon
     svgIcon="mat_outline:refresh"
     (click)="refresh()"
     class="w-6 h-6 cursor-pointer"
-></mat-icon>
-
-<div *ngIf="showReport && hasData" class="w-full md:h-full h-[4000px] ">
+></mat-icon> -->
+<div class="flex justify-between mb-3 w-full">
+    <div>
+        <!-- <mat-icon
+            svgIcon="mat_outline:arrow_back_ios"
+            class="w-10 h-10 cursor-pointer"
+        ></mat-icon>
+        <mat-icon
+            svgIcon="mat_outline:arrow_forward_ios"
+            class="w-10 h-10 cursor-pointer"
+        ></mat-icon> -->
+        <button
+            *ngFor="let page of pages"
+            mat-stroked-button
+            class="mx-2 bg-slate-300 w-auto h-auto text-2xl p-2 rounded-lg"
+            (click)="change(page.name)"
+        >
+            {{ page.displayName }}
+        </button>
+    </div>
+    <mat-icon
+        svgIcon="mat_outline:refresh"
+        (click)="refresh()"
+        class="w-10 h-10 cursor-pointer"
+    ></mat-icon>
+</div>
+<div *ngIf="showReport && hasData" class="w-full md:h-full h-[4000px]">
     <powerbi-report
-    class="w-full  md:h-full h-[4000px] "
+        class="w-full md:h-full h-[4000px]"
         #reportObj
         [embedConfig]="config"
         [cssClassName]="'pbi-report'"
