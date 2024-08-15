@@ -9,8 +9,8 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DocumentsService } from 'app/modules/services/documents.service';
 import { Router } from '@angular/router';
-import jwtDecode from 'jwt-decode';
 import { AuthService } from 'app/modules/services/auth/auth.service';
+import { DialogRef } from '@angular/cdk/dialog';
 
 @Component({
     selector: 'app-add-documentos',
@@ -25,7 +25,7 @@ export class AddDocumentosComponent implements OnInit {
     files = [];
     clientes = [];
     projetos = [];
-    myControl = new FormControl('', [Validators.required]);
+    clientesControl = new FormControl({} as any, [Validators.required]);
     projetosControl = new FormControl(
         [],
         [Validators.required, Validators.minLength(1)]
@@ -44,7 +44,7 @@ export class AddDocumentosComponent implements OnInit {
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public modalParams: any,
-        private tenantsService: TenantsService,
+        private dialog: DialogRef,
         private toastr: ToastrService,
         private documentsService: DocumentsService,
         private router: Router,
@@ -52,9 +52,11 @@ export class AddDocumentosComponent implements OnInit {
         private fb: FormBuilder
     ) {
         this.formData = this.modalParams.files;
+  
+        const fileName = this.modalParams.files.get('files').name.split('.')
         this.form.patchValue({
-            name: this.modalParams.files.get('files').name.split('.')[0],
-            extencion: this.modalParams.files.get('files').name.split('.')[1],
+            name: fileName.slice(0, fileName.length - 1).join('.'),
+            extencion: fileName[fileName.length - 1],
         });
 
         this.canUploadOrDeleteFiles =
@@ -69,30 +71,11 @@ export class AddDocumentosComponent implements OnInit {
         });
 
         this.cliente$.subscribe((res) => {
-            this.getFiles(res.id);
-
             this.projetos = res.projects;
             this.projetosControl = new FormControl([]);
         });
     }
 
-    getFiles(id = 'all') {
-        const token = JSON.parse(localStorage.getItem('token'));
-        const decoded = jwtDecode(token) as any;
-        this.documentsService.getFiles(id).subscribe((res) => {
-            if (this.router.url.includes('administrador/documentos')) {
-                this.files = res.filter((f) => {
-                    return f.projects.find((p) => decoded.projects.includes(p));
-                });
-            } else {
-                this.files = res;
-            }
-            return this.updateDataSource([
-                ...this.files,
-                ...this.formData.getAll('files'),
-            ]);
-        });
-    }
 
     updateDataSource(data) {
         this.dataSource = new MatTableDataSource(data);
@@ -103,11 +86,10 @@ export class AddDocumentosComponent implements OnInit {
     }
     setProjects(e) {
         const cliente = this.clienteSubject.getValue();
-        console.log(e, cliente);
 
         if (cliente?.tenant_name === e) return;
 
-        this.setContextoCliente(this.clientes.find((c) => c.tenant_name === e));
+        this.setContextoCliente(this.clientes.find((c) => c.id === e));
     }
 
     public setContextoCliente(novoContexto: any): void {
@@ -116,37 +98,30 @@ export class AddDocumentosComponent implements OnInit {
     }
 
     UploadFiles() {
-        const cliente = this.clienteSubject.getValue();
         const files = this.formData.get('files');
 
         if (!files || (files instanceof FileList && files.length === 0)) {
             this.toastr.error('Nenhum arquivo selecionado');
             return;
         }
-        if (cliente.id && this.projetosControl.value.length) {
-            const file: any = this.formData.get('files');
-            this.formData.set(
-                'files',
-                file,
-                this.form.get('name').value +
-                    '.' +
-                    this.form.get('extencion').value
-            );
-
+        if (this.projetosControl.value.length) {
+            this.dialog.close();
             this.documentsService
                 .UploadFiles(
                     this.formData,
-                    cliente.id,
+                    this.clientesControl.value,
                     this.projetosControl.value,
                     this.form.value.description
                 )
                 .subscribe(() => {
                     this.modalParams.data();
                 });
+                this
         } else {
             this.toastr.error('Formulário inválido');
+
             this.projetosControl.markAllAsTouched();
-            this.myControl.markAllAsTouched();
+            this.clientesControl.markAllAsTouched();
         }
     }
 }
