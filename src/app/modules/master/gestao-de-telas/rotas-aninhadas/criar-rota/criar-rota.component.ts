@@ -38,15 +38,32 @@ export class CriarRotaComponent implements OnInit {
     screenType = Object.values(screenTypes);
     roles = roles;
     url = new FormControl('', [Validators.required]);
+    form = this.fb.group({
+        id: [''],
+        page_type: ['report', [Validators.required]],
+        title: ['', [Validators.required]],
+        link: [''],
+        type: ['basic'],
+        formated_title: [''],
+        group_id: [''],
+        report_id: [''],
+        restrict: [false],
+        table_name: [''],
+        page_group_title: [''],
+        page_group_id: [this.groupId],
+        possui_dados_sensiveis: [false],
+        descricao_painel: [''],
+        nome_responsavel: [''],
+        email_responsavel: [''],
+        roles: [[], [Validators.required]],
+    });
 
     constructor(
         public dialog: MatDialog,
         public fb: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private pageMasterService: PageMasterService,
-        private groupMasterService: GroupMasterService,
-        private toastr: ToastrService
+        private groupMasterService: GroupMasterService
     ) {
         this.groupId = this.route.snapshot.paramMap.get('groupId');
         this.page_context = this.router.url.includes('criar')
@@ -70,25 +87,6 @@ export class CriarRotaComponent implements OnInit {
               ])
             : this.router.navigate(['/master/gestao/telas/']);
     }
-    form = this.fb.group({
-        id: [''],
-        page_type: ['report', [Validators.required]],
-        title: ['', [Validators.required]],
-        link: [''],
-        type: ['basic'],
-        formated_title: [''],
-        group_id: [''],
-        report_id: [''],
-        restrict: [false],
-        table_name: [''],
-        page_group_title: [''],
-        page_group_id: [this.groupId],
-        possui_dados_sensiveis: [false],
-        descricao_painel: [''],
-        nome_responsavel: [''],
-        email_responsavel: [''],
-        roles: [[]],
-    });
 
     ngOnInit(): void {
         this.form.patchValue({
@@ -118,6 +116,7 @@ export class CriarRotaComponent implements OnInit {
         this.form.patchValue({
             formated_title: title,
         });
+        console.log(this.form.value.title);
         let pathByType = '';
         const isReportTypeNull = this.form.value.page_type === null;
         if (isReportTypeNull) {
@@ -146,52 +145,5 @@ export class CriarRotaComponent implements OnInit {
                 link: `${pathByType}${pathByGroup}/${title}`,
             });
         }
-    }
-    // criarRota() {
-    //     if (!this.form.valid && !this.url.valid) {
-    //         this.toastr.error('Formulário inválido');
-    //         return;
-    //     }
-    //     const { page_group_title, possui_dados_sensiveis, id, ...args } =
-    //         this.form.value;
-
-    //     this.pageMasterService
-    //         .postPage({ ...args, web_page_link: this.url.value })
-    //         .subscribe(
-    //             (res) => {
-    //                 this.toastr.success('Rota criada com sucesso');
-    //                 this.voltar();
-    //             },
-    //             ({ error }) => this.toastr.error('Falha ao criar rota')
-    //         );
-    // }
-    // urlSeparator() {
-    //     var url_separada = this.url.value.split('/');
-
-    //     if (
-    //         url_separada.indexOf('groups') !== -1 &&
-    //         url_separada.indexOf('reports') !== -1
-    //     ) {
-    //         this.form.patchValue({
-    //             group_id: url_separada[url_separada.indexOf('groups') + 1],
-    //             report_id: url_separada[url_separada.indexOf('reports') + 1],
-    //         });
-    //     } else {
-    //         this.form.patchValue({
-    //             group_id: '',
-    //             report_id: '    ',
-    //         });
-    //     }
-    // }
-    handleDashboardForm(data) {
-        console.log(data.value);
-
-        this.form.patchValue({
-            group_id: data.value.group_id,
-            report_id: data.value.report_id,
-            roles: data.value.roles,
-            descricao_painel: data.value.descricao_painel,
-        });
-        console.log(this.form);
     }
 }

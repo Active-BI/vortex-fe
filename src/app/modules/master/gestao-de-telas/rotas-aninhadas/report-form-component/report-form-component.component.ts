@@ -11,15 +11,15 @@ import { PageMasterService } from 'app/modules/services/page-master.service';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-dashboard-form-component',
-    templateUrl: './dashboard-form-component.component.html',
-    styleUrls: ['./dashboard-form-component.component.scss'],
+    selector: 'app-report-form-component',
+    templateUrl: './report-form-component.component.html',
+    styleUrls: ['./report-form-component.component.scss'],
 })
-export class DashboardFormComponentComponent implements OnInit {
+export class ReportFormComponentComponent implements OnInit {
     roles = roles;
     @Input() form: FormGroup = this.fb.group({});
 
-    formDashboard = this.fb.group(
+    formReport = this.fb.group(
         {
             id: [''],
             page_type: ['', [Validators.required]],
@@ -43,7 +43,7 @@ export class DashboardFormComponentComponent implements OnInit {
 
     ngOnInit(): void {
         this.form.valueChanges.subscribe((value) => {
-            this.formDashboard.patchValue({
+            this.formReport.patchValue({
                 id: value.id,
                 title: value.title,
                 page_type: value.page_type,
@@ -52,18 +52,18 @@ export class DashboardFormComponentComponent implements OnInit {
     }
 
     urlSeparator() {
-        var url_separada = this.formDashboard.controls.url.value.split('/');
+        var url_separada = this.formReport.controls.url.value.split('/');
 
         if (
             url_separada.indexOf('groups') !== -1 &&
             url_separada.indexOf('reports') !== -1
         ) {
-            this.formDashboard.patchValue({
+            this.formReport.patchValue({
                 group_id: url_separada[url_separada.indexOf('groups') + 1],
                 report_id: url_separada[url_separada.indexOf('reports') + 1],
             });
         } else {
-            this.formDashboard.patchValue({
+            this.formReport.patchValue({
                 group_id: '',
                 report_id: '',
             });
@@ -78,18 +78,18 @@ export class DashboardFormComponentComponent implements OnInit {
     }
 
     criarDashboardAndReport() {
-        if (this.formDashboard.invalid) {
-            this.formDashboard.markAllAsTouched();
+        if (this.formReport.invalid) {
+            this.formReport.markAllAsTouched();
             this.toastr.error('Formulário inválido');
             return;
         }
         this.form.patchValue({
-            group_id: this.formDashboard.value.group_id,
-            report_id: this.formDashboard.value.report_id,
-            roles: this.formDashboard.value.roles,
-            descricao_painel: this.formDashboard.value.descricao_painel,
+            group_id: this.formReport.value.group_id,
+            report_id: this.formReport.value.report_id,
+            roles: this.formReport.value.roles,
+            descricao_painel: this.formReport.value.descricao_painel,
             possui_dados_sensiveis:
-                this.formDashboard.value.possui_dados_sensiveis,
+                this.formReport.value.possui_dados_sensiveis,
         });
         const { page_group_title, possui_dados_sensiveis, id, ...args } =
             this.form.value;
@@ -97,7 +97,6 @@ export class DashboardFormComponentComponent implements OnInit {
         this.pageMasterService
             .postPage({
                 ...args,
-                web_page_link: this.formDashboard.controls.url.value,
             })
             .subscribe(
                 (res) => {
@@ -129,4 +128,21 @@ export class DashboardFormComponentComponent implements OnInit {
 
         return null;
     }
+    // criarRota() {
+    //     if (!this.form.valid && !this.url.valid) {
+    //         this.toastr.error('Formulário inválido');
+    //         return;
+    //     }
+    //     const { page_group_title, possui_dados_sensiveis, id, ...args } =
+    //         this.form.value;
+    //     this.pageMasterService.postPage(args).subscribe(
+    //         (res) => {
+    //             this.toastr.success('Rota criada com sucesso');
+    //             this.router.navigate([
+    //                 '/master/gestao/telas/grupo/' + this.groupId,
+    //             ]);
+    //         },
+    //         ({ error }) => this.toastr.error('Falha ao criar rota')
+    //     );
+    // }
 }

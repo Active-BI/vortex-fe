@@ -61,6 +61,7 @@ import { InicioComponent } from '../admin/inicio/inicio.component';
 import { ShowIconsComponent } from './gestao-de-telas/rotas-aninhadas/show-icons/show-icons.component';
 import { DashboardFormComponentComponent } from './gestao-de-telas/rotas-aninhadas/dashboard-form-component/dashboard-form-component.component';
 import { WebpageFormComponentComponent } from './gestao-de-telas/rotas-aninhadas/webpage-form-component/webpage-form-component.component';
+import { ReportFormComponentComponent } from './gestao-de-telas/rotas-aninhadas/report-form-component/report-form-component.component';
 
 const masterRoutes: Route[] = [
     {
@@ -144,6 +145,7 @@ const masterRoutes: Route[] = [
         ShowIconsComponent,
         DashboardFormComponentComponent,
         WebpageFormComponentComponent,
+        ReportFormComponentComponent,
     ],
     imports: [
         CommonModule,

@@ -101,12 +101,23 @@
             <app-dashboard-form-component
                 class="bg-slate-200 col-span-full"
                 *ngIf="form.value.page_type === 'dashboard'"
-                (dashboardForm)="handleDashboardForm($event)"
                 [form]="form"
             ></app-dashboard-form-component>
             <!-- </div> -->
 
-            <mat-form-field
+            <app-webpage-form-component
+                class="bg-slate-200 col-span-full"
+                *ngIf="form.value.page_type === 'web-page'"
+            ></app-webpage-form-component>
+
+            <app-report-form-component
+                class="bg-slate-200 col-span-full"
+                *ngIf="form.value.page_type === 'report'"
+                [form]="form"
+            >
+            </app-report-form-component>
+
+            <!-- <mat-form-field
                 appearance="fill"
                 class="md:col-span-1 fuse-mat-dense col-span-full"
                 *ngIf="form.value.page_type === 'web-page'"
@@ -131,12 +142,12 @@
                         role.name
                     }}</mat-option>
                 </mat-select>
-            </mat-form-field>
-            <div
+            </mat-form-field> -->
+            <!-- <div
                 class="col-span-full md:col-span-1 flex gap-x-4 items-center"
                 *ngIf="form.value.page_type !== 'web-page'"
-            >
-                <!-- <mat-form-field class="w-full fuse-mat-dense">
+            > -->
+            <!-- <mat-form-field class="w-full fuse-mat-dense">
                     <mat-label>Nome do Responsável</mat-label>
                     <input formControlName="nome_responsavel" matInput #first />
                 </mat-form-field>
@@ -155,7 +166,7 @@
                 </mat-form-field>
             </div> -->
 
-                <!-- <div
+            <!-- <div
                 class="col-span-full flex gap-x-4 items-center"
                 *ngIf="form.value.page_type !== 'web-page'"
             >
@@ -187,7 +198,7 @@
                     {{ page_context }}
                 </button>
             </div> -->
-            </div>
+            <!-- </div> -->
         </div>
     </form>
 </div>

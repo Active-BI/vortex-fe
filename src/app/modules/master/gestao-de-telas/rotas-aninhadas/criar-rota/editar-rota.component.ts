@@ -23,15 +23,7 @@ export class EditarRotaComponent extends CriarRotaComponent {
         _router: Router,
         private _toastr: ToastrService
     ) {
-        super(
-            dialog,
-            fb,
-            _route,
-            _router,
-            _pageMasterService,
-            _groupMasterService,
-            _toastr
-        );
+        super(dialog, fb, _route, _router, _groupMasterService);
         this.screenId = this._route.snapshot.paramMap.get('screenId');
         this.requisicoes();
     }

@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { mat_outline } from '../../modais/criacao-grupo/edicao-criacao-grupo.component';
-import { map, Observable, startWith } from 'rxjs';
+import { PageMasterService } from 'app/modules/services/page-master.service';
 
 type Icon = {
     type: string;
@@ -19,21 +19,21 @@ export class ShowIconsComponent implements OnInit {
     showAll = false;
     filteredIcons: Icon[] = this.filterByName('');
 
-    filteredObsv: Observable<any[]>;
+    // filteredObsv: Observable<any[]>;
 
     form = this.fb.group({
-        id: [''],
         icon: ['', Validators.required],
         search: ['', Validators.required],
     });
     constructor(
         @Inject(MAT_DIALOG_DATA) public data,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private pageMasterService: PageMasterService,
+        public dialogRef: MatDialogRef<ShowIconsComponent>
     ) {}
     ngOnInit(): void {
         this.filterByName('');
         this.form.get('search')?.valueChanges.subscribe((value) => {
-            console.log(value);
             this.filteredIcons = this.filterByName(value);
         });
         // this.requisicoes();
@@ -58,18 +58,35 @@ export class ShowIconsComponent implements OnInit {
             .slice(0, 100);
     }
 
-    async requisicoes() {
-        this.filteredObsv = this.form.controls.search.valueChanges.pipe(
-            startWith(''),
-            map((value) => this.filter2(value || ''))
-        );
+    // async requisicoes() {
+    //     this.filteredObsv = this.form.controls.search.valueChanges.pipe(
+    //         startWith(''),
+    //         map((value) => this.filter2(value || ''))
+    //     );
+    // }
+
+    // filter2(value: string): any[] {
+    //     console.log(this.matIcons);
+    //     console.log(this.filteredObsv);
+    //     return this.matIcons.filter((option) =>
+    //         option.icon.toLowerCase().includes(value)
+    //     );
+    // }
+
+    editIcon(icon: string): void {
+        this.dialogRef.close(icon);
+
+        // this.pageMasterService.updateGroup(this.data.group_id, {
+        //     id: this.data.group_id,
+        //     title: this.data.title,
+        //     icon: this.form.value.icon,
+        // });
     }
 
-    filter2(value: string): any[] {
-        console.log(this.matIcons);
-        console.log(this.filteredObsv);
-        return this.matIcons.filter((option) =>
-            option.icon.toLowerCase().includes(value)
-        );
+    cleanInput() {
+        this.form.patchValue({
+            search: '',
+        });
+        this.form.controls.search.markAsUntouched();
     }
 }
