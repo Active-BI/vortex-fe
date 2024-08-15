@@ -234,24 +234,42 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         this.breakpointObserver
             .observe([Breakpoints.Handset])
             .subscribe((state: BreakpointState) => {
+                    this.showReport = false;
                 if (state.matches) {
                     this.settings = {
                         ...this.settings,
                         layoutType: 2,
                         background: 1,
                     };
-                    // this.report.updateSettings(this.settings);x
+                    // this.report.updateSettings(this.settings);
+                    this.embeddedSrv.changeHandSetStatus('mobile');
                 } else {
-                    this.embeddedSrv.changeHandSetStatus('desktop');
                     this.settings = {
                         ...this.settings,
                         layoutType: 0,
                         background: 0,
                     };
+                    this.embeddedSrv.changeHandSetStatus('desktop');
                 }
+
+                this.config = {
+                    ...this.config,
+                    settings: this.settings,
+                }
+
+                setInterval(() => {
+                    this.showReport = true;
+                }, 300)
             });
 
+            this.embeddedSrv.handSetEmitter.subscribe((status) => {
+                console.log(status)
+                console.log(this.reportObj)
+            })
+
         this.getEmbedded(this.settings);
+
+        
     }
 
     async refresh() {

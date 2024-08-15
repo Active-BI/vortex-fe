@@ -6,32 +6,23 @@
         <p class="text-gray-400">
             {{form.value.extencion}}
         </p>
-        <mat-icon
-            svgIcon="heroicons_outline:user-circle"
-            class=""
-        ></mat-icon>
     </mat-form-field>
-
 
     <mat-form-field appearance="fill" class="w-full">
         <mat-label>Descrição</mat-label>
         <input formControlName="description" matInput #first />
-        <mat-icon
-            svgIcon="heroicons_outline:user-circle"
-            class=""
-        ></mat-icon>
     </mat-form-field>
 
     <mat-form-field class="w-full" appearance="fill">
         <mat-label>Clientes</mat-label>
         <mat-select
             panelClass="mt-12"
-            [formControl]="myControl"
+            [formControl]="clientesControl"
             (selectionChange)="setProjects($event.value)"
         >
             <mat-option
                 *ngFor="let cliente of clientes"
-                [value]="cliente.tenant_name"
+                [value]="cliente.id"
             >
                 {{ cliente.tenant_name }}
             </mat-option>
@@ -65,9 +56,9 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+    <!-- *ngIf="canUploadOrDeleteFiles" -->
     <button
         type="button"
-        *ngIf="canUploadOrDeleteFiles"
         class="w-full h-auto p-2 mt-10 self-end bg-[#0069b1] hover:bg-[#00a8e4] rounded-md text-white"
         (click)="UploadFiles()"
     >

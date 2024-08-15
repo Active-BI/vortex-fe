@@ -25,50 +25,36 @@ export class DocumentosComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild('fileInput') fileInput: ElementRef;
+
     files = [];
     canUploadOrDeleteFiles;
     displayedColumns: string[] = ['name', 'format', 'projects', 'created_at', 'opt'];
     constructor(
         private documentsService: DocumentsService,
         private authService: AuthService,
-        private tenantsService: TenantsService,
         private toastr: ToastrService,
         private dialog: MatDialog,
-
         private router: Router
     ) {
         this.dataSource = new MatTableDataSource([]);
-        this.canUploadOrDeleteFiles =
-            this.authService.GetUser().role_name === 'Master' ? true : false;
-    }
-    formData = new FormData();
-    ngOnInit(): void {
-        this.projetosControl.disable();
 
+        this.canUploadOrDeleteFiles = this.authService.GetUser().role_name === 'Master' ? true : false;
+    }
+
+    formData = new FormData();
+
+    getDocuments() {
         this.documentsService.getClientProjectFilters().subscribe((res) => {
             this.clientes = res;
+            const files = []
+            res.forEach((v) => files.push(...v.Tenant_files))
+            this.updateDataSource(files);
         });
+    }
 
-        this.cliente$.subscribe((cliente) => {
-            this.getFiles(cliente.id);
-            this.projetos = cliente.projects;
-            this.projetosControl = new FormControl([]);
-        });
-
-        if (this.router.url.includes('administrador/documentos')) {
-            const token = JSON.parse(localStorage.getItem('token'));
-            const decoded = jwtDecode(token) as any;
-            this.tenantsService.getProjects(decoded.tenant_name).subscribe({
-                next: (value: any[]) => {
-                    this.projetos = (value as string[]).filter((v: any) =>
-                        decoded.projects.includes(v.id)
-                    );
-                },
-                error: (error: any) => {
-                    console.log(error);
-                },
-            });
-        }
+    ngOnInit(): void {
+        this.projetosControl.disable();
+        this.getDocuments();
     }
 
     onFileSelected(event) {
@@ -78,25 +64,20 @@ export class DocumentosComponent implements OnInit {
                 this.formData.append('files', files[i]);
             }
             this.openModal(this.formData);
-            return this.updateDataSource([
-                ...this.files,
-                // ...this.formData.getAll('files'),
-            ]);
         }
     }
+    
     deleteCommitedFile(file_id) {
-        const cliente = this.clienteSubject.getValue();
-
         this.documentsService.DeleteFile(file_id).subscribe(() => {
-            this.getFiles(cliente.id ? cliente.id : 'all');
+            this.getDocuments();
         });
     }
 
     downloadFile(file) {
         this.documentsService.DownloadFile(file.id).subscribe((res) => {
             const blob = new Blob([res], { type: 'application/octet-stream' });
-
             saveAs(blob, file.name + '.' + file.file_format);
+            this.toastr.success('Removido com sucesso');
         });
     }
 
@@ -121,6 +102,7 @@ export class DocumentosComponent implements OnInit {
 
         return this.dataSource;
     }
+
     clientes = [];
     projetos = [];
     myControl = new FormControl('', [Validators.required]);
@@ -129,55 +111,22 @@ export class DocumentosComponent implements OnInit {
         [Validators.required, Validators.minLength(1)]
     );
 
-    getFiles(id = 'all') {
-        const token = JSON.parse(localStorage.getItem('token'));
-        const decoded = jwtDecode(token) as any;
-        this.documentsService.getFiles(id).subscribe((res) => {
-            if (this.router.url.includes('administrador/documentos')) {
-                this.files = res.filter((f) => {
-                    return f.projects.find((p) => decoded.projects.includes(p));
-                });
-            } else {
-                this.files = res;
-            }
-            return this.updateDataSource([
-                ...this.files,
-                ...this.formData.getAll('files'),
-            ]);
-        });
-    }
 
-    clienteSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
-    public cliente$: Observable<any> = this.clienteSubject.asObservable();
-
-    public setContextoCliente(novoContexto: any): void {
-        this.projetosControl.enable();
-        this.clienteSubject.next(novoContexto);
-    }
-    clearSelection() {
-        this.myControl.setValue('');
-        this.projetosControl.disable();
-        this.getFiles();
-        this.setContextoCliente({});
-        return;
-    }
-   
     openModal(files: FormData) {
         const modal = this.dialog.open(AddDocumentosComponent, {
             data: {
                 files,
                 data: () => {
                     this.toastr.success('Criado com sucesso');
+                    this.getDocuments();
                     this.dialog.closeAll();
                 },
             },
         });
         modal.afterClosed().subscribe({
             next: () => {
-                this.getFiles();
                 this.formData = new FormData();
                 this.fileInput.nativeElement.value = '';
-                console.log(this.dataSource);
             },
         });
     }
