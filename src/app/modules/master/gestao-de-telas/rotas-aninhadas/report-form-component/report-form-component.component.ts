@@ -43,10 +43,9 @@ export class ReportFormComponentComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.form.controls.title.valueChanges.subscribe(() => {
-            this.change()
+        this.form.controls.title.valueChanges.subscribe((title) => {
+            this.change(title)
         })
-
 
         this.form.valueChanges.subscribe((value) => {
             this.formReport.patchValue({
@@ -135,14 +134,14 @@ export class ReportFormComponentComponent implements OnInit {
         return null;
     }
 
-    change() {
+    change(input_title) {
         const pathByGroup = this.form.value.page_group_title
             .toLowerCase()
             .split(' ')
             .join('-')
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '');
-        const title = this.form.value.title
+        const title = input_title
             .toLowerCase()
             .split(' ')
             .join('-')

@@ -58,7 +58,6 @@ export class RotasAninhadasComponent implements OnInit {
         private pmiService: PMIService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
-        this.requisicoes();
     }
 
     ngOnInit(): void {
