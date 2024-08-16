@@ -13,7 +13,6 @@
             <mat-form-field class="md:col-span-1 fuse-mat-dense col-span-full">
                 <mat-label>Tipo da página</mat-label>
                 <mat-select
-                    (selectionChange)="change()"
                     formControlName="page_type"
                 >
                     <mat-option
@@ -35,7 +34,6 @@
             >
                 <mat-label>Nome da Página</mat-label>
                 <input
-                    (input)="change()"
                     formControlName="title"
                     matInput
                     #first

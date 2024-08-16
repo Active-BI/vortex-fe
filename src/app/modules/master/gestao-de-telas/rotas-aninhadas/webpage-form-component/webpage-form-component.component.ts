@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CriarRotaComponent } from '../criar-rota/criar-rota.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { CriarRotaComponent, roles } from '../criar-rota/criar-rota.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,33 +13,37 @@ import { PageMasterService } from 'app/modules/services/page-master.service';
     styleUrls: ['./webpage-form-component.component.scss'],
 })
 export class WebpageFormComponentComponent
-    extends CriarRotaComponent
     implements OnInit
 {
-    formWebPage: FormGroup = this.formb.group({
+    @Input() form: FormGroup = this.fb.group({});
+    @Input() groupId: string = '';
+    roles = roles;
+    
+    formWebPage: FormGroup = this.fb.group({
         id: [''],
+        page_group_id: [this.groupId],
         page_type: ['', [Validators.required]],
+        type: ['basic'],
         title: ['', [Validators.required]],
         url: ['', [Validators.required]],
         roles: [[], Validators.required],
     });
 
     constructor(
-        public _dialog: MatDialog,
-        public _fb: FormBuilder,
-        public _route: ActivatedRoute,
-        public _router: Router,
-        public _groupMasterService: GroupMasterService,
+        public dialog: MatDialog,
+        public fb: FormBuilder,
+        public route: ActivatedRoute,
+        public router: Router,
+        public groupMasterService: GroupMasterService,
         private toastr: ToastrService,
-        private formb: FormBuilder,
         private pageMasterService: PageMasterService
     ) {
-        super(_dialog, _fb, _route, _router, _groupMasterService);
-    }
+     }
 
     ngOnInit(): void {
         this.form.valueChanges.subscribe((value) => {
             this.formWebPage.patchValue({
+                page_group_id: this.groupId,
                 id: value.id,
                 title: value.title,
                 page_type: value.page_type,
@@ -47,24 +51,28 @@ export class WebpageFormComponentComponent
         });
     }
 
-    async criarWebPage() {
-        console.log(this.form);
-        console.log(this.formWebPage);
+    voltar() {
+        this.groupId.length > 0
+            ? this.router.navigate([
+                  '/master/gestao/telas/grupo/' + this.groupId,
+              ])
+            : this.router.navigate(['/master/gestao/telas/']);
+    }
 
+    
+    findRole(id) {
+        if (id) {
+            return this.roles.find((r) => r.id === id).name;
+        }
+        return '';
+    }
+    async criarWebPage() {
         if (this.formWebPage.invalid) {
             this.formWebPage.markAllAsTouched();
             this.toastr.error('formaulário inválido');
             return;
         }
-
-        this.form.patchValue({
-            roles: this.formWebPage.value.roles,
-            possui_dados_sensiveis:
-                this.formWebPage.value.possui_dados_sensiveis,
-        });
-        const { page_group_title, possui_dados_sensiveis, id, ...args } =
-            this.form.value;
-
+        const { url, ...args } = this.formWebPage.value;
         this.pageMasterService
             .postPage({
                 ...args,
@@ -75,7 +83,7 @@ export class WebpageFormComponentComponent
                     this.toastr.success('Rota criada com sucesso');
                     this.voltar();
                 },
-                ({ error }) => this.toastr.error('Falha ao criar rota')
+                ({ error }) => this.toastr.error(error.message)
             );
     }
 }

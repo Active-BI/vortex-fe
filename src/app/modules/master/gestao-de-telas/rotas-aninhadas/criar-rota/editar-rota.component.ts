@@ -39,7 +39,6 @@ export class EditarRotaComponent extends CriarRotaComponent {
             if (res.page_type === 'web-page') {
                 this.url.patchValue(res.web_page_link);
             }
-            this.change();
         });
     }
     editarRota() {

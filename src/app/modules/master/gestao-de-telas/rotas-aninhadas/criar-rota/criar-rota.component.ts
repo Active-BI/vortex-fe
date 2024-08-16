@@ -38,6 +38,7 @@ export class CriarRotaComponent implements OnInit {
     screenType = Object.values(screenTypes);
     roles = roles;
     url = new FormControl('', [Validators.required]);
+
     form = this.fb.group({
         id: [''],
         page_type: ['report', [Validators.required]],
@@ -92,58 +93,12 @@ export class CriarRotaComponent implements OnInit {
         this.form.patchValue({
             page_group_id: this.groupId,
         });
-        this.change();
     }
+
     findRole(id) {
         if (id) {
             return this.roles.find((r) => r.id === id).name;
         }
         return '';
-    }
-    change() {
-        const pathByGroup = this.form.value.page_group_title
-            .toLowerCase()
-            .split(' ')
-            .join('-')
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '');
-        const title = this.form.value.title
-            .toLowerCase()
-            .split(' ')
-            .join('-')
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '');
-        this.form.patchValue({
-            formated_title: title,
-        });
-        console.log(this.form.value.title);
-        let pathByType = '';
-        const isReportTypeNull = this.form.value.page_type === null;
-        if (isReportTypeNull) {
-            this.form.patchValue({
-                page_type: 'report',
-            });
-        }
-        if (
-            this.form.value.page_type.includes('report') ||
-            this.form.value.page_type.includes('dashboard')
-        ) {
-            pathByType = this.form.value.page_type.includes('report')
-                ? pathByType + 'view-report/'
-                : pathByType + 'view-dashboard/';
-        }
-        if (this.form.value.restrict) {
-            pathByType = '/master/' + pathByType;
-        }
-
-        if (pathByGroup === '') {
-            this.form.patchValue({
-                link: `${pathByType}${title}`,
-            });
-        } else {
-            this.form.patchValue({
-                link: `${pathByType}${pathByGroup}/${title}`,
-            });
-        }
     }
 }

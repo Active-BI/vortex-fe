@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 export class ReportFormComponentComponent implements OnInit {
     roles = roles;
     @Input() form: FormGroup = this.fb.group({});
+    @Input() groupId: String = ''
 
     formReport = this.fb.group(
         {
@@ -42,6 +43,11 @@ export class ReportFormComponentComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.form.controls.title.valueChanges.subscribe(() => {
+            this.change()
+        })
+
+
         this.form.valueChanges.subscribe((value) => {
             this.formReport.patchValue({
                 id: value.id,
@@ -109,7 +115,7 @@ export class ReportFormComponentComponent implements OnInit {
 
     voltar() {
         this.router.navigate([
-            '/master/gestao/telas/grupo/' + this.form.value.page_group_id,
+            '/master/gestao/telas/grupo/' + this.groupId,
         ]);
     }
 
@@ -128,21 +134,51 @@ export class ReportFormComponentComponent implements OnInit {
 
         return null;
     }
-    // criarRota() {
-    //     if (!this.form.valid && !this.url.valid) {
-    //         this.toastr.error('Formulário inválido');
-    //         return;
-    //     }
-    //     const { page_group_title, possui_dados_sensiveis, id, ...args } =
-    //         this.form.value;
-    //     this.pageMasterService.postPage(args).subscribe(
-    //         (res) => {
-    //             this.toastr.success('Rota criada com sucesso');
-    //             this.router.navigate([
-    //                 '/master/gestao/telas/grupo/' + this.groupId,
-    //             ]);
-    //         },
-    //         ({ error }) => this.toastr.error('Falha ao criar rota')
-    //     );
-    // }
+
+    change() {
+        const pathByGroup = this.form.value.page_group_title
+            .toLowerCase()
+            .split(' ')
+            .join('-')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+        const title = this.form.value.title
+            .toLowerCase()
+            .split(' ')
+            .join('-')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+        this.form.patchValue({
+            formated_title: title,
+        });
+
+        let pathByType = '';
+        const isReportTypeNull = this.form.value.page_type === null;
+        if (isReportTypeNull) {
+            this.form.patchValue({
+                page_type: 'report',
+            });
+        }
+        if (
+            this.form.value.page_type.includes('report') ||
+            this.form.value.page_type.includes('dashboard')
+        ) {
+            pathByType = this.form.value.page_type.includes('report')
+                ? pathByType + 'view-report/'
+                : pathByType + 'view-dashboard/';
+        }
+        if (this.form.value.restrict) {
+            pathByType = '/master/' + pathByType;
+        }
+
+        if (pathByGroup === '') {
+            this.form.patchValue({
+                link: `${pathByType}${title}`,
+            });
+        } else {
+            this.form.patchValue({
+                link: `${pathByType}${pathByGroup}/${title}`,
+            });
+        }
+    }
 }
