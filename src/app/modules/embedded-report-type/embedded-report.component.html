@@ -4,23 +4,28 @@
     class="w-6 h-6 cursor-pointer"
 ></mat-icon> -->
 <div class="flex justify-between mb-3 w-full">
-    <div>
-        <!-- <mat-icon
+    <div class="flex items-center justify-center">
+        <mat-icon
             svgIcon="mat_outline:arrow_back_ios"
+            (click)="changePageBackward()"
             class="w-10 h-10 cursor-pointer"
         ></mat-icon>
+        <div class="text-xl mx-3 sm:mx-0">
+            {{ contador + 1 + "/" + pages.length }}
+        </div>
         <mat-icon
             svgIcon="mat_outline:arrow_forward_ios"
+            (click)="changePageFoward()"
             class="w-10 h-10 cursor-pointer"
-        ></mat-icon> -->
-        <button
+        ></mat-icon>
+        <!-- <button
             *ngFor="let page of pages"
             mat-stroked-button
             class="mx-2 bg-slate-300 w-auto h-auto text-2xl p-2 rounded-lg"
             (click)="change(page.name)"
         >
             {{ page.displayName }}
-        </button>
+        </button> -->
     </div>
     <mat-icon
         svgIcon="mat_outline:refresh"

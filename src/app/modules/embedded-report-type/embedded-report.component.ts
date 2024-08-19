@@ -181,6 +181,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
     report: any;
     pages: any = [];
     handlers;
+    contador: number = 0;
     title;
     settings = {
         visualRenderedEvents: true,
@@ -319,6 +320,25 @@ export class EmbeddedReportByTypeComponent implements OnInit {
     async change(value) {
         console.log(value);
         await this.pages.find((page) => page.name === value).setActive();
+    }
+
+    async changePageFoward() {
+        this.contador++;
+        if (this.contador > this.pages.length - 1) {
+            this.contador = 0;
+        }
+        await this.pages
+            .find((page) => page === this.pages[this.contador])
+            .setActive();
+    }
+    async changePageBackward() {
+        this.contador--;
+        if (this.contador < 0) {
+            this.contador = this.pages.length - 1;
+        }
+        await this.pages
+            .find((page) => page === this.pages[this.contador])
+            .setActive();
     }
 
     private getEmbedded(settings: any): void {
