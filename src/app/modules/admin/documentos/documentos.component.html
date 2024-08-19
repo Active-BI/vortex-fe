@@ -5,8 +5,8 @@
         <div class="w-full flex flex-col">
             <div
                 class="w-full flex items-center justify-between"
-                *ngIf="canUploadOrDeleteFiles"
-            >
+                >
+                <!-- *ngIf="canUploadOrDeleteFiles" -->
                 <button
                     type="button"
                     class="w-60 h-auto p-2 bg-[#0069b1] hover:bg-[#00a8e4] rounded-md text-white"
@@ -97,11 +97,7 @@
                                 [row]="row"
                                 name="Arquivo"
                                 *ngIf="canUploadOrDeleteFiles"
-                                (delete)="
-                                    row.id
-                                        ? deleteCommitedFile(row.id)
-                                        : deleteFromFormData(row.name)
-                                "
+                                (delete)=" deleteCommitedFile(row.id) "
                             ></davita-trash-btn>
                         </div>
                     </td>

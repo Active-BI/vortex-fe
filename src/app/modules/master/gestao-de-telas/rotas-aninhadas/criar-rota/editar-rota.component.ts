@@ -23,21 +23,12 @@ export class EditarRotaComponent extends CriarRotaComponent {
         _router: Router,
         private _toastr: ToastrService
     ) {
-        super(
-            dialog,
-            fb,
-            _route,
-            _router,
-            _pageMasterService,
-            _groupMasterService,
-            _toastr
-        );
+        super(dialog, fb, _route, _router, _groupMasterService);
         this.screenId = this._route.snapshot.paramMap.get('screenId');
         this.requisicoes();
     }
     async requisicoes() {
-
-        this._pageMasterService.getPage(this.screenId).subscribe(res => {
+        this._pageMasterService.getPage(this.screenId).subscribe((res) => {
             this.form.patchValue({
                 ...res,
                 page_group_id: res.Page_Group.id,
@@ -45,28 +36,25 @@ export class EditarRotaComponent extends CriarRotaComponent {
                 roles: res.Page_Role.map((p) => p.Rls.id),
             });
 
-
             if (res.page_type === 'web-page') {
-                this.url.patchValue(res.web_page_link)
+                this.url.patchValue(res.web_page_link);
             }
-            this.change();
         });
-
-        
-   
     }
     editarRota() {
-        console.log(this.form)
+        console.log(this.form);
         const { page_group_title, page_group_id, ...dados } = this.form.value;
         if (!this.form.valid) {
             this._toastr.error('Dados inválidos');
             return;
         }
-        this._pageMasterService.patchPages(dados.id, {...dados,web_page_link: this.url.value }).subscribe(
-            (res) => this._toastr.success('Rota edtada com sucesso'),
-            ({ error }) => {
-                this._toastr.error('Falha ao atualizar rota');
-            }
-        );
+        this._pageMasterService
+            .patchPages(dados.id, { ...dados, web_page_link: this.url.value })
+            .subscribe(
+                (res) => this._toastr.success('Rota edtada com sucesso'),
+                ({ error }) => {
+                    this._toastr.error('Falha ao atualizar rota');
+                }
+            );
     }
 }

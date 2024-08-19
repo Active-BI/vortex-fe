@@ -1,0 +1,94 @@
+<form
+    class="col-span-full p-4 rounded-md fuse-mat-dense grid grid-cols-2 gap-x-2 gap-y-4"
+    [formGroup]="formDashboard"
+>
+    <mat-form-field
+        appearance="fill"
+        class="md:col-span-2 fuse-mat-dense col-span-full"
+    >
+        <mat-label>URL</mat-label>
+        <input
+            [formControlName]="'url'"
+            (input)="urlSeparator()"
+            matInput
+            #first
+        />
+        <!-- <p class="text-gray-400">(www.exemplo.com.br)</p> -->
+        <mat-error
+            class="text-red-600 mb-2"
+            *ngIf="
+                formDashboard.controls.url.touched &&
+                (formDashboard.controls.group_id.invalid ||
+                    formDashboard.controls.url.invalid)
+            "
+        >
+            URL invalida
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+        appearance="fill"
+        class="md:col-span-1 fuse-mat-dense col-span-full"
+    >
+        <mat-label> Descrição do Dashboard </mat-label>
+        <input formControlName="descricao_painel" matInput #first />
+    </mat-form-field>
+    <mat-form-field
+        appearance="fill"
+        class="md:col-span-1 fuse-mat-dense col-span-full"
+    >
+        <mat-label>Roles</mat-label>
+        <mat-select formControlName="roles" multiple>
+            <mat-select-trigger>
+                {{ findRole(formDashboard.value.roles[0]) }}
+                <span
+                    *ngIf="(formDashboard.value.roles?.length || 0) > 1"
+                    class="example-additional-selection"
+                >
+                    (+{{ (formDashboard.value.roles?.length || 0) - 1 }}
+                    {{
+                        formDashboard.value.roles?.length === 2
+                            ? "Outro"
+                            : "Outros"
+                    }})
+                </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let role of roles" [value]="role.id">{{
+                role.name
+            }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="col-span-full flex justify-between items-center">
+        <div
+            class="flex gap-x-4 items-center"
+            *ngIf="form.value.page_type !== 'web-page'"
+        >
+            <section class="example-section">
+                <mat-checkbox
+                    matTooltip="CPF, CNPJ, Nome, Salário etc..."
+                    formControlName="possui_dados_sensiveis"
+                    class="example-margin"
+                    >Possui dados sensíveis?
+                </mat-checkbox>
+            </section>
+        </div>
+        <div class="flex justify-center items-center col-start-2 gap-x-4">
+            <button
+                mat-raised-button
+                (click)="voltar()"
+                class="rounded-sm text-colorText bg-[#006cbe] text-white"
+            >
+                voltar
+            </button>
+
+            <button
+                mat-raised-button
+                (click)="criarDashboardAndReport()"
+                class="rounded-sm text-colorText bg-[#006cbe] text-white"
+            >
+                Criar
+            </button>
+        </div>
+    </div>
+</form>
