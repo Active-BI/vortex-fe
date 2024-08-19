@@ -1,0 +1,62 @@
+<form
+    class="col-span-full p-4 rounded-md fuse-mat-dense grid grid-cols-2 gap-x-2 gap-y-4"
+    [formGroup]="formWebPage"
+>
+    <mat-form-field
+        appearance="fill"
+        class="md:col-span-2 fuse-mat-dense col-span-full"
+    >
+        <mat-label>URL</mat-label>
+        <input
+            [formControlName]="'url'"
+            placeholder="www.exemplo.com.br"
+            required
+            matInput
+            #first
+        />
+    </mat-form-field>
+
+    <mat-form-field
+        appearance="fill"
+        class="md:col-span-1 fuse-mat-dense col-span-full"
+    >
+        <mat-label>Roles</mat-label>
+        <mat-select formControlName="roles" multiple>
+            <mat-select-trigger>
+                {{ findRole(formWebPage.value.roles[0]) }}
+                <span
+                    *ngIf="(formWebPage.value.roles?.length || 0) > 1"
+                    class="example-additional-selection"
+                >
+                    (+{{ (formWebPage.value.roles?.length || 0) - 1 }}
+                    {{
+                        formWebPage.value.roles?.length === 2
+                            ? "Outro"
+                            : "Outros"
+                    }})
+                </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let role of roles" [value]="role.id">{{
+                role.name
+            }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="col-span-1 col-start-2 flex justify-end gap-x-4 items-center">
+        <button
+            mat-raised-button
+            (click)="voltar()"
+            class="rounded-sm text-colorText bg-[#006cbe] text-white"
+        >
+            voltar
+        </button>
+
+        <button
+            mat-raised-button
+            (click)="criarWebPage()"
+            class="rounded-sm text-colorText bg-[#006cbe] text-white"
+        >
+            Criar
+        </button>
+    </div>
+</form>

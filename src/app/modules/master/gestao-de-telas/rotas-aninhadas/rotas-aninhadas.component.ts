@@ -10,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import { DeletarRotaAninhadaComponent } from '../modais/deletar-rota-aninhada/deletar-rota-aninhada.component';
 import { GroupMasterService } from 'app/modules/services/group-master.service';
 import { PMIService } from 'app/modules/services/PMI.service';
+import { ShowIconsComponent } from './show-icons/show-icons.component';
+import { DialogRef } from '@angular/cdk/dialog';
 
 export function agregarRoles(objeto) {
     if (objeto?.children) {
@@ -56,7 +58,6 @@ export class RotasAninhadasComponent implements OnInit {
         private pmiService: PMIService
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
-        this.requisicoes();
     }
 
     ngOnInit(): void {
@@ -76,7 +77,7 @@ export class RotasAninhadasComponent implements OnInit {
             name: acessos.page_group,
             icon: acessos.icon,
         });
-        console.log(acessos.children);
+        console.log(acessos);
         this.usuarios = new MatTableDataSource(acessos.children);
         this.usuariosFiltrados = new MatTableDataSource(acessos.children);
         this.usuariosFiltrados.paginator = this.paginator;
@@ -163,5 +164,22 @@ export class RotasAninhadasComponent implements OnInit {
     }
     voltar(): void {
         this.router.navigate([`/master/gestao/telas`]);
+    }
+
+    showIcons() {
+        this.dialog
+            .open(ShowIconsComponent, {
+                data: {
+                    data: () => {
+                        this.toastr.success('Editado com sucesso');
+                        this.dialog.closeAll();
+                    },
+                },
+            })
+            .afterClosed()
+            .subscribe((icon) => {
+                console.log(this.form);
+                this.form.patchValue({ icon: icon });
+            });
     }
 }

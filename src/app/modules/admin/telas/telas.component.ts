@@ -40,7 +40,6 @@ export class TelasComponent {
         private toastr: ToastrService
     ) {
         this.tenantId = localStorage.getItem('tenant_id');
-        this.requisicoes();
     }
 
     ngOnInit(): void {

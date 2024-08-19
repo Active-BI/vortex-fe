@@ -39,14 +39,32 @@ export class CriarRotaComponent implements OnInit {
     roles = roles;
     url = new FormControl('', [Validators.required]);
 
+    form = this.fb.group({
+        id: [''],
+        page_type: ['report', [Validators.required]],
+        title: ['', [Validators.required]],
+        link: [''],
+        type: ['basic'],
+        formated_title: [''],
+        group_id: [''],
+        report_id: [''],
+        restrict: [false],
+        table_name: [''],
+        page_group_title: [''],
+        page_group_id: [this.groupId],
+        possui_dados_sensiveis: [false],
+        descricao_painel: [''],
+        nome_responsavel: [''],
+        email_responsavel: [''],
+        roles: [[], [Validators.required]],
+    });
+
     constructor(
         public dialog: MatDialog,
         public fb: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private pageMasterService: PageMasterService,
-        private groupMasterService: GroupMasterService,
-        private toastr: ToastrService
+        private groupMasterService: GroupMasterService
     ) {
         this.groupId = this.route.snapshot.paramMap.get('groupId');
         this.page_context = this.router.url.includes('criar')
@@ -70,116 +88,17 @@ export class CriarRotaComponent implements OnInit {
               ])
             : this.router.navigate(['/master/gestao/telas/']);
     }
-    form = this.fb.group({
-        id: [''],
-        page_type: ['report', [Validators.required]],
-        title: ['', [Validators.required]],
-        link: [''],
-        type: ['basic'],
-        formated_title: [''],
-        group_id: [''],
-        report_id: [''],
-        restrict: [false],
-        table_name: [''],
-        page_group_title: ['', [Validators.required]],
-        page_group_id: [this.groupId, [Validators.required]],
-        possui_dados_sensiveis: [false],
-        descricao_painel: ['', ],
-        nome_responsavel: ['', ],
-        email_responsavel: ['' ],
-        roles: [[], [Validators.required]],
-    });
+
     ngOnInit(): void {
         this.form.patchValue({
             page_group_id: this.groupId,
         });
-        this.change();
     }
+
     findRole(id) {
         if (id) {
             return this.roles.find((r) => r.id === id).name;
         }
         return '';
-    }
-    change() {
-        const pathByGroup = this.form.value.page_group_title
-            .toLowerCase()
-            .split(' ')
-            .join('-')
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '');
-        const title = this.form.value.title
-            .toLowerCase()
-            .split(' ')
-            .join('-')
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '');
-        this.form.patchValue({
-            formated_title: title,
-        });
-        let pathByType = '';
-        const isReportTypeNull = this.form.value.page_type === null;
-        if (isReportTypeNull) {
-            this.form.patchValue({
-                page_type: 'report',
-            });
-        }
-        if (
-            this.form.value.page_type.includes('report') ||
-            this.form.value.page_type.includes('dashboard')
-        ) {
-            pathByType = this.form.value.page_type.includes('report')
-                ? pathByType + 'view-report/'
-                : pathByType + 'view-dashboard/';
-        }
-        if (this.form.value.restrict) {
-            pathByType = '/master/' + pathByType;
-        }
-
-        if (pathByGroup === '') {
-            this.form.patchValue({
-                link: `${pathByType}${title}`,
-            });
-        } else {
-            this.form.patchValue({
-                link: `${pathByType}${pathByGroup}/${title}`,
-            });
-        }
-    }
-    criarRota() {
-        if (!this.form.valid && !this.url.valid) {
-            this.toastr.error('Formulário inválido');
-            return;
-        }
-        const { page_group_title, possui_dados_sensiveis, id, ...args } =
-            this.form.value;
-
-        this.pageMasterService.postPage({...args, web_page_link: this.url.value }).subscribe(
-            (res) => {
-                this.toastr.success('Rota criada com sucesso');
-                this.router.navigate([
-                    '/master/gestao/telas/grupo/' + this.groupId,
-                ]);
-            },
-            ({ error }) => this.toastr.error('Falha ao criar rota')
-        );
-    }
-    urlSeparator() {
-        var url_separada = this.url.value.split('/');
-
-        if (
-            url_separada.indexOf('groups') !== -1 &&
-            url_separada.indexOf('reports') !== -1
-        ) {
-            this.form.patchValue({
-                group_id: url_separada[url_separada.indexOf('groups') + 1],
-                report_id: url_separada[url_separada.indexOf('reports') + 1],
-            });
-        } else {
-            this.form.patchValue({
-                group_id: '',
-                report_id: '    ',
-            });
-        }
     }
 }

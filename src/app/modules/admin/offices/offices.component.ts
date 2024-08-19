@@ -31,7 +31,6 @@ export class OfficesComponent implements OnInit {
       private fb: FormBuilder,
       private toastr: ToastrService
   ) {
-      this.requisicoes();
   }
 
   form = this.fb.group({
