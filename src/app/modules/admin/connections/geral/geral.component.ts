@@ -32,7 +32,6 @@ export class GeralComponent implements OnInit, OnDestroy {
         private fb: FormBuilder
     ) {
         this.tenantId = localStorage.getItem('tenant_id');
-        this.requisicoes();
     }
     async clearDate() {
         await this.form.patchValue({ data_inicio: '', data_fim: '' });
@@ -40,9 +39,7 @@ export class GeralComponent implements OnInit, OnDestroy {
     }
     conn;
     ngOnInit(): void {
-        // this.conn = this.socketService.socket.on('refresh-conn', () => {
-        //     this.requisicoes();
-        // });
+        this.requisicoes();
     }
     ngOnDestroy() {
         // this.conn.off()

@@ -61,7 +61,6 @@ export class ListUsersComponent implements OnInit {
         private toastr: ToastrService,
         private office: OfficeService
     ) {
-        this.requisicoes();
         this.office.getOffices().subscribe((e) => {
             this.cargo = e;
         });

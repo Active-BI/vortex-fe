@@ -28,7 +28,6 @@ export class AtivosComponent implements OnInit, OnDestroy {
         public dialog: MatDialog
     ) {
         this.tenantId = localStorage.getItem('tenant_id');
-        this.requisicoes();
     }
     conn;
     ngOnInit(): void {

@@ -47,7 +47,6 @@ export class GestaoDeTelasComponent implements OnInit {
         private pageMasterService: PageMasterService,
         private groupMasterService: GroupMasterService
     ) {
-        this.requisicoes();
     }
 
     ngOnInit(): void {

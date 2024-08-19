@@ -30,7 +30,6 @@ export class GestaoTenantComponent implements OnInit {
         private toastr: ToastrService,
         private tenantsService: TenantsService
     ) {
-        this.requisicoes();
     }
 
     ngOnInit(): void {
