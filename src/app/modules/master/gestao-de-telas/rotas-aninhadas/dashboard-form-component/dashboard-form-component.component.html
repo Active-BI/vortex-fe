@@ -59,34 +59,36 @@
         </mat-select>
     </mat-form-field>
 
-    <div
-        class="col-span-full flex gap-x-4 items-center"
-        *ngIf="form.value.page_type !== 'web-page'"
-    >
-        <section class="example-section">
-            <mat-checkbox
-                matTooltip="CPF, CNPJ, Nome, Salário etc..."
-                formControlName="possui_dados_sensiveis"
-                class="example-margin"
-                >Possui dados sensíveis?
-            </mat-checkbox>
-        </section>
-    </div>
-    <div class="col-span-1 col-start-2 flex justify-end gap-x-4 items-center">
-        <button
-            mat-raised-button
-            (click)="voltar()"
-            class="rounded-sm text-colorText bg-[#006cbe] text-white"
+    <div class="col-span-full flex justify-between items-center">
+        <div
+            class="flex gap-x-4 items-center"
+            *ngIf="form.value.page_type !== 'web-page'"
         >
-            voltar
-        </button>
+            <section class="example-section">
+                <mat-checkbox
+                    matTooltip="CPF, CNPJ, Nome, Salário etc..."
+                    formControlName="possui_dados_sensiveis"
+                    class="example-margin"
+                    >Possui dados sensíveis?
+                </mat-checkbox>
+            </section>
+        </div>
+        <div class="flex justify-center items-center col-start-2 gap-x-4">
+            <button
+                mat-raised-button
+                (click)="voltar()"
+                class="rounded-sm text-colorText bg-[#006cbe] text-white"
+            >
+                voltar
+            </button>
 
-        <button
-            mat-raised-button
-            (click)="criarDashboardAndReport()"
-            class="rounded-sm text-colorText bg-[#006cbe] text-white"
-        >
-            Criar
-        </button>
+            <button
+                mat-raised-button
+                (click)="criarDashboardAndReport()"
+                class="rounded-sm text-colorText bg-[#006cbe] text-white"
+            >
+                Criar
+            </button>
+        </div>
     </div>
 </form>

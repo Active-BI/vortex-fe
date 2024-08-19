@@ -12,9 +12,7 @@
         <div class="grid grid-cols-2 gap-x-2 gap-y-4 col-span-full">
             <mat-form-field class="md:col-span-1 fuse-mat-dense col-span-full">
                 <mat-label>Tipo da página</mat-label>
-                <mat-select
-                    formControlName="page_type"
-                >
+                <mat-select formControlName="page_type">
                     <mat-option
                         *ngFor="let item of screenType"
                         [value]="item"
@@ -33,11 +31,7 @@
                 class="fuse-mat-dense md:col-span-1 col-span-full"
             >
                 <mat-label>Nome da Página</mat-label>
-                <input
-                    formControlName="title"
-                    matInput
-                    #first
-                />
+                <input formControlName="title" matInput #first />
             </mat-form-field>
 
             <app-dashboard-form-component
@@ -57,9 +51,9 @@
                 class="bg-slate-200 col-span-full"
                 *ngIf="form.value.page_type === 'report'"
                 [form]="form"
+                [groupId]="groupId"
             >
             </app-report-form-component>
-
         </div>
     </form>
 </div>

@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
 export class ReportFormComponentComponent implements OnInit {
     roles = roles;
     @Input() form: FormGroup = this.fb.group({});
-    @Input() groupId: String = ''
+    @Input() groupId: String = '';
 
     formReport = this.fb.group(
         {
@@ -43,10 +43,9 @@ export class ReportFormComponentComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.form.controls.title.valueChanges.subscribe(() => {
-            this.change()
-        })
-
+        this.form.controls.title.valueChanges.subscribe((value) => {
+            this.change(value);
+        });
 
         this.form.valueChanges.subscribe((value) => {
             this.formReport.patchValue({
@@ -106,17 +105,18 @@ export class ReportFormComponentComponent implements OnInit {
             })
             .subscribe(
                 (res) => {
+                    console.log(this.groupId);
                     this.toastr.success('Rota criada com sucesso');
                     this.voltar();
                 },
-                ({ error }) => this.toastr.error('Falha ao criar rota')
+                ({ error }) => {
+                    this.toastr.error(error.message);
+                }
             );
     }
 
     voltar() {
-        this.router.navigate([
-            '/master/gestao/telas/grupo/' + this.groupId,
-        ]);
+        this.router.navigate(['/master/gestao/telas/grupo/' + this.groupId]);
     }
 
     validateUrlBasedOnGroupAndReport(
@@ -135,14 +135,14 @@ export class ReportFormComponentComponent implements OnInit {
         return null;
     }
 
-    change() {
+    change(_title) {
         const pathByGroup = this.form.value.page_group_title
             .toLowerCase()
             .split(' ')
             .join('-')
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '');
-        const title = this.form.value.title
+        const title = _title
             .toLowerCase()
             .split(' ')
             .join('-')
