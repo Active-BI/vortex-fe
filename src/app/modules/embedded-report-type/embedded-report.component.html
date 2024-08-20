@@ -8,7 +8,7 @@
         <mat-icon
             svgIcon="mat_outline:arrow_back_ios"
             (click)="changePageBackward()"
-            class="w-10 h-10 cursor-pointer rounded-full active:bg-slate-300 transition duration-500 ease-out"
+            class="w-10 h-10 cursor-pointer rounded-full active:bg-slate-400 transition duration-500 ease-out"
         ></mat-icon>
         <div class="text-xl mx-3 sm:mx-0">
             {{ contador + 1 + "/" + pages.length }}
@@ -16,7 +16,7 @@
         <mat-icon
             svgIcon="mat_outline:arrow_forward_ios"
             (click)="changePageFoward()"
-            class="w-10 h-10 cursor-pointer rounded-full focus:outline-none active:bg-slate-400 transition duration-500 ease-out"
+            class="w-10 h-10 cursor-pointer rounded-full active:bg-slate-400 transition duration-500 ease-out"
         ></mat-icon>
         <!-- <button
             *ngFor="let page of pages"
