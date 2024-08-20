@@ -314,7 +314,6 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         get();
     }
     async change(value) {
-        console.log(value);
         await this.pages.find((page) => page.name === value).setActive();
     }
 
