@@ -77,7 +77,6 @@ export class RotasAninhadasComponent implements OnInit {
             name: acessos.page_group,
             icon: acessos.icon,
         });
-        console.log(acessos);
         this.usuarios = new MatTableDataSource(acessos.children);
         this.usuariosFiltrados = new MatTableDataSource(acessos.children);
         this.usuariosFiltrados.paginator = this.paginator;
@@ -154,8 +153,6 @@ export class RotasAninhadasComponent implements OnInit {
 
         this.pmiService.refreshDataset(group, _report).subscribe(
             (res) => {
-                console.log(report);
-
                 this.toastr.success('Relatorio sendo atualizado');
                 this.requisicoes();
             },

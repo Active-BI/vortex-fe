@@ -263,10 +263,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                 }, 300);
             });
 
-        this.embeddedSrv.handSetEmitter.subscribe((status) => {
-            console.log(status);
-            console.log(this.reportObj);
-        });
+        this.embeddedSrv.handSetEmitter.subscribe((status) => {});
 
         this.getEmbedded(this.settings);
     }
@@ -310,7 +307,6 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                         const pages = result[0];
                         this.pages = pages.filter((e) => e.visibility === 0);
                         this.report_page.setValue(pages[0].name);
-                        console.log(pages, pages[0].name);
                     }
                 );
             } catch (error) {}
@@ -318,7 +314,6 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         get();
     }
     async change(value) {
-        console.log(value);
         await this.pages.find((page) => page.name === value).setActive();
     }
 

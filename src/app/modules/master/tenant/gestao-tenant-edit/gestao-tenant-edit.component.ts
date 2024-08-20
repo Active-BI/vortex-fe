@@ -208,7 +208,6 @@ export class GestaoTenantEditComponent implements OnInit {
     }
 
     editar(): void {
-        console.log(this.form.controls);
         if (this.form.valid) {
             this.tenantsService
                 .updateTenant(this.id, {

@@ -105,7 +105,6 @@ export class ReportFormComponentComponent implements OnInit {
             })
             .subscribe(
                 (res) => {
-                    console.log(this.groupId);
                     this.toastr.success('Rota criada com sucesso');
                     this.voltar();
                 },
