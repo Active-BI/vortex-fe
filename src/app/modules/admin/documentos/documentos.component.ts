@@ -7,11 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'app/modules/services/auth/auth.service';
 import { DocumentsService } from 'app/modules/services/documents.service';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable } from 'rxjs';
 import saveAs from 'file-saver';
 import { Router } from '@angular/router';
-import jwtDecode from 'jwt-decode';
-import { TenantsService } from 'app/modules/services/tenants.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDocumentosComponent } from './add-documentos/add-documentos.component';
 
@@ -28,17 +25,24 @@ export class DocumentosComponent implements OnInit {
 
     files = [];
     canUploadOrDeleteFiles;
-    displayedColumns: string[] = ['name', 'format', 'projects', 'created_at', 'opt'];
+    displayedColumns: string[] = [
+        'tenant_name',
+        'name',
+        'format',
+        'projects',
+        'created_at',
+        'opt',
+    ];
     constructor(
         private documentsService: DocumentsService,
         private authService: AuthService,
         private toastr: ToastrService,
-        private dialog: MatDialog,
-        private router: Router
+        private dialog: MatDialog
     ) {
         this.dataSource = new MatTableDataSource([]);
 
-        this.canUploadOrDeleteFiles = this.authService.GetUser().role_name === 'Master' ? true : false;
+        this.canUploadOrDeleteFiles =
+            this.authService.GetUser().role_name === 'Master' ? true : false;
     }
 
     formData = new FormData();
@@ -46,8 +50,15 @@ export class DocumentosComponent implements OnInit {
     getDocuments() {
         this.documentsService.getClientProjectFilters().subscribe((res) => {
             this.clientes = res;
-            const files = []
-            res.forEach((v) => files.push(...v.Tenant_files))
+
+            const files = [];
+            res.forEach((v) =>
+                files.push(
+                    ...v.Tenant_files.map((obj) => {
+                        return { ...obj, tenant_name: v.tenant_name };
+                    })
+                )
+            );
             this.updateDataSource(files);
         });
     }
@@ -66,7 +77,7 @@ export class DocumentosComponent implements OnInit {
             this.openModal(this.formData);
         }
     }
-    
+
     deleteCommitedFile(file_id) {
         this.documentsService.DeleteFile(file_id).subscribe(() => {
             this.getDocuments();
@@ -110,7 +121,6 @@ export class DocumentosComponent implements OnInit {
         [],
         [Validators.required, Validators.minLength(1)]
     );
-
 
     openModal(files: FormData) {
         const modal = this.dialog.open(AddDocumentosComponent, {
