@@ -11,6 +11,7 @@ import saveAs from 'file-saver';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDocumentosComponent } from './add-documentos/add-documentos.component';
+import { getAllRequest } from 'app/modules/services/user.service';
 
 @Component({
     selector: 'app-documentos',
@@ -25,6 +26,7 @@ export class DocumentosComponent implements OnInit {
 
     files = [];
     canUploadOrDeleteFiles;
+    docs = new MatTableDataSource<getAllRequest>();
     displayedColumns: string[] = [
         'tenant_name',
         'name',
@@ -59,6 +61,7 @@ export class DocumentosComponent implements OnInit {
                     })
                 )
             );
+            this.docs = new MatTableDataSource(files);
             this.updateDataSource(files);
         });
     }
@@ -116,7 +119,8 @@ export class DocumentosComponent implements OnInit {
 
     clientes = [];
     projetos = [];
-    myControl = new FormControl('', [Validators.required]);
+    myControl = new FormControl('');
+
     projetosControl = new FormControl(
         [],
         [Validators.required, Validators.minLength(1)]
@@ -139,5 +143,12 @@ export class DocumentosComponent implements OnInit {
                 this.fileInput.nativeElement.value = '';
             },
         });
+    }
+    filtrar(e) {
+        const data = this.docs.data.filter((u) =>
+            u.name.toUpperCase().includes(e.toUpperCase())
+        );
+
+        this.updateDataSource(data);
     }
 }

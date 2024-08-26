@@ -19,6 +19,21 @@
                     #fileInput
                     type="file"
                 />
+                <div class="flex items-center justify-start">
+                    <mat-form-field
+                        appearance="fill"
+                        class="w-80 mt-4 mr-4 ml-1 h2"
+                    >
+                        <mat-icon class="mr-4">search</mat-icon>
+                        <input
+                            type="text"
+                            [formControl]="myControl"
+                            placeholder="Buscar"
+                            (ngModelChange)="filtrar($event)"
+                            matInput
+                        />
+                    </mat-form-field>
+                </div>
             </div>
 
             <table
@@ -87,7 +102,7 @@
                                 *ngIf="row.description?.length > 0"
                             >
                                 <mat-icon
-                                    class="cursor-pointer mr-5 text-[#999999]"
+                                    class="hover:text-blue-500 cursor-pointer mr-5 text-[#999999]"
                                     svgIcon="heroicons_outline:question-mark-circle"
                                 ></mat-icon>
                             </button>
