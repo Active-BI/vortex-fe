@@ -97,7 +97,6 @@ export class ListUsersComponent implements OnInit {
                     return 0;
                 });
             // .filter((user) => user.contact_email !== decoded.contact_email);
-            console.log(users);
             this.usuarios = new MatTableDataSource(users);
             this.usuariosFiltrados = new MatTableDataSource(users);
             this.usuariosFiltrados.paginator = this.paginator;
@@ -114,7 +113,6 @@ export class ListUsersComponent implements OnInit {
         this.usuariosFiltrados.paginator = this.paginator;
     }
     reenviarEmail(user) {
-        console.log(user);
         this.userSrv
             .resendEmail({ email: user.contact_email, id: user.id })
             .subscribe(() => {
