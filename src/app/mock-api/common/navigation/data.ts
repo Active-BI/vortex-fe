@@ -20,6 +20,5 @@ export const defaultNavigation: FuseNavigationItem[] = [];
 export class MenuItemService {
     sub = new ReplaySubject();
     intervalId: any;
-    constructor() {
-    }
+    constructor() {}
 }
