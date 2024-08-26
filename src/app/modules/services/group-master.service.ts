@@ -52,7 +52,6 @@ export class GroupMasterService {
         const res = await this.http
             .get<any[]>(`${this.baseUrl}master/groups`)
             .toPromise();
-
         const pageList = res.map((group) => {
             return {
                 id: group.id,
@@ -78,7 +77,7 @@ export class GroupMasterService {
                 icon: group.icon,
             };
         }
-        
+
         return trataRotas(group.Page).find((g) => g.id === group.id);
     }
 }
