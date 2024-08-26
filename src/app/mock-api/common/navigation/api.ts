@@ -13,10 +13,12 @@ export class NavigationMockApi {
         private _fuseMockApiService: FuseMockApiService,
         private menuItemService: MenuItemService
     ) {
-        Promise.all([JSON.parse(localStorage.getItem('userRoutes'))]).then((e) => {
-            this._defaultNavigation = e[0];
-            this.registerHandlers();
-    })
+        Promise.all([JSON.parse(localStorage.getItem('userRoutes'))]).then(
+            (e) => {
+                this._defaultNavigation = e[0];
+                this.registerHandlers();
+            }
+        );
     }
 
     registerHandlers(): void {
