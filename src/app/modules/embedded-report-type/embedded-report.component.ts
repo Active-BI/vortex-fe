@@ -6,7 +6,7 @@ import {
     BreakpointState,
     Breakpoints,
 } from '@angular/cdk/layout';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import * as xlsx from 'xlsx';
 import { PMIService } from '../services/PMI.service';
@@ -46,7 +46,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
             (res) => this.toastr.success('Relatório está sendo Atualizado'),
             ({ error }) => {
                 this.toastr.error(error.message);
-            }
+            },
         );
     }
     refreshReportDataflow() {
@@ -54,7 +54,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
             (res) => this.toastr.success('Dataflow está sendo Atualizado'),
             ({ error }) => {
                 this.toastr.error(error.message);
-            }
+            },
         );
     }
     Salvar() {
@@ -77,7 +77,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                                     data: () => {
                                         const inputElement: HTMLInputElement =
                                             document.querySelector(
-                                                '.input-file'
+                                                '.input-file',
                                             );
                                         if (inputElement) {
                                             this.cleanFile();
@@ -91,7 +91,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                             });
                         }
                         this.cleanFile();
-                    }
+                    },
                 );
         } else {
             this.toastr.error('Nenhum dado foi importado');
@@ -203,7 +203,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
         private toastr: ToastrService,
         private fb: FormBuilder,
         private pmiService: PMIService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
     ) {
         const token = localStorage.getItem('token');
 
@@ -307,7 +307,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
                         const pages = result[0];
                         this.pages = pages.filter((e) => e.visibility === 0);
                         this.report_page.setValue(pages[0].name);
-                    }
+                    },
                 );
             } catch (error) {}
         };
@@ -375,7 +375,7 @@ export class EmbeddedReportByTypeComponent implements OnInit {
 
                     this.showReport = true;
                 },
-                (err) => {}
+                (err) => {},
             );
     }
 }

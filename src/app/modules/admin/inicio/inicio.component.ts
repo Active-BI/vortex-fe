@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { LocalAuthService } from 'app/modules/services/auth.service';
 
 @Component({
     selector: 'app-inicio',
@@ -6,9 +7,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
     styleUrls: ['./inicio.component.scss'],
 })
 export class InicioComponent implements OnInit, OnDestroy {
-    constructor() {}
-    ngOnDestroy(): void {
-    }
+    user;
+    constructor(private localAuthService: LocalAuthService) {}
+    ngOnDestroy(): void {}
     ngOnInit(): void {
+        console.log(this.user);
     }
 }

@@ -28,9 +28,14 @@
         </button> -->
     </div>
     <mat-icon
+        svgIcon="mat_outline:open_in_full"
+        (click)="fullscreen()"
+        class="w-8 h-8 cursor-pointer mr-2"
+    ></mat-icon>
+    <mat-icon
         svgIcon="mat_outline:refresh"
         (click)="refresh()"
-        class="w-10 h-10 cursor-pointer"
+        class="w-8 h-8 cursor-pointer"
     ></mat-icon>
 </div>
 <div *ngIf="showReport && hasData" class="w-full md:h-full h-[4000px]">
