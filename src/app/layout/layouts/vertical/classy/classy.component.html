@@ -1,30 +1,42 @@
 <fuse-loading-bar></fuse-loading-bar>
 <fuse-vertical-navigation
-    [class]="'print:hidden text-[' +  getContrastColor(appConfigs.tenant_color) +']'" [style]="'background-color:' + appConfigs.tenant_color "
+    [class]="
+        'print:hidden text-[' + getContrastColor(appConfigs.tenant_color) + ']'
+    "
+    [style]="'background-color:' + appConfigs.tenant_color"
     [mode]="isScreenSmall ? 'over' : 'side'"
     [name]="'mainNavigation'"
     [navigation]="navigation.default"
-    [opened]="!isScreenSmall">
+    [opened]="!isScreenSmall"
+>
     <ng-container fuseVerticalNavigationContentHeader>
         <div class="flex items-center justify-between w-full gap-6 p-4 pl-6">
             <div class="flex items-center">
-                <img src="assets/images/active_logo.png" alt="" class="h-8">
+                <img src="assets/images/active_logo.png" alt="" class="h-8" />
             </div>
             <div class="flex items-center">
-                <img *ngIf="appConfigs.tenant_image && appConfigs.tenant_image.length > 0" [src]="appConfigs.tenant_image" alt="" class="h-7">
+                <img
+                    *ngIf="
+                        appConfigs.tenant_image &&
+                        appConfigs.tenant_image.length > 0
+                    "
+                    [src]="appConfigs.tenant_image"
+                    alt=""
+                    class="h-7"
+                />
             </div>
         </div>
     </ng-container>
 </fuse-vertical-navigation>
 <div class="flex flex-col flex-auto w-full min-w-0">
-    <div class="relative flex flex-0 items-center justify-between w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
-        <button
-            mat-icon-button
-            (click)="toggleNavigation('mainNavigation')">
+    <div
+        class="relative flex flex-0 items-center justify-between w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden"
+    >
+        <button mat-icon-button (click)="toggleNavigation('mainNavigation')">
             <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
         </button>
         <div class="w-full flex flex-row">
-            <div class="justify-center flex w-full text-primary text-xl     ">
+            <div class="justify-center flex w-full text-primary text-xl">
                 Portal do Cliente
             </div>
         </div>
