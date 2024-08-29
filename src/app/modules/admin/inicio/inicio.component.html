@@ -1,7 +1,14 @@
 <div class="w-full p-4">
-    <h1 class="text-3xl text-extrabold text-slate-700 my-5">
-        BEM VINDO AO PORTAL DO CLIENTE!
+    <h1 class="text-3xl text-slate-700 my-5">
+        {{ user.name + ", Bem vindo ao Portal do Cliente !" }}
     </h1>
+    <div class="ml-8 mb-8 text-slate-600">
+        <ul class="list-disc text-2xl font-bold">
+            <li>informações em tempo real</li>
+            <li>relatorios exclusivos</li>
+            <li>muito mais!</li>
+        </ul>
+    </div>
 
     <div class="flex space-x-4">
         <div class="max-w-62 bg-white rounded-lg shadow-md overflow-hidden">
