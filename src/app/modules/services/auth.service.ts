@@ -78,15 +78,4 @@ export class LocalAuthService {
     register(user): Observable<any> {
         return this.http.post<any>(`${this.baseUrl}login/register`, user);
     }
-
-    // getUser(email: string) {
-    //     return this.http.post(`${this.baseUrl}user/user-name`, email);
-    // }
-
-    // getUser() {
-    //     const userEmail = localStorage.getItem('userLogged');
-    //     const user = { email: userEmail, name: userEmail };
-    //     this.updateUserLogin(user);
-    //     return user;
-    // }
 }
