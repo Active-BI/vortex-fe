@@ -78,6 +78,7 @@ import { AppConfigs } from '../services/appServices/appConfigs';
 import { AuthService } from '../services/auth/auth.service';
 import { WebPageComponent } from './web-page/web-page.component';
 import { SafePipe } from '../services/sanitizerPipe';
+import { DataStorage } from '../services/data-storage.service';
 
 const adminroutes: Route[] = [
     {
@@ -233,6 +234,7 @@ const adminroutes: Route[] = [
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
         { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },
         NavigationMockApi,
+        DataStorage,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -244,7 +246,7 @@ export class AdminModule {
         private authService: AuthService,
     ) {
         this.socket = this.socketService.socket;
-            
+
         setInterval(() => {
             Promise.all([localStorage.getItem('session_id')]).then((res) => {
                 if (res[0]) {
@@ -253,7 +255,7 @@ export class AdminModule {
             });
             this.socket.on('logout', () => {
                 this.authService.logout();
-                this.appConfigs.removeTenantConfigs()
+                this.appConfigs.removeTenantConfigs();
                 this.socket.disconnect();
             });
         }, 5000);
