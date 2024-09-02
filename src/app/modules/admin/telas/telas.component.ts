@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { DataStorage } from 'app/modules/services/data-storage.service';
 import { PageService } from 'app/modules/services/page.service';
 import { PMIService } from 'app/modules/services/PMI.service';
 import { TelasService } from 'app/modules/services/telas.service';
@@ -37,7 +38,8 @@ export class TelasComponent {
         //private adminSrv: AdminService,
         public dialog: MatDialog,
         private pmiService: PMIService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private storageService: DataStorage,
     ) {
         this.tenantId = localStorage.getItem('tenant_id');
     }
@@ -51,17 +53,23 @@ export class TelasComponent {
     }
 
     requisicoes() {
-        this.pageService.getDashboards().subscribe((e) => {
-            const result = e
-                .map((report) => ({
-                    ...report.Page,
-                    datasetInf: report.datasetInf,
-                }))
-                .filter((r) => r.page_type === 'report');
-            console.log(result);
-            this.secondPage = new MatTableDataSource(result);
+        this.storageService.storagePages().subscribe((res) => {
+            console.log(res);
+            this.secondPage = new MatTableDataSource(res);
             this.secondPage.paginator = this.paginator;
         });
+
+        // this.pageService.getDashboards().subscribe((e) => {
+        //     const result = e
+        //         .map((report) => ({
+        //             ...report.Page,
+        //             datasetInf: report.datasetInf,
+        //         }))
+        //         .filter((r) => r.page_type === 'report');
+        //     console.log(result);
+        //     this.secondPage = new MatTableDataSource(result);
+        //     this.secondPage.paginator = this.paginator;
+        // });
     }
     exportarAcessos() {
         this.telasSrv.getUserByPagesExport().subscribe((data) => {
@@ -94,7 +102,7 @@ export class TelasComponent {
             (error) => {
                 this.toastr.error('Atualização em andamento');
                 this.requisicoes();
-            }
+            },
         );
     }
 
