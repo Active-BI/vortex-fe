@@ -28,9 +28,7 @@ interface User {
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
 })
-export class AuthSignInComponent
-    implements OnInit, AfterViewInit
-{
+export class AuthSignInComponent implements OnInit, AfterViewInit {
     error: string = '';
     showAlert = false;
     showSpinner = false;
@@ -42,15 +40,11 @@ export class AuthSignInComponent
         private router: Router,
         private userService: UserService,
         private _authService: AuthService,
-        private localAuthService: LocalAuthService,
         public appConfigs: AppConfigs,
-        authService: LocalAuthService,
         _socketService: SocketService,
         private toastr: ToastrService,
-        private route: ActivatedRoute
-    ) {
-
-    }
+        private route: ActivatedRoute,
+    ) {}
 
     ngAfterViewInit(): void {
         if (this._authService.isLoggedIn()) {
@@ -83,15 +77,13 @@ export class AuthSignInComponent
             return;
         }
 
-        this.userService.Login(data).subscribe(
-            (loginResponse) => {
-                if (this.checkIfUserCanPassThrough(loginResponse)) {
-                    this.sendUserToTheMasterApp(loginResponse.token);
-                    return;
-                }
-                this.sendUserToThe2FA(loginResponse.token);
-            },
-        );
+        this.userService.Login(data).subscribe((loginResponse) => {
+            if (this.checkIfUserCanPassThrough(loginResponse)) {
+                this.sendUserToTheMasterApp(loginResponse.token);
+                return;
+            }
+            this.sendUserToThe2FA(loginResponse.token);
+        });
     }
 
     checkIfUserCanPassThrough(loginResponse): boolean {
@@ -119,11 +111,9 @@ export class AuthSignInComponent
     }
 
     sendUserToThe2FA(token): void {
-        Promise.all([localStorage.setItem('tempToken', token)]).then(
-            () => {
-                this.redirectTfa();
-            }
-        );
+        Promise.all([localStorage.setItem('tempToken', token)]).then(() => {
+            this.redirectTfa();
+        });
     }
 
     redirectMaster() {

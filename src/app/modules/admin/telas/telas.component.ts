@@ -40,6 +40,7 @@ export class TelasComponent {
         private pmiService: PMIService,
         private toastr: ToastrService,
         private storageService: DataStorage,
+        private pmiSrv: PMIService,
     ) {
         this.tenantId = localStorage.getItem('tenant_id');
     }
@@ -54,22 +55,21 @@ export class TelasComponent {
 
     requisicoes() {
         this.storageService.storagePages().subscribe((res) => {
-            console.log(res);
             this.secondPage = new MatTableDataSource(res);
             this.secondPage.paginator = this.paginator;
-        });
 
-        // this.pageService.getDashboards().subscribe((e) => {
-        //     const result = e
-        //         .map((report) => ({
-        //             ...report.Page,
-        //             datasetInf: report.datasetInf,
-        //         }))
-        //         .filter((r) => r.page_type === 'report');
-        //     console.log(result);
-        //     this.secondPage = new MatTableDataSource(result);
-        //     this.secondPage.paginator = this.paginator;
-        // });
+            this.pmiService.getDataSetInfo().subscribe((e) => {
+                const result = e
+                    .map((report) => ({
+                        ...report.Page,
+                        datasetInf: report.datasetInf,
+                    }))
+                    .filter((r) => r.page_type === 'report');
+                console.log(result);
+                this.secondPage = new MatTableDataSource(result);
+                this.secondPage.paginator = this.paginator;
+            });
+        });
     }
     exportarAcessos() {
         this.telasSrv.getUserByPagesExport().subscribe((data) => {

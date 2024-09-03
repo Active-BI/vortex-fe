@@ -10,14 +10,17 @@ import { catchError, debounceTime, map } from 'rxjs/operators';
     providedIn: 'root',
 })
 export class PMIService {
-    constructor(private http: HttpClient, private toast: ToastrService) {}
+    constructor(
+        private http: HttpClient,
+        private toast: ToastrService,
+    ) {}
 
     private baseUrl = environment.baseUrl;
 
     uploadFile(payload, group, type) {
         return this.http.post(
             `${this.baseUrl}files/upload/${group}/${type}`,
-            payload
+            payload,
         );
     }
     exportDataFile(group, type: string) {
@@ -25,17 +28,17 @@ export class PMIService {
             `${this.baseUrl}files/download-pbi-data/${group}/${type}`,
             {
                 responseType: 'blob',
-            }
+            },
         );
     }
     refreshDataset(group, type) {
         return this.http.get(
-            `${this.baseUrl}pbi-report/refresh/${group}/${type}`
+            `${this.baseUrl}pbi-report/refresh/${group}/${type}`,
         );
     }
     refreshDataflow(group, type) {
         return this.http.get(
-            `${this.baseUrl}pbi-report/refresh-dataflow/${group}/${type}`
+            `${this.baseUrl}pbi-report/refresh-dataflow/${group}/${type}`,
         );
     }
     exportExampleFile(group, tipoRelatorio: string) {
@@ -43,10 +46,14 @@ export class PMIService {
             `${this.baseUrl}files/get-template/${group}/${tipoRelatorio}`,
             {
                 responseType: 'blob',
-            }
+            },
         );
     }
     tenants() {
         return this.http.get(`${this.baseUrl}InserirDadosMock/tenants`);
+    }
+
+    getDataSetInfo(): Observable<any[]> {
+        return this.http.get(`${this.baseUrl}page/datasetInf`) as any;
     }
 }

@@ -79,6 +79,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { WebPageComponent } from './web-page/web-page.component';
 import { SafePipe } from '../services/sanitizerPipe';
 import { DataStorage } from '../services/data-storage.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const adminroutes: Route[] = [
     {
@@ -225,6 +226,7 @@ const adminroutes: Route[] = [
         MatInputModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatProgressSpinnerModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [
