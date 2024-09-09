@@ -11,7 +11,7 @@ import { DeletarRotaAninhadaComponent } from '../modais/deletar-rota-aninhada/de
 import { GroupMasterService } from 'app/modules/services/group-master.service';
 import { PMIService } from 'app/modules/services/PMI.service';
 import { ShowIconsComponent } from './show-icons/show-icons.component';
-import { DialogRef } from '@angular/cdk/dialog';
+import { DataStorageService } from 'app/modules/services/data-storage.service';
 
 export function agregarRoles(objeto) {
     if (objeto?.children) {
@@ -45,6 +45,8 @@ export class RotasAninhadasComponent implements OnInit {
     @ViewChild('paginator') paginator: MatPaginator;
     usuarios: MatTableDataSource<any>;
     usuariosL: number = 0;
+    usuariosFiltrados: MatTableDataSource<any>;
+
     id = '';
     icones = [];
     constructor(
@@ -55,7 +57,8 @@ export class RotasAninhadasComponent implements OnInit {
         private toastr: ToastrService,
         private pageMasterService: PageMasterService,
         private groupMasterService: GroupMasterService,
-        private pmiService: PMIService
+        private pmiService: PMIService,
+        private storageSrv: DataStorageService,
     ) {
         this.id = this.route.snapshot.paramMap.get('id');
     }
@@ -70,23 +73,47 @@ export class RotasAninhadasComponent implements OnInit {
     pages = [];
     pagesReduced = [];
     async requisicoes() {
-        const acessos = agregarRoles(
-            await this.groupMasterService.getGroup(this.id)
-        );
-        this.form.patchValue({
-            name: acessos.page_group,
-            icon: acessos.icon,
+        this.storageSrv.storageMasterGroup(this.id).subscribe((res) => {
+            console.log(res.children);
+            this.form.patchValue({
+                name: res.page_group,
+                icon: res.icon,
+            });
+            this.usuarios = new MatTableDataSource(res.children);
+            this.usuariosFiltrados = new MatTableDataSource(res.children);
+            this.usuariosFiltrados.paginator = this.paginator;
+            this.usuarios.paginator = this.paginator;
+            this.usuariosL = this.usuarios?.data.length;
+            this.pmiService
+                .getMasterGroupDataSetInfo(res.children)
+                .subscribe((e) => {
+                    console.log(e);
+                    this.usuariosFiltrados = new MatTableDataSource(e);
+                    this.usuariosFiltrados.paginator = this.paginator;
+                    this.usuarios = new MatTableDataSource(e);
+                    this.usuarios.paginator = this.paginator;
+
+                    this.usuariosL = this.usuarios?.data.length;
+                });
         });
-        this.usuarios = new MatTableDataSource(acessos.children);
-        this.usuariosFiltrados = new MatTableDataSource(acessos.children);
-        this.usuariosFiltrados.paginator = this.paginator;
-        this.usuarios.paginator = this.paginator;
-        this.usuariosL = this.usuarios?.data.length;
+
+        // const acessos = agregarRoles(
+        //     await this.groupMasterService.getGroup(this.id),
+        // );
+        // console.log(acessos);
+        // this.form.patchValue({
+        //     name: acessos.page_group,
+        //     icon: acessos.icon,
+        // });
+        // this.usuarios = new MatTableDataSource(acessos.children);
+        // this.usuariosFiltrados = new MatTableDataSource(acessos.children);
+        // this.usuariosFiltrados.paginator = this.paginator;
+        // this.usuarios.paginator = this.paginator;
+        // this.usuariosL = this.usuarios?.data.length;
     }
-    usuariosFiltrados: MatTableDataSource<any>;
     filtarUsuarios(e) {
         const data = this.usuarios.data.filter((u) =>
-            u.name.toUpperCase().includes(e.toUpperCase())
+            u.name.toUpperCase().includes(e.toUpperCase()),
         );
         this.usuariosFiltrados = new MatTableDataSource(data);
         this.usuariosFiltrados.paginator = this.paginator;
@@ -108,7 +135,7 @@ export class RotasAninhadasComponent implements OnInit {
                 },
                 ({ error }) => {
                     this.toastr.error('Falha ao atualizar grupo');
-                }
+                },
             );
     }
 
@@ -140,7 +167,7 @@ export class RotasAninhadasComponent implements OnInit {
                             },
                             ({ error }) => {
                                 this.toastr.error('Falha ao excluir rota');
-                            }
+                            },
                         );
                 },
             },
@@ -156,7 +183,7 @@ export class RotasAninhadasComponent implements OnInit {
                 this.toastr.success('Relatorio sendo atualizado');
                 this.requisicoes();
             },
-            (error) => this.toastr.error('Atualização em andamento')
+            (error) => this.toastr.error('Atualização em andamento'),
         );
     }
     voltar(): void {

@@ -78,7 +78,7 @@ import { AppConfigs } from '../services/appServices/appConfigs';
 import { AuthService } from '../services/auth/auth.service';
 import { WebPageComponent } from './web-page/web-page.component';
 import { SafePipe } from '../services/sanitizerPipe';
-import { DataStorage } from '../services/data-storage.service';
+import { DataStorageService } from '../services/data-storage.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const adminroutes: Route[] = [
@@ -236,7 +236,7 @@ const adminroutes: Route[] = [
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
         { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },
         NavigationMockApi,
-        DataStorage,
+        DataStorageService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

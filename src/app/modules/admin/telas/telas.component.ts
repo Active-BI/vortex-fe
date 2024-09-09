@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { DataStorage } from 'app/modules/services/data-storage.service';
+import { DataStorageService } from 'app/modules/services/data-storage.service';
 import { PageService } from 'app/modules/services/page.service';
 import { PMIService } from 'app/modules/services/PMI.service';
 import { TelasService } from 'app/modules/services/telas.service';
@@ -39,8 +39,7 @@ export class TelasComponent {
         public dialog: MatDialog,
         private pmiService: PMIService,
         private toastr: ToastrService,
-        private storageService: DataStorage,
-        private pmiSrv: PMIService,
+        private storageService: DataStorageService,
     ) {
         this.tenantId = localStorage.getItem('tenant_id');
     }
