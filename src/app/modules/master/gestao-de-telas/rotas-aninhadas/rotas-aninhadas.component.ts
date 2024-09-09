@@ -90,7 +90,7 @@ export class RotasAninhadasComponent implements OnInit {
                     console.log(e);
                     this.usuariosFiltrados = new MatTableDataSource(e);
                     this.usuariosFiltrados.paginator = this.paginator;
-                    this.usuarios = new MatTableDataSource(res.children);
+                    this.usuarios = new MatTableDataSource(e);
                     this.usuarios.paginator = this.paginator;
 
                     this.usuariosL = this.usuarios?.data.length;
