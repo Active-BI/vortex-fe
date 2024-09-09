@@ -56,4 +56,11 @@ export class PMIService {
     getDataSetInfo(): Observable<any[]> {
         return this.http.get(`${this.baseUrl}page/datasetInf`) as any;
     }
+
+    getMasterGroupDataSetInfo(pages): Observable<any[]> {
+        return this.http.post(
+            `${this.baseUrl}master/groups/dataset/info`,
+            pages,
+        ) as any;
+    }
 }

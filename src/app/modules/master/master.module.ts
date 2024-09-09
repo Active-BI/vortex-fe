@@ -62,6 +62,8 @@ import { ShowIconsComponent } from './gestao-de-telas/rotas-aninhadas/show-icons
 import { DashboardFormComponentComponent } from './gestao-de-telas/rotas-aninhadas/dashboard-form-component/dashboard-form-component.component';
 import { WebpageFormComponentComponent } from './gestao-de-telas/rotas-aninhadas/webpage-form-component/webpage-form-component.component';
 import { ReportFormComponentComponent } from './gestao-de-telas/rotas-aninhadas/report-form-component/report-form-component.component';
+import { DataStorageService } from '../services/data-storage.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const masterRoutes: Route[] = [
     {
@@ -178,12 +180,14 @@ const masterRoutes: Route[] = [
         MatAutocompleteModule,
         ReactiveFormsModule,
         NgxMaskModule.forRoot(),
+        MatProgressSpinnerModule,
     ],
     entryComponents: [MatDialogModule],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
         { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },
         NavigationMockApi,
+        DataStorageService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

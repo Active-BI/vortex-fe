@@ -2,6 +2,7 @@ import { group } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
+import { Observable } from 'rxjs';
 
 export function trataRotas(rotas) {
     const pageList = rotas.map((page) => {
@@ -15,7 +16,6 @@ export function trataRotas(rotas) {
             group_id: page.group_id,
             name: page.title,
             id: page.id,
-            datasetInf: page.datasetInf,
             roles: page.Page_Role.map((p) => p.Rls.name),
         };
     });
@@ -48,6 +48,10 @@ export class GroupMasterService {
 
     private baseUrl = environment.baseUrl;
 
+    newGetGroup(id: string): Observable<any> {
+        return this.http.get<any>(`${this.baseUrl}master/groups/${id}`) as any;
+    }
+
     async getGroups() {
         const res = await this.http
             .get<any[]>(`${this.baseUrl}master/groups`)
@@ -59,7 +63,7 @@ export class GroupMasterService {
                 page_group_icon: group.icon,
                 pages_length: group.Page.length,
                 roles: group.Page.map((p) =>
-                    p.Page_Role.map((pr) => pr.Rls.name)
+                    p.Page_Role.map((pr) => pr.Rls.name),
                 ),
             };
         });
