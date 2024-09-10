@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { EMPTY, Observable, catchError, throwError } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
@@ -21,7 +21,10 @@ export interface UserRegister extends User {
     providedIn: 'root',
 })
 export class UserService {
-    constructor(private http: HttpClient, private toastr: ToastrService) {}
+    constructor(
+        private http: HttpClient,
+        private toastr: ToastrService,
+    ) {}
 
     baseUrl = environment.baseUrl;
 
@@ -40,10 +43,9 @@ export class UserService {
         password: string;
     }): Observable<any> {
         return this.http.post(`${this.baseUrl}login`, { email, password }).pipe(
-            catchError(({error}) => {
-                this.toastr.error(isArray(error?.message) ? "Senha ou email inválidos" : error?.message);
-                return error;
-            })
+            catchError(() => {
+                return throwError(() => new Error('Senha ou email inválidos'));
+            }),
         );
     }
 

@@ -18,7 +18,7 @@ export class AddAccessAdminComponent implements OnInit {
         private fb: FormBuilder,
         private toastr: ToastrService,
         private pageMasterService: PageMasterService,
-        private tenantService: TenantsService
+        private tenantService: TenantsService,
     ) {
         console.log(data.tenant_id);
     }
@@ -47,7 +47,7 @@ export class AddAccessAdminComponent implements OnInit {
             },
         });
     }
-    
+
     onSubmit(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
@@ -61,8 +61,9 @@ export class AddAccessAdminComponent implements OnInit {
                     this.data.data();
                 },
                 (error) => {
-                    this.toastr.error('Erro ao cadastrar usuário');
-                }
+                    console.log(error);
+                    this.toastr.error(error.error.message);
+                },
             );
     }
 }
