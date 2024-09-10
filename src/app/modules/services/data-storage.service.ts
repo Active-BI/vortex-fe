@@ -33,8 +33,6 @@ export class DataStorageService {
     }
 
     storageMasterGroup(id: string): Observable<any> {
-        if (this.masterGroupData) return of(this.masterGroupData);
-
         return this.groupMasterSrv.newGetGroup(id).pipe(
             map((group) => {
                 if (group.Page.length < 1) {
