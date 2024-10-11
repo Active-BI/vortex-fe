@@ -91,7 +91,7 @@ export class DocumentosComponent implements OnInit {
         this.documentsService.DownloadFile(file.id).subscribe((res) => {
             const blob = new Blob([res], { type: 'application/octet-stream' });
             saveAs(blob, file.name + '.' + file.file_format);
-            this.toastr.success('Removido com sucesso');
+            this.toastr.success('Obtido com sucesso');
         });
     }
 

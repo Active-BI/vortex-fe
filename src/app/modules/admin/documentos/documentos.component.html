@@ -7,10 +7,10 @@
                 <!-- *ngIf="canUploadOrDeleteFiles" -->
                 <button
                     type="button"
-                    class="w-60 h-auto p-2 bg-[#0069b1] hover:bg-[#00a8e4] rounded-md text-white"
+                    class="w-60 h-auto p-2 bg-button hover:bg-button_hover rounded-md text-white"
                     (click)="fileInput.click()"
                 >
-                    Selecione arquivo
+                    Selecione o arquivo
                 </button>
                 <!-- (click)="click()" -->
                 <input
@@ -46,7 +46,7 @@
                     <td
                         mat-cell
                         *matCellDef="let row"
-                        [ngClass]="row.id ? '' : 'text-blue-500'"
+                        [ngClass]="row.id ? '' : 'text-button'"
                     >
                         {{ row.tenant_name }}
                     </td>
@@ -56,7 +56,7 @@
                     <td
                         mat-cell
                         *matCellDef="let row"
-                        [ngClass]="row.id ? '' : 'text-blue-500'"
+                        [ngClass]="row.id ? '' : 'text-button'"
                     >
                         {{ row.name }}
                     </td>
@@ -67,7 +67,7 @@
                     <td
                         mat-cell
                         *matCellDef="let row"
-                        [ngClass]="row.id ? '' : 'text-blue-500'"
+                        [ngClass]="row.id ? '' : 'text-button'"
                     >
                         {{ row.file_format }}
                     </td>
@@ -97,23 +97,23 @@
                     <td mat-cell *matCellDef="let row">
                         <div class="w-full flex justify-end">
                             <button
-                                class="text-violet-900"
+                                class="text-button"
                                 [matTooltip]="row.description"
                                 *ngIf="row.description?.length > 0"
                             >
                                 <mat-icon
-                                    class="hover:text-blue-500 cursor-pointer mr-5 text-[#999999]"
+                                    class="hover:text-button cursor-pointer mr-5 text-[#999999]"
                                     svgIcon="heroicons_outline:question-mark-circle"
                                 ></mat-icon>
                             </button>
                             <button
-                                class="text-violet-900"
+                                class="text-button"
                                 matTooltip="Baixar"
                                 *ngIf="row.id"
                                 (click)="downloadFile(row)"
                             >
                                 <mat-icon
-                                    class="cursor-pointer mr-5 text-[#0069b1]"
+                                    class="cursor-pointer mr-5 text-button"
                                     svgIcon="download"
                                 ></mat-icon>
                             </button>

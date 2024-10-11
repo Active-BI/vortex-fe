@@ -1,10 +1,8 @@
 <div class="relative w-full">
-    <img src="/assets/images/background.jpg" alt="" srcset="" />
-
     <div class="absolute top-10 left-10 text-left text-slate-600">
         <div class="flex items-center">
             <h1 class="text-5xl my-5 font-semibold">
-                {{ "Bem vindo ao Portal do Cliente,  " }}
+                {{ "Bem vindo ao Portal Gaudium,  " }}
             </h1>
 
             <h1
@@ -20,30 +18,8 @@
                 {{ user.name }}
             </h1>
         </div>
-        <p class="text-slate-600 text-lg">
-            O portal do cliente é uma plataforma que proporciona total
-            transparência para acompanhamento dos projeto.
-        </p>
 
         <div class="mt-6 space-x-4"></div>
     </div>
 
-    <div class="absolute bottom-50 left-0 w-[80%] grid grid-cols-3 gap-4 p-8">
-        <div
-            *ngFor="let caixa of caixasDeTexto"
-            class="flex-1 bg-white bg-opacity-80 p-4 shadow-lg rounded hover:shadow-xl transition duration-300 hover:scale-105 cursor-pointer"
-        >
-            <!-- <img [src]="caixa.images" alt="Icone" class="w-12 h-12 mx-auto" /> -->
-            <h3 class="text-center text-2xl font-bold mt-4">
-                {{ caixa.titulo }}
-            </h3>
-            <p class="mt-2 text-lg text-center">
-                {{ caixa.texto }}
-            </p>
-        </div>
-    </div>
 </div>
-<!-- <iframe
-    src="https://www.activebi.com.br/blog"
-    class="w-[100vw] h-[100vh]"
-></iframe> -->

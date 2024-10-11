@@ -120,7 +120,7 @@
                                         <ng-container *ngIf="last || chat.messages[i + 1].isMine !== message.isMine">
                                             <div
                                                 class="absolute bottom-0 w-3"
-                                                [ngClass]="{'text-blue-500 -right-1 -mr-px mb-px': message.isMine,
+                                                [ngClass]="{'text-button -right-1 -mr-px mb-px': message.isMine,
                                                             'text-gray-500 -left-1 -ml-px mb-px -scale-x-1': !message.isMine}">
                                                 <ng-container *ngTemplateOutlet="speechBubbleExtension"></ng-container>
                                             </div>
