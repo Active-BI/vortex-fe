@@ -7,10 +7,10 @@
                     <mat-label>{{ criar === false ? 'Edite o Cargo' : 'Cargo' }} </mat-label>
                     <input  class="w-full" formControlName="name" matInput #first />
                 </mat-form-field>
-        
+
             </div>
             <button mat-raised-button (click)="criarUsuario()"
-                class="mt-2 rounded-sm text-colorText bg-[#006cbe] text-white">{{ criar === false ? 'Editar' : 'Criar' }}</button>
+                class="mt-2 rounded-sm text-colorText bg-button text-white">{{ criar === false ? 'Editar' : 'Criar' }}</button>
                 <button *ngIf="criar === false" mat-raised-button (click)="cancelarEdicao()" matTooltip="Cancelar Edição"
                 class="mt-2 rounded-sm text-colorText bg-[#be0000] text-white">X</button>
         </form>
@@ -44,7 +44,7 @@
                         <div class="w-full flex justify-end">
 
                             <button class="text-violet-900" matTooltip='Editar' (click)="editarUsuario(element)">
-                                <mat-icon class="cursor-pointer mr-5 text-blue-700" svgIcon="edit_note"></mat-icon>
+                                <mat-icon class="cursor-pointer mr-5 bg-button" svgIcon="edit_note"></mat-icon>
                             </button>
                             <button matTooltip='Deletar' (click)="deletarUsuario(element.id)">
                                 <mat-icon color="warn" class="cursor-pointer mr-5"

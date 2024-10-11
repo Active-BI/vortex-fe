@@ -1,6 +1,6 @@
 <div class="flex flex-col w-full  h-full ">
     <div class="w-full flex justify-center my-4">
-        <button class="p-1 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white shadow-sm rounded-md mx-1"(click)="prevPage()">Anterior</button>
+        <button class="p-1 cursor-pointer bg-button hover:bg-blue-500 text-white shadow-sm rounded-md mx-1"(click)="prevPage()">Anterior</button>
         <ng-container *ngIf="currentPage > 2">
             <button class="p-1 px-2 cursor-pointer bg-white hover:bg-cyan-100 shadow-sm rounded-sm mx-1" (click)="goToPage(currentPage - 2)">{{ currentPage - 2 }}</button>
         </ng-container>
@@ -14,7 +14,7 @@
         <ng-container *ngIf="currentPage < totalPages - 1">
             <button class="p-1 px-2 cursor-pointer bg-white hover:bg-cyan-100 shadow-sm rounded-sm mx-1" (click)="goToPage(currentPage + 2)">{{ currentPage + 2 }}</button>
         </ng-container>
-       <button class="p-1 px-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white shadow-sm rounded-md mx-1" (click)="nextPage()">Próximo</button>
+       <button class="p-1 px-2 cursor-pointer bg-button hover:bg-blue-500 text-white shadow-sm rounded-md mx-1" (click)="nextPage()">Próximo</button>
     </div>
     <div  class="w-full  h-[95vh] grid grid-cols-3 xl:grid-cols-4  gap-x-4 overflow-y-auto overflow-x-hidden" cdkScrollable>
         <ng-container *ngFor="let video of paginatedVideos" style="margin: 0.5%;" class="col-span-1 flex justify-center">
@@ -46,7 +46,7 @@
         </ng-container>
     </div>
     <div class="w-full flex justify-center my-4">
-        <button class="p-1 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white shadow-sm rounded-md mx-1"(click)="prevPage()">Anterior</button>
+        <button class="p-1 cursor-pointer bg-button hover:bg-blue-500 text-white shadow-sm rounded-md mx-1"(click)="prevPage()">Anterior</button>
         <ng-container *ngIf="currentPage > 2">
             <button class="p-1 px-2 cursor-pointer bg-white hover:bg-cyan-100 shadow-sm rounded-sm mx-1" (click)="goToPage(currentPage - 2)">{{ currentPage - 2 }}</button>
         </ng-container>
@@ -60,6 +60,6 @@
         <ng-container *ngIf="currentPage < totalPages - 1">
             <button class="p-1 px-2 cursor-pointer bg-white hover:bg-cyan-100 shadow-sm rounded-sm mx-1" (click)="goToPage(currentPage + 2)">{{ currentPage + 2 }}</button>
         </ng-container>
-       <button class="p-1 px-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white shadow-sm rounded-md mx-1" (click)="nextPage()">Próximo</button>
+       <button class="p-1 px-2 cursor-pointer bg-button hover:bg-blue-500 text-white shadow-sm rounded-md mx-1" (click)="nextPage()">Próximo</button>
     </div>
 </div>

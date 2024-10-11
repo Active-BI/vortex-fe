@@ -30,7 +30,7 @@
                 <button
                     mat-raised-button
                     (click)="AtualizarGrupo()"
-                    class="self-center mx-4 mt-1 rounded-sm text-colorText bg-[#006cbe] text-white"
+                    class="self-center mx-4 mt-1 rounded-sm text-colorText bg-button text-white"
                 >
                     salvar
                 </button>
@@ -39,7 +39,7 @@
                 <button
                     mat-raised-button
                     (click)="AdicionarRota()"
-                    class="mt-1 rounded-sm text-colorText bg-[#006cbe] text-white"
+                    class="mt-1 rounded-sm text-colorText bg-button text-white"
                 >
                     adicionar relatório
                 </button>
@@ -173,7 +173,7 @@
                                 *ngIf="element.page_type === 'report'"
                             >
                                 <mat-icon
-                                    class="cursor-pointer mr-5 text-blue-700"
+                                    class="cursor-pointer mr-5 text-button"
                                     svgIcon="sync"
                                 ></mat-icon>
                             </button>
@@ -183,7 +183,7 @@
                                 (click)="EditarRota(element.id)"
                             >
                                 <mat-icon
-                                    class="cursor-pointer mr-5 text-blue-700"
+                                    class="cursor-pointer mr-5 text-button"
                                     svgIcon="edit_note"
                                 ></mat-icon>
                             </button>

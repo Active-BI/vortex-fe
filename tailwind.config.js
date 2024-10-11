@@ -24,7 +24,15 @@ const themes = {
     default: {
         primary: {
             ...colors.slate,
-            DEFAULT: colors.slate[900],
+            DEFAULT: colors.gray[800],
+        },
+        button: {
+            ...colors.blue,
+            DEFAULT: colors.gray[800],
+        },
+        button_hover: {
+            ...colors.blue,
+            DEFAULT: colors.gray[600],
         },
         "icon-primary": {
             ...colors.blue,

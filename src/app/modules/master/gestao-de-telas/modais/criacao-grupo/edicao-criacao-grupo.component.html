@@ -36,7 +36,7 @@
             total - {{ _filter(form.value.search || "").length }}
             <button
                 (click)="showAllFunc()"
-                class="flex items-center text-center self-center px-2 min-w-22 bg-[#006cbe] text-white w-auto"
+                class="flex items-center text-center self-center px-2 min-w-22 bg-button text-white w-auto"
             >
                 Mostrar
                 {{ showAll ? "Menos" : "Mais" }}
@@ -74,7 +74,7 @@
     </form>
     <button
         (click)="criarGrupo()"
-        class="mt-4 self-end p-1 mb-6 min-w-22 w-1/5 bg-[#006cbe] text-white"
+        class="mt-4 self-end p-1 mb-6 min-w-22 w-1/5 bg-button text-white"
     >
         {{ state }}
     </button>

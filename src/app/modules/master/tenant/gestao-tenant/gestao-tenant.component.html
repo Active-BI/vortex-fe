@@ -4,14 +4,14 @@
             <button
                 mat-raised-button
                 (click)="criarUsuario()"
-                class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white"
+                class="self-end mt-2 rounded-sm text-colorText bg-button text-white"
             >
                 Criar Clientes
             </button>
-            
+
             <form class="file">
                 <span class="file-custom"></span>
-                <label class="custom-file-upload hover:bg-[#056ebe]">
+                <label class="custom-file-upload hover:bg-button_hover">
                     <input class="" type="file" (change)="Importar($event)" />
                     Importar Projetos
                 </label>
@@ -19,7 +19,7 @@
             <button
                 mat-raised-button
                 (click)="configs()"
-                class="self-end mt-2 rounded-sm text-colorText bg-[#006cbe] text-white"
+                class="self-end mt-2 rounded-sm text-colorText bg-button text-white"
             >
                 Configuração da Aplicação
             </button>
@@ -73,23 +73,23 @@
                     <td mat-cell *matCellDef="let element">
                         <div class="w-full flex justify-end">
                             <button
-                                class="text-violet-900"
+                                class="text-button"
                                 matTooltip="Editar"
                                 (click)="editarUsuario(element.id)"
                             >
                                 <mat-icon
-                                    class="cursor-pointer mr-5 text-blue-700"
+                                    class="cursor-pointer mr-5 text-button"
                                     svgIcon="edit_note"
                                 ></mat-icon>
                             </button>
                             <button
-                                class="text-violet-900"
+                                class="text-button"
                                 matTooltip="Administradores"
                                 (click)="listarUsuarios(element.id)"
                             >
                                 <mat-icon
                                     color="warn"
-                                    class="cursor-pointer mr-5 text-blue-700"
+                                    class="cursor-pointer mr-5 text-button"
                                     svgIcon="mat_solid:people"
                                 ></mat-icon>
                             </button>
