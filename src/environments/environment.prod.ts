@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    baseUrl: 'https://active-cliente-portal-be-508406ece2fb.herokuapp.com/api/',
-    socketUrl: 'https://active-cliente-portal-be-508406ece2fb.herokuapp.com/',
+    baseUrl: 'https://gaudium-be-49205193bdb2.herokuapp.com/api/',
+    socketUrl: 'https://gaudium-be-49205193bdb2.herokuapp.com/',
 };
