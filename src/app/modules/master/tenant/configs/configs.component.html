@@ -33,6 +33,7 @@
                             class="h-20 w-auto"
                         />
                     </div>
+                
                     <div>
                         <mat-label class="mb-3">Logo (tela de login)</mat-label>
                         <div class="flex justify-between items-center mb-3">
@@ -46,7 +47,11 @@
                                     class=""
                                 />
                             </div>
+                            <button mat-button class="bg-button text-white rounded-sm ml-2" (click)="form.get('logo').reset('')" >
+                                limpar
+                            </button>
                         </div>
+                        
                         <div
                             *ngIf="form.controls.logo.touched"
                             class="text-red-600 mb-2"
@@ -64,6 +69,7 @@
                         </div>
                     </div>
                 </div>
+           
                 <div class="flex flex-col items-start">
                     <div class="w-[240px] h-[140px] my-4">
                         <img
@@ -90,6 +96,9 @@
                                     class=""
                                 />
                             </div>
+                            <button mat-button class="bg-button text-white rounded-sm ml-2" (click)="form.get('bg_image').reset('')" >
+                                limpar
+                            </button>
                         </div>
                         <div
                             *ngIf="form.controls.bg_image.touched"
