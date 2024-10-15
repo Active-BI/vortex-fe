@@ -75,9 +75,8 @@
                 </mat-form-field>
 
                 <button
-                    class="fuse-mat-button-large w-full mt-6 rounded-sm"
+                    class="fuse-mat-button-large w-full mt-6 rounded-sm hover:bg-[#3d9be9] bg-[#00c4e9] text-white"
                     mat-flat-button
-                    [color]="'primary'"
                     [disabled]="email.hasError('') || password.hasError('')"
                     (click)="login()"
                 >
