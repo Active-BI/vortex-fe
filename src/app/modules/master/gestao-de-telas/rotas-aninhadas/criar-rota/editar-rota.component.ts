@@ -28,6 +28,9 @@ export class EditarRotaComponent extends CriarRotaComponent {
         this.requisicoes();
     }
     async requisicoes() {
+        this.form.controls.title.valueChanges.subscribe((title) => {
+            this.change(title);
+        });
         this._pageMasterService.getPage(this.screenId).subscribe((res) => {
             this.form.patchValue({
                 ...res,
@@ -42,7 +45,6 @@ export class EditarRotaComponent extends CriarRotaComponent {
         });
     }
     editarRota() {
-        console.log(this.form);
         const { page_group_title, page_group_id, ...dados } = this.form.value;
         if (!this.form.valid) {
             this._toastr.error('Dados inválidos');
@@ -56,5 +58,54 @@ export class EditarRotaComponent extends CriarRotaComponent {
                     this._toastr.error('Falha ao atualizar rota');
                 }
             );
+    }
+
+    change(input_title) {
+        console.log(input_title);
+        const pathByGroup = this.form.value.page_group_title
+            .toLowerCase()
+            .split(' ')
+            .join('-')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+        const title = input_title
+            .toLowerCase()
+            .split(' ')
+            .join('-')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+        this.form.patchValue({
+            formated_title: title,
+        });
+
+        let pathByType = '';
+        const isReportTypeNull = this.form.value.page_type === null;
+        if (isReportTypeNull) {
+            this.form.patchValue({
+                page_type: 'report',
+            });
+        }
+        if (
+            this.form.value.page_type.includes('report') ||
+            this.form.value.page_type.includes('dashboard')
+        ) {
+            pathByType = this.form.value.page_type.includes('report')
+                ? pathByType + 'view-report/'
+                : pathByType + 'view-dashboard/';
+        }
+        if (this.form.value.restrict) {
+            pathByType = '/master/' + pathByType;
+        }
+
+        if (pathByGroup === '') {
+            this.form.patchValue({
+                link: `${pathByType}${title}`,
+            });
+        } else {
+            this.form.patchValue({
+                link: `${pathByType}${pathByGroup}/${title}`,
+            });
+            console.log(`${pathByType}${pathByGroup}/${title}`);
+        }
     }
 }
