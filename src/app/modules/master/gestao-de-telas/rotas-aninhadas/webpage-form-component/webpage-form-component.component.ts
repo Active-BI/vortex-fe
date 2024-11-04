@@ -12,13 +12,11 @@ import { PageMasterService } from 'app/modules/services/page-master.service';
     templateUrl: './webpage-form-component.component.html',
     styleUrls: ['./webpage-form-component.component.scss'],
 })
-export class WebpageFormComponentComponent
-    implements OnInit
-{
+export class WebpageFormComponentComponent implements OnInit {
     @Input() form: FormGroup = this.fb.group({});
     @Input() groupId: string = '';
     roles = roles;
-    
+
     formWebPage: FormGroup = this.fb.group({
         id: [''],
         page_group_id: [this.groupId],
@@ -37,8 +35,7 @@ export class WebpageFormComponentComponent
         public groupMasterService: GroupMasterService,
         private toastr: ToastrService,
         private pageMasterService: PageMasterService
-    ) {
-     }
+    ) {}
 
     ngOnInit(): void {
         this.form.valueChanges.subscribe((value) => {
@@ -59,7 +56,6 @@ export class WebpageFormComponentComponent
             : this.router.navigate(['/master/gestao/telas/']);
     }
 
-    
     findRole(id) {
         if (id) {
             return this.roles.find((r) => r.id === id).name;
@@ -67,7 +63,10 @@ export class WebpageFormComponentComponent
         return '';
     }
     async criarWebPage() {
-        if (this.formWebPage.invalid) {
+        if (
+            this.formWebPage.invalid ||
+            this.form.controls.page_group_title.invalid
+        ) {
             this.formWebPage.markAllAsTouched();
             this.toastr.error('formaulário inválido');
             return;

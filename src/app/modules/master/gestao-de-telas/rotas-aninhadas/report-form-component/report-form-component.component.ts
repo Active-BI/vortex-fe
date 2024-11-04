@@ -83,7 +83,10 @@ export class ReportFormComponentComponent implements OnInit {
     }
 
     criarDashboardAndReport() {
-        if (this.formReport.invalid) {
+        if (
+            this.formReport.invalid ||
+            this.form.controls.page_group_title.invalid
+        ) {
             this.formReport.markAllAsTouched();
             this.toastr.error('Formulário inválido');
             return;
@@ -135,12 +138,13 @@ export class ReportFormComponentComponent implements OnInit {
     }
 
     change(input_title) {
-        const pathByGroup = this.form.value.page_group_title
-            .toLowerCase()
-            .split(' ')
-            .join('-')
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '');
+        const pathByGroup =
+            this.form.value.page_group_title
+                .toLowerCase()
+                .split(' ')
+                .join('-')
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '') || '';
         const title = input_title
             .toLowerCase()
             .split(' ')
@@ -170,11 +174,7 @@ export class ReportFormComponentComponent implements OnInit {
             pathByType = '/master/' + pathByType;
         }
 
-        if (pathByGroup === '') {
-            this.form.patchValue({
-                link: `${pathByType}${title}`,
-            });
-        } else {
+        if (pathByGroup !== '') {
             this.form.patchValue({
                 link: `${pathByType}${pathByGroup}/${title}`,
             });

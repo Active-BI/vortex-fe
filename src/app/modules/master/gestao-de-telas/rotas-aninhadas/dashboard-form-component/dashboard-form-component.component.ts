@@ -78,7 +78,10 @@ export class DashboardFormComponentComponent implements OnInit {
     }
 
     criarDashboardAndReport() {
-        if (this.formDashboard.invalid) {
+        if (
+            this.formDashboard.invalid ||
+            this.form.controls.page_group_title.invalid
+        ) {
             this.formDashboard.markAllAsTouched();
             this.toastr.error('Formulário inválido');
             return;

@@ -33,6 +33,7 @@ export const roles = [
     styleUrls: ['./criar-rota.component.scss'],
 })
 export class CriarRotaComponent implements OnInit {
+   
     groupId = '';
     page_context = 'criar';
     screenType = Object.values(screenTypes);
@@ -43,14 +44,14 @@ export class CriarRotaComponent implements OnInit {
         id: [''],
         page_type: ['report', [Validators.required]],
         title: ['', [Validators.required]],
-        link: [''],
+        link: ['', [Validators.required]],
         type: ['basic'],
         formated_title: [''],
         group_id: [''],
         report_id: [''],
         restrict: [false],
         table_name: [''],
-        page_group_title: [''],
+        page_group_title: ['', Validators.required],
         page_group_id: [this.groupId],
         possui_dados_sensiveis: [false],
         descricao_painel: [''],
@@ -70,6 +71,7 @@ export class CriarRotaComponent implements OnInit {
         this.page_context = this.router.url.includes('criar')
             ? 'criar'
             : 'editar';
+
         this.requisicoes();
     }
     async requisicoes() {
@@ -79,6 +81,7 @@ export class CriarRotaComponent implements OnInit {
         this.form.patchValue({
             page_group_title: acessos.page_group,
         });
+        
     }
 
     voltar() {
