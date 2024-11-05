@@ -161,7 +161,7 @@
                 <mat-label>Acessos Liberados</mat-label>
                 <mat-select [formControl]="visoes" multiple="">
                     <mat-optgroup
-                        *ngFor="let group of dashboardListReduced"
+                        *ngFor="let group of userDashboardListReduced"
                         [label]="group.page_group"
                     >
                         <mat-option
