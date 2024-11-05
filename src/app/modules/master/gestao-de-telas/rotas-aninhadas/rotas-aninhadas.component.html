@@ -119,7 +119,7 @@
 
                                 {{
                                     element.datasetInf.startTime
-                                        | date: "dd/MM/yyyy HH:MM"
+                                        | date : "dd/MM/yyyy HH:MM"
                                 }}
                             </p>
                             <p class="text-gray-500 font-light">
@@ -127,7 +127,7 @@
 
                                 {{
                                     element.datasetInf.startTime
-                                        | date: "dd/MM/yyyy HH:MM"
+                                        | date : "dd/MM/yyyy HH:MM"
                                 }}
                             </p>
                         </div>
@@ -178,6 +178,7 @@
                                 ></mat-icon>
                             </button>
                             <button
+                                *ngIf="form.value.name !== 'Administrador'"
                                 class="text-violet-900"
                                 matTooltip="Editar"
                                 (click)="EditarRota(element.id)"
@@ -189,6 +190,7 @@
                             </button>
 
                             <button
+                                *ngIf="form.value.name !== 'Administrador'"
                                 matTooltip="Deletar"
                                 (click)="deletarRotaAninhada(element.id)"
                             >
