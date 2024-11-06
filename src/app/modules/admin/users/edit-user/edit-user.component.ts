@@ -76,26 +76,34 @@ export class EditUserComponent implements OnInit {
 
         this.changeRLS();
     }
+
     changeRLS() {
+        const filtrarListaPorRls = () => {
+            return this.dashboardListReduced
+                .map((item) => {
+                    return {
+                        ...item,
+                        children: item.children.filter((e) =>
+                            e.roles.includes('User')
+                        ),
+                    };
+                })
+                .filter((e) => e.children.length > 0);
+        };
+        const atualizarVisoes = () => {
+            this.visoes.setValue(
+                this.visoes.value.filter((e) =>
+                    this.userDashboardListReduced.some((d) =>
+                        d.children.some((c) => c.id === e)
+                    )
+                )
+            );
+        };
+
         this.form.controls.rls_id.valueChanges.subscribe((value) => {
             if (value === 'ca21241b-a37d-4e6f-bbb6-26643d3cdd99') {
-                this.userDashboardListReduced = this.dashboardListReduced
-                    .map((item) => {
-                        return {
-                            ...item,
-                            children: item.children.filter((e) =>
-                                e.roles.includes('User')
-                            ),
-                        };
-                    })
-                    .filter((e) => e.children.length > 0);
-                this.visoes.setValue(
-                    this.visoes.value.filter((e) =>
-                        this.userDashboardListReduced.some((d) =>
-                            d.children.some((c) => c.id === e)
-                        )
-                    )
-                );
+                this.userDashboardListReduced = filtrarListaPorRls();
+                atualizarVisoes();
             }
 
             if (value === '6a203390-8389-49ca-aa0e-6a14ba7815bc') {
