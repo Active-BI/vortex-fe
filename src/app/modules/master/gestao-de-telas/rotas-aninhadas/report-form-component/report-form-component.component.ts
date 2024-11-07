@@ -31,6 +31,7 @@ export class ReportFormComponentComponent implements OnInit {
             roles: [[], [Validators.required]],
             descricao_painel: [''],
             possui_dados_sensiveis: [false],
+            has_RLS: [false],
         },
         { validators: this.validateUrlBasedOnGroupAndReport }
     );
@@ -40,7 +41,9 @@ export class ReportFormComponentComponent implements OnInit {
         private toastr: ToastrService,
         private pageMasterService: PageMasterService,
         private router: Router
-    ) {}
+    ) {
+        this.formReport.valueChanges.subscribe((value) => console.log(value));
+    }
 
     ngOnInit(): void {
         this.form.controls.title.valueChanges.subscribe((title) => {
@@ -98,6 +101,7 @@ export class ReportFormComponentComponent implements OnInit {
             descricao_painel: this.formReport.value.descricao_painel,
             possui_dados_sensiveis:
                 this.formReport.value.possui_dados_sensiveis,
+            has_RLS: this.formReport.value.has_RLS,
         });
         const { page_group_title, possui_dados_sensiveis, id, ...args } =
             this.form.value;

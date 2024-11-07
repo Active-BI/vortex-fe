@@ -12,9 +12,7 @@
         <div class="grid grid-cols-2 gap-x-2 gap-y-4 col-span-full">
             <mat-form-field class="md:col-span-1 fuse-mat-dense col-span-full">
                 <mat-label>Tipo da página</mat-label>
-                <mat-select
-                    formControlName="page_type"
-                >
+                <mat-select formControlName="page_type">
                     <mat-option
                         *ngFor="let item of screenType"
                         [value]="item"
@@ -33,11 +31,7 @@
                 class="fuse-mat-dense md:col-span-1 col-span-full"
             >
                 <mat-label>Nome da Página</mat-label>
-                <input
-                    formControlName="title"
-                    matInput
-                    #first
-                />
+                <input formControlName="title" matInput #first />
             </mat-form-field>
 
             <div
@@ -161,6 +155,14 @@
                         formControlName="possui_dados_sensiveis"
                         class="example-margin"
                         >Possui dados sensíveis?
+                    </mat-checkbox>
+                </section>
+                <section class="example-section">
+                    <mat-checkbox
+                        matTooltip="Seu relatorio possui algum filtro de segurança?"
+                        formControlName="has_RLS"
+                        class="example-margin"
+                        >Possui RLS?
                     </mat-checkbox>
                 </section>
             </div>

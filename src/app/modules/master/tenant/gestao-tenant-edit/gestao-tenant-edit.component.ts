@@ -215,6 +215,7 @@ export class GestaoTenantEditComponent implements OnInit {
                 })
                 .subscribe((e) => {
                     this.toastr.success('Editado com Sucesso');
+                    this.voltar();
                     // this.voltar();
                 });
         } else {

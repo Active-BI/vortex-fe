@@ -33,7 +33,6 @@ export const roles = [
     styleUrls: ['./criar-rota.component.scss'],
 })
 export class CriarRotaComponent implements OnInit {
-   
     groupId = '';
     page_context = 'criar';
     screenType = Object.values(screenTypes);
@@ -58,6 +57,7 @@ export class CriarRotaComponent implements OnInit {
         nome_responsavel: [''],
         email_responsavel: [''],
         roles: [[], [Validators.required]],
+        has_RLS: [],
     });
 
     constructor(
@@ -81,7 +81,6 @@ export class CriarRotaComponent implements OnInit {
         this.form.patchValue({
             page_group_title: acessos.page_group,
         });
-        
     }
 
     voltar() {
