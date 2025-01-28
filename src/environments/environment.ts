@@ -3,12 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    // production: true,
-    // baseUrl: 'https://active-cliente-portal-be-508406ece2fb.herokuapp.com/api/',
-    // socketUrl: 'https://active-cliente-portal-be-508406ece2fb.herokuapp.com/',
-    production: false,
+    production: true,
+    baseUrl: 'https://active-cliente-portal-be-508406ece2fb.herokuapp.com/api/',
+    socketUrl: 'https://active-cliente-portal-be-508406ece2fb.herokuapp.com/',
+    /*  production: false,
     baseUrl: 'http://localhost:5002/api/',
-    socketUrl: 'http://localhost:5002/',
+    socketUrl: 'http://localhost:5002/', */
 };
 
 /*
