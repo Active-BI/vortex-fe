@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    baseUrl: 'https://gaudium-be-49205193bdb2.herokuapp.com/api/',
-    socketUrl: 'https://gaudium-be-49205193bdb2.herokuapp.com/',
+    baseUrl: ' https://vortex-api-416840a7504f.herokuapp.com//api/',
+    socketUrl: ' https://vortex-api-416840a7504f.herokuapp.com/',
 };
