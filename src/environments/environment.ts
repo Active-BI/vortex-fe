@@ -3,12 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: true,
-    baseUrl: 'https://vortex-api-416840a7504f.herokuapp.com/api/',
-    socketUrl: 'https://vortex-api-416840a7504f.herokuapp.com/',
-    // production: false,
-    // baseUrl: 'http://localhost:5002/api/',
-    // socketUrl: 'http://localhost:5002/',
+    // production: true,
+    // baseUrl: 'https://vortex-api-416840a7504f.herokuapp.com/api/',
+    // socketUrl: 'https://vortex-api-416840a7504f.herokuapp.com/',
+    production: false,
+    baseUrl: 'http://localhost:5002/api/',
+    socketUrl: 'http://localhost:5002/',
 };
 
 /*
